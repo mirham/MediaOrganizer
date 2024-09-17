@@ -1,0 +1,104 @@
+//
+//  JobsView.swift
+//  MediaOrganizer
+//
+//  Created by UglyGeorge on 13.09.2024.
+//
+
+import SwiftUI
+
+struct JobsView: FolderContainerView {
+    @EnvironmentObject var appState: AppState
+    
+    @Environment(\.openWindow) private var openWindow
+    
+    private let jobService = JobService.shared
+    
+    var body: some View {
+        ScrollView(.vertical) {
+            ForEach(appState.userData.jobs, id: \.id) { job in
+                HStack {
+                    HStack {
+                        Toggle(String(), isOn: Binding(
+                            get: { job.checked },
+                            set: {
+                                jobService.toggleJob(jobId: job.id, checked: $0)
+                            }))
+                        .toggleStyle(CheckToggleStyle())
+                        Image(nsImage: getFolderIcon(folder: job.sourceFolder))
+                            .resizable()
+                            .frame(width: 42, height: 42)
+                        Image(nsImage: getFolderIcon(folder: job.outputFolder))
+                            .resizable()
+                            .frame(width: 42, height: 42)
+                            .offset(x: -20, y: 35)
+                            .padding(.bottom, 45)
+                    }
+                    .padding(.leading, 10)
+                    VStack (alignment: .leading) {
+                        Text(job.name)
+                            .fontWeight(.bold)
+                            .padding(.bottom, 2)
+                        Text(String(format: Constants.maskSource, job.sourceFolder))
+                            .foregroundStyle(jobService.isCurrentJob(jobId: job.id) ? .white : .gray)
+                        Text(String(format: Constants.maskOutput, job.outputFolder))
+                            .foregroundStyle(jobService.isCurrentJob(jobId: job.id) ? .white : .gray)
+                    }
+                    Spacer()
+                }
+                .contentShape(Rectangle())
+                .background(jobService.isCurrentJob(jobId: job.id) ? Color.accentColor : .clear)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .padding(.leading, 10)
+                .padding(.trailing, 10)
+                .gesture(TapGesture(count: 2).onEnded {
+                    jobItemDoubleClickHandler(job: job)
+                })
+                .simultaneousGesture(TapGesture().onEnded {
+                    jobItemClickHandler(job: job)
+                })
+                Divider()
+            }
+        }
+        .onTapGesture {
+            jobService.resetCurrentJob()
+        }
+        .toolbar(content: {
+            ToolbarView()
+                .padding(.leading)
+        })
+        .onAppear() {
+            appState.views.isJobsViewShown = true
+        }
+        .onDisappear() {
+            appState.views.isJobsViewShown = false
+        }
+    }
+    
+    // MARK: Private functions
+    
+    private func jobItemClickHandler (job : Job) {
+        guard !appState.views.isJobSettingsViewShown else { return }
+        
+        appState.current.job = job
+    }
+    
+    private func jobItemDoubleClickHandler (job : Job) {
+        appState.current.job = job
+        showEditJobWindow()
+    }
+    
+    private func showEditJobWindow() {
+        if (!appState.views.isJobSettingsViewShown){
+            openWindow(id: Constants.windowIdJobSettings)
+            ViewHelper.activateView(viewId: Constants.windowIdJobSettings)
+        }
+        else {
+            ViewHelper.activateView(viewId: Constants.windowIdJobSettings)
+        }
+    }
+}
+
+#Preview {
+    JobsView().environmentObject(AppState())
+}

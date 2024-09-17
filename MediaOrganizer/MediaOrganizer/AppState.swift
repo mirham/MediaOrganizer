@@ -9,30 +9,51 @@ import Foundation
 
 class AppState : ObservableObject {
     @Published var userData = UserData()
+    @Published var current = Current()
+    @Published var views = Views()
     
     static let shared = AppState()
 }
 
 extension AppState {
-    struct UserData : Settable, Equatable {
-        var sourceFolder: String = String() {
-            didSet { writeSetting(newValue: sourceFolder, key: Constants.settingsKeySourceFolder) }
+    struct Current : Equatable {
+        var job: Job? = nil
+        
+        static func == (lhs: Current, rhs: Current) -> Bool {
+            let result = lhs.job == rhs.job
+            
+            return result
         }
-        var destinationFolder: String = String() {
-            didSet { writeSetting(newValue: destinationFolder, key: Constants.settingsKeyDestinationFolder) }
+    }
+}
+
+extension AppState {
+    struct Views {
+        var isJobsViewShown = false
+        var isJobSettingsViewShown = false
+        var isInfoViewShown = false
+    }
+}
+
+extension AppState {
+    struct UserData : Settable, Equatable {
+        var jobs = [Job]() {
+            didSet {
+                writeSettingsArray(newValues: jobs, key: Constants.settingsKeyJobs) }
         }
         
         static func == (lhs: UserData, rhs: UserData) -> Bool {
-            let result = lhs.sourceFolder == rhs.sourceFolder
-            && lhs.destinationFolder == rhs.destinationFolder
-            
+            let result = lhs.jobs == rhs.jobs
             
             return result
         }
         
         init() {
-            sourceFolder = readSetting(key: Constants.settingsKeySourceFolder) ?? String()
-            destinationFolder = readSetting(key: Constants.settingsKeyDestinationFolder) ?? String()
+            let savedJobs: [Job]? = readSettingsArray(key: Constants.settingsKeyJobs)
+            
+            if (savedJobs != nil) {
+                jobs = savedJobs!
+            }
         }
     }
 }

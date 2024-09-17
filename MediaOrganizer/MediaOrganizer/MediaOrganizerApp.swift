@@ -15,10 +15,10 @@ struct MediaOrganizerApp: App {
     
     var body: some Scene {
         WindowGroup {
-            MainView()
+            JobsView()
                 .environmentObject(appState)
                 .navigationTitle(Constants.appName)
-                .frame(minWidth: 600, maxWidth: 600, minHeight: 300, maxHeight: 300)
+                .frame(minWidth: 600, minHeight: 300)
         }
         .windowResizability(.contentSize)
         .commands {
@@ -26,5 +26,12 @@ struct MediaOrganizerApp: App {
                 Button("About \(Bundle.main.bundleURL.lastPathComponent.replacing(".\(Bundle.main.bundleURL.pathExtension)", with: String()))") { appDelegate.showInfoWindow() }
             }
         } 
+        
+        WindowGroup(id:Constants.windowIdJobSettings, content: {
+            JobSettingsView()
+                .environmentObject(appState)
+                .navigationTitle(Constants.elJobSettings)
+                .frame(minWidth: 500, minHeight: 500)
+        }).windowResizability(.contentSize)
     }
 }

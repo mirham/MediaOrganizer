@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		352B6F012C99BCF80000789D /* JobService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B6F002C99BCF70000789D /* JobService.swift */; };
+		352B6F032C99BD1D0000789D /* ServiceBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B6F022C99BD1C0000789D /* ServiceBase.swift */; };
+		352B6F072C99D69D0000789D /* JobSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B6F062C99D69D0000789D /* JobSettingsView.swift */; };
+		352B6F092C99ECB00000789D /* JobRulesEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B6F082C99ECB00000789D /* JobRulesEditView.swift */; };
+		35447F452C9848AA0000C0B1 /* Job.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35447F442C9848AA0000C0B1 /* Job.swift */; };
+		35447F472C9852850000C0B1 /* JobGeneralSettingsEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35447F462C9852850000C0B1 /* JobGeneralSettingsEditView.swift */; };
+		35447F4A2C985A890000C0B1 /* FolderContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35447F492C985A890000C0B1 /* FolderContainerView.swift */; };
+		35447F4C2C985CA00000C0B1 /* JobsToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35447F4B2C985CA00000C0B1 /* JobsToolbarView.swift */; };
+		35447F4F2C98618C0000C0B1 /* ViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35447F4E2C98618C0000C0B1 /* ViewHelper.swift */; };
+		35447F512C9870F80000C0B1 /* JobEditMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35447F502C9870F80000C0B1 /* JobEditMode.swift */; };
+		35447F562C98C0580000C0B1 /* CheckToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35447F552C98C0580000C0B1 /* CheckToggleStyle.swift */; };
 		35CA7C782C946D9000765522 /* MediaOrganizerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CA7C772C946D9000765522 /* MediaOrganizerApp.swift */; };
 		35CA7C7C2C946D9300765522 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35CA7C7B2C946D9300765522 /* Assets.xcassets */; };
 		35CA7C7F2C946D9300765522 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35CA7C7E2C946D9300765522 /* Preview Assets.xcassets */; };
@@ -15,13 +26,24 @@
 		35CA7C912C94715900765522 /* Settable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CA7C902C94715900765522 /* Settable.swift */; };
 		35CA7C952C9471DA00765522 /* IsHiddenModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CA7C942C9471DA00765522 /* IsHiddenModifier.swift */; };
 		35CA7C972C94720C00765522 /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CA7C962C94720C00765522 /* ViewExtensions.swift */; };
-		35CA7C992C94724600765522 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CA7C982C94724600765522 /* MainView.swift */; };
+		35CA7C992C94724600765522 /* JobsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CA7C982C94724600765522 /* JobsView.swift */; };
 		35CA7C9B2C94725900765522 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CA7C9A2C94725900765522 /* InfoView.swift */; };
 		35CA7C9D2C94743100765522 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CA7C9C2C94743100765522 /* AppState.swift */; };
 		35CA7C9F2C94855B00765522 /* FolderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CA7C9E2C94855B00765522 /* FolderType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		352B6F002C99BCF70000789D /* JobService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobService.swift; sourceTree = "<group>"; };
+		352B6F022C99BD1C0000789D /* ServiceBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceBase.swift; sourceTree = "<group>"; };
+		352B6F062C99D69D0000789D /* JobSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobSettingsView.swift; sourceTree = "<group>"; };
+		352B6F082C99ECB00000789D /* JobRulesEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobRulesEditView.swift; sourceTree = "<group>"; };
+		35447F442C9848AA0000C0B1 /* Job.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Job.swift; sourceTree = "<group>"; };
+		35447F462C9852850000C0B1 /* JobGeneralSettingsEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobGeneralSettingsEditView.swift; sourceTree = "<group>"; };
+		35447F492C985A890000C0B1 /* FolderContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderContainerView.swift; sourceTree = "<group>"; };
+		35447F4B2C985CA00000C0B1 /* JobsToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobsToolbarView.swift; sourceTree = "<group>"; };
+		35447F4E2C98618C0000C0B1 /* ViewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewHelper.swift; sourceTree = "<group>"; };
+		35447F502C9870F80000C0B1 /* JobEditMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobEditMode.swift; sourceTree = "<group>"; };
+		35447F552C98C0580000C0B1 /* CheckToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckToggleStyle.swift; sourceTree = "<group>"; };
 		35CA7C742C946D9000765522 /* MediaOrganizer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MediaOrganizer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35CA7C772C946D9000765522 /* MediaOrganizerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaOrganizerApp.swift; sourceTree = "<group>"; };
 		35CA7C7B2C946D9300765522 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -32,7 +54,7 @@
 		35CA7C902C94715900765522 /* Settable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settable.swift; sourceTree = "<group>"; };
 		35CA7C942C9471DA00765522 /* IsHiddenModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsHiddenModifier.swift; sourceTree = "<group>"; };
 		35CA7C962C94720C00765522 /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
-		35CA7C982C94724600765522 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		35CA7C982C94724600765522 /* JobsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobsView.swift; sourceTree = "<group>"; };
 		35CA7C9A2C94725900765522 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		35CA7C9C2C94743100765522 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		35CA7C9E2C94855B00765522 /* FolderType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderType.swift; sourceTree = "<group>"; };
@@ -49,6 +71,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		35447F432C9848630000C0B1 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				35447F442C9848AA0000C0B1 /* Job.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		35447F482C985A670000C0B1 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				35447F492C985A890000C0B1 /* FolderContainerView.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		35447F4D2C9861750000C0B1 /* Heplers */ = {
+			isa = PBXGroup;
+			children = (
+				35447F4E2C98618C0000C0B1 /* ViewHelper.swift */,
+			);
+			path = Heplers;
+			sourceTree = "<group>";
+		};
+		35447F522C9877B20000C0B1 /* Styles */ = {
+			isa = PBXGroup;
+			children = (
+				35447F552C98C0580000C0B1 /* CheckToggleStyle.swift */,
+			);
+			path = Styles;
+			sourceTree = "<group>";
+		};
 		35CA7C6B2C946D9000765522 = {
 			isa = PBXGroup;
 			children = (
@@ -75,6 +129,7 @@
 				35CA7C862C946FCB00765522 /* Infrastructure */,
 				35CA7C872C946FE800765522 /* Protocols */,
 				35CA7C882C94700B00765522 /* Enums */,
+				35447F432C9848630000C0B1 /* Models */,
 				35CA7C8A2C94703300765522 /* Services */,
 				35CA7C8B2C94705500765522 /* Views */,
 				35CA7C7D2C946D9300765522 /* Preview Content */,
@@ -111,6 +166,7 @@
 			isa = PBXGroup;
 			children = (
 				35CA7C9E2C94855B00765522 /* FolderType.swift */,
+				35447F502C9870F80000C0B1 /* JobEditMode.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -118,6 +174,8 @@
 		35CA7C8A2C94703300765522 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				352B6F022C99BD1C0000789D /* ServiceBase.swift */,
+				352B6F002C99BCF70000789D /* JobService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -125,9 +183,16 @@
 		35CA7C8B2C94705500765522 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				35447F522C9877B20000C0B1 /* Styles */,
+				35447F4D2C9861750000C0B1 /* Heplers */,
+				35447F482C985A670000C0B1 /* Protocols */,
 				35CA7C932C9471B800765522 /* Extensions */,
 				35CA7C922C9471AB00765522 /* Modifiers */,
-				35CA7C982C94724600765522 /* MainView.swift */,
+				35CA7C982C94724600765522 /* JobsView.swift */,
+				35447F4B2C985CA00000C0B1 /* JobsToolbarView.swift */,
+				352B6F062C99D69D0000789D /* JobSettingsView.swift */,
+				35447F462C9852850000C0B1 /* JobGeneralSettingsEditView.swift */,
+				352B6F082C99ECB00000789D /* JobRulesEditView.swift */,
 				35CA7C9A2C94725900765522 /* InfoView.swift */,
 			);
 			path = Views;
@@ -219,13 +284,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				352B6F092C99ECB00000789D /* JobRulesEditView.swift in Sources */,
+				35447F472C9852850000C0B1 /* JobGeneralSettingsEditView.swift in Sources */,
 				35CA7C9B2C94725900765522 /* InfoView.swift in Sources */,
+				35447F512C9870F80000C0B1 /* JobEditMode.swift in Sources */,
 				35CA7C8F2C94710F00765522 /* AppDelegate.swift in Sources */,
-				35CA7C992C94724600765522 /* MainView.swift in Sources */,
+				35CA7C992C94724600765522 /* JobsView.swift in Sources */,
+				352B6F072C99D69D0000789D /* JobSettingsView.swift in Sources */,
 				35CA7C9D2C94743100765522 /* AppState.swift in Sources */,
+				352B6F032C99BD1D0000789D /* ServiceBase.swift in Sources */,
 				35CA7C782C946D9000765522 /* MediaOrganizerApp.swift in Sources */,
+				35447F562C98C0580000C0B1 /* CheckToggleStyle.swift in Sources */,
 				35CA7C8D2C94708500765522 /* Constants.swift in Sources */,
 				35CA7C952C9471DA00765522 /* IsHiddenModifier.swift in Sources */,
+				35447F4C2C985CA00000C0B1 /* JobsToolbarView.swift in Sources */,
+				35447F4A2C985A890000C0B1 /* FolderContainerView.swift in Sources */,
+				35447F4F2C98618C0000C0B1 /* ViewHelper.swift in Sources */,
+				352B6F012C99BCF80000789D /* JobService.swift in Sources */,
+				35447F452C9848AA0000C0B1 /* Job.swift in Sources */,
 				35CA7C9F2C94855B00765522 /* FolderType.swift in Sources */,
 				35CA7C972C94720C00765522 /* ViewExtensions.swift in Sources */,
 				35CA7C912C94715900765522 /* Settable.swift in Sources */,
