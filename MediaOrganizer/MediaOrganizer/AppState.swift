@@ -18,9 +18,15 @@ class AppState : ObservableObject {
 extension AppState {
     struct Current : Equatable {
         var job: Job? = nil
+        var rule: Rule? = nil
+        var condition: Condition? = nil
+        var action: Action? = nil
         
         static func == (lhs: Current, rhs: Current) -> Bool {
             let result = lhs.job == rhs.job
+                && lhs.rule == rhs.rule
+                && lhs.condition == rhs.condition
+                && lhs.action == rhs.action
             
             return result
         }

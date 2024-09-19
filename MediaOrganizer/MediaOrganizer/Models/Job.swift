@@ -13,6 +13,7 @@ class Job : Codable, Identifiable, Equatable {
     var name: String
     var sourceFolder: String
     var outputFolder: String
+    var rules: [Rule] = [Rule]()
     
     init(name: String,
         sourceFolder: String,
@@ -21,10 +22,6 @@ class Job : Codable, Identifiable, Equatable {
         self.name = name
         self.sourceFolder = sourceFolder
         self.outputFolder = outputFolder
-    }
-    
-    func check(isChecked: Bool) {
-        self.checked = isChecked
     }
     
     static func makeDefault() -> Job {

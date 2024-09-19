@@ -15,29 +15,28 @@ class JobService: ServiceBase {
     }
     
     func addJob() {
-        guard appState.current.job != nil && appState.current.job != Job.makeDefault() else { return }
+        guard doesCurrentJobExist()
+                && appState.current.job != Job.makeDefault()
+                && getJobIndexByJobId(jobId: appState.current.job!.id) == nil
+        else { return }
         
         appState.userData.jobs.append(appState.current.job!)
     }
     
     func updateJob() {
-        guard appState.current.job != nil else { return }
+        guard doesCurrentJobExist() else { return }
         
-        if let jobId = appState.userData.jobs.firstIndex(where: {$0.id == appState.current.job!.id}) {
-            appState.userData.jobs[jobId] = appState.current.job!
+        if let jobIndex = getJobIndexByJobId(jobId: getCurrentJobId()!) {
+            appState.userData.jobs[jobIndex] = appState.current.job!
         }
     }
     
     func toggleJob(jobId: UUID, checked: Bool) {
-        if let jobIndex = appState.userData.jobs.firstIndex(where: {$0.id == jobId}) {
+        if let jobIndex = getJobIndexByJobId(jobId: jobId) {
             let job = appState.userData.jobs[jobIndex]
             job.checked = checked
             appState.userData.jobs[jobIndex] = job
         }
-    }
-    
-    func doesCurrentJobExist() -> Bool {
-        appState.current.job != nil
     }
     
     func isCurrentJob(jobId: UUID) -> Bool {
@@ -55,7 +54,7 @@ class JobService: ServiceBase {
     func removeCurrentJob() {
         guard appState.current.job != nil else { return }
         
-        if let jobIndex = appState.userData.jobs.firstIndex(where: {$0.id == appState.current.job!.id}) {
+        if let jobIndex = getJobIndexByJobId(jobId: getCurrentJobId()!) {
             appState.userData.jobs.remove(at: jobIndex)
             resetCurrentJob()
         }

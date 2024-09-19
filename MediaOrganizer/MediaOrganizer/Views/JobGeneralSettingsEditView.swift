@@ -25,7 +25,7 @@ struct JobGeneralSettingsEditView: FolderContainerView {
                 }
                 VStack(alignment: .leading, spacing: 12) {
                     TextField(Constants.hintJobName, text: $jobName)
-                        .frame(width: 150)
+                        .frame(width: 250)
                         .onChange(of: jobName) {
                             guard appState.current.job != nil else { return }
                             appState.current.job!.name = jobName

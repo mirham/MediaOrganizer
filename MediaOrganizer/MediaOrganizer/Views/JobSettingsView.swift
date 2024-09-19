@@ -22,9 +22,9 @@ struct JobSettingsView : View {
                 .tabItem {
                     Text(Constants.elGeneral)
                 }
-            JobRulesEditView()
+            RulesEditView()
                 .tabItem {
-                    Text(Constants.elActionsAndRules)
+                    Text(Constants.elRulesAndActions)
                 }
         }
         .onAppear(perform: {

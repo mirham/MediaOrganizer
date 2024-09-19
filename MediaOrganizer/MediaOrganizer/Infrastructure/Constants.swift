@@ -32,25 +32,35 @@ struct Constants {
     static let iconSettings = "gearshape.2"
     static let iconCheckmark = "checkmark.circle.fill"
     static let iconCircle = "circle"
+    static let iconArrowDown = "arrow.down.circle.fill"
+    
+    // MARK: Colors
+    static let colorHexSelection = "#244EC9"
+    static let colorHexPanelDark = "#313131"
     
     // MARK: Element names
     static let elInfo = "Info"
     static let elJobSettings = "Job settings"
     static let elGeneral = "General"
-    static let elActionsAndRules = "Actions and rules"
+    static let elRulesAndActions = "Rules and actions"
     static let elAddJob = "Add job"
     static let elEditJob = "Edit job"
     static let elChoose = "Choose..."
     static let elJobName = "Job name"
+    static let elConditions = "Conditions"
+    static let elActions = "Actions"
+    static let elNoConditions = "No conditions"
+    static let elNoActions = "No actions"
     
     // MARK: Masks
     static let maskSource =  "Source: %1$@"
     static let maskOutput =  "Output: %1$@"
     
-    // MARK: Toolbar
+    // MARK: Toolbars
     static let toolbarAddJob = "Add job"
     static let toolbarRemoveJob = "Remove job"
-    static let toolbarJobSettings = "Job Settings"
+    static let toolbarAddRule = "Add rule"
+    static let toolbarRemoveRule = "Remove rule"
     
     // MARK: Stubs
     static let stubNotSelected = "not selected yet"
@@ -65,6 +75,8 @@ struct Constants {
     // MARK: Dialogs
     static let dialogHeaderRemoveJob = "Delete job '%1$@'"
     static let dialogBodyRemoveJob = "This operation cannot be undone. The folders will be preserved."
+    static let dialogHeaderRemoveRule = "Delete rule"
+    static let dialogBodyRemoveRule = "This operation cannot be undone."
     static let dialogButtonDelete = "Remove"
     static let dialogButtonCancel = "Cancel"
     

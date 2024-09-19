@@ -47,7 +47,7 @@ struct JobsView: FolderContainerView {
                     Spacer()
                 }
                 .contentShape(Rectangle())
-                .background(jobService.isCurrentJob(jobId: job.id) ? Color.accentColor : .clear)
+                .background(jobService.isCurrentJob(jobId: job.id) ? Color(hex: Constants.colorHexSelection) : .clear)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
                 .padding(.leading, 10)
                 .padding(.trailing, 10)
@@ -61,10 +61,10 @@ struct JobsView: FolderContainerView {
             }
         }
         .onTapGesture {
-            jobService.resetCurrentJob()
+            jobScrollViewClickHandler()
         }
         .toolbar(content: {
-            ToolbarView()
+            JobsToolbarView()
                 .padding(.leading)
         })
         .onAppear() {
@@ -76,6 +76,12 @@ struct JobsView: FolderContainerView {
     }
     
     // MARK: Private functions
+    
+    private func jobScrollViewClickHandler () {
+        guard !appState.views.isJobSettingsViewShown else { return }
+        
+        jobService.resetCurrentJob()
+    }
     
     private func jobItemClickHandler (job : Job) {
         guard !appState.views.isJobSettingsViewShown else { return }

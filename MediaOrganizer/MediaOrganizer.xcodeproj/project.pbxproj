@@ -7,10 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		351514052C9B1105000E4CAB /* Condition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351514042C9B1105000E4CAB /* Condition.swift */; };
+		351514072C9B18B4000E4CAB /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351514062C9B18B4000E4CAB /* ColorExtensions.swift */; };
+		351514092C9B1A30000E4CAB /* RulesToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351514082C9B1A30000E4CAB /* RulesToolbarView.swift */; };
+		3515140B2C9B1D4F000E4CAB /* RuleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3515140A2C9B1D4F000E4CAB /* RuleService.swift */; };
+		3515140E2C9C0744000E4CAB /* DividerWithImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3515140D2C9C0744000E4CAB /* DividerWithImage.swift */; };
+		351514102C9C1BDB000E4CAB /* ActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3515140F2C9C1BDB000E4CAB /* ActionView.swift */; };
+		3526858D2C9C3D0900F958E8 /* ActionEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3526858C2C9C3D0900F958E8 /* ActionEditView.swift */; };
 		352B6F012C99BCF80000789D /* JobService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B6F002C99BCF70000789D /* JobService.swift */; };
 		352B6F032C99BD1D0000789D /* ServiceBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B6F022C99BD1C0000789D /* ServiceBase.swift */; };
 		352B6F072C99D69D0000789D /* JobSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B6F062C99D69D0000789D /* JobSettingsView.swift */; };
-		352B6F092C99ECB00000789D /* JobRulesEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B6F082C99ECB00000789D /* JobRulesEditView.swift */; };
+		352B6F092C99ECB00000789D /* RulesEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B6F082C99ECB00000789D /* RulesEditView.swift */; };
+		352B6F0B2C9A0BAC0000789D /* ConditionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B6F0A2C9A0BAC0000789D /* ConditionType.swift */; };
+		352B6F0D2C9A0D9E0000789D /* MetadataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B6F0C2C9A0D9E0000789D /* MetadataType.swift */; };
+		352B6F0F2C9A13C20000789D /* ActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B6F0E2C9A13C20000789D /* ActionType.swift */; };
+		352B6F112C9A160A0000789D /* Rule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B6F102C9A160A0000789D /* Rule.swift */; };
+		352B6F132C9A19D10000789D /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B6F122C9A19D10000789D /* Action.swift */; };
 		35447F452C9848AA0000C0B1 /* Job.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35447F442C9848AA0000C0B1 /* Job.swift */; };
 		35447F472C9852850000C0B1 /* JobGeneralSettingsEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35447F462C9852850000C0B1 /* JobGeneralSettingsEditView.swift */; };
 		35447F4A2C985A890000C0B1 /* FolderContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35447F492C985A890000C0B1 /* FolderContainerView.swift */; };
@@ -33,10 +45,22 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		351514042C9B1105000E4CAB /* Condition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Condition.swift; sourceTree = "<group>"; };
+		351514062C9B18B4000E4CAB /* ColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
+		351514082C9B1A30000E4CAB /* RulesToolbarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RulesToolbarView.swift; sourceTree = "<group>"; };
+		3515140A2C9B1D4F000E4CAB /* RuleService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RuleService.swift; sourceTree = "<group>"; };
+		3515140D2C9C0744000E4CAB /* DividerWithImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DividerWithImage.swift; sourceTree = "<group>"; };
+		3515140F2C9C1BDB000E4CAB /* ActionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionView.swift; sourceTree = "<group>"; };
+		3526858C2C9C3D0900F958E8 /* ActionEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionEditView.swift; sourceTree = "<group>"; };
 		352B6F002C99BCF70000789D /* JobService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobService.swift; sourceTree = "<group>"; };
 		352B6F022C99BD1C0000789D /* ServiceBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceBase.swift; sourceTree = "<group>"; };
 		352B6F062C99D69D0000789D /* JobSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobSettingsView.swift; sourceTree = "<group>"; };
-		352B6F082C99ECB00000789D /* JobRulesEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobRulesEditView.swift; sourceTree = "<group>"; };
+		352B6F082C99ECB00000789D /* RulesEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesEditView.swift; sourceTree = "<group>"; };
+		352B6F0A2C9A0BAC0000789D /* ConditionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConditionType.swift; sourceTree = "<group>"; };
+		352B6F0C2C9A0D9E0000789D /* MetadataType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetadataType.swift; sourceTree = "<group>"; };
+		352B6F0E2C9A13C20000789D /* ActionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionType.swift; sourceTree = "<group>"; };
+		352B6F102C9A160A0000789D /* Rule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rule.swift; sourceTree = "<group>"; };
+		352B6F122C9A19D10000789D /* Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
 		35447F442C9848AA0000C0B1 /* Job.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Job.swift; sourceTree = "<group>"; };
 		35447F462C9852850000C0B1 /* JobGeneralSettingsEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobGeneralSettingsEditView.swift; sourceTree = "<group>"; };
 		35447F492C985A890000C0B1 /* FolderContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderContainerView.swift; sourceTree = "<group>"; };
@@ -71,10 +95,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3515140C2C9C0725000E4CAB /* Controls */ = {
+			isa = PBXGroup;
+			children = (
+				3515140D2C9C0744000E4CAB /* DividerWithImage.swift */,
+			);
+			path = Controls;
+			sourceTree = "<group>";
+		};
 		35447F432C9848630000C0B1 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				35447F442C9848AA0000C0B1 /* Job.swift */,
+				351514042C9B1105000E4CAB /* Condition.swift */,
+				352B6F122C9A19D10000789D /* Action.swift */,
+				352B6F102C9A160A0000789D /* Rule.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -167,6 +202,9 @@
 			children = (
 				35CA7C9E2C94855B00765522 /* FolderType.swift */,
 				35447F502C9870F80000C0B1 /* JobEditMode.swift */,
+				352B6F0A2C9A0BAC0000789D /* ConditionType.swift */,
+				352B6F0E2C9A13C20000789D /* ActionType.swift */,
+				352B6F0C2C9A0D9E0000789D /* MetadataType.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -176,6 +214,7 @@
 			children = (
 				352B6F022C99BD1C0000789D /* ServiceBase.swift */,
 				352B6F002C99BCF70000789D /* JobService.swift */,
+				3515140A2C9B1D4F000E4CAB /* RuleService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -183,6 +222,7 @@
 		35CA7C8B2C94705500765522 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				3515140C2C9C0725000E4CAB /* Controls */,
 				35447F522C9877B20000C0B1 /* Styles */,
 				35447F4D2C9861750000C0B1 /* Heplers */,
 				35447F482C985A670000C0B1 /* Protocols */,
@@ -192,7 +232,10 @@
 				35447F4B2C985CA00000C0B1 /* JobsToolbarView.swift */,
 				352B6F062C99D69D0000789D /* JobSettingsView.swift */,
 				35447F462C9852850000C0B1 /* JobGeneralSettingsEditView.swift */,
-				352B6F082C99ECB00000789D /* JobRulesEditView.swift */,
+				352B6F082C99ECB00000789D /* RulesEditView.swift */,
+				351514082C9B1A30000E4CAB /* RulesToolbarView.swift */,
+				3515140F2C9C1BDB000E4CAB /* ActionView.swift */,
+				3526858C2C9C3D0900F958E8 /* ActionEditView.swift */,
 				35CA7C9A2C94725900765522 /* InfoView.swift */,
 			);
 			path = Views;
@@ -209,6 +252,7 @@
 		35CA7C932C9471B800765522 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				351514062C9B18B4000E4CAB /* ColorExtensions.swift */,
 				35CA7C962C94720C00765522 /* ViewExtensions.swift */,
 			);
 			path = Extensions;
@@ -242,7 +286,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1540;
-				LastUpgradeCheck = 1540;
+				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					35CA7C732C946D9000765522 = {
 						CreatedOnToolsVersion = 15.4;
@@ -284,27 +328,39 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				352B6F092C99ECB00000789D /* JobRulesEditView.swift in Sources */,
+				352B6F092C99ECB00000789D /* RulesEditView.swift in Sources */,
+				351514052C9B1105000E4CAB /* Condition.swift in Sources */,
+				352B6F132C9A19D10000789D /* Action.swift in Sources */,
 				35447F472C9852850000C0B1 /* JobGeneralSettingsEditView.swift in Sources */,
 				35CA7C9B2C94725900765522 /* InfoView.swift in Sources */,
 				35447F512C9870F80000C0B1 /* JobEditMode.swift in Sources */,
+				351514092C9B1A30000E4CAB /* RulesToolbarView.swift in Sources */,
+				3526858D2C9C3D0900F958E8 /* ActionEditView.swift in Sources */,
 				35CA7C8F2C94710F00765522 /* AppDelegate.swift in Sources */,
 				35CA7C992C94724600765522 /* JobsView.swift in Sources */,
+				3515140E2C9C0744000E4CAB /* DividerWithImage.swift in Sources */,
+				352B6F112C9A160A0000789D /* Rule.swift in Sources */,
 				352B6F072C99D69D0000789D /* JobSettingsView.swift in Sources */,
 				35CA7C9D2C94743100765522 /* AppState.swift in Sources */,
 				352B6F032C99BD1D0000789D /* ServiceBase.swift in Sources */,
+				351514102C9C1BDB000E4CAB /* ActionView.swift in Sources */,
 				35CA7C782C946D9000765522 /* MediaOrganizerApp.swift in Sources */,
 				35447F562C98C0580000C0B1 /* CheckToggleStyle.swift in Sources */,
+				3515140B2C9B1D4F000E4CAB /* RuleService.swift in Sources */,
 				35CA7C8D2C94708500765522 /* Constants.swift in Sources */,
+				352B6F0D2C9A0D9E0000789D /* MetadataType.swift in Sources */,
 				35CA7C952C9471DA00765522 /* IsHiddenModifier.swift in Sources */,
 				35447F4C2C985CA00000C0B1 /* JobsToolbarView.swift in Sources */,
 				35447F4A2C985A890000C0B1 /* FolderContainerView.swift in Sources */,
 				35447F4F2C98618C0000C0B1 /* ViewHelper.swift in Sources */,
 				352B6F012C99BCF80000789D /* JobService.swift in Sources */,
 				35447F452C9848AA0000C0B1 /* Job.swift in Sources */,
+				352B6F0F2C9A13C20000789D /* ActionType.swift in Sources */,
 				35CA7C9F2C94855B00765522 /* FolderType.swift in Sources */,
+				352B6F0B2C9A0BAC0000789D /* ConditionType.swift in Sources */,
 				35CA7C972C94720C00765522 /* ViewExtensions.swift in Sources */,
 				35CA7C912C94715900765522 /* Settable.swift in Sources */,
+				351514072C9B18B4000E4CAB /* ColorExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,6 +401,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -408,6 +465,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -438,6 +496,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"MediaOrganizer/Preview Content\"";
 				DEVELOPMENT_TEAM = N6M7ZCZ5Z6;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -467,6 +526,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"MediaOrganizer/Preview Content\"";
 				DEVELOPMENT_TEAM = N6M7ZCZ5Z6;
 				ENABLE_HARDENED_RUNTIME = YES;

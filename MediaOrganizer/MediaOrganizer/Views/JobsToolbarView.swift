@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ToolbarView : View {
+struct JobsToolbarView : View {
     @EnvironmentObject var appState: AppState
     
     @Environment(\.openWindow) private var openWindow
@@ -19,7 +19,6 @@ struct ToolbarView : View {
     
     @State private var showOverAddJob = false
     @State private var showOverRemoveJob = false
-    @State private var showOverJobSettings = false
     
     var body: some View {
         Section {
@@ -27,7 +26,7 @@ struct ToolbarView : View {
                 jobService.resetCurrentJob()
                 showJobSettingsWindow()
             }
-            .withToolbarButtonStyle(showOver: showOverAddJob, activeState: controlActiveState)
+            .withToolbarButtonStyle(showOver: showOverAddJob, activeState: controlActiveState, color: .green)
             .popover(isPresented: $showOverAddJob, content: {
                 renderHint(hint: Constants.toolbarAddJob)
             })
@@ -37,7 +36,7 @@ struct ToolbarView : View {
             Button(Constants.toolbarRemoveJob, systemImage: Constants.iconRemove) {
                 isJobRemoving = true
             }
-            .withToolbarButtonStyle(showOver: showOverRemoveJob, activeState: controlActiveState)
+            .withToolbarButtonStyle(showOver: showOverRemoveJob, activeState: controlActiveState, color: .red)
             .disabled(!jobService.doesCurrentJobExist())
             .popover(isPresented: $showOverRemoveJob, content: {
                 renderHint(hint: Constants.toolbarRemoveJob)
@@ -81,10 +80,9 @@ struct ToolbarView : View {
 }
 
 private extension Button {
-    func withToolbarButtonStyle(showOver: Bool, activeState: ControlActiveState) -> some View {
+    func withToolbarButtonStyle(showOver: Bool, activeState: ControlActiveState, color: Color) -> some View {
         self.buttonStyle(.plain)
-            .foregroundColor(showOver && activeState == .key ? .blue : .gray)
-            .bold(showOver)
+            .foregroundColor(showOver && activeState == .key ? color : .gray)
             .focusEffectDisabled()
             .font(.system(size: 17))
             .opacity(getViewOpacity(state: activeState))
@@ -92,5 +90,5 @@ private extension Button {
 }
 
 #Preview {
-    ToolbarView().environmentObject(AppState())
+    JobsToolbarView().environmentObject(AppState())
 }
