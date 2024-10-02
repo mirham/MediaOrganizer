@@ -14,6 +14,8 @@ struct ActionView: View {
     
     @State private var showEditor: Bool = false
     
+    private let ruleService = RuleService.shared
+    
     private var action: Action
     
     init(action: Action) {
@@ -22,26 +24,28 @@ struct ActionView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text(action.description())
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .contentShape(Rectangle())
-                .padding(5)
-                .onTapGesture(count: 2) {
-                    actionClickHandler()
-                    actionDoubleClickHandler()
-                }
-                .onTapGesture {
-                    actionClickHandler()
-                }
-                .isHidden(hidden: showEditor, remove: true)
-            ActionEditView()
-                .padding(.leading, -15)
-                .padding(5)
-                .onDisappear() {
-                    showEditor = false
-                }
-                .frame(maxWidth: .infinity)
-                .isHidden(hidden: !showEditor || !isActionSelected(), remove: true )
+            HStack {
+                Text(action.description())
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .contentShape(Rectangle())
+                    .padding(5)
+                    .onTapGesture(count: 2) {
+                        actionClickHandler()
+                        actionDoubleClickHandler()
+                    }
+                    .onTapGesture {
+                        actionClickHandler()
+                    }
+                    .isHidden(hidden: showEditor, remove: true)
+                ActionEditView()
+                    .padding(.leading, -15)
+                    .padding(5)
+                    .onDisappear() {
+                        showEditor = false
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .isHidden(hidden: !showEditor || !isActionSelected(), remove: true )
+            }
         }
     }
     
@@ -53,6 +57,10 @@ struct ActionView: View {
     
     private func actionDoubleClickHandler () {
         showEditor = true
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.02) {
+            appState.current.isActionInEditMode = true
+        }
     }
     
     private func isActionSelected() -> Bool {

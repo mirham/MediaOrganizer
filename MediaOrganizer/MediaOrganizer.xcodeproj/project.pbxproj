@@ -30,6 +30,8 @@
 		35447F4F2C98618C0000C0B1 /* ViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35447F4E2C98618C0000C0B1 /* ViewHelper.swift */; };
 		35447F512C9870F80000C0B1 /* JobEditMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35447F502C9870F80000C0B1 /* JobEditMode.swift */; };
 		35447F562C98C0580000C0B1 /* CheckToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35447F552C98C0580000C0B1 /* CheckToggleStyle.swift */; };
+		35B1B14D2C9C77F700B39FFC /* DraggableElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B1B14C2C9C77F700B39FFC /* DraggableElement.swift */; };
+		35B1B1502C9CA33500B39FFC /* WrappingHStack in Frameworks */ = {isa = PBXBuildFile; productRef = 35B1B14F2C9CA33500B39FFC /* WrappingHStack */; };
 		35CA7C782C946D9000765522 /* MediaOrganizerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CA7C772C946D9000765522 /* MediaOrganizerApp.swift */; };
 		35CA7C7C2C946D9300765522 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35CA7C7B2C946D9300765522 /* Assets.xcassets */; };
 		35CA7C7F2C946D9300765522 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35CA7C7E2C946D9300765522 /* Preview Assets.xcassets */; };
@@ -42,6 +44,14 @@
 		35CA7C9B2C94725900765522 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CA7C9A2C94725900765522 /* InfoView.swift */; };
 		35CA7C9D2C94743100765522 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CA7C9C2C94743100765522 /* AppState.swift */; };
 		35CA7C9F2C94855B00765522 /* FolderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CA7C9E2C94855B00765522 /* FolderType.swift */; };
+		35DF88302CAB0095007626CB /* DropViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DF882F2CAB0095007626CB /* DropViewDelegate.swift */; };
+		35DF88342CAB270B007626CB /* DraggableSourceElementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DF88332CAB270B007626CB /* DraggableSourceElementsView.swift */; };
+		35DF883A2CAB2FB2007626CB /* ElementType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DF88392CAB2FB2007626CB /* ElementType.swift */; };
+		35DF883F2CABDCEC007626CB /* ElementValueType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DF883E2CABDCEC007626CB /* ElementValueType.swift */; };
+		35DF88412CABE194007626CB /* ElementInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DF88402CABE194007626CB /* ElementInfo.swift */; };
+		35DF88432CAC1174007626CB /* ElementHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DF88422CAC1174007626CB /* ElementHelper.swift */; };
+		35DF88492CAC6E07007626CB /* DraggableConditionElementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DF88482CAC6E07007626CB /* DraggableConditionElementsView.swift */; };
+		35DF884B2CAD6997007626CB /* ActionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DF884A2CAD6997007626CB /* ActionService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +78,7 @@
 		35447F4E2C98618C0000C0B1 /* ViewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewHelper.swift; sourceTree = "<group>"; };
 		35447F502C9870F80000C0B1 /* JobEditMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobEditMode.swift; sourceTree = "<group>"; };
 		35447F552C98C0580000C0B1 /* CheckToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckToggleStyle.swift; sourceTree = "<group>"; };
+		35B1B14C2C9C77F700B39FFC /* DraggableElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableElement.swift; sourceTree = "<group>"; };
 		35CA7C742C946D9000765522 /* MediaOrganizer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MediaOrganizer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35CA7C772C946D9000765522 /* MediaOrganizerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaOrganizerApp.swift; sourceTree = "<group>"; };
 		35CA7C7B2C946D9300765522 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -82,6 +93,14 @@
 		35CA7C9A2C94725900765522 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		35CA7C9C2C94743100765522 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		35CA7C9E2C94855B00765522 /* FolderType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderType.swift; sourceTree = "<group>"; };
+		35DF882F2CAB0095007626CB /* DropViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropViewDelegate.swift; sourceTree = "<group>"; };
+		35DF88332CAB270B007626CB /* DraggableSourceElementsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableSourceElementsView.swift; sourceTree = "<group>"; };
+		35DF88392CAB2FB2007626CB /* ElementType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementType.swift; sourceTree = "<group>"; };
+		35DF883E2CABDCEC007626CB /* ElementValueType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementValueType.swift; sourceTree = "<group>"; };
+		35DF88402CABE194007626CB /* ElementInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementInfo.swift; sourceTree = "<group>"; };
+		35DF88422CAC1174007626CB /* ElementHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementHelper.swift; sourceTree = "<group>"; };
+		35DF88482CAC6E07007626CB /* DraggableConditionElementsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableConditionElementsView.swift; sourceTree = "<group>"; };
+		35DF884A2CAD6997007626CB /* ActionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +108,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				35B1B1502C9CA33500B39FFC /* WrappingHStack in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,6 +118,7 @@
 		3515140C2C9C0725000E4CAB /* Controls */ = {
 			isa = PBXGroup;
 			children = (
+				35B1B14C2C9C77F700B39FFC /* DraggableElement.swift */,
 				3515140D2C9C0744000E4CAB /* DividerWithImage.swift */,
 			);
 			path = Controls;
@@ -110,6 +131,7 @@
 				351514042C9B1105000E4CAB /* Condition.swift */,
 				352B6F122C9A19D10000789D /* Action.swift */,
 				352B6F102C9A160A0000789D /* Rule.swift */,
+				35DF88402CABE194007626CB /* ElementInfo.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -126,6 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				35447F4E2C98618C0000C0B1 /* ViewHelper.swift */,
+				35DF88422CAC1174007626CB /* ElementHelper.swift */,
 			);
 			path = Heplers;
 			sourceTree = "<group>";
@@ -204,6 +227,8 @@
 				35447F502C9870F80000C0B1 /* JobEditMode.swift */,
 				352B6F0A2C9A0BAC0000789D /* ConditionType.swift */,
 				352B6F0E2C9A13C20000789D /* ActionType.swift */,
+				35DF883E2CABDCEC007626CB /* ElementValueType.swift */,
+				35DF88392CAB2FB2007626CB /* ElementType.swift */,
 				352B6F0C2C9A0D9E0000789D /* MetadataType.swift */,
 			);
 			path = Enums;
@@ -215,6 +240,7 @@
 				352B6F022C99BD1C0000789D /* ServiceBase.swift */,
 				352B6F002C99BCF70000789D /* JobService.swift */,
 				3515140A2C9B1D4F000E4CAB /* RuleService.swift */,
+				35DF884A2CAD6997007626CB /* ActionService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -222,6 +248,7 @@
 		35CA7C8B2C94705500765522 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				35DF882E2CAB005B007626CB /* Delegates */,
 				3515140C2C9C0725000E4CAB /* Controls */,
 				35447F522C9877B20000C0B1 /* Styles */,
 				35447F4D2C9861750000C0B1 /* Heplers */,
@@ -236,6 +263,8 @@
 				351514082C9B1A30000E4CAB /* RulesToolbarView.swift */,
 				3515140F2C9C1BDB000E4CAB /* ActionView.swift */,
 				3526858C2C9C3D0900F958E8 /* ActionEditView.swift */,
+				35DF88332CAB270B007626CB /* DraggableSourceElementsView.swift */,
+				35DF88482CAC6E07007626CB /* DraggableConditionElementsView.swift */,
 				35CA7C9A2C94725900765522 /* InfoView.swift */,
 			);
 			path = Views;
@@ -256,6 +285,14 @@
 				35CA7C962C94720C00765522 /* ViewExtensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		35DF882E2CAB005B007626CB /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				35DF882F2CAB0095007626CB /* DropViewDelegate.swift */,
+			);
+			path = Delegates;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -302,6 +339,9 @@
 				Base,
 			);
 			mainGroup = 35CA7C6B2C946D9000765522;
+			packageReferences = (
+				35B1B14E2C9CA33500B39FFC /* XCRemoteSwiftPackageReference "WrappingHStack" */,
+			);
 			productRefGroup = 35CA7C752C946D9000765522 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -333,7 +373,10 @@
 				352B6F132C9A19D10000789D /* Action.swift in Sources */,
 				35447F472C9852850000C0B1 /* JobGeneralSettingsEditView.swift in Sources */,
 				35CA7C9B2C94725900765522 /* InfoView.swift in Sources */,
+				35B1B14D2C9C77F700B39FFC /* DraggableElement.swift in Sources */,
+				35DF883A2CAB2FB2007626CB /* ElementType.swift in Sources */,
 				35447F512C9870F80000C0B1 /* JobEditMode.swift in Sources */,
+				35DF88432CAC1174007626CB /* ElementHelper.swift in Sources */,
 				351514092C9B1A30000E4CAB /* RulesToolbarView.swift in Sources */,
 				3526858D2C9C3D0900F958E8 /* ActionEditView.swift in Sources */,
 				35CA7C8F2C94710F00765522 /* AppDelegate.swift in Sources */,
@@ -346,13 +389,19 @@
 				351514102C9C1BDB000E4CAB /* ActionView.swift in Sources */,
 				35CA7C782C946D9000765522 /* MediaOrganizerApp.swift in Sources */,
 				35447F562C98C0580000C0B1 /* CheckToggleStyle.swift in Sources */,
+				35DF884B2CAD6997007626CB /* ActionService.swift in Sources */,
 				3515140B2C9B1D4F000E4CAB /* RuleService.swift in Sources */,
 				35CA7C8D2C94708500765522 /* Constants.swift in Sources */,
 				352B6F0D2C9A0D9E0000789D /* MetadataType.swift in Sources */,
+				35DF88342CAB270B007626CB /* DraggableSourceElementsView.swift in Sources */,
+				35DF883F2CABDCEC007626CB /* ElementValueType.swift in Sources */,
 				35CA7C952C9471DA00765522 /* IsHiddenModifier.swift in Sources */,
+				35DF88302CAB0095007626CB /* DropViewDelegate.swift in Sources */,
 				35447F4C2C985CA00000C0B1 /* JobsToolbarView.swift in Sources */,
 				35447F4A2C985A890000C0B1 /* FolderContainerView.swift in Sources */,
 				35447F4F2C98618C0000C0B1 /* ViewHelper.swift in Sources */,
+				35DF88492CAC6E07007626CB /* DraggableConditionElementsView.swift in Sources */,
+				35DF88412CABE194007626CB /* ElementInfo.swift in Sources */,
 				352B6F012C99BCF80000789D /* JobService.swift in Sources */,
 				35447F452C9848AA0000C0B1 /* Job.swift in Sources */,
 				352B6F0F2C9A13C20000789D /* ActionType.swift in Sources */,
@@ -569,6 +618,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		35B1B14E2C9CA33500B39FFC /* XCRemoteSwiftPackageReference "WrappingHStack" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dkk/WrappingHStack";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.2.11;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		35B1B14F2C9CA33500B39FFC /* WrappingHStack */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 35B1B14E2C9CA33500B39FFC /* XCRemoteSwiftPackageReference "WrappingHStack" */;
+			productName = WrappingHStack;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 35CA7C6C2C946D9000765522 /* Project object */;
 }

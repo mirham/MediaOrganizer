@@ -16,6 +16,7 @@ struct Constants {
     static let minPercentage: Double = 0
     static let maxPercentage: Double = 100
     static let defaultJobName = "New job"
+    static let dragAndDropTimeToleranceInSeconds: Int = 1
     
     // MARK: Settings key names
     static let settingsKeyJobs = "jobs"
@@ -33,10 +34,14 @@ struct Constants {
     static let iconCheckmark = "checkmark.circle.fill"
     static let iconCircle = "circle"
     static let iconArrowDown = "arrow.down.circle.fill"
+    static let iconFile = "doc.fill"
     
     // MARK: Colors
     static let colorHexSelection = "#244EC9"
     static let colorHexPanelDark = "#313131"
+    static let colorHexFileElement = "#681892"
+    static let colorHexExifElement = "#093576"
+    static let colorHexCustomElement = "#C49518"
     
     // MARK: Element names
     static let elInfo = "Info"

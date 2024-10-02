@@ -21,12 +21,14 @@ extension AppState {
         var rule: Rule? = nil
         var condition: Condition? = nil
         var action: Action? = nil
+        var isActionInEditMode = false
         
         static func == (lhs: Current, rhs: Current) -> Bool {
             let result = lhs.job == rhs.job
                 && lhs.rule == rhs.rule
                 && lhs.condition == rhs.condition
                 && lhs.action == rhs.action
+                && lhs.isActionInEditMode == rhs.isActionInEditMode
             
             return result
         }

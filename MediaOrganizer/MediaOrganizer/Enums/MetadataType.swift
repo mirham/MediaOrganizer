@@ -10,16 +10,16 @@ import Foundation
 enum MetadataType : Int, CaseIterable, Identifiable, Codable, Equatable {
     var id: Int { return self.rawValue }
     
-    case fileName = 0
-    case fileDateCreated = 1
-    case fileDateModified = 2
-    case exifDateOriginal = 3
-    case exifDateDigitilized = 4
-    case exifCameraModel = 5
-    case exifPixelXDimention = 6
-    case exifPixelYDimention = 7
-    case exifLatitude = 8
-    case exifLongitude = 9
+    case fileName = 10
+    case fileDateCreated = 11
+    case fileDateModified = 12
+    case exifDateOriginal = 13
+    case exifDateDigitilized = 14
+    case exifCameraModel = 15
+    case exifPixelXDimention = 16
+    case exifPixelYDimention = 17
+    case exifLatitude = 18
+    case exifLongitude = 19
     
     var description: String {
         switch self {
@@ -33,6 +33,21 @@ enum MetadataType : Int, CaseIterable, Identifiable, Codable, Equatable {
             case .exifPixelYDimention: return "EXIF height"
             case .exifLatitude: return "EXIF latitude"
             case .exifLongitude: return "EXIF longitude"
+        }
+    }
+    
+    var shortDescription: String {
+        switch self {
+            case .fileName: return "name"
+            case .fileDateCreated: return "date created"
+            case .fileDateModified: return "date modified"
+            case .exifDateOriginal: return "date original"
+            case .exifDateDigitilized: return "date digitilized"
+            case .exifCameraModel: return "camera model"
+            case .exifPixelXDimention: return "width"
+            case .exifPixelYDimention: return "height"
+            case .exifLatitude: return "latitude"
+            case .exifLongitude: return "longitude"
         }
     }
 }

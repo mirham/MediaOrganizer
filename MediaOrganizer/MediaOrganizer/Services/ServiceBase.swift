@@ -47,4 +47,8 @@ class ServiceBase {
         
         return result
     }
+    
+    internal func doesCurrentActionExist() -> Bool {
+        appState.current.action != nil
+    }
 }

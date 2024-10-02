@@ -34,29 +34,21 @@ struct RulesEditView: View {
                     }
                     Text(Constants.elActions)
                         .asRuleElementCaption()
-                    HStack {
+                    HStack(alignment: .bottom) {
                         Button(String(), systemImage: Constants.iconAdd) {
                             rule.actions.append(Action())
                         }
                         .withAddButtonStyle(activeState: controlActiveState)
                         .isHidden(hidden: !ruleService.isCurrentRule(ruleId: rule.id) , remove: true)
+                        .padding(.bottom, 3)
                         VStack(alignment: .leading) {
                             Text(Constants.elNoActions)
                                 .asRuleElementNone()
                                 .isHidden(hidden: isNoneElementSholuldBeHidden(rule: rule, array: rule.actions), remove: true)
                             ForEach(rule.actions, id: \.id) { action in
-                                HStack {
+                                HStack(spacing: 0) {
                                     ActionView(action: action)
                                         .frame(maxWidth: .infinity)
-                                    Spacer()
-                                    Button(String(), systemImage: Constants.iconRemove) {
-                                        if let actionIndex = rule.actions.firstIndex(where: {$0.id == action.id}) {
-                                            rule.actions.remove(at: actionIndex)
-                                            appState.objectWillChange.send()
-                                        }
-                                    }
-                                    .withRemoveButtonStyle(activeState: controlActiveState)
-                                    .isHidden(hidden: !ruleService.isCurrentRule(ruleId: rule.id) , remove: true)
                                 }
                             }
                         }
@@ -65,7 +57,7 @@ struct RulesEditView: View {
                 .padding(5)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .contentShape(Rectangle())
-                .background(ruleService.isCurrentRule(ruleId: rule.id) ? Color(hex: Constants.colorHexSelection) : .clear)
+                .background(ruleService.isCurrentRule(ruleId: rule.id) && !appState.current.isActionInEditMode ? Color(hex: Constants.colorHexSelection) : .clear)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
                 .padding(.leading, 10)
                 .padding(.trailing, 10)
@@ -92,6 +84,11 @@ struct RulesEditView: View {
     // MARK: Private functions
     
     private func ruleItemClickHandler (rule : Rule) {
+        if appState.current.rule != rule {
+            appState.current.condition = nil
+            appState.current.action = nil
+        }
+        
         appState.current.rule = rule
     }
     
