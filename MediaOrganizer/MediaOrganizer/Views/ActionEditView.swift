@@ -12,7 +12,7 @@ struct ActionEditView: View {
     
     @Environment(\.controlActiveState) private var controlActiveState
     
-    @State private var selectedActionTypeRaw = ActionType.rename.rawValue
+    @State private var selectedActionTypeId = ActionType.rename.id
     @State private var actionElements = [DraggableElement]()
     @State private var draggedItem: DraggableElement?
     
@@ -22,9 +22,9 @@ struct ActionEditView: View {
         HStack {
             VStack {
                 Picker(String(), selection: Binding(
-                    get: { appState.current.action?.type.rawValue ?? ActionType.rename.rawValue },
+                    get: { selectedActionTypeId },
                     set: {
-                        selectedActionTypeRaw = $0
+                        selectedActionTypeId = $0
                         appState.current.action!.type = ActionType(rawValue: $0) ?? .rename
                         appState.objectWillChange.send()
                     }
@@ -35,16 +35,17 @@ struct ActionEditView: View {
                 }
                 .pickerStyle(.menu)
                 DraggableConditionElementsView(
-                    selectedActionTypeRaw: $selectedActionTypeRaw,
+                    selectedActionTypeId: $selectedActionTypeId,
                     draggedItem: $draggedItem,
                     conditionElements: $actionElements)
                 DraggableSourceElementsView(
-                    selectedActionTypeRaw: $selectedActionTypeRaw,
+                    selectedActionTypeId: $selectedActionTypeId,
                     draggedItem: $draggedItem,
                     destinationElements: $actionElements)
             }
             Button(String(), systemImage: Constants.iconRemove, action: actionService.removeCurrentAction)
                 .withRemoveButtonStyle(activeState: controlActiveState)
+                .padding(.leading, 10)
         }
         .padding(.top, 5)
         .padding(.bottom, 5)
@@ -53,6 +54,7 @@ struct ActionEditView: View {
         .background(Color(hex: Constants.colorHexSelection))
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .onAppear {
+            selectedActionTypeId = appState.current.action?.type.id ?? ActionType.rename.id
             appState.current.isActionInEditMode = true
         }
         .onDisappear {

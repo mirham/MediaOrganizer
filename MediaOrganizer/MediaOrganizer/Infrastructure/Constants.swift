@@ -17,6 +17,8 @@ struct Constants {
     static let maxPercentage: Double = 100
     static let defaultJobName = "New job"
     static let dragAndDropTimeToleranceInSeconds: Int = 1
+    static let space = "   "
+    static let customTextLimit = 100
     
     // MARK: Settings key names
     static let settingsKeyJobs = "jobs"
@@ -34,6 +36,8 @@ struct Constants {
     static let iconCheckmark = "checkmark.circle.fill"
     static let iconCircle = "circle"
     static let iconArrowDown = "arrow.down.circle.fill"
+    static let iconCheck = "checkmark.circle.fill"
+    static let iconEdit = "pencil.circle.fill"
     static let iconFile = "doc.fill"
     
     // MARK: Colors
@@ -73,6 +77,7 @@ struct Constants {
     // MARK: Hints
     static let hintFolder = "Select a folder..."
     static let hintJobName = "A job name"
+    static let hintCustomText = "Custom text"
     
     // MARK: Drag and Drop
     static let ddFolder = "public.file-url"

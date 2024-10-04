@@ -2,7 +2,15 @@
 //  ElementOptions.swift
 //  MediaOrganizer
 //
-//  Created by Yuriy Russkikh on 02.10.2024.
+//  Created by UglyGeorge on 02.10.2024.
 //
 
-import Foundation
+import SwiftUI
+
+struct ElementOptions {
+    let icon: Image?
+    let background: Color
+    let valueType: ElementValueType
+    let hasFormula: Bool
+    let editable: Bool
+}

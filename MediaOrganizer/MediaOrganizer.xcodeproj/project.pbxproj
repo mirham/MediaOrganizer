@@ -52,6 +52,11 @@
 		35DF88432CAC1174007626CB /* ElementHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DF88422CAC1174007626CB /* ElementHelper.swift */; };
 		35DF88492CAC6E07007626CB /* DraggableConditionElementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DF88482CAC6E07007626CB /* DraggableConditionElementsView.swift */; };
 		35DF884B2CAD6997007626CB /* ActionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DF884A2CAD6997007626CB /* ActionService.swift */; };
+		35DF884D2CAD7EC1007626CB /* ElementOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DF884C2CAD7EC1007626CB /* ElementOptions.swift */; };
+		35DF88512CAD81C8007626CB /* ActionElementEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DF88502CAD81C8007626CB /* ActionElementEditView.swift */; };
+		35DF88532CAED3CB007626CB /* DateFormatType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DF88522CAED3CB007626CB /* DateFormatType.swift */; };
+		35DF88572CAF341F007626CB /* WrappingHStack in Frameworks */ = {isa = PBXBuildFile; productRef = 35DF88562CAF341F007626CB /* WrappingHStack */; };
+		35DF885A2CAF344C007626CB /* WrappingHStack in Frameworks */ = {isa = PBXBuildFile; productRef = 35DF88592CAF344C007626CB /* WrappingHStack */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -101,6 +106,9 @@
 		35DF88422CAC1174007626CB /* ElementHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementHelper.swift; sourceTree = "<group>"; };
 		35DF88482CAC6E07007626CB /* DraggableConditionElementsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableConditionElementsView.swift; sourceTree = "<group>"; };
 		35DF884A2CAD6997007626CB /* ActionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionService.swift; sourceTree = "<group>"; };
+		35DF884C2CAD7EC1007626CB /* ElementOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementOptions.swift; sourceTree = "<group>"; };
+		35DF88502CAD81C8007626CB /* ActionElementEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionElementEditView.swift; sourceTree = "<group>"; };
+		35DF88522CAED3CB007626CB /* DateFormatType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +116,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				35DF88572CAF341F007626CB /* WrappingHStack in Frameworks */,
+				35DF885A2CAF344C007626CB /* WrappingHStack in Frameworks */,
 				35B1B1502C9CA33500B39FFC /* WrappingHStack in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -132,6 +142,7 @@
 				352B6F122C9A19D10000789D /* Action.swift */,
 				352B6F102C9A160A0000789D /* Rule.swift */,
 				35DF88402CABE194007626CB /* ElementInfo.swift */,
+				35DF884C2CAD7EC1007626CB /* ElementOptions.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -230,6 +241,7 @@
 				35DF883E2CABDCEC007626CB /* ElementValueType.swift */,
 				35DF88392CAB2FB2007626CB /* ElementType.swift */,
 				352B6F0C2C9A0D9E0000789D /* MetadataType.swift */,
+				35DF88522CAED3CB007626CB /* DateFormatType.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -265,6 +277,7 @@
 				3526858C2C9C3D0900F958E8 /* ActionEditView.swift */,
 				35DF88332CAB270B007626CB /* DraggableSourceElementsView.swift */,
 				35DF88482CAC6E07007626CB /* DraggableConditionElementsView.swift */,
+				35DF88502CAD81C8007626CB /* ActionElementEditView.swift */,
 				35CA7C9A2C94725900765522 /* InfoView.swift */,
 			);
 			path = Views;
@@ -340,7 +353,7 @@
 			);
 			mainGroup = 35CA7C6B2C946D9000765522;
 			packageReferences = (
-				35B1B14E2C9CA33500B39FFC /* XCRemoteSwiftPackageReference "WrappingHStack" */,
+				35DF88582CAF344C007626CB /* XCRemoteSwiftPackageReference "WrappingHStack" */,
 			);
 			productRefGroup = 35CA7C752C946D9000765522 /* Products */;
 			projectDirPath = "";
@@ -369,11 +382,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				352B6F092C99ECB00000789D /* RulesEditView.swift in Sources */,
+				35DF884D2CAD7EC1007626CB /* ElementOptions.swift in Sources */,
 				351514052C9B1105000E4CAB /* Condition.swift in Sources */,
 				352B6F132C9A19D10000789D /* Action.swift in Sources */,
 				35447F472C9852850000C0B1 /* JobGeneralSettingsEditView.swift in Sources */,
 				35CA7C9B2C94725900765522 /* InfoView.swift in Sources */,
 				35B1B14D2C9C77F700B39FFC /* DraggableElement.swift in Sources */,
+				35DF88512CAD81C8007626CB /* ActionElementEditView.swift in Sources */,
 				35DF883A2CAB2FB2007626CB /* ElementType.swift in Sources */,
 				35447F512C9870F80000C0B1 /* JobEditMode.swift in Sources */,
 				35DF88432CAC1174007626CB /* ElementHelper.swift in Sources */,
@@ -404,6 +419,7 @@
 				35DF88412CABE194007626CB /* ElementInfo.swift in Sources */,
 				352B6F012C99BCF80000789D /* JobService.swift in Sources */,
 				35447F452C9848AA0000C0B1 /* Job.swift in Sources */,
+				35DF88532CAED3CB007626CB /* DateFormatType.swift in Sources */,
 				352B6F0F2C9A13C20000789D /* ActionType.swift in Sources */,
 				35CA7C9F2C94855B00765522 /* FolderType.swift in Sources */,
 				352B6F0B2C9A0BAC0000789D /* ConditionType.swift in Sources */,
@@ -628,12 +644,29 @@
 				minimumVersion = 2.2.11;
 			};
 		};
+		35DF88582CAF344C007626CB /* XCRemoteSwiftPackageReference "WrappingHStack" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ksemianov/WrappingHStack";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		35B1B14F2C9CA33500B39FFC /* WrappingHStack */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 35B1B14E2C9CA33500B39FFC /* XCRemoteSwiftPackageReference "WrappingHStack" */;
+			productName = WrappingHStack;
+		};
+		35DF88562CAF341F007626CB /* WrappingHStack */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = WrappingHStack;
+		};
+		35DF88592CAF344C007626CB /* WrappingHStack */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 35DF88582CAF344C007626CB /* XCRemoteSwiftPackageReference "WrappingHStack" */;
 			productName = WrappingHStack;
 		};
 /* End XCSwiftPackageProductDependency section */

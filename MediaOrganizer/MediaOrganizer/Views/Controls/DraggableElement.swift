@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct DraggableElement: Equatable {
+struct DraggableElement: Equatable, Identifiable {
     let id = UUID()
     let elementInfo: ElementInfo
     let dateCreated: Date

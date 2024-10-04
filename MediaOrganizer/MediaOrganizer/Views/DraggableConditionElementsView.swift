@@ -11,31 +11,29 @@ import WrappingHStack
 struct DraggableConditionElementsView: View {
     @EnvironmentObject var appState: AppState
     
-    @Binding var selectedActionTypeRaw: Int
+    @Binding var selectedActionTypeId: Int
     @Binding var draggedItem: DraggableElement?
     @Binding var conditionElements: [DraggableElement]
     
     var body: some View {
         HStack {
-            WrappingHStack(conditionElements, id: \.self, lineSpacing: 10) { conditionElement in
-                Text(conditionElement.elementInfo.displayText)
-                    .fixedSize(horizontal: false, vertical: false)
-                    .padding(3)
-                    .background(
-                        RoundedRectangle(cornerRadius: 5, style: .continuous).fill(Color.gray)
-                    )
-                    .onDrag({
-                        self.draggedItem = conditionElement
-                        return NSItemProvider(object: conditionElement.elementInfo.displayText as NSString)
-                    })
-                    .onDrop(of: [.text], delegate: DropViewDelegate(
-                        draggedItem: $draggedItem,
-                        items: $conditionElements,
-                        item: conditionElement))
+            WrappingHStack(alignment: .leading) {
+                ForEach(conditionElements, id: \.id) {conditionElement in
+                    ActionElementEditView(elementInfo: conditionElement.elementInfo)
+                        .onDrag({
+                            self.draggedItem = conditionElement
+                            return NSItemProvider(object: conditionElement.elementInfo.displayText as NSString)
+                        })
+                        .onDrop(of: [.text], delegate: DropViewDelegate(
+                            draggedItem: $draggedItem,
+                            items: $conditionElements,
+                            item: conditionElement))
+                }
             }
             .padding(5)
         }
         .asActionEditPanel()
+        .isHidden(hidden: selectedActionTypeId == ActionType.delete.id, remove: true)
         .padding(.leading, 5)
         .padding(.bottom, 10)
     }
@@ -43,7 +41,8 @@ struct DraggableConditionElementsView: View {
 
 private extension HStack {
     func asActionEditPanel() -> some View {
-        self.frame(minWidth: 350, minHeight: 30)
+        self.frame(minWidth: 400, maxWidth: .infinity, minHeight: 30)
+            .contentShape(Rectangle())
             .clipShape(
                 RoundedRectangle(
                     cornerRadius: 6

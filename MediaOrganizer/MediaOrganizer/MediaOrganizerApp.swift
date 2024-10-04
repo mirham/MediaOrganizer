@@ -31,7 +31,7 @@ struct MediaOrganizerApp: App {
             JobSettingsView()
                 .environmentObject(appState)
                 .navigationTitle(Constants.elJobSettings)
-                .frame(minWidth: 500, minHeight: 500)
+                .frame(minWidth: 560, minHeight: 500)
         }).windowResizability(.contentSize)
     }
 }

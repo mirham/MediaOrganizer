@@ -11,28 +11,30 @@ import WrappingHStack
 struct DraggableSourceElementsView: View {
     @EnvironmentObject var appState: AppState
     
-    @Binding var selectedActionTypeRaw: Int
+    @Binding var selectedActionTypeId: Int
     @Binding var draggedItem: DraggableElement?
     @Binding var destinationElements: [DraggableElement]
     
     @State private var sourceElements = [DraggableElement]()
     
     var body: some View {
-        WrappingHStack(sourceElements, id: \.self, lineSpacing: 10) { sourceElement in
-            elementAsIconAndText(elementInfo: sourceElement.elementInfo)
-                .onDrag {
-                    self.draggedItem = sourceElement
-                    return NSItemProvider(object: sourceElement.elementInfo.displayText as NSString)
-                }
-                .onDrop(of: [.text], delegate: DropViewDelegate(
-                    draggedItem: $draggedItem,
-                    items: $destinationElements,
-                    item: sourceElement
-                ))
+        WrappingHStack(alignment: .leading) {
+            ForEach(sourceElements, id: \.id) {sourceElement in
+                elementAsIconAndText(elementInfo: sourceElement.elementInfo)
+                    .onDrag {
+                        self.draggedItem = sourceElement
+                        return NSItemProvider(object: sourceElement.elementInfo.displayText as NSString)
+                    }
+                    .onDrop(of: [.text], delegate: DropViewDelegate(
+                        draggedItem: $draggedItem,
+                        items: $destinationElements,
+                        item: sourceElement
+                    ))
+            }
         }
         .padding(.leading, 10)
         .onAppear(perform: fillSourceElements)
-        .onChange(of: selectedActionTypeRaw, fillSourceElements)
+        .onChange(of: selectedActionTypeId, fillSourceElements)
     }
     
     private func fillSourceElements() {
@@ -45,9 +47,9 @@ struct DraggableSourceElementsView: View {
         
         for metadataCase in MetadataType.allCases {
             let elementInfo = ElementInfo(
-                elementTypeId: metadataCase.rawValue,
+                elementTypeId: metadataCase.id,
                 displayText: metadataCase.shortDescription,
-                settingType: ElementValueType.text)
+                settingType: ElementHelper.getElementValueTypeByTypeId(typeId: metadataCase.id))
             let actionElement = DraggableElement(elementInfo: elementInfo)
             sourceElements.append(actionElement)
         }
@@ -56,9 +58,9 @@ struct DraggableSourceElementsView: View {
         
         for elementCase in ElementType.allCases {
             let elementInfo = ElementInfo(
-                elementTypeId: elementCase.rawValue,
+                elementTypeId: elementCase.id,
                 displayText: elementCase.description,
-                settingType: ElementValueType.text)
+                settingType: ElementHelper.getElementValueTypeByTypeId(typeId: elementCase.id))
             optionalElements.append(elementInfo)
         }
         
@@ -73,7 +75,6 @@ struct DraggableSourceElementsView: View {
                     let actionElement = DraggableElement(elementInfo: optionalElement)
                     sourceElements.append(actionElement)
                 }
-                
             case .delete:
                 return
         }
@@ -86,21 +87,19 @@ struct DraggableSourceElementsView: View {
         let label = elementInfo.displayText
         let options = ElementHelper.getElementOptionsByTypeId(typeId: elementInfo.elementTypeId)
         
-        if(options != nil) {
-            HStack {
-                if options!.icon != nil {
-                    options!.icon!
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 20, height: 20)
-                }
-                Text(label)
+        HStack {
+            if options.icon != nil {
+                options.icon!
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 20, height: 20)
             }
-            .padding(3)
-            .background(
-                RoundedRectangle(cornerRadius: 5, style: .continuous).fill(options!.backgound)
-            )
+            Text(label)
         }
+        .padding(3)
+        .background(
+            RoundedRectangle(cornerRadius: 5, style: .continuous).fill(options.background)
+        )
     }
 }
 
