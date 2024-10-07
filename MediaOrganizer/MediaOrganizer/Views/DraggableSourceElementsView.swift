@@ -38,7 +38,6 @@ struct DraggableSourceElementsView: View {
     }
     
     private func fillSourceElements() {
-        destinationElements.removeAll()
         sourceElements.removeAll()
         
         let currentActionType = appState.current.action?.type ?? .rename

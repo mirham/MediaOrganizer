@@ -7,9 +7,10 @@
 
 import Foundation
 
-class Action : Codable, Identifiable, Equatable {
+class Action : Codable, Identifiable, Equatable, ObservableObject {
     var id = UUID()
     var type = ActionType.rename
+    var elements: [ElementInfo] = [ElementInfo]()
     
     func description() -> String {
         let result = type.description

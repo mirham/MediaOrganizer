@@ -38,41 +38,36 @@ struct ActionEditView: View {
                     selectedActionTypeId: $selectedActionTypeId,
                     draggedItem: $draggedItem,
                     conditionElements: $actionElements)
+                .onAppear {
+                    selectedActionTypeId = appState.current.action?.type.id ?? ActionType.rename.id
+                    
+                    if (appState.current.action != nil) {
+                        actionElements = appState.current.action!.elements.map({ return DraggableElement(elementInfo: $0) })
+                    }
+                }
+                .onDisappear {
+                    if (appState.current.action != nil) {
+                        appState.current.action!.elements = actionElements.map({ return $0.elementInfo })
+                        
+                        if let actionIndex = appState.current.rule!.actions.firstIndex(where: {$0.id == appState.current.action!.id}) {
+                            appState.current.rule!.actions[actionIndex].elements
+                            = appState.current.action!.elements
+                        }
+                    }
+                    appState.objectWillChange.send()
+                }
                 DraggableSourceElementsView(
                     selectedActionTypeId: $selectedActionTypeId,
                     draggedItem: $draggedItem,
                     destinationElements: $actionElements)
+                ActionPreviewView(actionElements: actionElements.map({ return $0.elementInfo }))
+                    .padding(10)
             }
-            Button(String(), systemImage: Constants.iconRemove, action: actionService.removeCurrentAction)
-                .withRemoveButtonStyle(activeState: controlActiveState)
-                .padding(.leading, 10)
         }
         .padding(.top, 5)
         .padding(.bottom, 5)
         .padding(.trailing, 5)
         .contentShape(Rectangle())
-        .background(Color(hex: Constants.colorHexSelection))
         .clipShape(RoundedRectangle(cornerRadius: 10))
-        .onAppear {
-            selectedActionTypeId = appState.current.action?.type.id ?? ActionType.rename.id
-            appState.current.isActionInEditMode = true
-        }
-        .onDisappear {
-            appState.current.isActionInEditMode = false
-        }
-    }
-}
-
-private extension Button {
-    func withRuleButtonStyle(activeState: ControlActiveState) -> some View {
-        self.buttonStyle(.plain)
-            .focusEffectDisabled()
-            .font(.system(size: 16))
-            .opacity(getViewOpacity(state: activeState))
-    }
-    
-    func withRemoveButtonStyle(activeState: ControlActiveState) -> some View {
-        self.withRuleButtonStyle(activeState: activeState)
-            .foregroundStyle(.red)
     }
 }

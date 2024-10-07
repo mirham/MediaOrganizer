@@ -33,12 +33,8 @@ struct DropViewDelegate: DropDelegate {
         let from = items.firstIndex(of: draggedItem) != nil ? items.firstIndex(of: draggedItem) : nil
         let to = items.firstIndex(of: item) != nil ? items.firstIndex(of: item)! : start
         
-        //withAnimation(.easeInOut) {
-            if(from != nil) {
-                /*sourceItems.move(
-                    fromOffsets: IndexSet(integer: from!),
-                    toOffset: to > from! ? to == start ? to : to + step : to) */
-                
+        withAnimation(.easeInOut) {
+            if(from != nil) {                
                 let from = items.firstIndex(of: draggedItem)
                 let to = items.firstIndex(of: item)
                 
@@ -46,9 +42,7 @@ struct DropViewDelegate: DropDelegate {
                     items.remove(at: from!)
                 }
                 else {
-                    withAnimation(.default) {
-                        self.items.move(fromOffsets: IndexSet(integer: from!), toOffset: to! > from! ? to! + 1 : to!)
-                    }
+                    self.items.move(fromOffsets: IndexSet(integer: from!), toOffset: to! > from! ? to! + 1 : to!)
                 }
                 
             }
@@ -57,9 +51,8 @@ struct DropViewDelegate: DropDelegate {
                     < Constants.dragAndDropTimeToleranceInSeconds })) {
                     let item = draggedItem.clone()
                     items.insert(item, at: to == start ? to : to + step)
-                    //destinationItems.removeAll(where: {$0.id == item.id})
                 }
             }
-       // }
+        }
     }
 }

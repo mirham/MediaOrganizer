@@ -14,11 +14,10 @@ struct ActionElementEditView: View {
     
     @State private var showEditor: Bool = false
     @State private var selectedTypeId: Int?
-    @State private var customText: String = String()
-    @State private var customDate: Date = Date.distantPast
+    @State private var customText: String
+    @State private var customDate: Date
     
     private var elementInfo: ElementInfo
-    private var elementOptions: ElementOptions
     
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -28,7 +27,6 @@ struct ActionElementEditView: View {
     
     init(elementInfo: ElementInfo) {
         self.elementInfo = elementInfo
-        self.elementOptions = ElementHelper.getElementOptionsByTypeId(typeId: elementInfo.elementTypeId)
         self.selectedTypeId = elementInfo.selectedTypeId ?? DateFormatType.dateEu.id
         self.customText = elementInfo.customText ?? String()
         self.customDate = elementInfo.customDate ?? Date.distantPast
@@ -44,11 +42,13 @@ struct ActionElementEditView: View {
             }
             .withEditButtonStyle(activeState: controlActiveState)
             .padding(.leading, -5)
-            .isHidden(hidden: !(elementOptions.editable || elementOptions.hasFormula), remove: true)
+            .isHidden(
+                hidden: !(elementInfo.elementOptions.editable || elementInfo.elementOptions.hasFormula),
+                remove: true)
             
         }
         .background(
-            RoundedRectangle(cornerRadius: 5, style: .continuous).fill(elementOptions.background)
+            RoundedRectangle(cornerRadius: 5, style: .continuous).fill(elementInfo.elementOptions.background)
         )
         .isHidden(hidden: showEditor, remove: true)
         renderEditor()
@@ -88,12 +88,12 @@ struct ActionElementEditView: View {
         HStack {
             Text(elementInfo.displayText)
                 .padding(.trailing, -10)
-                .isHidden(hidden: elementOptions.editable, remove: true)
+                .isHidden(hidden: elementInfo.elementOptions.editable, remove: true)
             DatePicker(String(),
                        selection: $customDate,
                        displayedComponents: [.date, .hourAndMinute])
             .datePickerStyle(.compact)
-                .isHidden(hidden: !elementOptions.editable, remove: true)
+                .isHidden(hidden: !elementInfo.elementOptions.editable, remove: true)
                 .onAppear(perform: {
                     if (customDate == Date.distantPast) {
                         customDate = Date()
@@ -118,6 +118,7 @@ struct ActionElementEditView: View {
             .frame(maxWidth: 20)
             Button(String(), systemImage: Constants.iconCheck) {
                 elementInfo.selectedTypeId = selectedTypeId
+                elementInfo.customDate = customDate
                 showEditor = false
             }
             .withRemoveButtonStyle(activeState: controlActiveState)

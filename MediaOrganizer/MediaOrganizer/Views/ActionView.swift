@@ -15,58 +15,68 @@ struct ActionView: View {
     @State private var showEditor: Bool = false
     
     private let ruleService = RuleService.shared
+    private let actionService = ActionService.shared
     
+    private var ruleId: UUID
     private var action: Action
     
-    init(action: Action) {
+    init(ruleId: UUID, action: Action) {
         self.action = action
+        self.ruleId = ruleId
     }
     
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
                 Text(action.description())
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .frame(maxWidth: 50, alignment: .leading)
                     .contentShape(Rectangle())
                     .padding(5)
-                    .onTapGesture(count: 2) {
-                        actionClickHandler()
-                        actionDoubleClickHandler()
-                    }
-                    .onTapGesture {
-                        actionClickHandler()
-                    }
                     .isHidden(hidden: showEditor, remove: true)
                 ActionEditView()
-                    .padding(.leading, -15)
                     .padding(5)
-                    .onDisappear() {
-                        showEditor = false
-                    }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .isHidden(hidden: !showEditor || !isActionSelected(), remove: true )
+                    .isHidden(hidden: !showEditor || !actionService.isCurrentAction(actionId: action.id), remove: true )
+                ActionPreviewView(actionElements: action.elements)
+                    .isHidden(hidden: showEditor, remove: true)
+                    .frame(maxWidth: .infinity,  alignment: .leading)
+                    .padding(.leading, 10)
+                    .padding(.trailing, 10)
+                    .onChange(of: action.elements, {  })
+                Button(String(), systemImage: Constants.iconEdit, action: actionEditClickHandler)
+                    .withSmallEditButtonStyle(activeState: controlActiveState)
+                    .isHidden(hidden: !ruleService.isCurrentRule(ruleId: ruleId) || appState.current.isActionInEditMode, remove: true )
+                Button(String(), systemImage: Constants.iconCheck, action: actionSaveClickHanlder)
+                    .withSmallSaveButtonStyle(activeState: controlActiveState)
+                    .isHidden(hidden: !showEditor, remove: true )
+                Button(String(), systemImage: Constants.iconRemove, action: actionRemoveClickHandler)
+                    .withSmallRemoveButtonStyle(activeState: controlActiveState)
+                    .isHidden(hidden: !ruleService.isCurrentRule(ruleId: ruleId), remove: true )
             }
+            .background(actionService.isCurrentAction(actionId: action.id) && appState.current.isActionInEditMode
+                        ? Color(hex: Constants.colorHexSelection)
+                        : .clear)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
         }
     }
     
     // MARK: Private functions
     
-    private func actionClickHandler () {
+    private func actionEditClickHandler () {
         appState.current.action = action
-    }
-    
-    private func actionDoubleClickHandler () {
+        appState.current.isActionInEditMode = true
         showEditor = true
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.02) {
-            appState.current.isActionInEditMode = true
-        }
     }
     
-    private func isActionSelected() -> Bool {
-        let result = appState.current.action != nil && appState.current.action!.id == action.id
-        
-        return result
+    private func actionSaveClickHanlder() {
+        appState.current.isActionInEditMode = false
+        showEditor = false
+    }
+    
+    private func actionRemoveClickHandler () {
+        actionService.removeActionById(actionId: action.id)
+        appState.current.isActionInEditMode = false
+        showEditor = false
     }
 }
 

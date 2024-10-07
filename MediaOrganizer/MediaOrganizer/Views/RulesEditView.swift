@@ -17,42 +17,43 @@ struct RulesEditView: View {
     var body: some View {
         ScrollView(.vertical) {
             ForEach(appState.current.job?.rules ?? [Rule](), id: \.id) { rule in
-                VStack(alignment: .leading) {
+                VStack(alignment: .center) {
                     Text(Constants.elConditions)
                         .asRuleElementCaption()
                     HStack {
-                        Button(String(), systemImage: Constants.iconAdd) {
-                            // Conditions
-                        }
-                        .withAddButtonStyle(activeState: controlActiveState)
-                        .isHidden(hidden: !ruleService.isCurrentRule(ruleId: rule.id) , remove: true)
                         VStack(alignment: .leading) {
                             Text(Constants.elNoConditions)
                                 .asRuleElementNone()
                                 .isHidden(hidden: isNoneElementSholuldBeHidden(rule: rule, array: rule.conditions), remove: true)
                         }
-                    }
-                    Text(Constants.elActions)
-                        .asRuleElementCaption()
-                    HStack(alignment: .bottom) {
                         Button(String(), systemImage: Constants.iconAdd) {
-                            rule.actions.append(Action())
+                            // TODO: Conditions
                         }
                         .withAddButtonStyle(activeState: controlActiveState)
                         .isHidden(hidden: !ruleService.isCurrentRule(ruleId: rule.id) , remove: true)
-                        .padding(.bottom, 3)
+                    }
+                    Text(Constants.elActions)
+                        .asRuleElementCaption()
+                        .padding(.top, 5)
+                    HStack(alignment: .center) {
                         VStack(alignment: .leading) {
                             Text(Constants.elNoActions)
                                 .asRuleElementNone()
                                 .isHidden(hidden: isNoneElementSholuldBeHidden(rule: rule, array: rule.actions), remove: true)
                             ForEach(rule.actions, id: \.id) { action in
                                 HStack(spacing: 0) {
-                                    ActionView(action: action)
+                                    ActionView(ruleId: rule.id, action: action)
                                         .frame(maxWidth: .infinity)
                                 }
                             }
                         }
                     }
+                    Button(String(), systemImage: Constants.iconAdd) {
+                        rule.actions.append(Action())
+                    }
+                    .withAddButtonStyle(activeState: controlActiveState)
+                    .isHidden(hidden: !ruleService.isCurrentRule(ruleId: rule.id) , remove: true)
+                    .padding(.bottom, 3)
                 }
                 .padding(5)
                 .frame(maxWidth: .infinity, alignment: .leading)

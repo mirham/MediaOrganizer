@@ -8,7 +8,7 @@
 import Foundation
 
 class ElementInfo : Codable, Equatable {
-    var id = UUID()
+    let id: UUID
     let elementTypeId: Int
     let displayText: String
     let settingType: ElementValueType?
@@ -16,7 +16,14 @@ class ElementInfo : Codable, Equatable {
     var customDate: Date?
     var customText: String?
     
+    var elementOptions: ElementOptions { get
+        {
+            return ElementHelper.getElementOptionsByTypeId(typeId: elementTypeId)
+        }
+    }
+    
     init(elementTypeId: Int, displayText: String, settingType: ElementValueType?) {
+        self.id = UUID()
         self.elementTypeId = elementTypeId
         self.displayText = displayText
         self.settingType = settingType
@@ -27,5 +34,14 @@ class ElementInfo : Codable, Equatable {
     
     static func == (lhs: ElementInfo, rhs: ElementInfo) -> Bool {
         return lhs.id == rhs.id
+    }
+    
+    func clone() -> ElementInfo {
+        let result = ElementInfo(
+            elementTypeId: self.elementTypeId,
+            displayText: self.displayText,
+            settingType: self.settingType)
+        
+        return result
     }
 }

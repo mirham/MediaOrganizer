@@ -23,6 +23,8 @@
 		352B6F0F2C9A13C20000789D /* ActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B6F0E2C9A13C20000789D /* ActionType.swift */; };
 		352B6F112C9A160A0000789D /* Rule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B6F102C9A160A0000789D /* Rule.swift */; };
 		352B6F132C9A19D10000789D /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B6F122C9A19D10000789D /* Action.swift */; };
+		352E1F5F2CB3F8DC0035C492 /* ButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352E1F5E2CB3F8DC0035C492 /* ButtonExtension.swift */; };
+		3536629F2CB162F9006FB739 /* ActionPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3536629E2CB162F9006FB739 /* ActionPreviewView.swift */; };
 		35447F452C9848AA0000C0B1 /* Job.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35447F442C9848AA0000C0B1 /* Job.swift */; };
 		35447F472C9852850000C0B1 /* JobGeneralSettingsEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35447F462C9852850000C0B1 /* JobGeneralSettingsEditView.swift */; };
 		35447F4A2C985A890000C0B1 /* FolderContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35447F492C985A890000C0B1 /* FolderContainerView.swift */; };
@@ -76,6 +78,8 @@
 		352B6F0E2C9A13C20000789D /* ActionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionType.swift; sourceTree = "<group>"; };
 		352B6F102C9A160A0000789D /* Rule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rule.swift; sourceTree = "<group>"; };
 		352B6F122C9A19D10000789D /* Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
+		352E1F5E2CB3F8DC0035C492 /* ButtonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonExtension.swift; sourceTree = "<group>"; };
+		3536629E2CB162F9006FB739 /* ActionPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionPreviewView.swift; sourceTree = "<group>"; };
 		35447F442C9848AA0000C0B1 /* Job.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Job.swift; sourceTree = "<group>"; };
 		35447F462C9852850000C0B1 /* JobGeneralSettingsEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobGeneralSettingsEditView.swift; sourceTree = "<group>"; };
 		35447F492C985A890000C0B1 /* FolderContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderContainerView.swift; sourceTree = "<group>"; };
@@ -278,6 +282,7 @@
 				35DF88332CAB270B007626CB /* DraggableSourceElementsView.swift */,
 				35DF88482CAC6E07007626CB /* DraggableConditionElementsView.swift */,
 				35DF88502CAD81C8007626CB /* ActionElementEditView.swift */,
+				3536629E2CB162F9006FB739 /* ActionPreviewView.swift */,
 				35CA7C9A2C94725900765522 /* InfoView.swift */,
 			);
 			path = Views;
@@ -296,6 +301,7 @@
 			children = (
 				351514062C9B18B4000E4CAB /* ColorExtensions.swift */,
 				35CA7C962C94720C00765522 /* ViewExtensions.swift */,
+				352E1F5E2CB3F8DC0035C492 /* ButtonExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -382,6 +388,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				352B6F092C99ECB00000789D /* RulesEditView.swift in Sources */,
+				3536629F2CB162F9006FB739 /* ActionPreviewView.swift in Sources */,
 				35DF884D2CAD7EC1007626CB /* ElementOptions.swift in Sources */,
 				351514052C9B1105000E4CAB /* Condition.swift in Sources */,
 				352B6F132C9A19D10000789D /* Action.swift in Sources */,
@@ -403,6 +410,7 @@
 				352B6F032C99BD1D0000789D /* ServiceBase.swift in Sources */,
 				351514102C9C1BDB000E4CAB /* ActionView.swift in Sources */,
 				35CA7C782C946D9000765522 /* MediaOrganizerApp.swift in Sources */,
+				352E1F5F2CB3F8DC0035C492 /* ButtonExtension.swift in Sources */,
 				35447F562C98C0580000C0B1 /* CheckToggleStyle.swift in Sources */,
 				35DF884B2CAD6997007626CB /* ActionService.swift in Sources */,
 				3515140B2C9B1D4F000E4CAB /* RuleService.swift in Sources */,

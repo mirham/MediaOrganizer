@@ -72,7 +72,7 @@ class ElementHelper {
                 icon: Image(.exificon),
                 background: Color(hex: Constants.colorHexExifElement),
                 valueType: ElementValueType.text,
-                hasFormula: true,
+                hasFormula: false,
                 editable: false),
           MetadataType.exifPixelXDimention.id :
             ElementOptions(
@@ -86,21 +86,21 @@ class ElementHelper {
                 icon: Image(.exificon),
                 background: Color(hex: Constants.colorHexExifElement),
                 valueType: ElementValueType.number,
-                hasFormula: true,
+                hasFormula: false,
                 editable: false),
           MetadataType.exifLatitude.rawValue :
             ElementOptions(
                 icon: Image(.exificon),
                 background: Color(hex: Constants.colorHexExifElement),
                 valueType: ElementValueType.number,
-                hasFormula: true,
+                hasFormula: false,
                 editable: false),
           MetadataType.exifLongitude.id :
             ElementOptions(
                 icon: Image(.exificon),
                 background: Color(hex: Constants.colorHexExifElement),
                 valueType: ElementValueType.number,
-                hasFormula: true,
+                hasFormula: false,
                 editable: false)
     ];
     

@@ -65,11 +65,11 @@ struct JobGeneralSettingsEditView: FolderContainerView {
             .frame(maxWidth: .infinity, alignment: .center)
             Spacer()
                 .frame(height: 30)
-            VStack(alignment: .leading) {
+            VStack {
                 Text(String(format: Constants.maskSource, appState.current.job?.sourceFolder ?? String()))
                 Text(String(format: Constants.maskOutput, appState.current.job?.outputFolder ?? String()))
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
+            .frame(maxWidth: .infinity, alignment: .center)
             .padding(20)
             Spacer()
         }
