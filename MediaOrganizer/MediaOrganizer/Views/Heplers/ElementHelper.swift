@@ -53,49 +53,49 @@ class ElementHelper {
                 valueType: ElementValueType.date,
                 hasFormula: true,
                 editable: false),
-          MetadataType.exifDateOriginal.id :
+          MetadataType.metadataDateOriginal.id :
             ElementOptions(
                 icon: Image(.exificon),
                 background: Color(hex: Constants.colorHexExifElement),
                 valueType: ElementValueType.date,
                 hasFormula: true,
                 editable: false),
-          MetadataType.exifDateDigitilized.id :
+          MetadataType.metadataDateDigitilized.id :
             ElementOptions(
                 icon: Image(.exificon),
                 background: Color(hex: Constants.colorHexExifElement),
                 valueType: ElementValueType.date,
                 hasFormula: true,
                 editable: false),
-          MetadataType.exifCameraModel.id :
+          MetadataType.metadataCameraModel.id :
             ElementOptions(
                 icon: Image(.exificon),
                 background: Color(hex: Constants.colorHexExifElement),
                 valueType: ElementValueType.text,
                 hasFormula: false,
                 editable: false),
-          MetadataType.exifPixelXDimention.id :
+          MetadataType.metadataPixelXDimention.id :
             ElementOptions(
                 icon: Image(.exificon),
                 background: Color(hex: Constants.colorHexExifElement),
                 valueType: ElementValueType.number,
                 hasFormula: true,
                 editable: false),
-          MetadataType.exifPixelYDimention.id :
+          MetadataType.metadataPixelYDimention.id :
             ElementOptions(
                 icon: Image(.exificon),
                 background: Color(hex: Constants.colorHexExifElement),
                 valueType: ElementValueType.number,
                 hasFormula: false,
                 editable: false),
-          MetadataType.exifLatitude.rawValue :
+          MetadataType.metadataLatitude.rawValue :
             ElementOptions(
                 icon: Image(.exificon),
                 background: Color(hex: Constants.colorHexExifElement),
                 valueType: ElementValueType.number,
                 hasFormula: false,
                 editable: false),
-          MetadataType.exifLongitude.id :
+          MetadataType.metadataLongitude.id :
             ElementOptions(
                 icon: Image(.exificon),
                 background: Color(hex: Constants.colorHexExifElement),
@@ -111,13 +111,13 @@ class ElementHelper {
         MetadataType.fileName.id: ElementValueType.text,
         MetadataType.fileDateCreated.id: ElementValueType.date,
         MetadataType.fileDateModified.id: ElementValueType.date,
-        MetadataType.exifDateOriginal.id: ElementValueType.date,
-        MetadataType.exifDateDigitilized.id: ElementValueType.date,
-        MetadataType.exifCameraModel.id: ElementValueType.text,
-        MetadataType.exifPixelXDimention.id: ElementValueType.number,
-        MetadataType.exifPixelYDimention.id: ElementValueType.number,
-        MetadataType.exifLatitude.rawValue: ElementValueType.number,
-        MetadataType.exifLongitude.id: ElementValueType.number
+        MetadataType.metadataDateOriginal.id: ElementValueType.date,
+        MetadataType.metadataDateDigitilized.id: ElementValueType.date,
+        MetadataType.metadataCameraModel.id: ElementValueType.text,
+        MetadataType.metadataPixelXDimention.id: ElementValueType.number,
+        MetadataType.metadataPixelYDimention.id: ElementValueType.number,
+        MetadataType.metadataLatitude.rawValue: ElementValueType.number,
+        MetadataType.metadataLongitude.id: ElementValueType.number
     ];
     
     static func getElementOptionsByTypeId(typeId: Int) -> ElementOptions {

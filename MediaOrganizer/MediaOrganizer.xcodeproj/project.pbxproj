@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -46,6 +46,11 @@
 		35CA7C9B2C94725900765522 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CA7C9A2C94725900765522 /* InfoView.swift */; };
 		35CA7C9D2C94743100765522 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CA7C9C2C94743100765522 /* AppState.swift */; };
 		35CA7C9F2C94855B00765522 /* FolderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CA7C9E2C94855B00765522 /* FolderType.swift */; };
+		35CBFF1B2CB804A2003E3DBE /* FileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CBFF1A2CB804A0003E3DBE /* FileService.swift */; };
+		35CBFF232CB825CB003E3DBE /* MediaType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CBFF222CB825CB003E3DBE /* MediaType.swift */; };
+		35CBFF252CB828E0003E3DBE /* MediaInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CBFF242CB828E0003E3DBE /* MediaInfo.swift */; };
+		35CBFF272CB82B99003E3DBE /* MetadataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CBFF262CB82B99003E3DBE /* MetadataService.swift */; };
+		35CBFF2F2CB83E93003E3DBE /* JobsHeaderToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CBFF2E2CB83E93003E3DBE /* JobsHeaderToolbarView.swift */; };
 		35DF88302CAB0095007626CB /* DropViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DF882F2CAB0095007626CB /* DropViewDelegate.swift */; };
 		35DF88342CAB270B007626CB /* DraggableSourceElementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DF88332CAB270B007626CB /* DraggableSourceElementsView.swift */; };
 		35DF883A2CAB2FB2007626CB /* ElementType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DF88392CAB2FB2007626CB /* ElementType.swift */; };
@@ -102,6 +107,11 @@
 		35CA7C9A2C94725900765522 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		35CA7C9C2C94743100765522 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		35CA7C9E2C94855B00765522 /* FolderType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderType.swift; sourceTree = "<group>"; };
+		35CBFF1A2CB804A0003E3DBE /* FileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileService.swift; sourceTree = "<group>"; };
+		35CBFF222CB825CB003E3DBE /* MediaType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaType.swift; sourceTree = "<group>"; };
+		35CBFF242CB828E0003E3DBE /* MediaInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaInfo.swift; sourceTree = "<group>"; };
+		35CBFF262CB82B99003E3DBE /* MetadataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataService.swift; sourceTree = "<group>"; };
+		35CBFF2E2CB83E93003E3DBE /* JobsHeaderToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobsHeaderToolbarView.swift; sourceTree = "<group>"; };
 		35DF882F2CAB0095007626CB /* DropViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropViewDelegate.swift; sourceTree = "<group>"; };
 		35DF88332CAB270B007626CB /* DraggableSourceElementsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableSourceElementsView.swift; sourceTree = "<group>"; };
 		35DF88392CAB2FB2007626CB /* ElementType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementType.swift; sourceTree = "<group>"; };
@@ -114,6 +124,10 @@
 		35DF88502CAD81C8007626CB /* ActionElementEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionElementEditView.swift; sourceTree = "<group>"; };
 		35DF88522CAED3CB007626CB /* DateFormatType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		35CBFF1F2CB81774003E3DBE /* Extensions */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Extensions; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		35CA7C712C946D9000765522 /* Frameworks */ = {
@@ -147,6 +161,7 @@
 				352B6F102C9A160A0000789D /* Rule.swift */,
 				35DF88402CABE194007626CB /* ElementInfo.swift */,
 				35DF884C2CAD7EC1007626CB /* ElementOptions.swift */,
+				35CBFF242CB828E0003E3DBE /* MediaInfo.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -202,6 +217,7 @@
 				35CA7C862C946FCB00765522 /* Infrastructure */,
 				35CA7C872C946FE800765522 /* Protocols */,
 				35CA7C882C94700B00765522 /* Enums */,
+				35CBFF1F2CB81774003E3DBE /* Extensions */,
 				35447F432C9848630000C0B1 /* Models */,
 				35CA7C8A2C94703300765522 /* Services */,
 				35CA7C8B2C94705500765522 /* Views */,
@@ -238,6 +254,7 @@
 		35CA7C882C94700B00765522 /* Enums */ = {
 			isa = PBXGroup;
 			children = (
+				35CBFF222CB825CB003E3DBE /* MediaType.swift */,
 				35CA7C9E2C94855B00765522 /* FolderType.swift */,
 				35447F502C9870F80000C0B1 /* JobEditMode.swift */,
 				352B6F0A2C9A0BAC0000789D /* ConditionType.swift */,
@@ -257,6 +274,8 @@
 				352B6F002C99BCF70000789D /* JobService.swift */,
 				3515140A2C9B1D4F000E4CAB /* RuleService.swift */,
 				35DF884A2CAD6997007626CB /* ActionService.swift */,
+				35CBFF262CB82B99003E3DBE /* MetadataService.swift */,
+				35CBFF1A2CB804A0003E3DBE /* FileService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -272,6 +291,7 @@
 				35CA7C932C9471B800765522 /* Extensions */,
 				35CA7C922C9471AB00765522 /* Modifiers */,
 				35CA7C982C94724600765522 /* JobsView.swift */,
+				35CBFF2E2CB83E93003E3DBE /* JobsHeaderToolbarView.swift */,
 				35447F4B2C985CA00000C0B1 /* JobsToolbarView.swift */,
 				352B6F062C99D69D0000789D /* JobSettingsView.swift */,
 				35447F462C9852850000C0B1 /* JobGeneralSettingsEditView.swift */,
@@ -328,6 +348,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				35CBFF1F2CB81774003E3DBE /* Extensions */,
 			);
 			name = MediaOrganizer;
 			productName = MediaOrganizer;
@@ -389,6 +412,7 @@
 			files = (
 				352B6F092C99ECB00000789D /* RulesEditView.swift in Sources */,
 				3536629F2CB162F9006FB739 /* ActionPreviewView.swift in Sources */,
+				35CBFF2F2CB83E93003E3DBE /* JobsHeaderToolbarView.swift in Sources */,
 				35DF884D2CAD7EC1007626CB /* ElementOptions.swift in Sources */,
 				351514052C9B1105000E4CAB /* Condition.swift in Sources */,
 				352B6F132C9A19D10000789D /* Action.swift in Sources */,
@@ -405,9 +429,11 @@
 				35CA7C992C94724600765522 /* JobsView.swift in Sources */,
 				3515140E2C9C0744000E4CAB /* DividerWithImage.swift in Sources */,
 				352B6F112C9A160A0000789D /* Rule.swift in Sources */,
+				35CBFF1B2CB804A2003E3DBE /* FileService.swift in Sources */,
 				352B6F072C99D69D0000789D /* JobSettingsView.swift in Sources */,
 				35CA7C9D2C94743100765522 /* AppState.swift in Sources */,
 				352B6F032C99BD1D0000789D /* ServiceBase.swift in Sources */,
+				35CBFF272CB82B99003E3DBE /* MetadataService.swift in Sources */,
 				351514102C9C1BDB000E4CAB /* ActionView.swift in Sources */,
 				35CA7C782C946D9000765522 /* MediaOrganizerApp.swift in Sources */,
 				352E1F5F2CB3F8DC0035C492 /* ButtonExtension.swift in Sources */,
@@ -425,6 +451,7 @@
 				35447F4F2C98618C0000C0B1 /* ViewHelper.swift in Sources */,
 				35DF88492CAC6E07007626CB /* DraggableConditionElementsView.swift in Sources */,
 				35DF88412CABE194007626CB /* ElementInfo.swift in Sources */,
+				35CBFF252CB828E0003E3DBE /* MediaInfo.swift in Sources */,
 				352B6F012C99BCF80000789D /* JobService.swift in Sources */,
 				35447F452C9848AA0000C0B1 /* Job.swift in Sources */,
 				35DF88532CAED3CB007626CB /* DateFormatType.swift in Sources */,
@@ -433,6 +460,7 @@
 				352B6F0B2C9A0BAC0000789D /* ConditionType.swift in Sources */,
 				35CA7C972C94720C00765522 /* ViewExtensions.swift in Sources */,
 				35CA7C912C94715900765522 /* Settable.swift in Sources */,
+				35CBFF232CB825CB003E3DBE /* MediaType.swift in Sources */,
 				351514072C9B18B4000E4CAB /* ColorExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

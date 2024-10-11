@@ -60,11 +60,22 @@ struct JobsView: FolderContainerView {
                 Divider()
             }
         }
+        .safeAreaInset(edge: .bottom, content: {
+            VStack {
+                Divider()
+                HStack {
+                    JobsToolbarView()
+                }
+                .padding(.bottom, 10)
+                .frame(maxWidth: .infinity)
+            }
+            .background(Color(hex: Constants.colorHexPanelDark))
+        })
         .onTapGesture {
             jobScrollViewClickHandler()
         }
         .toolbar(content: {
-            JobsToolbarView()
+            JobsHeaderToolbarView()
                 .padding(.leading)
         })
         .onAppear() {

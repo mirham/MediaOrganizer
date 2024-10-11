@@ -80,6 +80,9 @@ struct RulesEditView: View {
             }
             .background(Color(hex: Constants.colorHexPanelDark))
         })
+        .onDisappear() {
+            appState.current.isActionInEditMode = false
+        }
     }
     
     // MARK: Private functions

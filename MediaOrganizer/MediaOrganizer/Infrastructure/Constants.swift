@@ -29,6 +29,7 @@ struct Constants {
     
     // MARK: Icons
     static let iconApp = "AppIcon"
+    static let iconRun = "play.circle.fill"
     static let iconArrowForward = "arrow.forward"
     static let iconAdd = "plus.circle.fill"
     static let iconRemove = "minus.circle.fill"
@@ -46,6 +47,10 @@ struct Constants {
     static let colorHexFileElement = "#681892"
     static let colorHexExifElement = "#093576"
     static let colorHexCustomElement = "#C49518"
+    
+    // MARK: Regexes
+    static let regexLocationInIso6709 = "([+-][0-9.]+)([+-][0-9.]+)"
+    static let regexEncodedLocationInIso6709 = "%+09.5f%+010.5f%+.0fCRSWGS_84/"
     
     // MARK: Element names
     static let elInfo = "Info"
@@ -66,6 +71,7 @@ struct Constants {
     static let maskOutput =  "Output: %1$@"
     
     // MARK: Toolbars
+    static let toolbarRunJobs = "Run all checked jobs"
     static let toolbarAddJob = "Add job"
     static let toolbarRemoveJob = "Remove job"
     static let toolbarAddRule = "Add rule"

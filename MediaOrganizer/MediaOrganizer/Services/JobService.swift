@@ -10,6 +10,8 @@ import Foundation
 class JobService: ServiceBase {
     static let shared = JobService()
     
+    private let fileService = FileService.shared
+    
     func createJob() {
         appState.current.job = Job.makeDefault()
     }
@@ -47,6 +49,18 @@ class JobService: ServiceBase {
         return result
     }
     
+    func runCheckedJobsAsync() async {
+        let checkedJobs = appState.userData.jobs.filter({ $0.checked })
+        
+        guard !checkedJobs.isEmpty else { return }
+        
+        for job in checkedJobs {
+            Task.detached(priority: .high) {
+                let mediaFiles = await self.fileService.getFolderFilesAsync(path: job.sourceFolder)
+            }
+        }
+    }
+    
     func resetCurrentJob() {
         appState.current.job = nil
     }
@@ -58,5 +72,11 @@ class JobService: ServiceBase {
             appState.userData.jobs.remove(at: jobIndex)
             resetCurrentJob()
         }
+    }
+    
+    // MARK: Private functions
+    
+    private func runJobAsync(job: Job) async {
+        // TODO: Filter files with conditions
     }
 }

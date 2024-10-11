@@ -19,18 +19,16 @@ struct ActionPreviewView: View {
     var body: some View {
         WrappingHStack(alignment: .leading, horizontalSpacing: 0) {
             Text("Example: ")
+                .font(.subheadline)
             ForEach(actionElements, id: \.id) {elementInfo in
                 if (elementInfo.settingType != nil) {
                     switch elementInfo.settingType! {
                         case .date:
                             if(elementInfo.customDate != nil){
                                 HStack(spacing: 0) {
-                                    Text("[")
-                                        .foregroundStyle(.gray)
                                     Text(getFormattedDate(elementInfo: elementInfo))
-                                    Text("]")
-                                        .foregroundStyle(.gray)
                                 }
+                                .font(.subheadline)
                                 .background(
                                     RoundedRectangle(cornerRadius: 2, style: .continuous)
                                         .fill(elementInfo.elementOptions.background)
@@ -39,13 +37,9 @@ struct ActionPreviewView: View {
                             else
                             {
                                 HStack(spacing: 0) {
-                                    Text("[")
-                                        .foregroundStyle(.gray)
-                                    Text(elementInfo.displayText)
-                                    Text("(example:\(getFormattedDate(elementInfo: elementInfo)))")
-                                    Text("]")
-                                        .foregroundStyle(.gray)
+                                    Text(getFormattedDate(elementInfo: elementInfo))
                                 }
+                                .font(.subheadline)
                                 .background(
                                     RoundedRectangle(cornerRadius: 2, style: .continuous)
                                         .fill(elementInfo.elementOptions.background)
@@ -54,12 +48,9 @@ struct ActionPreviewView: View {
 
                         default:
                             HStack(spacing: 0) {
-                                Text("[")
-                                    .foregroundStyle(.gray)
                                 Text(elementInfo.customText ?? elementInfo.displayText)
-                                Text("]")
-                                    .foregroundStyle(.gray)
                             }
+                            .font(.subheadline)
                             .background(
                                 RoundedRectangle(cornerRadius: 2, style: .continuous)
                                     .fill(elementInfo.elementOptions.background)
@@ -68,7 +59,7 @@ struct ActionPreviewView: View {
                 }
             }
         }
-        .opacity(0.6)
+        .opacity(0.8)
         .frame(maxWidth: .infinity)
         .isHidden(hidden: actionElements.isEmpty, remove: false)
     }

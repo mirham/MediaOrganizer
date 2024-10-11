@@ -27,9 +27,6 @@ struct JobsToolbarView : View {
                 showJobSettingsWindow()
             }
             .withToolbarButtonStyle(showOver: showOverAddJob, activeState: controlActiveState, color: .green)
-            .popover(isPresented: $showOverAddJob, content: {
-                renderHint(hint: Constants.toolbarAddJob)
-            })
             .onHover(perform: { hovering in
                 showOverAddJob = hovering && controlActiveState == .key
             })
@@ -38,9 +35,6 @@ struct JobsToolbarView : View {
             }
             .withToolbarButtonStyle(showOver: showOverRemoveJob, activeState: controlActiveState, color: .red)
             .disabled(!jobService.doesCurrentJobExist())
-            .popover(isPresented: $showOverRemoveJob, content: {
-                renderHint(hint: Constants.toolbarRemoveJob)
-            })
             .onHover(perform: { hovering in
                 showOverRemoveJob = hovering && controlActiveState == .key
             })
@@ -58,14 +52,6 @@ struct JobsToolbarView : View {
     private func removeJobClickHandler() {
         jobService.removeCurrentJob()
         isJobRemoving = false
-    }
-    
-    private func renderHint(hint: String) -> some View {
-        let result = Text(hint)
-            .padding()
-            .interactiveDismissDisabled()
-        
-        return result
     }
     
     private func showJobSettingsWindow() {
