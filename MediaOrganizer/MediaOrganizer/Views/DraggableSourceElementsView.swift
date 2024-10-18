@@ -8,7 +8,7 @@
 import SwiftUI
 import WrappingHStack
 
-struct DraggableSourceElementsView: View {
+struct DraggableSourceElementsView: ElementContainerView {
     @EnvironmentObject var appState: AppState
     
     @Binding var selectedActionTypeId: Int
@@ -20,10 +20,10 @@ struct DraggableSourceElementsView: View {
     var body: some View {
         WrappingHStack(alignment: .leading) {
             ForEach(sourceElements, id: \.id) {sourceElement in
-                elementAsIconAndText(elementInfo: sourceElement.elementInfo)
+                elementAsIconAndText(elementInfo: sourceElement.element)
                     .onDrag {
                         self.draggedItem = sourceElement
-                        return NSItemProvider(object: sourceElement.elementInfo.displayText as NSString)
+                        return NSItemProvider(object: sourceElement.element.displayText as NSString)
                     }
                     .onDrop(of: [.text], delegate: DropViewDelegate(
                         draggedItem: $draggedItem,
@@ -45,33 +45,31 @@ struct DraggableSourceElementsView: View {
         guard currentActionType != .delete else { return }
         
         for metadataCase in MetadataType.allCases {
-            let elementInfo = ElementInfo(
+            let elementInfo = Element(
                 elementTypeId: metadataCase.id,
-                displayText: metadataCase.shortDescription,
-                settingType: ElementHelper.getElementValueTypeByTypeId(typeId: metadataCase.id))
-            let actionElement = DraggableElement(elementInfo: elementInfo)
+                displayText: metadataCase.shortDescription)
+            let actionElement = DraggableElement(element: elementInfo)
             sourceElements.append(actionElement)
         }
         
-        var optionalElements = [ElementInfo]()
+        var optionalElements = [Element]()
         
         for elementCase in ElementType.allCases {
-            let elementInfo = ElementInfo(
+            let elementInfo = Element(
                 elementTypeId: elementCase.id,
-                displayText: elementCase.description,
-                settingType: ElementHelper.getElementValueTypeByTypeId(typeId: elementCase.id))
+                displayText: elementCase.description)
             optionalElements.append(elementInfo)
         }
         
         switch currentActionType {
             case .copyToFolder, .moveToFolder:
                 for optionalElement in optionalElements {
-                    let actionElement = DraggableElement(elementInfo: optionalElement)
+                    let actionElement = DraggableElement(element: optionalElement)
                     sourceElements.append(actionElement)
                 }
             case .rename:
                 for optionalElement in optionalElements.filter({$0.elementTypeId != ElementType.slash.id}) {
-                    let actionElement = DraggableElement(elementInfo: optionalElement)
+                    let actionElement = DraggableElement(element: optionalElement)
                     sourceElements.append(actionElement)
                 }
             case .delete:
@@ -82,9 +80,9 @@ struct DraggableSourceElementsView: View {
     // MARK: Private functions
     
     @ViewBuilder
-    private func elementAsIconAndText(elementInfo: ElementInfo) -> some View {
+    private func elementAsIconAndText(elementInfo: Element) -> some View {
         let label = elementInfo.displayText
-        let options = ElementHelper.getElementOptionsByTypeId(typeId: elementInfo.elementTypeId)
+        let options = getElementOptionsByTypeId(typeId: elementInfo.elementTypeId)
         
         HStack {
             if options.icon != nil {

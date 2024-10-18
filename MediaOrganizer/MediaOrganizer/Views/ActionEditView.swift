@@ -42,12 +42,12 @@ struct ActionEditView: View {
                     selectedActionTypeId = appState.current.action?.type.id ?? ActionType.rename.id
                     
                     if (appState.current.action != nil) {
-                        actionElements = appState.current.action!.elements.map({ return DraggableElement(elementInfo: $0) })
+                        actionElements = appState.current.action!.elements.map({ return DraggableElement(element: $0) })
                     }
                 }
                 .onDisappear {
                     if (appState.current.action != nil) {
-                        appState.current.action!.elements = actionElements.map({ return $0.elementInfo })
+                        appState.current.action!.elements = actionElements.map({ return $0.element })
                         
                         if let actionIndex = appState.current.rule!.actions.firstIndex(where: {$0.id == appState.current.action!.id}) {
                             appState.current.rule!.actions[actionIndex].elements
@@ -60,7 +60,7 @@ struct ActionEditView: View {
                     selectedActionTypeId: $selectedActionTypeId,
                     draggedItem: $draggedItem,
                     destinationElements: $actionElements)
-                ActionPreviewView(actionElements: actionElements.map({ return $0.elementInfo }))
+                ActionPreviewView(actionElements: actionElements.map({ return $0.element }))
                     .padding(10)
             }
         }

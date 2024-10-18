@@ -1,5 +1,5 @@
 //
-//  MediaInfo.swift
+//  MediaFileInfo.swift
 //  MediaOrganizer
 //
 //  Created by UglyGeorge on 10.10.2024.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-class MediaInfo : Identifiable, Equatable {
+class MediaFileInfo : Identifiable, Equatable {
     let id = UUID()
     let type: MediaType
     let metadata: [MetadataType: Any?]
@@ -19,7 +19,7 @@ class MediaInfo : Identifiable, Equatable {
         self.metadata = metadata
     }
     
-    static func == (lhs: MediaInfo, rhs: MediaInfo) -> Bool {
+    static func == (lhs: MediaFileInfo, rhs: MediaFileInfo) -> Bool {
         return lhs.id == rhs.id
     }
 }

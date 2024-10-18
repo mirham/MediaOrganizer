@@ -55,9 +55,7 @@ class JobService: ServiceBase {
         guard !checkedJobs.isEmpty else { return }
         
         for job in checkedJobs {
-            Task.detached(priority: .high) {
-                let mediaFiles = await self.fileService.getFolderFilesAsync(path: job.sourceFolder)
-            }
+            await runJobAsync(job: job)
         }
     }
     
@@ -77,6 +75,16 @@ class JobService: ServiceBase {
     // MARK: Private functions
     
     private func runJobAsync(job: Job) async {
-        // TODO: Filter files with conditions
+        Task.detached(priority: .high) {
+            let mediaFiles = await self.fileService.getFolderMediaFilesAsync(path: job.sourceFolder)
+            
+            // TODO: Apply conditions (filter files)
+            
+            for fileInfo in mediaFiles {
+                for rule in job.rules {
+                    let fileActions = rule.apply(fileInfo: fileInfo)
+                }
+            }
+        }
     }
 }

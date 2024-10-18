@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ActionElementEditView: View {
+struct ActionElementEditView: ElementContainerView {
     @EnvironmentObject var appState: AppState
     
     @Environment(\.controlActiveState) private var controlActiveState
@@ -17,7 +17,11 @@ struct ActionElementEditView: View {
     @State private var customText: String
     @State private var customDate: Date
     
-    private var elementInfo: ElementInfo
+    private let element: Element
+    
+    private var elementOptions: ElementOptions { get {
+        return getElementOptionsByTypeId(typeId: element.elementTypeId)
+    }}
     
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -25,11 +29,11 @@ struct ActionElementEditView: View {
         return formatter
     }()
     
-    init(elementInfo: ElementInfo) {
-        self.elementInfo = elementInfo
-        self.selectedTypeId = elementInfo.selectedTypeId ?? DateFormatType.dateEu.id
-        self.customText = elementInfo.customText ?? String()
-        self.customDate = elementInfo.customDate ?? Date.distantPast
+    init(element: Element) {
+        self.element = element
+        self.selectedTypeId = element.selectedFormatTypeId ?? DateFormatType.dateEu.id
+        self.customText = element.customText ?? String()
+        self.customDate = element.customDate ?? Date.distantPast
     }
     
     var body: some View {
@@ -43,12 +47,12 @@ struct ActionElementEditView: View {
             .withEditButtonStyle(activeState: controlActiveState)
             .padding(.leading, -5)
             .isHidden(
-                hidden: !(elementInfo.elementOptions.editable || elementInfo.elementOptions.hasFormula),
+                hidden: !(elementOptions.editable || elementOptions.hasFormula),
                 remove: true)
             
         }
         .background(
-            RoundedRectangle(cornerRadius: 5, style: .continuous).fill(elementInfo.elementOptions.background)
+            RoundedRectangle(cornerRadius: 5, style: .continuous).fill(elementOptions.background)
         )
         .isHidden(hidden: showEditor, remove: true)
         renderEditor()
@@ -66,14 +70,14 @@ struct ActionElementEditView: View {
             ? customText
             : customDate != Date.distantPast
                 ? customDate.formatted(date: .numeric, time: .standard)
-                : elementInfo.displayText
+                : element.displayText
         
         return result
     }
     
     @ViewBuilder
     private func renderEditor() -> some View {
-        switch elementInfo.settingType {
+        switch element.settingType {
             case .date:
                 renderDateFormatSelection()
             case .text:
@@ -86,14 +90,14 @@ struct ActionElementEditView: View {
     @ViewBuilder
     private func renderDateFormatSelection() -> some View {
         HStack {
-            Text(elementInfo.displayText)
+            Text(element.displayText)
                 .padding(.trailing, -10)
-                .isHidden(hidden: elementInfo.elementOptions.editable, remove: true)
+                .isHidden(hidden: elementOptions.editable, remove: true)
             DatePicker(String(),
                        selection: $customDate,
                        displayedComponents: [.date, .hourAndMinute])
             .datePickerStyle(.compact)
-                .isHidden(hidden: !elementInfo.elementOptions.editable, remove: true)
+                .isHidden(hidden: !elementOptions.editable, remove: true)
                 .onAppear(perform: {
                     if (customDate == Date.distantPast) {
                         customDate = Date()
@@ -117,8 +121,8 @@ struct ActionElementEditView: View {
             .pickerStyle(.menu)
             .frame(maxWidth: 20)
             Button(String(), systemImage: Constants.iconCheck) {
-                elementInfo.selectedTypeId = selectedTypeId
-                elementInfo.customDate = customDate
+                element.selectedFormatTypeId = selectedTypeId
+                element.customDate = customDate
                 showEditor = false
             }
             .withRemoveButtonStyle(activeState: controlActiveState)
@@ -134,7 +138,7 @@ struct ActionElementEditView: View {
                 }
             .frame(maxWidth: 100)
             Button(String(), systemImage: Constants.iconCheck) {
-                elementInfo.customText = customText
+                element.customText = customText
                 showEditor = false
             }
             .withRemoveButtonStyle(activeState: controlActiveState)

@@ -9,18 +9,18 @@ import SwiftUI
 
 struct DraggableElement: Equatable, Identifiable {
     let id: UUID
-    let elementInfo: ElementInfo
+    let element: Element
     let dateCreated: Date
     
-    init(elementInfo: ElementInfo) {
+    init(element: Element) {
         self.id = UUID()
-        self.elementInfo = elementInfo
+        self.element = element
         self.dateCreated = Date()
     }
     
     func clone() -> DraggableElement {
-        let elementInfo = elementInfo.clone()
-        let result = DraggableElement(elementInfo: elementInfo)
+        let clonedElement = element.clone()
+        let result = DraggableElement(element: clonedElement)
         
         return result
     }

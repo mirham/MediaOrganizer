@@ -19,10 +19,10 @@ struct DraggableConditionElementsView: View {
         HStack {
             WrappingHStack(alignment: .leading) {
                 ForEach(conditionElements, id: \.id) {conditionElement in
-                    ActionElementEditView(elementInfo: conditionElement.elementInfo)
+                    ActionElementEditView(element: conditionElement.element)
                         .onDrag({
                             self.draggedItem = conditionElement
-                            return NSItemProvider(object: conditionElement.elementInfo.displayText as NSString)
+                            return NSItemProvider(object: conditionElement.element.displayText as NSString)
                         })
                         .onDrop(of: [.text], delegate: DropViewDelegate(
                             draggedItem: $draggedItem,

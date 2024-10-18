@@ -13,8 +13,8 @@ class FileService : ServiceBase {
     
     private let metadataService = MetadataService.shared
     
-    func getFolderFilesAsync(path: String) async -> [MediaInfo] {
-        var result = [MediaInfo]()
+    func getFolderMediaFilesAsync(path: String) async -> [MediaFileInfo] {
+        var result = [MediaFileInfo]()
         let path = URL( string: path)
         
         let options: FileManager.DirectoryEnumerationOptions = [.skipsHiddenFiles, .skipsPackageDescendants]
@@ -26,7 +26,7 @@ class FileService : ServiceBase {
         for await fileUrl in filteredFileUrls {
             let mediaType = fileUrl.isImageFile ? MediaType.photo : MediaType.video
             let metadata = await metadataService.getFileMetadataAsync(fileUrl: fileUrl)
-            let mediaInfo = MediaInfo(type: mediaType, url: fileUrl, metadata: metadata)
+            let mediaInfo = MediaFileInfo(type: mediaType, url: fileUrl, metadata: metadata)
             
             result.append(mediaInfo)
         }
