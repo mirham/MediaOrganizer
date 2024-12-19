@@ -42,7 +42,7 @@ struct DraggableSourceElementsView: ElementContainerView {
         
         let currentActionType = appState.current.action?.type ?? .rename
         
-        guard currentActionType != .delete else { return }
+        guard currentActionType.canBeCustomized else { return }
         
         for metadataCase in MetadataType.allCases {
             let elementInfo = Element(
@@ -72,7 +72,7 @@ struct DraggableSourceElementsView: ElementContainerView {
                     let actionElement = DraggableElement(element: optionalElement)
                     sourceElements.append(actionElement)
                 }
-            case .delete:
+            case .delete, .skip:
                 return
         }
     }

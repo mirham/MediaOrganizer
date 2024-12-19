@@ -11,11 +11,13 @@ class MediaFileInfo : Identifiable, Equatable {
     let id = UUID()
     let type: MediaType
     let metadata: [MetadataType: Any?]
-    var url: URL
+    let originalUrl: URL
+    var currentUrl: URL
     
     init(type: MediaType, url: URL, metadata: [MetadataType: Any?]) {
         self.type = type
-        self.url = url
+        self.originalUrl = url
+        self.currentUrl = url
         self.metadata = metadata
     }
     

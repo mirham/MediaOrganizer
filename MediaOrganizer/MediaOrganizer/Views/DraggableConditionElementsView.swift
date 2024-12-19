@@ -33,7 +33,7 @@ struct DraggableConditionElementsView: View {
             .padding(5)
         }
         .asActionEditPanel()
-        .isHidden(hidden: selectedActionTypeId == ActionType.delete.id, remove: true)
+        .isHidden(hidden: !ActionType(rawValue: selectedActionTypeId)!.canBeCustomized, remove: true)
         .padding(.leading, 5)
         .padding(.bottom, 10)
     }

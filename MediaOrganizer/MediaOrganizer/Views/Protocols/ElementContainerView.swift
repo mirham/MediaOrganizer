@@ -89,7 +89,7 @@ extension ElementContainerView {
                 icon: Image(.exificon),
                 background: Color(hex: Constants.colorHexExifElement),
                 valueType: ElementValueType.number,
-                hasFormula: true,
+                hasFormula: false,
                 editable: false),
         MetadataType.metadataPixelYDimention.id:
             ElementOptions(

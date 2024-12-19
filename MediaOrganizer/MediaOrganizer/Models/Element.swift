@@ -43,6 +43,59 @@ class Element : Codable, Equatable {
         self.customText = nil
     }
     
+    func toString(fileMetadata: [MetadataType: Any?]) -> String? {
+        let dateFormatter = settingType == .date ? DateFormatter() : nil
+        
+        switch elementTypeId {
+            case ElementType.slash.id:
+                return Constants.slash
+            case ElementType.customDate.id:
+                guard customDate != nil && selectedFormatTypeId != nil else { return nil }
+                
+                dateFormatter!.dateFormat = DateFormatType(rawValue: selectedFormatTypeId!)!.formula
+                return dateFormatter!.string(from: customDate!)
+            case ElementType.customText.id:
+                return customText
+            case MetadataType.fileName.id:
+                return fileMetadata[MetadataType.fileName] as? String
+            case MetadataType.fileExtension.id:
+                let extensionWithoutDot = fileMetadata[MetadataType.fileExtension] as? String
+                return extensionWithoutDot == nil ? nil : "." + extensionWithoutDot!
+            case MetadataType.fileDateCreated.id:
+                guard let fileDateCreared = fileMetadata[MetadataType.fileDateCreated] as? Date else { return nil }
+                
+                dateFormatter!.dateFormat = DateFormatType(rawValue: selectedFormatTypeId!)!.formula
+                return dateFormatter!.string(from: fileDateCreared)
+            case MetadataType.fileDateModified.id:
+                guard let fileDateModified = fileMetadata[MetadataType.fileDateModified] as? Date else { return nil }
+                
+                dateFormatter!.dateFormat = DateFormatType(rawValue: selectedFormatTypeId!)!.formula
+                return dateFormatter!.string(from: fileDateModified)
+            case MetadataType.metadataDateOriginal.id:
+                guard let metadataDateOriginal = fileMetadata[MetadataType.metadataDateOriginal] as? Date else { return nil }
+                
+                dateFormatter!.dateFormat = DateFormatType(rawValue: selectedFormatTypeId!)!.formula
+                return dateFormatter!.string(from: metadataDateOriginal)
+            case MetadataType.metadataDateDigitilized.id:
+                guard let metadataDateDigitilized = fileMetadata[MetadataType.metadataDateDigitilized] as? Date else { return nil }
+                
+                dateFormatter!.dateFormat = DateFormatType(rawValue: selectedFormatTypeId!)!.formula
+                return dateFormatter!.string(from: metadataDateDigitilized)
+            case MetadataType.metadataCameraModel.id:
+                return fileMetadata[MetadataType.metadataCameraModel] as? String
+            case MetadataType.metadataPixelXDimention.id:
+                return fileMetadata[MetadataType.metadataPixelXDimention] as? String
+            case MetadataType.metadataPixelYDimention.id:
+                return fileMetadata[MetadataType.metadataPixelYDimention] as? String
+            case MetadataType.metadataLatitude.id:
+                return fileMetadata[MetadataType.metadataLatitude] as? String
+            case MetadataType.metadataLongitude.id:
+                return fileMetadata[MetadataType.metadataLongitude] as? String
+            default:
+                return nil
+        }
+    }
+    
     func clone() -> Element {
         let result = Element(
             elementTypeId: self.elementTypeId,

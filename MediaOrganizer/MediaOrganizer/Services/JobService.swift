@@ -83,6 +83,10 @@ class JobService: ServiceBase {
             for fileInfo in mediaFiles {
                 for rule in job.rules {
                     let fileActions = rule.apply(fileInfo: fileInfo)
+                    await self.fileService.peformFileActionsAsync(
+                        outputPath: job.outputFolder,
+                        fileInfo: fileInfo,
+                        fileActions: fileActions)
                 }
             }
         }

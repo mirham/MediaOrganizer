@@ -159,8 +159,8 @@
 			children = (
 				35447F442C9848AA0000C0B1 /* Job.swift */,
 				351514042C9B1105000E4CAB /* Condition.swift */,
-				352B6F122C9A19D10000789D /* Action.swift */,
 				352B6F102C9A160A0000789D /* Rule.swift */,
+				352B6F122C9A19D10000789D /* Action.swift */,
 				35DF88402CABE194007626CB /* Element.swift */,
 				35DF884C2CAD7EC1007626CB /* ElementOptions.swift */,
 				35CBFF242CB828E0003E3DBE /* MediaFileInfo.swift */,

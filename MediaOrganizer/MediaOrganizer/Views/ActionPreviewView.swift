@@ -15,6 +15,7 @@ struct ActionPreviewView: ElementContainerView {
     
     private let dateFormatter = DateFormatter()
     private let dateExample = Date.now
+    private let extensionExample = Date.now
     
     var body: some View {
         WrappingHStack(alignment: .leading, horizontalSpacing: 0) {
@@ -46,7 +47,9 @@ struct ActionPreviewView: ElementContainerView {
                         }
                     default:
                         HStack(spacing: 0) {
-                            Text(elementInfo.customText ?? elementInfo.displayText)
+                            Text(MetadataType(rawValue: elementInfo.elementTypeId)?.example
+                                 ?? elementInfo.customText
+                                 ?? elementInfo.displayText)
                         }
                         .font(.subheadline)
                         .background(

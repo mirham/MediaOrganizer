@@ -53,4 +53,17 @@ enum MetadataType : Int, CaseIterable, Identifiable, Codable, Equatable {
             case .metadataLongitude: return "longitude"
         }
     }
+    
+    var example: String {
+        switch self {
+            case .fileName: return "IMG_013777"
+            case .fileExtension: return ".HEIC"
+            case .metadataCameraModel: return "iPhone 15 Pro Max"
+            case .metadataPixelXDimention: return "4032"
+            case .metadataPixelYDimention: return "2268"
+            case .metadataLatitude: return "53° 15' 54,93\" E"
+            case .metadataLongitude: return "56° 50' 57,3\" N"
+            default: return shortDescription
+        }
+    }
 }

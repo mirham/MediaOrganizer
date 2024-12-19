@@ -14,6 +14,7 @@ enum ActionType : Int, CaseIterable, Identifiable, Codable, Equatable {
     case copyToFolder = 1
     case moveToFolder = 2
     case delete = 3
+    case skip = 4
     
     var description: String {
         switch self {
@@ -21,6 +22,17 @@ enum ActionType : Int, CaseIterable, Identifiable, Codable, Equatable {
             case .copyToFolder: return "copy to folder"
             case .moveToFolder: return "move to folder"
             case .delete: return "delete"
+            case .skip: return "skip"
+        }
+    }
+    
+    var canBeCustomized: Bool {
+        switch self {
+            case .rename: return true
+            case .copyToFolder: return true
+            case .moveToFolder: return true
+            case .delete: return false
+            case .skip: return false
         }
     }
 }

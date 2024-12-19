@@ -19,10 +19,13 @@ class Action : Codable, Identifiable, Equatable, ObservableObject {
     }
     
     func toFileAction(fileInfo: MediaFileInfo) -> FileAction {
-        var value: String? = nil
+        var value: String = String()
         
         for element in elements {
-            //element.
+            guard let stringElement = element.toString(fileMetadata: fileInfo.metadata)
+            else { return FileAction(actionType: .skip, value: nil) }
+            
+            value.append(stringElement)
         }
         
         return FileAction(actionType: type, value: value)

@@ -29,7 +29,7 @@ struct ActionView: View {
         VStack(alignment: .leading) {
             HStack {
                 Text(action.description())
-                    .frame(maxWidth: 50, alignment: .leading)
+                    .frame(maxWidth: 90, alignment: .leading)
                     .contentShape(Rectangle())
                     .padding(5)
                     .isHidden(hidden: showEditor, remove: true)
@@ -38,7 +38,7 @@ struct ActionView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .isHidden(hidden: !showEditor || !actionService.isCurrentAction(actionId: action.id), remove: true )
                 ActionPreviewView(actionElements: action.elements)
-                    .isHidden(hidden: showEditor, remove: true)
+                    .isHidden(hidden: !action.type.canBeCustomized, remove: true)
                     .frame(maxWidth: .infinity,  alignment: .leading)
                     .padding(.leading, 10)
                     .padding(.trailing, 10)
