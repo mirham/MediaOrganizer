@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Factory
 
 struct JobsHeaderToolbarView : View {
     @EnvironmentObject var appState: AppState
@@ -13,7 +14,7 @@ struct JobsHeaderToolbarView : View {
     @Environment(\.openWindow) private var openWindow
     @Environment(\.controlActiveState) private var controlActiveState
     
-    private let jobService = JobService.shared
+    @Injected(\.jobService) private var jobService
     
     @State private var showOverRunJobs = false
     

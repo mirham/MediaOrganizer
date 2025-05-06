@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Factory
 
 struct JobsToolbarView : View {
     @EnvironmentObject var appState: AppState
@@ -13,7 +14,7 @@ struct JobsToolbarView : View {
     @Environment(\.openWindow) private var openWindow
     @Environment(\.controlActiveState) private var controlActiveState
     
-    private let jobService = JobService.shared
+    @Injected(\.jobService) private var jobService
     
     @State private var isJobRemoving = false
     
@@ -21,7 +22,7 @@ struct JobsToolbarView : View {
     @State private var showOverRemoveJob = false
     
     var body: some View {
-        Section {
+        HStack {
             Button(Constants.toolbarAddJob, systemImage: Constants.iconAdd) {
                 jobService.resetCurrentJob()
                 showJobSettingsWindow()

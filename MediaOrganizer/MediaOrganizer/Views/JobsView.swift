@@ -6,13 +6,14 @@
 //
 
 import SwiftUI
+import Factory
 
 struct JobsView: FolderContainerView {
     @EnvironmentObject var appState: AppState
     
     @Environment(\.openWindow) private var openWindow
     
-    private let jobService = JobService.shared
+    @Injected(\.jobService) private var jobService
     
     var body: some View {
         ScrollView(.vertical) {

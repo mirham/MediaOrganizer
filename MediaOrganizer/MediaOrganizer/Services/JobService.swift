@@ -6,11 +6,10 @@
 //
 
 import Foundation
+import Factory
 
-class JobService: ServiceBase {
-    static let shared = JobService()
-    
-    private let fileService = FileService.shared
+class JobService: ServiceBase, JobServiceType {
+    @Injected(\.fileService) private var fileService
     
     func createJob() {
         appState.current.job = Job.makeDefault()

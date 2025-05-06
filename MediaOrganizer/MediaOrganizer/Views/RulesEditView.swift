@@ -6,13 +6,14 @@
 //
 
 import SwiftUI
+import Factory
 
 struct RulesEditView: View {
     @EnvironmentObject var appState: AppState
     
     @Environment(\.controlActiveState) private var controlActiveState
     
-    private let ruleService = RuleService.shared
+    @Injected(\.ruleService) private var ruleService
     
     var body: some View {
         ScrollView(.vertical) {

@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ServiceBase {
+class ServiceBase : ServiceBaseType {
     let appState = AppState.shared
     
     internal func doesCurrentJobExist() -> Bool {

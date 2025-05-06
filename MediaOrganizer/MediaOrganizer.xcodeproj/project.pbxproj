@@ -67,6 +67,14 @@
 		35E39A362CC2A13E003D6360 /* IsoExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E39A332CC2A13E003D6360 /* IsoExtensions.swift */; };
 		35E39A372CC2A13E003D6360 /* UrlExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E39A342CC2A13E003D6360 /* UrlExtensions.swift */; };
 		35E39A392CC2A303003D6360 /* ElementContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E39A382CC2A303003D6360 /* ElementContainerView.swift */; };
+		35F872362DCA0E4D0064B304 /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = 35F872352DCA0E4D0064B304 /* Factory */; };
+		35F8723A2DCA0EC30064B304 /* ContainerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F872392DCA0EBD0064B304 /* ContainerExtensions.swift */; };
+		35F8723C2DCA10290064B304 /* JobServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F8723B2DCA10290064B304 /* JobServiceType.swift */; };
+		35F8723E2DCA15E30064B304 /* ServiceBaseType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F8723D2DCA15E30064B304 /* ServiceBaseType.swift */; };
+		35F872402DCA19110064B304 /* RuleServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F8723F2DCA19110064B304 /* RuleServiceType.swift */; };
+		35F872422DCA1A8A0064B304 /* ActionServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F872412DCA1A8A0064B304 /* ActionServiceType.swift */; };
+		35F872442DCA1BF40064B304 /* MetadataServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F872432DCA1BF40064B304 /* MetadataServiceType.swift */; };
+		35F872462DCA1D570064B304 /* FileServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F872452DCA1D570064B304 /* FileServiceType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -129,6 +137,13 @@
 		35E39A332CC2A13E003D6360 /* IsoExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsoExtensions.swift; sourceTree = "<group>"; };
 		35E39A342CC2A13E003D6360 /* UrlExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlExtensions.swift; sourceTree = "<group>"; };
 		35E39A382CC2A303003D6360 /* ElementContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementContainerView.swift; sourceTree = "<group>"; };
+		35F872392DCA0EBD0064B304 /* ContainerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerExtensions.swift; sourceTree = "<group>"; };
+		35F8723B2DCA10290064B304 /* JobServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobServiceType.swift; sourceTree = "<group>"; };
+		35F8723D2DCA15E30064B304 /* ServiceBaseType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceBaseType.swift; sourceTree = "<group>"; };
+		35F8723F2DCA19110064B304 /* RuleServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleServiceType.swift; sourceTree = "<group>"; };
+		35F872412DCA1A8A0064B304 /* ActionServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionServiceType.swift; sourceTree = "<group>"; };
+		35F872432DCA1BF40064B304 /* MetadataServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataServiceType.swift; sourceTree = "<group>"; };
+		35F872452DCA1D570064B304 /* FileServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileServiceType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +154,7 @@
 				35DF88572CAF341F007626CB /* WrappingHStack in Frameworks */,
 				35DF885A2CAF344C007626CB /* WrappingHStack in Frameworks */,
 				35B1B1502C9CA33500B39FFC /* WrappingHStack in Frameworks */,
+				35F872362DCA0E4D0064B304 /* Factory in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,7 +230,6 @@
 			isa = PBXGroup;
 			children = (
 				35CA7C772C946D9000765522 /* MediaOrganizerApp.swift */,
-				35CA7C9C2C94743100765522 /* AppState.swift */,
 				35CA7C7B2C946D9300765522 /* Assets.xcassets */,
 				35CA7C802C946D9300765522 /* MediaOrganizer.entitlements */,
 				35CA7C862C946FCB00765522 /* Infrastructure */,
@@ -242,6 +257,7 @@
 			children = (
 				35CA7C8C2C94708500765522 /* Constants.swift */,
 				35CA7C8E2C94710F00765522 /* AppDelegate.swift */,
+				35CA7C9C2C94743100765522 /* AppState.swift */,
 			);
 			path = Infrastructure;
 			sourceTree = "<group>";
@@ -250,6 +266,12 @@
 			isa = PBXGroup;
 			children = (
 				35CA7C902C94715900765522 /* Settable.swift */,
+				35F8723D2DCA15E30064B304 /* ServiceBaseType.swift */,
+				35F8723B2DCA10290064B304 /* JobServiceType.swift */,
+				35F8723F2DCA19110064B304 /* RuleServiceType.swift */,
+				35F872412DCA1A8A0064B304 /* ActionServiceType.swift */,
+				35F872432DCA1BF40064B304 /* MetadataServiceType.swift */,
+				35F872452DCA1D570064B304 /* FileServiceType.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -340,6 +362,7 @@
 		35E39A352CC2A13E003D6360 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				35F872392DCA0EBD0064B304 /* ContainerExtensions.swift */,
 				35E39A332CC2A13E003D6360 /* IsoExtensions.swift */,
 				35E39A342CC2A13E003D6360 /* UrlExtensions.swift */,
 			);
@@ -392,6 +415,7 @@
 			mainGroup = 35CA7C6B2C946D9000765522;
 			packageReferences = (
 				35DF88582CAF344C007626CB /* XCRemoteSwiftPackageReference "WrappingHStack" */,
+				35F872342DCA0E4D0064B304 /* XCRemoteSwiftPackageReference "Factory" */,
 			);
 			productRefGroup = 35CA7C752C946D9000765522 /* Products */;
 			projectDirPath = "";
@@ -419,6 +443,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				35F872442DCA1BF40064B304 /* MetadataServiceType.swift in Sources */,
 				352B6F092C99ECB00000789D /* RulesEditView.swift in Sources */,
 				35E39A322CC29305003D6360 /* FileAction.swift in Sources */,
 				3536629F2CB162F9006FB739 /* ActionPreviewView.swift in Sources */,
@@ -427,13 +452,16 @@
 				351514052C9B1105000E4CAB /* Condition.swift in Sources */,
 				352B6F132C9A19D10000789D /* Action.swift in Sources */,
 				35447F472C9852850000C0B1 /* JobGeneralSettingsEditView.swift in Sources */,
+				35F872402DCA19110064B304 /* RuleServiceType.swift in Sources */,
 				35CA7C9B2C94725900765522 /* InfoView.swift in Sources */,
 				35B1B14D2C9C77F700B39FFC /* DraggableElement.swift in Sources */,
+				35F8723E2DCA15E30064B304 /* ServiceBaseType.swift in Sources */,
 				35DF88512CAD81C8007626CB /* ActionElementEditView.swift in Sources */,
 				35DF883A2CAB2FB2007626CB /* ElementType.swift in Sources */,
 				35447F512C9870F80000C0B1 /* JobEditMode.swift in Sources */,
 				351514092C9B1A30000E4CAB /* RulesToolbarView.swift in Sources */,
 				3526858D2C9C3D0900F958E8 /* ActionEditView.swift in Sources */,
+				35F8723C2DCA10290064B304 /* JobServiceType.swift in Sources */,
 				35CA7C8F2C94710F00765522 /* AppDelegate.swift in Sources */,
 				35CA7C992C94724600765522 /* JobsView.swift in Sources */,
 				35E39A362CC2A13E003D6360 /* IsoExtensions.swift in Sources */,
@@ -455,6 +483,7 @@
 				352B6F0D2C9A0D9E0000789D /* MetadataType.swift in Sources */,
 				35DF88342CAB270B007626CB /* DraggableSourceElementsView.swift in Sources */,
 				35DF883F2CABDCEC007626CB /* ElementValueType.swift in Sources */,
+				35F872422DCA1A8A0064B304 /* ActionServiceType.swift in Sources */,
 				35CA7C952C9471DA00765522 /* IsHiddenModifier.swift in Sources */,
 				35DF88302CAB0095007626CB /* DropViewDelegate.swift in Sources */,
 				35447F4C2C985CA00000C0B1 /* JobsToolbarView.swift in Sources */,
@@ -472,6 +501,8 @@
 				352B6F0B2C9A0BAC0000789D /* ConditionType.swift in Sources */,
 				35CA7C972C94720C00765522 /* ViewExtensions.swift in Sources */,
 				35CA7C912C94715900765522 /* Settable.swift in Sources */,
+				35F8723A2DCA0EC30064B304 /* ContainerExtensions.swift in Sources */,
+				35F872462DCA1D570064B304 /* FileServiceType.swift in Sources */,
 				35CBFF232CB825CB003E3DBE /* MediaType.swift in Sources */,
 				351514072C9B18B4000E4CAB /* ColorExtensions.swift in Sources */,
 			);
@@ -700,6 +731,14 @@
 				minimumVersion = 0.2.0;
 			};
 		};
+		35F872342DCA0E4D0064B304 /* XCRemoteSwiftPackageReference "Factory" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hmlongco/Factory";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.4.3;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -716,6 +755,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 35DF88582CAF344C007626CB /* XCRemoteSwiftPackageReference "WrappingHStack" */;
 			productName = WrappingHStack;
+		};
+		35F872352DCA0E4D0064B304 /* Factory */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 35F872342DCA0E4D0064B304 /* XCRemoteSwiftPackageReference "Factory" */;
+			productName = Factory;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

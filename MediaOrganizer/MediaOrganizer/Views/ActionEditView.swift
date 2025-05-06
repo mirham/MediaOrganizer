@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Factory
 
 struct ActionEditView: View {
     @EnvironmentObject var appState: AppState
@@ -16,7 +17,7 @@ struct ActionEditView: View {
     @State private var actionElements = [DraggableElement]()
     @State private var draggedItem: DraggableElement?
     
-    private let actionService = ActionService.shared
+    @Injected(\.actionService) private var actionService
     
     var body: some View {
         HStack {

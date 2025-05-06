@@ -7,11 +7,10 @@
 
 import Foundation
 import Combine
+import Factory
 
-class FileService : ServiceBase {
-    static let shared = FileService()
-    
-    private let metadataService = MetadataService.shared
+class FileService : ServiceBase, FileServiceType {
+    @Injected(\.metadataService) private var metadataService
     
     private let fileManager = FileManager.default
     
@@ -36,7 +35,10 @@ class FileService : ServiceBase {
         return result
     }
     
-    func peformFileActionsAsync(outputPath: String, fileInfo: MediaFileInfo, fileActions: [FileAction]) async {
+    func peformFileActionsAsync(
+        outputPath: String,
+        fileInfo: MediaFileInfo,
+        fileActions: [FileAction]) async {
         do {
             try createFolderIfDoesNotExist(path: outputPath)
             fileInfo.currentUrl = try makeTempFileCopy(fileUrl:  fileInfo.currentUrl, outputPath: outputPath)

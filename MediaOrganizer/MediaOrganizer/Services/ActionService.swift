@@ -7,9 +7,7 @@
 
 import Foundation
 
-class ActionService : ServiceBase {
-    static let shared = ActionService()
-    
+class ActionService : ServiceBase, ActionServiceType {    
     func removeActionById(actionId: UUID) {
         guard appState.current.rule != nil else { return }
         

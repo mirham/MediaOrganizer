@@ -6,13 +6,14 @@
 //
 
 import SwiftUI
+import Factory
 
 struct JobSettingsView : View {
     @EnvironmentObject var appState: AppState
     
     @Environment(\.controlActiveState) var controlActiveState
     
-    private let jobService = JobService.shared
+    @Injected(\.jobService) private var jobService
     
     @State private var currentEditMode: JobEditMode = .edit
     

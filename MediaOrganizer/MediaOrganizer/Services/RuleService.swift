@@ -7,9 +7,7 @@
 
 import Foundation
 
-class RuleService: ServiceBase {
-    static let shared = RuleService()
-    
+class RuleService: ServiceBase, RuleServiceType {    
     func createRule() {
         appState.current.rule = Rule()
     }

@@ -6,11 +6,12 @@
 //
 
 import SwiftUI
+import Factory
 
 struct JobGeneralSettingsEditView: FolderContainerView {
     @EnvironmentObject var appState: AppState
     
-    private let jobService = JobService.shared
+    @Injected(\.jobService) private var jobService
     
     @State private var jobName = String()
     

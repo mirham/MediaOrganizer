@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Factory
 
 struct RulesToolbarView : View {
     @EnvironmentObject var appState: AppState
@@ -13,7 +14,7 @@ struct RulesToolbarView : View {
     @Environment(\.openWindow) private var openWindow
     @Environment(\.controlActiveState) private var controlActiveState
     
-    private let ruleService = RuleService.shared
+    @Injected(\.ruleService) private var ruleService
     
     @State private var showOverAddRule = false
     @State private var showOverRemoveRule = false

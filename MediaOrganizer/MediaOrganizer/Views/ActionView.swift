@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Factory
 
 struct ActionView: View {
     @EnvironmentObject var appState: AppState
@@ -14,8 +15,8 @@ struct ActionView: View {
     
     @State private var showEditor: Bool = false
     
-    private let ruleService = RuleService.shared
-    private let actionService = ActionService.shared
+    @Injected(\.ruleService) private var ruleService
+    @Injected(\.actionService) private var actionService
     
     private var ruleId: UUID
     private var action: Action
@@ -38,7 +39,7 @@ struct ActionView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .isHidden(hidden: !showEditor || !actionService.isCurrentAction(actionId: action.id), remove: true )
                 ActionPreviewView(actionElements: action.elements)
-                    .isHidden(hidden: !action.type.canBeCustomized, remove: true)
+                    .isHidden(hidden: showEditor || !action.type.canBeCustomized, remove: true)
                     .frame(maxWidth: .infinity,  alignment: .leading)
                     .padding(.leading, 10)
                     .padding(.trailing, 10)
