@@ -18,19 +18,6 @@ class Action : Codable, Identifiable, Equatable, ObservableObject {
         return result
     }
     
-    func toFileAction(fileInfo: MediaFileInfo) -> FileAction {
-        var value: String = String()
-        
-        for element in elements {
-            guard let stringElement = element.toString(fileMetadata: fileInfo.metadata)
-            else { return FileAction(actionType: .skip, value: nil) }
-            
-            value.append(stringElement)
-        }
-        
-        return FileAction(actionType: type, value: value)
-    }
-    
     static func == (lhs: Action, rhs: Action) -> Bool {
         return lhs.id == rhs.id
     }

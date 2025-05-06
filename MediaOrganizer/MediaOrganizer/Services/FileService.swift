@@ -11,6 +11,7 @@ import Factory
 
 class FileService : ServiceBase, FileServiceType {
     @Injected(\.metadataService) private var metadataService
+    @Injected(\.fileActionStrategyFactory) private var fileActionStrategyFactory
     
     private let fileManager = FileManager.default
     
@@ -44,19 +45,11 @@ class FileService : ServiceBase, FileServiceType {
             fileInfo.currentUrl = try makeTempFileCopy(fileUrl:  fileInfo.currentUrl, outputPath: outputPath)
             
             for fileAction in fileActions {
-                switch fileAction.actionType {
-                    case .rename:
-                        fileInfo.currentUrl = try renameFile(newName: fileAction.value!, fileUrl: fileInfo.currentUrl)
-                    case .copyToFolder:
-                        fileInfo.currentUrl = try copyToFolder(subfolderName: fileAction.value!, outputPath: outputPath, fileUrl: fileInfo.currentUrl)
-                    case .moveToFolder:
-                        fileInfo.currentUrl = try copyToFolder(subfolderName: fileAction.value!, outputPath: outputPath, fileUrl: fileInfo.currentUrl)
-                        try deleteFile(fileUrl: fileInfo.originalUrl)
-                    case .delete:
-                        try deleteFile(fileUrl: fileInfo.currentUrl)
-                        try deleteFile(fileUrl: fileInfo.originalUrl)
-                    case .skip:
-                        return
+                let fileActionStrategy = fileActionStrategyFactory.getStrategy(actionType: fileAction.actionType)
+                let currentUrl = try fileActionStrategy?.performAction(outputPath: outputPath, fileInfo: fileInfo, fileAction: fileAction)
+                
+                if (currentUrl != nil) {
+                    fileInfo.currentUrl = currentUrl!
                 }
             }
         }
@@ -65,9 +58,33 @@ class FileService : ServiceBase, FileServiceType {
         }
     }
     
+    func renameFile(newName: String, fileUrl: URL) throws -> URL {
+        let newUrl = URL(fileURLWithPath: fileUrl.deletingLastPathComponent().path() + newName)
+        
+        try fileManager.moveItem(at: fileUrl, to: newUrl)
+        
+        return newUrl
+    }
+    
+    func copyToFolder(subfolderName: String, outputPath: String, fileUrl: URL) throws -> URL {
+        let subfolderPath = outputPath + subfolderName
+        
+        try createFolderIfDoesNotExist(path: subfolderPath)
+        
+        let newUrl = URL(fileURLWithPath: subfolderPath + Constants.slash + fileUrl.lastPathComponent)
+        
+        try fileManager.moveItem(at: fileUrl, to: newUrl)
+        
+        return newUrl
+    }
+    
+    func deleteFile(fileUrl: URL) throws {
+        try fileManager.removeItem(at: fileUrl)
+    }
+    
     // MARK: Private functions
     
-    func listFilesInFolderAsync(at url: URL, options: FileManager.DirectoryEnumerationOptions ) async -> AsyncStream<URL> {
+    private func listFilesInFolderAsync(at url: URL, options: FileManager.DirectoryEnumerationOptions ) async -> AsyncStream<URL> {
         AsyncStream { continuation in
             Task {
                 let enumerator = FileManager.default.enumerator(at: url, includingPropertiesForKeys: nil, options: options)
@@ -100,29 +117,5 @@ class FileService : ServiceBase, FileServiceType {
         try fileManager.copyItem(at: fileUrl, to: outputUrl)
         
         return outputUrl
-    }
-    
-    private func renameFile(newName: String, fileUrl: URL) throws -> URL {
-        let newUrl = URL(fileURLWithPath: fileUrl.deletingLastPathComponent().path() + newName)
-        
-        try fileManager.moveItem(at: fileUrl, to: newUrl)
-        
-        return newUrl
-    }
-    
-    private func copyToFolder(subfolderName: String, outputPath: String, fileUrl: URL) throws -> URL {
-        let subfolderPath = outputPath + subfolderName
-        
-        try createFolderIfDoesNotExist(path: subfolderPath)
-        
-        let newUrl = URL(fileURLWithPath: subfolderPath + Constants.slash + fileUrl.lastPathComponent)
-        
-        try fileManager.moveItem(at: fileUrl, to: newUrl)
-        
-        return newUrl
-    }
-    
-    private func deleteFile(fileUrl: URL) throws {
-        try fileManager.removeItem(at: fileUrl)
     }
 }

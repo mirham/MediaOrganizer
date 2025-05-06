@@ -13,6 +13,7 @@ protocol RuleServiceType : ServiceBaseType {
     func addRule()
     func updateRule()
     func isCurrentRule(ruleId: UUID) -> Bool
+    func applyRule(rule:Rule, fileInfo: MediaFileInfo) -> [FileAction]
     func resetCurrentRule()
     func removeCurrentRule()
 }

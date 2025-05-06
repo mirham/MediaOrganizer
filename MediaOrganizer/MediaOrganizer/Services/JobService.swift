@@ -10,6 +10,7 @@ import Factory
 
 class JobService: ServiceBase, JobServiceType {
     @Injected(\.fileService) private var fileService
+    @Injected(\.ruleService) private var ruleService
     
     func createJob() {
         appState.current.job = Job.makeDefault()
@@ -81,7 +82,7 @@ class JobService: ServiceBase, JobServiceType {
             
             for fileInfo in mediaFiles {
                 for rule in job.rules {
-                    let fileActions = rule.apply(fileInfo: fileInfo)
+                    let fileActions = self.ruleService.applyRule(rule:rule, fileInfo: fileInfo)
                     await self.fileService.peformFileActionsAsync(
                         outputPath: job.outputFolder,
                         fileInfo: fileInfo,

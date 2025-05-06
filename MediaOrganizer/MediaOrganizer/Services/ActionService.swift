@@ -6,8 +6,33 @@
 //
 
 import Foundation
+import Factory
 
-class ActionService : ServiceBase, ActionServiceType {    
+class ActionService : ServiceBase, ActionServiceType {
+    @Injected(\.elementService) private var elementService
+    
+    func isCurrentAction(actionId: UUID) -> Bool {
+        guard doesCurrentActionExist() else { return false }
+        
+        let result = appState.current.action!.id == actionId
+        
+        return result
+    }
+    
+    func actionToFileAction(action: Action, fileInfo: MediaFileInfo) -> FileAction {
+        var value: String = String()
+        
+        for element in action.elements {
+            element.fileMetadata = fileInfo.metadata
+            guard let stringElement = elementService.elementAsString(element: element)
+            else { return FileAction(actionType: .skip, value: nil) }
+            
+            value.append(stringElement)
+        }
+        
+        return FileAction(actionType: action.type, value: value)
+    }
+    
     func removeActionById(actionId: UUID) {
         guard appState.current.rule != nil else { return }
         
@@ -24,13 +49,5 @@ class ActionService : ServiceBase, ActionServiceType {
             appState.current.rule!.actions.remove(at: actionIndex)
             appState.objectWillChange.send()
         }
-    }
-    
-    func isCurrentAction(actionId: UUID) -> Bool {
-        guard doesCurrentActionExist() else { return false }
-        
-        let result = appState.current.action!.id == actionId
-        
-        return result
     }
 }

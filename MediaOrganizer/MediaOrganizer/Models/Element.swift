@@ -15,6 +15,17 @@ class Element : Codable, Equatable {
     var selectedFormatTypeId: Int?
     var customDate: Date?
     var customText: String?
+    var fileMetadata: [MetadataType: Any?] = [:]
+    
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case elementTypeId
+        case displayText
+        case settingType
+        case selectedFormatTypeId
+        case customDate
+        case customText
+    }
     
     private static let valueTypesMap = [
         ElementType.slash.id: ElementValueType.text,
