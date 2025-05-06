@@ -111,7 +111,47 @@ extension ElementContainerView {
                 background: Color(hex: Constants.colorHexExifElement),
                 valueType: ElementValueType.number,
                 hasFormula: false,
-                editable: false) ]
+                editable: false),
+        ActionType.rename.id:
+            ElementOptions(
+                icon: nil,
+                background: Color.blue,
+                valueType: ElementValueType.text,
+                hasFormula: false,
+                editable: false
+            ),
+        ActionType.copyToFolder.id:
+            ElementOptions(
+                icon: nil,
+                background: Color.blue,
+                valueType: ElementValueType.text,
+                hasFormula: false,
+                editable: false
+            ),
+        ActionType.moveToFolder.id:
+            ElementOptions(
+                icon: nil,
+                background: Color.blue,
+                valueType: ElementValueType.text,
+                hasFormula: false,
+                editable: false
+            ),
+        ActionType.skip.id:
+            ElementOptions(
+                icon: nil,
+                background: Color.gray,
+                valueType: ElementValueType.text,
+                hasFormula: false,
+                editable: false
+            ),
+        ActionType.delete.id:
+            ElementOptions(
+                icon: nil,
+                background: Color.red,
+                valueType: ElementValueType.text,
+                hasFormula: false,
+                editable: false
+            )]
     }
     
     func getElementOptionsByTypeId(typeId: Int) -> ElementOptions {

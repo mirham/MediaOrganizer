@@ -10,9 +10,9 @@ import Foundation
 enum ElementType : Int, CaseIterable, Identifiable, Codable, Equatable {
     var id: Int { return self.rawValue }
     
-    case slash = 0
-    case customText = 1
-    case customDate = 2
+    case slash = 100
+    case customText = 101
+    case customDate = 102
     
     var description: String {
         switch self {

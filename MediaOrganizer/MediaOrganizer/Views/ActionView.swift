@@ -8,7 +8,7 @@
 import SwiftUI
 import Factory
 
-struct ActionView: View {
+struct ActionView: ElementContainerView {
     @EnvironmentObject var appState: AppState
     
     @Environment(\.controlActiveState) private var controlActiveState
@@ -29,17 +29,24 @@ struct ActionView: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
+                let elementOptions = getElementOptionsByTypeId(typeId: action.type.id)
                 Text(action.description())
-                    .frame(maxWidth: 90, alignment: .leading)
+                    .fontWeight(.bold)
+                    .frame(maxWidth: 100, alignment: .center)
                     .contentShape(Rectangle())
                     .padding(5)
+                    .background(
+                        RoundedRectangle(cornerRadius: 3, style: .continuous)
+                            .fill(elementOptions.background)
+                            .padding(3)
+                    )
                     .isHidden(hidden: showEditor, remove: true)
                 ActionEditView()
                     .padding(5)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .isHidden(hidden: !showEditor || !actionService.isCurrentAction(actionId: action.id), remove: true )
                 ActionPreviewView(actionElements: action.elements)
-                    .isHidden(hidden: showEditor || !action.type.canBeCustomized, remove: true)
+                    .isHidden(hidden: showEditor || !action.type.canBeCustomized, remove: showEditor)
                     .frame(maxWidth: .infinity,  alignment: .leading)
                     .padding(.leading, 10)
                     .padding(.trailing, 10)

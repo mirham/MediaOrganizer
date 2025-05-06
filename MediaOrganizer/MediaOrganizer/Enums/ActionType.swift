@@ -13,8 +13,8 @@ enum ActionType : Int, CaseIterable, Identifiable, Codable, Equatable {
     case rename = 0
     case copyToFolder = 1
     case moveToFolder = 2
-    case delete = 3
-    case skip = 4
+    case skip = 3
+    case delete = 4
     
     var description: String {
         switch self {
