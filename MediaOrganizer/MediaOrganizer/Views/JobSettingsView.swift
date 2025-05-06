@@ -35,7 +35,6 @@ struct JobSettingsView : View {
             closeView()
         })
         .opacity(getViewOpacity(state: controlActiveState))
-        .padding()
     }
     
     // MARK: Private functions

@@ -51,7 +51,7 @@ private extension Button {
         self.buttonStyle(.plain)
             .foregroundColor(showOver && activeState == .key ? color : .gray)
             .focusEffectDisabled()
-            .font(.system(size: 17))
+            .font(.system(size: 30))
             .opacity(getViewOpacity(state: activeState))
     }
 }

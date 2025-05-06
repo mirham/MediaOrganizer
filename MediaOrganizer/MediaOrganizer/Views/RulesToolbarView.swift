@@ -21,7 +21,7 @@ struct RulesToolbarView : View {
     @State private var isRuleRemoving = false
     
     var body: some View {
-        Section {
+        HStack {
             Button(Constants.toolbarAddRule, systemImage: Constants.iconAdd) {
                 ruleService.resetCurrentRule()
                 ruleService.createRule()
@@ -36,6 +36,7 @@ struct RulesToolbarView : View {
             }
             .withToolbarButtonStyle(showOver: showOverRemoveRule, activeState: controlActiveState, color: .red)
             .disabled(!ruleService.doesCurrentRuleExist())
+            .isHidden(hidden: !ruleService.doesCurrentRuleExist(), remove: true)
             .onHover(perform: { hovering in
                 showOverRemoveRule = hovering && controlActiveState == .key
             })
@@ -69,7 +70,7 @@ private extension Button {
         self.buttonStyle(.plain)
             .foregroundColor(showOver && activeState == .key ? color : .gray)
             .focusEffectDisabled()
-            .font(.system(size: 18))
+            .font(.system(size: 16))
             .opacity(getViewOpacity(state: activeState))
     }
 }

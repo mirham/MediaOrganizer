@@ -36,6 +36,7 @@ struct JobsToolbarView : View {
             }
             .withToolbarButtonStyle(showOver: showOverRemoveJob, activeState: controlActiveState, color: .red)
             .disabled(!jobService.doesCurrentJobExist())
+            .isHidden(hidden: !jobService.doesCurrentJobExist(), remove: true)
             .onHover(perform: { hovering in
                 showOverRemoveJob = hovering && controlActiveState == .key
             })
@@ -71,7 +72,7 @@ private extension Button {
         self.buttonStyle(.plain)
             .foregroundColor(showOver && activeState == .key ? color : .gray)
             .focusEffectDisabled()
-            .font(.system(size: 17))
+            .font(.system(size: 16))
             .opacity(getViewOpacity(state: activeState))
     }
 }
