@@ -57,8 +57,8 @@ struct ConditionEditView: View {
                     }
                     appState.objectWillChange.send()
                 }
-                DraggableSourceConditionElementsView(
-                    selectedActionTypeId: $selectedConditionTypeId,
+                DraggableSourceElementsView<ConditionElement>(
+                    selectedTypeId: $selectedConditionTypeId,
                     draggedItem: $draggedItem,
                     destinationElements: $conditionElements)
                 ConditionPreviewView(conditionElements: conditionElements.map({ return $0.element }))

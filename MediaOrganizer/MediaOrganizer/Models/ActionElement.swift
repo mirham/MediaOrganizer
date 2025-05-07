@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ActionElement : Element {
+class ActionElement : ElementType {
     let id: UUID
     let elementTypeId: Int
     let displayText: String
@@ -28,9 +28,9 @@ class ActionElement : Element {
     }
     
     private static let valueTypesMap = [
-        ElementType.slash.id: ElementValueType.text,
-        ElementType.customDate.id: ElementValueType.date,
-        ElementType.customText.id: ElementValueType.text,
+        OptionalElementType.slash.id: ElementValueType.text,
+        OptionalElementType.customDate.id: ElementValueType.date,
+        OptionalElementType.customText.id: ElementValueType.text,
         MetadataType.fileName.id: ElementValueType.text,
         MetadataType.fileExtension.id: ElementValueType.text,
         MetadataType.fileDateCreated.id: ElementValueType.date,
@@ -44,7 +44,7 @@ class ActionElement : Element {
         MetadataType.metadataLongitude.id: ElementValueType.number
     ];
     
-    init(elementTypeId: Int, displayText: String) {
+    required init(elementTypeId: Int, displayText: String) {
         self.id = UUID()
         self.elementTypeId = elementTypeId
         self.displayText = displayText
@@ -54,7 +54,7 @@ class ActionElement : Element {
         self.customText = nil
     }
     
-    func clone() -> any Element {
+    func clone() -> any ElementType {
         let result = ActionElement(
             elementTypeId: self.elementTypeId,
             displayText: self.displayText)

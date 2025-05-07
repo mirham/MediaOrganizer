@@ -57,8 +57,8 @@ struct ActionEditView: View {
                     }
                     appState.objectWillChange.send()
                 }
-                DraggableSourceActionElementsView(
-                    selectedActionTypeId: $selectedActionTypeId,
+                DraggableSourceElementsView(
+                    selectedTypeId: $selectedActionTypeId,
                     draggedItem: $draggedItem,
                     destinationElements: $actionElements)
                 ActionPreviewView(actionElements: actionElements.map({ return $0.element }))

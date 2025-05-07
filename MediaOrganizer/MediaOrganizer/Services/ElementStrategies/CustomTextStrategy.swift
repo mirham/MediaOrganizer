@@ -7,7 +7,7 @@
 
 
 struct CustomTextStrategy : ElementStrategy {
-    let typeKey = ElementType.customText.rawValue
+    let typeKey = OptionalElementType.customText.rawValue
     
     func elementAsString(context: ActionElement) -> String? {
         context.customText

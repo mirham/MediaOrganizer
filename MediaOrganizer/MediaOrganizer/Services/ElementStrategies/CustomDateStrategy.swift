@@ -8,7 +8,7 @@
 import Foundation
 
 struct CustomDateStrategy : ElementStrategy {
-    let typeKey = ElementType.customDate.rawValue
+    let typeKey = OptionalElementType.customDate.rawValue
     
     func elementAsString(context: ActionElement) -> String? {
         guard let date = context.customDate,

@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ConditionElement : Element {
+class ConditionElement : ElementType {
     let id: UUID
     let elementTypeId: Int
     let displayText: String
@@ -39,7 +39,7 @@ class ConditionElement : Element {
         MetadataType.metadataLongitude.id: ElementValueType.number
     ];
     
-    init(elementTypeId: Int, displayText: String) {
+    required init(elementTypeId: Int, displayText: String) {
         self.id = UUID()
         self.elementTypeId = elementTypeId
         self.displayText = displayText
@@ -47,7 +47,7 @@ class ConditionElement : Element {
         self.value = .string(String())
     }
     
-    func clone() -> any Element {
+    func clone() -> any ElementType {
         let result = ConditionElement(
             elementTypeId: self.elementTypeId,
             displayText: self.displayText)

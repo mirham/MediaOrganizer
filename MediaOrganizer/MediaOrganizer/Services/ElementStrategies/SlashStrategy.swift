@@ -9,7 +9,7 @@
 import Foundation
 
 struct SlashStrategy: ElementStrategy {    
-    var typeKey = ElementType.slash.rawValue
+    var typeKey = OptionalElementType.slash.rawValue
     
     func elementAsString(context: ActionElement) -> String? {
         Constants.slash

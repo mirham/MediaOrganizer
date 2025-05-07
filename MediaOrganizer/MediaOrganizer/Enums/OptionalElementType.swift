@@ -1,5 +1,5 @@
 //
-//  ElementType.swift
+//  OptionalElementType.swift
 //  MediaOrganizer
 //
 //  Created by UglyGeorge on 30.09.2024.
@@ -7,12 +7,12 @@
 
 import Foundation
 
-enum ElementType : Int, CaseIterable, Identifiable, Codable, Equatable {
+enum OptionalElementType : Int, CaseIterable, Identifiable, Codable, Equatable {
     var id: Int { return self.rawValue }
     
-    case slash = 100
-    case customText = 101
-    case customDate = 102
+    case slash = 1000
+    case customText = 1001
+    case customDate = 1002
     
     var description: String {
         switch self {

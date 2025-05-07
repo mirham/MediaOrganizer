@@ -17,18 +17,26 @@ extension ElementContainerView {
         hasFormula: false,
         editable: false)
     }
+    
+    private static var customizationMap: [Int: Bool] { [
+        ActionType.rename.id: true,
+        ActionType.copyToFolder.id: true,
+        ActionType.moveToFolder.id: true,
+        ConditionType.cIf.id: true,
+        ConditionType.cElseIf.id: true
+    ] }
 
     private static var elementOptionsMap: [Int: ElementOptions] { [
-        ElementType.slash.id:
+        OptionalElementType.slash.id:
             defaultElementOptions,
-        ElementType.customDate.id:
+        OptionalElementType.customDate.id:
             ElementOptions(
                 icon: nil,
                 background: Color(hex: Constants.colorHexCustomElement),
                 valueType: ElementValueType.date,
                 hasFormula: true,
                 editable: true),
-        ElementType.customText.id:
+        OptionalElementType.customText.id:
             ElementOptions(
                 icon: nil,
                 background: Color(hex: Constants.colorHexCustomElement),
@@ -154,8 +162,53 @@ extension ElementContainerView {
             )]
     }
     
+    private static var optionalElementsMap: [Int: Bool] { [
+        ActionType.rename.id: true,
+        ActionType.copyToFolder.id: true,
+        ActionType.moveToFolder.id: true
+    ] }
+    
+    func getCustomizationAbilityByTypeId(typeId: Int) -> Bool {
+        let result: Bool = Self.customizationMap[typeId] ?? false
+        
+        return result
+    }
+    
     func getElementOptionsByTypeId(typeId: Int) -> ElementOptions {
         let result: ElementOptions = Self.elementOptionsMap[typeId] ?? Self.defaultElementOptions
+        
+        return result
+    }
+    
+    func getOptionalElements<T: ElementType>(typeId: Int) -> [DraggableElement<T>] {
+        var result = [DraggableElement<T>]()
+        
+        let areOptionalElementsAllowed: Bool = Self.optionalElementsMap[typeId] ?? false
+        guard areOptionalElementsAllowed else { return result }
+        
+        var optionalElements = [T]()
+        
+        for elementCase in OptionalElementType.allCases {
+            let elementInfo = T.init(
+                elementTypeId: elementCase.id,
+                displayText: elementCase.description
+            )
+            optionalElements.append(elementInfo)
+        }
+        
+        if typeId == ActionType.copyToFolder.id || typeId == ActionType.moveToFolder.id {
+            for optionalElement in optionalElements {
+                let actionElement = DraggableElement(element: optionalElement)
+                result.append(actionElement)
+            }
+        }
+        
+        if typeId == ActionType.rename.id {
+            for optionalElement in optionalElements.filter({ $0.elementTypeId != OptionalElementType.slash.id }) {
+                let actionElement = DraggableElement(element: optionalElement)
+                result.append(actionElement)
+            }
+        }
         
         return result
     }

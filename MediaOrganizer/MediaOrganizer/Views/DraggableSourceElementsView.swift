@@ -1,5 +1,5 @@
 //
-//  DraggableSourceActionElementsView.swift
+//  DraggableSourceElementsView.swift
 //  MediaOrganizer
 //
 //  Created by UglyGeorge on 30.09.2024.
@@ -8,14 +8,14 @@
 import SwiftUI
 import WrappingHStack
 
-struct DraggableSourceActionElementsView: ElementContainerView {
+struct DraggableSourceElementsView<T: ElementType>: ElementContainerView {
     @EnvironmentObject var appState: AppState
     
-    @Binding var selectedActionTypeId: Int
-    @Binding var draggedItem: DraggableElement<ActionElement>?
-    @Binding var destinationElements: [DraggableElement<ActionElement>]
+    @Binding var selectedTypeId: Int
+    @Binding var draggedItem: DraggableElement<T>?
+    @Binding var destinationElements: [DraggableElement<T>]
     
-    @State private var sourceElements = [DraggableElement<ActionElement>]()
+    @State private var sourceElements = [DraggableElement<T>]()
     
     var body: some View {
         WrappingHStack(alignment: .leading) {
@@ -34,53 +34,35 @@ struct DraggableSourceActionElementsView: ElementContainerView {
         }
         .padding(.leading, 10)
         .onAppear(perform: fillSourceElements)
-        .onChange(of: selectedActionTypeId, fillSourceElements)
+        .onChange(of: selectedTypeId, fillSourceElements)
     }
     
     private func fillSourceElements() {
         sourceElements.removeAll()
         
-        let currentActionType = appState.current.action?.type ?? .rename
+        let isCustomizable = getCustomizationAbilityByTypeId(typeId: selectedTypeId)
         
-        guard currentActionType.canBeCustomized else { return }
+        guard isCustomizable else { return }
         
         for metadataCase in MetadataType.allCases {
-            let elementInfo = ActionElement(
+            let elementInfo = T.init(
                 elementTypeId: metadataCase.id,
                 displayText: metadataCase.shortDescription)
             let actionElement = DraggableElement(element: elementInfo)
             sourceElements.append(actionElement)
         }
         
-        var optionalElements = [ActionElement]()
+        let optionalElements: [DraggableElement<T>] = getOptionalElements(typeId: selectedTypeId)
         
-        for elementCase in ElementType.allCases {
-            let elementInfo = ActionElement(
-                elementTypeId: elementCase.id,
-                displayText: elementCase.description)
-            optionalElements.append(elementInfo)
-        }
-        
-        switch currentActionType {
-            case .copyToFolder, .moveToFolder:
-                for optionalElement in optionalElements {
-                    let actionElement = DraggableElement(element: optionalElement)
-                    sourceElements.append(actionElement)
-                }
-            case .rename:
-                for optionalElement in optionalElements.filter({$0.elementTypeId != ElementType.slash.id}) {
-                    let actionElement = DraggableElement(element: optionalElement)
-                    sourceElements.append(actionElement)
-                }
-            case .delete, .skip:
-                return
+        for optionalElement in optionalElements {
+            sourceElements.append(optionalElement)
         }
     }
     
     // MARK: Private functions
     
     @ViewBuilder
-    private func elementAsIconAndText(elementInfo: ActionElement) -> some View {
+    private func elementAsIconAndText(elementInfo: T) -> some View {
         let label = elementInfo.displayText
         let options = getElementOptionsByTypeId(typeId: elementInfo.elementTypeId)
         

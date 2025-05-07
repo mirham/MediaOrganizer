@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct DropViewDelegate<T: Element>: DropDelegate {
+struct DropViewDelegate<T: ElementType>: DropDelegate {
     @Binding var draggedItem: DraggableElement<T>?
     @Binding var items: [DraggableElement<T>]
     
