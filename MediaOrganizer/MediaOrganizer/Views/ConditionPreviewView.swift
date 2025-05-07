@@ -8,10 +8,10 @@
 import SwiftUI
 import WrappingHStack
 
-struct ActionPreviewView: ElementContainerView {
+struct ConditionPreviewView: ElementContainerView {
     @EnvironmentObject var appState: AppState
     
-    var actionElements: [ActionElement]
+    var conditionElements: [ConditionElement]
     
     private let dateFormatter = DateFormatter()
     private let dateExample = Date.now
@@ -21,34 +21,21 @@ struct ActionPreviewView: ElementContainerView {
         WrappingHStack(alignment: .leading, horizontalSpacing: 0) {
             Text("Example: ")
                 .font(.subheadline)
-            ForEach(actionElements, id: \.id) { elementInfo in
+            ForEach(conditionElements, id: \.id) { elementInfo in
                 let elementOptions = getElementOptionsByTypeId(typeId: elementInfo.elementTypeId)
                 switch elementInfo.settingType {
                     case .date:
-                        if elementInfo.customDate != nil {
-                            HStack(spacing: 0) {
-                                Text(getFormattedDate(elementInfo: elementInfo))
-                            }
-                            .font(.subheadline)
-                            .background(
-                                RoundedRectangle(cornerRadius: 2, style: .continuous)
-                                    .fill(elementOptions.background)
-                            )
+                        HStack(spacing: 0) {
+                            Text(getFormattedDate(elementInfo: elementInfo))
                         }
-                        else {
-                            HStack(spacing: 0) {
-                                Text(getFormattedDate(elementInfo: elementInfo))
-                            }
-                            .font(.subheadline)
-                            .background(
-                                RoundedRectangle(cornerRadius: 2, style: .continuous)
-                                    .fill(elementOptions.background)
-                            )
-                        }
+                        .font(.subheadline)
+                        .background(
+                            RoundedRectangle(cornerRadius: 2, style: .continuous)
+                                .fill(elementOptions.background)
+                        )
                     default:
                         HStack(spacing: 0) {
                             Text(MetadataType(rawValue: elementInfo.elementTypeId)?.example
-                                 ?? elementInfo.customText
                                  ?? elementInfo.displayText)
                         }
                         .font(.subheadline)
@@ -61,16 +48,14 @@ struct ActionPreviewView: ElementContainerView {
         }
         .opacity(0.8)
         .frame(maxWidth: .infinity)
-        .isHidden(hidden: actionElements.isEmpty, remove: false)
+        .isHidden(hidden: conditionElements.isEmpty, remove: false)
     }
     
     // MARK: Private functions
     
-    private func getFormattedDate(elementInfo: ActionElement) -> String {
+    private func getFormattedDate(elementInfo: ConditionElement) -> String {
         dateFormatter.dateFormat = DateFormatType(rawValue: elementInfo.selectedFormatTypeId ?? DateFormatType.dateEu.id)!.formula
-        let date = elementInfo.customDate == nil || elementInfo.customDate == Date.distantPast
-            ? dateExample
-            : elementInfo.customDate!
+        let date = dateExample
         let result = dateFormatter.string(from: date)
         
         return result

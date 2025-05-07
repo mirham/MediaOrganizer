@@ -11,5 +11,5 @@ import Foundation
 protocol ElementStrategy {
     var typeKey : Int { get }
     
-    func elementAsString(context: Element) -> String?
+    func elementAsString(context: ActionElement) -> String?
 }

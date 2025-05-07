@@ -11,7 +11,7 @@ struct MetadataDateStrategy : ElementStrategy {
     let typeKey: Int
     let metadataKey: MetadataType
     
-    func elementAsString(context: Element) -> String? {
+    func elementAsString(context: ActionElement) -> String? {
         guard let date = context.fileMetadata[metadataKey] as? Date,
               let formatTypeId = context.selectedFormatTypeId,
               let formatType = DateFormatType(rawValue: formatTypeId) else {

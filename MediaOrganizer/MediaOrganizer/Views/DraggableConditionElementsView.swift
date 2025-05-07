@@ -1,46 +1,45 @@
 //
-//  DraggableActionElementsView.swift
+//  DraggableConditionElementsView.swift
 //  MediaOrganizer
 //
-//  Created by UglyGeorge on 01.10.2024.
+//  Created by UglyGeorge on 07.05.2024.
 //
 
 import SwiftUI
 import WrappingHStack
 
-struct DraggableActionElementsView: View {
+struct DraggableConditionElementsView: View {
     @EnvironmentObject var appState: AppState
     
-    @Binding var selectedActionTypeId: Int
-    @Binding var draggedItem: DraggableElement<ActionElement>?
-    @Binding var actionElements: [DraggableElement<ActionElement>]
+    @Binding var selectedConditionTypeId: Int
+    @Binding var draggedItem: DraggableElement<ConditionElement>?
+    @Binding var conditionElements: [DraggableElement<ConditionElement>]
     
     var body: some View {
         HStack {
             WrappingHStack(alignment: .leading) {
-                ForEach(actionElements, id: \.id) {conditionElement in
-                    ActionElementEditView(element: conditionElement.element)
+                ForEach(conditionElements, id: \.id) {conditionElement in
+                    ConditionElementEditView(element: conditionElement.element)
                         .onDrag({
                             self.draggedItem = conditionElement
                             return NSItemProvider(object: conditionElement.element.displayText as NSString)
                         })
                         .onDrop(of: [.text], delegate: DropViewDelegate(
                             draggedItem: $draggedItem,
-                            items: $actionElements,
+                            items: $conditionElements,
                             item: conditionElement))
                 }
             }
             .padding(5)
         }
-        .asActionEditPanel()
-        .isHidden(hidden: !ActionType(rawValue: selectedActionTypeId)!.canBeCustomized, remove: true)
+        .asConditionEditPanel()
         .padding(.leading, 5)
         .padding(.bottom, 10)
     }
 }
 
 private extension HStack {
-    func asActionEditPanel() -> some View {
+    func asConditionEditPanel() -> some View {
         self.frame(minWidth: 400, maxWidth: .infinity, minHeight: 30)
             .contentShape(Rectangle())
             .clipShape(

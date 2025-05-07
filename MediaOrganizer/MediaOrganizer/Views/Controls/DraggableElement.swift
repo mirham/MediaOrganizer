@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct DraggableElement: Equatable, Identifiable {
+struct DraggableElement<T: Element> : Equatable, Identifiable {
     let id: UUID
-    let element: Element
+    let element: T
     let dateCreated: Date
     
-    init(element: Element) {
+    init(element: T) {
         self.id = UUID()
         self.element = element
         self.dateCreated = Date()
@@ -20,7 +20,7 @@ struct DraggableElement: Equatable, Identifiable {
     
     func clone() -> DraggableElement {
         let clonedElement = element.clone()
-        let result = DraggableElement(element: clonedElement)
+        let result = DraggableElement(element: clonedElement as! T)
         
         return result
     }

@@ -15,5 +15,6 @@ protocol ServiceBaseType {
     func doesCurrentRuleExist() -> Bool
     func getCurrentRuleId() -> UUID?
     func getRuleIndexByRuleId(ruleId: UUID) -> Int?
+    func doesCurrentConditionExist() -> Bool
     func doesCurrentActionExist() -> Bool
 }

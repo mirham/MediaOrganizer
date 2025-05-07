@@ -14,8 +14,8 @@ struct ActionEditView: View {
     @Environment(\.controlActiveState) private var controlActiveState
     
     @State private var selectedActionTypeId = ActionType.rename.id
-    @State private var actionElements = [DraggableElement]()
-    @State private var draggedItem: DraggableElement?
+    @State private var actionElements = [DraggableElement<ActionElement>]()
+    @State private var draggedItem: DraggableElement<ActionElement>?
     
     @Injected(\.actionService) private var actionService
     
@@ -57,7 +57,7 @@ struct ActionEditView: View {
                     }
                     appState.objectWillChange.send()
                 }
-                DraggableSourceElementsView(
+                DraggableSourceActionElementsView(
                     selectedActionTypeId: $selectedActionTypeId,
                     draggedItem: $draggedItem,
                     destinationElements: $actionElements)

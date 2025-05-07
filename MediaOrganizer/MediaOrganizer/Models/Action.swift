@@ -10,7 +10,7 @@ import Foundation
 class Action : Codable, Identifiable, Equatable, ObservableObject {
     var id = UUID()
     var type = ActionType.skip
-    var elements: [Element] = [Element]()
+    var elements: [ActionElement] = [ActionElement]()
     
     func description() -> String {
         let result = type.description

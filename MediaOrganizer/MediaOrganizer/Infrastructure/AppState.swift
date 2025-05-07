@@ -20,6 +20,7 @@ extension AppState {
         var job: Job? = nil
         var rule: Rule? = nil
         var condition: Condition? = nil
+        var isConditionInEditMode = false
         var action: Action? = nil
         var isActionInEditMode = false
         
@@ -27,6 +28,7 @@ extension AppState {
             let result = lhs.job == rhs.job
                 && lhs.rule == rhs.rule
                 && lhs.condition == rhs.condition
+                && lhs.isConditionInEditMode == rhs.isConditionInEditMode
                 && lhs.action == rhs.action
                 && lhs.isActionInEditMode == rhs.isActionInEditMode
             

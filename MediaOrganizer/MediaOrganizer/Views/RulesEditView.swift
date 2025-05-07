@@ -21,18 +21,26 @@ struct RulesEditView: View {
                 VStack(alignment: .center) {
                     Text(Constants.elConditions)
                         .asRuleElementCaption()
-                    HStack {
+                        .padding(.top, 5)
+                    HStack(alignment: .center) {
                         VStack(alignment: .leading) {
                             Text(Constants.elNoConditions)
                                 .asRuleElementNone()
                                 .isHidden(hidden: isNoneElementSholuldBeHidden(rule: rule, array: rule.conditions), remove: true)
+                            ForEach(rule.conditions, id: \.id) { condition in
+                                HStack(spacing: 0) {
+                                    ConditionView(ruleId: rule.id, condition: condition)
+                                        .frame(maxWidth: .infinity)
+                                }
+                            }
                         }
-                        Button(String(), systemImage: Constants.iconAdd) {
-                            // TODO: Conditions
-                        }
-                        .withAddButtonStyle(activeState: controlActiveState)
-                        .isHidden(hidden: !ruleService.isCurrentRule(ruleId: rule.id) , remove: true)
                     }
+                    Button(String(), systemImage: Constants.iconAdd) {
+                        rule.conditions.append(Condition())
+                    }
+                    .withAddButtonStyle(activeState: controlActiveState)
+                    .isHidden(hidden: !ruleService.isCurrentRule(ruleId: rule.id) , remove: true)
+                    .padding(.bottom, 3)
                     Text(Constants.elActions)
                         .asRuleElementCaption()
                         .padding(.top, 5)

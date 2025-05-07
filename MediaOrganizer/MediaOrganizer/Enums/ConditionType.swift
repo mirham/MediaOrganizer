@@ -12,13 +12,11 @@ enum ConditionType : Int, CaseIterable, Identifiable, Codable, Equatable {
     
     case cIf = 0
     case cElseIf = 1
-    case cElse = 2
     
     var description: String {
         switch self {
             case .cIf: return "if"
             case .cElseIf: return "else if"
-            case .cElse: return "else"
         }
     }
 }

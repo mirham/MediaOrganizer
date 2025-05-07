@@ -1,23 +1,25 @@
 //
-//  ActionElementEditView.swift
+//  ConditionElementEditView.swift
 //  MediaOrganizer
 //
-//  Created by UglyGeorge on 02.10.2024.
+//  Created by UglyGeorge on 07.05.2024.
 //
 
 import SwiftUI
 
-struct ActionElementEditView: ElementContainerView {
+struct ConditionElementEditView: ElementContainerView {
     @EnvironmentObject var appState: AppState
     
     @Environment(\.controlActiveState) private var controlActiveState
     
     @State private var showEditor: Bool = false
     @State private var selectedTypeId: Int?
+    
+    // TODO RUSS: Owerwrite with correct data.
     @State private var customText: String
     @State private var customDate: Date
     
-    private let element: ActionElement
+    private let element: ConditionElement
     
     private var elementOptions: ElementOptions { get {
         return getElementOptionsByTypeId(typeId: element.elementTypeId)
@@ -29,16 +31,17 @@ struct ActionElementEditView: ElementContainerView {
         return formatter
     }()
     
-    init(element: ActionElement) {
+    init(element: ConditionElement) {
         self.element = element
         self.selectedTypeId = element.selectedFormatTypeId ?? DateFormatType.dateEu.id
-        self.customText = element.customText ?? String()
-        self.customDate = element.customDate ?? Date.distantPast
+        
+        self.customDate = Date.distantPast
+        self.customText = "FIX"
     }
     
     var body: some View {
         HStack {
-            Text(getEffectiveDispalyText() + getFormatDescription())
+            Text("WORKS!" + getFormatDescription())
                 .contentShape(Rectangle())
                 .padding(5)
             Button(String(), systemImage: Constants.iconEdit) {
@@ -64,16 +67,6 @@ struct ActionElementEditView: ElementContainerView {
     }
     
     // MARK: Private functions
-    
-    private func getEffectiveDispalyText() -> String {
-        let result = customText != String()
-            ? customText
-            : customDate != Date.distantPast
-                ? customDate.formatted(date: .numeric, time: .standard)
-                : element.displayText
-        
-        return result
-    }
     
     private func getFormatDescription() -> String {
         guard self.selectedTypeId != nil && elementOptions.valueType == .date else { return String() }
@@ -136,7 +129,6 @@ struct ActionElementEditView: ElementContainerView {
             .frame(maxWidth: 20)
             Button(String(), systemImage: Constants.iconCheck) {
                 element.selectedFormatTypeId = selectedTypeId
-                element.customDate = customDate
                 showEditor = false
             }
             .withRemoveButtonStyle(activeState: controlActiveState)
@@ -152,7 +144,6 @@ struct ActionElementEditView: ElementContainerView {
                 }
             .frame(maxWidth: 100)
             Button(String(), systemImage: Constants.iconCheck) {
-                element.customText = customText
                 showEditor = false
             }
             .withRemoveButtonStyle(activeState: controlActiveState)

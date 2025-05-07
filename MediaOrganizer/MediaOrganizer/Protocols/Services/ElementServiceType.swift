@@ -9,5 +9,5 @@
 import Foundation
 
 protocol ElementServiceType {
-    func elementAsString(element : Element) -> String?
+    func elementAsString(element : ActionElement) -> String?
 }

@@ -10,7 +10,7 @@ import Foundation
 struct CustomDateStrategy : ElementStrategy {
     let typeKey = ElementType.customDate.rawValue
     
-    func elementAsString(context: Element) -> String? {
+    func elementAsString(context: ActionElement) -> String? {
         guard let date = context.customDate,
               let formatTypeId = context.selectedFormatTypeId,
               let formatType = DateFormatType(rawValue: formatTypeId) else {

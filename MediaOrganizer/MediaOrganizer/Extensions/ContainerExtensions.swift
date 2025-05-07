@@ -21,6 +21,10 @@ extension Container {
         Factory(self) { RuleService() }
     }
     
+    var conditionService: Factory<ConditionServiceType> {
+        Factory(self) { ConditionService() }
+    }
+    
     var actionService: Factory<ActionServiceType> {
         Factory(self) { ActionService() }
     }

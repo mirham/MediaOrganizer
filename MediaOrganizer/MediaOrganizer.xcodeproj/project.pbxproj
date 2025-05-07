@@ -33,6 +33,16 @@
 		35447F512C9870F80000C0B1 /* JobEditMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35447F502C9870F80000C0B1 /* JobEditMode.swift */; };
 		35447F562C98C0580000C0B1 /* CheckToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35447F552C98C0580000C0B1 /* CheckToggleStyle.swift */; };
 		3559D94F2DCB83CE00B8D0D5 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3559D94E2DCB83C700B8D0D5 /* StringExtensions.swift */; };
+		3559D9512DCB913200B8D0D5 /* ConditionElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3559D9502DCB913200B8D0D5 /* ConditionElement.swift */; };
+		3559D9532DCB9B1A00B8D0D5 /* ConditionValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3559D9522DCB9B1400B8D0D5 /* ConditionValue.swift */; };
+		3559D9552DCBA03C00B8D0D5 /* ConditionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3559D9542DCBA03C00B8D0D5 /* ConditionView.swift */; };
+		3559D9572DCBA1CD00B8D0D5 /* ConditionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3559D9562DCBA1CD00B8D0D5 /* ConditionService.swift */; };
+		3559D95B2DCBA95400B8D0D5 /* ConditionEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3559D95A2DCBA95400B8D0D5 /* ConditionEditView.swift */; };
+		3559D95D2DCBAA6300B8D0D5 /* DraggableConditionElementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3559D95C2DCBAA6300B8D0D5 /* DraggableConditionElementsView.swift */; };
+		3559D95F2DCBAB6F00B8D0D5 /* ConditionElementEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3559D95E2DCBAB6F00B8D0D5 /* ConditionElementEditView.swift */; };
+		3559D9612DCBADB700B8D0D5 /* Element.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3559D9602DCBADB300B8D0D5 /* Element.swift */; };
+		3559D9632DCBAFEF00B8D0D5 /* ConditionPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3559D9622DCBAFEF00B8D0D5 /* ConditionPreviewView.swift */; };
+		3559D9652DCBB6BE00B8D0D5 /* DraggableSourceConditionElementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3559D9642DCBB6BE00B8D0D5 /* DraggableSourceConditionElementsView.swift */; };
 		35B1B14D2C9C77F700B39FFC /* DraggableElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B1B14C2C9C77F700B39FFC /* DraggableElement.swift */; };
 		35B1B1502C9CA33500B39FFC /* WrappingHStack in Frameworks */ = {isa = PBXBuildFile; productRef = 35B1B14F2C9CA33500B39FFC /* WrappingHStack */; };
 		35CA7C782C946D9000765522 /* MediaOrganizerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CA7C772C946D9000765522 /* MediaOrganizerApp.swift */; };
@@ -53,10 +63,10 @@
 		35CBFF272CB82B99003E3DBE /* MetadataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CBFF262CB82B99003E3DBE /* MetadataService.swift */; };
 		35CBFF2F2CB83E93003E3DBE /* JobsHeaderToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CBFF2E2CB83E93003E3DBE /* JobsHeaderToolbarView.swift */; };
 		35DF88302CAB0095007626CB /* DropViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DF882F2CAB0095007626CB /* DropViewDelegate.swift */; };
-		35DF88342CAB270B007626CB /* DraggableSourceElementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DF88332CAB270B007626CB /* DraggableSourceElementsView.swift */; };
+		35DF88342CAB270B007626CB /* DraggableSourceActionElementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DF88332CAB270B007626CB /* DraggableSourceActionElementsView.swift */; };
 		35DF883A2CAB2FB2007626CB /* ElementType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DF88392CAB2FB2007626CB /* ElementType.swift */; };
 		35DF883F2CABDCEC007626CB /* ElementValueType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DF883E2CABDCEC007626CB /* ElementValueType.swift */; };
-		35DF88412CABE194007626CB /* Element.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DF88402CABE194007626CB /* Element.swift */; };
+		35DF88412CABE194007626CB /* ActionElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DF88402CABE194007626CB /* ActionElement.swift */; };
 		35DF88492CAC6E07007626CB /* DraggableActionElementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DF88482CAC6E07007626CB /* DraggableActionElementsView.swift */; };
 		35DF884B2CAD6997007626CB /* ActionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DF884A2CAD6997007626CB /* ActionService.swift */; };
 		35DF884D2CAD7EC1007626CB /* ElementOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DF884C2CAD7EC1007626CB /* ElementOptions.swift */; };
@@ -100,6 +110,16 @@
 		35447F502C9870F80000C0B1 /* JobEditMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobEditMode.swift; sourceTree = "<group>"; };
 		35447F552C98C0580000C0B1 /* CheckToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckToggleStyle.swift; sourceTree = "<group>"; };
 		3559D94E2DCB83C700B8D0D5 /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
+		3559D9502DCB913200B8D0D5 /* ConditionElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionElement.swift; sourceTree = "<group>"; };
+		3559D9522DCB9B1400B8D0D5 /* ConditionValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionValue.swift; sourceTree = "<group>"; };
+		3559D9542DCBA03C00B8D0D5 /* ConditionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionView.swift; sourceTree = "<group>"; };
+		3559D9562DCBA1CD00B8D0D5 /* ConditionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionService.swift; sourceTree = "<group>"; };
+		3559D95A2DCBA95400B8D0D5 /* ConditionEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionEditView.swift; sourceTree = "<group>"; };
+		3559D95C2DCBAA6300B8D0D5 /* DraggableConditionElementsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableConditionElementsView.swift; sourceTree = "<group>"; };
+		3559D95E2DCBAB6F00B8D0D5 /* ConditionElementEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionElementEditView.swift; sourceTree = "<group>"; };
+		3559D9602DCBADB300B8D0D5 /* Element.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Element.swift; sourceTree = "<group>"; };
+		3559D9622DCBAFEF00B8D0D5 /* ConditionPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionPreviewView.swift; sourceTree = "<group>"; };
+		3559D9642DCBB6BE00B8D0D5 /* DraggableSourceConditionElementsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableSourceConditionElementsView.swift; sourceTree = "<group>"; };
 		35B1B14C2C9C77F700B39FFC /* DraggableElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableElement.swift; sourceTree = "<group>"; };
 		35CA7C742C946D9000765522 /* MediaOrganizer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MediaOrganizer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35CA7C772C946D9000765522 /* MediaOrganizerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaOrganizerApp.swift; sourceTree = "<group>"; };
@@ -121,10 +141,10 @@
 		35CBFF262CB82B99003E3DBE /* MetadataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataService.swift; sourceTree = "<group>"; };
 		35CBFF2E2CB83E93003E3DBE /* JobsHeaderToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobsHeaderToolbarView.swift; sourceTree = "<group>"; };
 		35DF882F2CAB0095007626CB /* DropViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropViewDelegate.swift; sourceTree = "<group>"; };
-		35DF88332CAB270B007626CB /* DraggableSourceElementsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableSourceElementsView.swift; sourceTree = "<group>"; };
+		35DF88332CAB270B007626CB /* DraggableSourceActionElementsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableSourceActionElementsView.swift; sourceTree = "<group>"; };
 		35DF88392CAB2FB2007626CB /* ElementType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementType.swift; sourceTree = "<group>"; };
 		35DF883E2CABDCEC007626CB /* ElementValueType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementValueType.swift; sourceTree = "<group>"; };
-		35DF88402CABE194007626CB /* Element.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Element.swift; sourceTree = "<group>"; };
+		35DF88402CABE194007626CB /* ActionElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionElement.swift; sourceTree = "<group>"; };
 		35DF88482CAC6E07007626CB /* DraggableActionElementsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableActionElementsView.swift; sourceTree = "<group>"; };
 		35DF884A2CAD6997007626CB /* ActionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionService.swift; sourceTree = "<group>"; };
 		35DF884C2CAD7EC1007626CB /* ElementOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementOptions.swift; sourceTree = "<group>"; };
@@ -172,10 +192,12 @@
 			isa = PBXGroup;
 			children = (
 				35447F442C9848AA0000C0B1 /* Job.swift */,
-				351514042C9B1105000E4CAB /* Condition.swift */,
 				352B6F102C9A160A0000789D /* Rule.swift */,
+				351514042C9B1105000E4CAB /* Condition.swift */,
+				3559D9522DCB9B1400B8D0D5 /* ConditionValue.swift */,
+				3559D9502DCB913200B8D0D5 /* ConditionElement.swift */,
 				352B6F122C9A19D10000789D /* Action.swift */,
-				35DF88402CABE194007626CB /* Element.swift */,
+				35DF88402CABE194007626CB /* ActionElement.swift */,
 				35DF884C2CAD7EC1007626CB /* ElementOptions.swift */,
 				35CBFF242CB828E0003E3DBE /* MediaFileInfo.swift */,
 				35E39A312CC29305003D6360 /* FileAction.swift */,
@@ -264,6 +286,7 @@
 			isa = PBXGroup;
 			children = (
 				35CA7C902C94715900765522 /* Settable.swift */,
+				3559D9602DCBADB300B8D0D5 /* Element.swift */,
 				35F872472DCA22430064B304 /* Services */,
 			);
 			path = Protocols;
@@ -293,6 +316,7 @@
 				352B6F022C99BD1C0000789D /* ServiceBase.swift */,
 				352B6F002C99BCF70000789D /* JobService.swift */,
 				3515140A2C9B1D4F000E4CAB /* RuleService.swift */,
+				3559D9562DCBA1CD00B8D0D5 /* ConditionService.swift */,
 				35DF884A2CAD6997007626CB /* ActionService.swift */,
 				35CBFF262CB82B99003E3DBE /* MetadataService.swift */,
 				35CBFF1A2CB804A0003E3DBE /* FileService.swift */,
@@ -318,9 +342,15 @@
 				35447F462C9852850000C0B1 /* JobGeneralSettingsEditView.swift */,
 				352B6F082C99ECB00000789D /* RulesEditView.swift */,
 				351514082C9B1A30000E4CAB /* RulesToolbarView.swift */,
+				3559D9542DCBA03C00B8D0D5 /* ConditionView.swift */,
+				3559D95A2DCBA95400B8D0D5 /* ConditionEditView.swift */,
+				3559D95E2DCBAB6F00B8D0D5 /* ConditionElementEditView.swift */,
+				3559D9622DCBAFEF00B8D0D5 /* ConditionPreviewView.swift */,
+				3559D9642DCBB6BE00B8D0D5 /* DraggableSourceConditionElementsView.swift */,
+				3559D95C2DCBAA6300B8D0D5 /* DraggableConditionElementsView.swift */,
 				3515140F2C9C1BDB000E4CAB /* ActionView.swift */,
 				3526858C2C9C3D0900F958E8 /* ActionEditView.swift */,
-				35DF88332CAB270B007626CB /* DraggableSourceElementsView.swift */,
+				35DF88332CAB270B007626CB /* DraggableSourceActionElementsView.swift */,
 				35DF88482CAC6E07007626CB /* DraggableActionElementsView.swift */,
 				35DF88502CAD81C8007626CB /* ActionElementEditView.swift */,
 				3536629E2CB162F9006FB739 /* ActionPreviewView.swift */,
@@ -358,8 +388,8 @@
 		35E39A352CC2A13E003D6360 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				3559D94E2DCB83C700B8D0D5 /* StringExtensions.swift */,
 				35F872392DCA0EBD0064B304 /* ContainerExtensions.swift */,
+				3559D94E2DCB83C700B8D0D5 /* StringExtensions.swift */,
 				35E39A332CC2A13E003D6360 /* IsoExtensions.swift */,
 				35E39A342CC2A13E003D6360 /* UrlExtensions.swift */,
 			);
@@ -448,21 +478,29 @@
 				352B6F092C99ECB00000789D /* RulesEditView.swift in Sources */,
 				35E39A322CC29305003D6360 /* FileAction.swift in Sources */,
 				3536629F2CB162F9006FB739 /* ActionPreviewView.swift in Sources */,
+				3559D9552DCBA03C00B8D0D5 /* ConditionView.swift in Sources */,
+				3559D9532DCB9B1A00B8D0D5 /* ConditionValue.swift in Sources */,
 				35CBFF2F2CB83E93003E3DBE /* JobsHeaderToolbarView.swift in Sources */,
 				35DF884D2CAD7EC1007626CB /* ElementOptions.swift in Sources */,
+				3559D95D2DCBAA6300B8D0D5 /* DraggableConditionElementsView.swift in Sources */,
+				3559D9512DCB913200B8D0D5 /* ConditionElement.swift in Sources */,
 				351514052C9B1105000E4CAB /* Condition.swift in Sources */,
 				352B6F132C9A19D10000789D /* Action.swift in Sources */,
 				35447F472C9852850000C0B1 /* JobGeneralSettingsEditView.swift in Sources */,
 				35CA7C9B2C94725900765522 /* InfoView.swift in Sources */,
+				3559D95B2DCBA95400B8D0D5 /* ConditionEditView.swift in Sources */,
 				35B1B14D2C9C77F700B39FFC /* DraggableElement.swift in Sources */,
+				3559D9612DCBADB700B8D0D5 /* Element.swift in Sources */,
 				35DF88512CAD81C8007626CB /* ActionElementEditView.swift in Sources */,
 				35DF883A2CAB2FB2007626CB /* ElementType.swift in Sources */,
+				3559D9652DCBB6BE00B8D0D5 /* DraggableSourceConditionElementsView.swift in Sources */,
 				35447F512C9870F80000C0B1 /* JobEditMode.swift in Sources */,
 				351514092C9B1A30000E4CAB /* RulesToolbarView.swift in Sources */,
 				3526858D2C9C3D0900F958E8 /* ActionEditView.swift in Sources */,
 				35CA7C8F2C94710F00765522 /* AppDelegate.swift in Sources */,
 				35CA7C992C94724600765522 /* JobsView.swift in Sources */,
 				35E39A362CC2A13E003D6360 /* IsoExtensions.swift in Sources */,
+				3559D9632DCBAFEF00B8D0D5 /* ConditionPreviewView.swift in Sources */,
 				35E39A372CC2A13E003D6360 /* UrlExtensions.swift in Sources */,
 				3515140E2C9C0744000E4CAB /* DividerWithImage.swift in Sources */,
 				352B6F112C9A160A0000789D /* Rule.swift in Sources */,
@@ -479,7 +517,7 @@
 				3515140B2C9B1D4F000E4CAB /* RuleService.swift in Sources */,
 				35CA7C8D2C94708500765522 /* Constants.swift in Sources */,
 				352B6F0D2C9A0D9E0000789D /* MetadataType.swift in Sources */,
-				35DF88342CAB270B007626CB /* DraggableSourceElementsView.swift in Sources */,
+				35DF88342CAB270B007626CB /* DraggableSourceActionElementsView.swift in Sources */,
 				3559D94F2DCB83CE00B8D0D5 /* StringExtensions.swift in Sources */,
 				35DF883F2CABDCEC007626CB /* ElementValueType.swift in Sources */,
 				35CA7C952C9471DA00765522 /* IsHiddenModifier.swift in Sources */,
@@ -490,13 +528,15 @@
 				35447F4F2C98618C0000C0B1 /* ViewHelper.swift in Sources */,
 				35E39A392CC2A303003D6360 /* ElementContainerView.swift in Sources */,
 				35DF88492CAC6E07007626CB /* DraggableActionElementsView.swift in Sources */,
-				35DF88412CABE194007626CB /* Element.swift in Sources */,
+				3559D95F2DCBAB6F00B8D0D5 /* ConditionElementEditView.swift in Sources */,
+				35DF88412CABE194007626CB /* ActionElement.swift in Sources */,
 				35CBFF252CB828E0003E3DBE /* MediaFileInfo.swift in Sources */,
 				352B6F012C99BCF80000789D /* JobService.swift in Sources */,
 				35447F452C9848AA0000C0B1 /* Job.swift in Sources */,
 				35DF88532CAED3CB007626CB /* DateFormatType.swift in Sources */,
 				352B6F0F2C9A13C20000789D /* ActionType.swift in Sources */,
 				35CA7C9F2C94855B00765522 /* FolderType.swift in Sources */,
+				3559D9572DCBA1CD00B8D0D5 /* ConditionService.swift in Sources */,
 				352B6F0B2C9A0BAC0000789D /* ConditionType.swift in Sources */,
 				35CA7C972C94720C00765522 /* ViewExtensions.swift in Sources */,
 				35CA7C912C94715900765522 /* Settable.swift in Sources */,

@@ -9,7 +9,7 @@
 struct FileExtensionStrategy : ElementStrategy {
     let typeKey = MetadataType.fileExtension.rawValue
     
-    func elementAsString(context: Element) -> String? {
+    func elementAsString(context: ActionElement) -> String? {
         guard let extensionWithoutDot = context.fileMetadata[.fileExtension] as? String else {
             return nil
         }

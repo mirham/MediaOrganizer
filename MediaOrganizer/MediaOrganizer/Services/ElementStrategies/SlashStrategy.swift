@@ -11,7 +11,7 @@ import Foundation
 struct SlashStrategy: ElementStrategy {    
     var typeKey = ElementType.slash.rawValue
     
-    func elementAsString(context: Element) -> String? {
+    func elementAsString(context: ActionElement) -> String? {
         Constants.slash
     }
 }

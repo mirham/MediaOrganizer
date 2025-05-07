@@ -1,5 +1,5 @@
 //
-//  DraggableSourceElementsView.swift
+//  DraggableSourceActionElementsView.swift
 //  MediaOrganizer
 //
 //  Created by UglyGeorge on 30.09.2024.
@@ -8,14 +8,14 @@
 import SwiftUI
 import WrappingHStack
 
-struct DraggableSourceElementsView: ElementContainerView {
+struct DraggableSourceActionElementsView: ElementContainerView {
     @EnvironmentObject var appState: AppState
     
     @Binding var selectedActionTypeId: Int
-    @Binding var draggedItem: DraggableElement?
-    @Binding var destinationElements: [DraggableElement]
+    @Binding var draggedItem: DraggableElement<ActionElement>?
+    @Binding var destinationElements: [DraggableElement<ActionElement>]
     
-    @State private var sourceElements = [DraggableElement]()
+    @State private var sourceElements = [DraggableElement<ActionElement>]()
     
     var body: some View {
         WrappingHStack(alignment: .leading) {
@@ -45,17 +45,17 @@ struct DraggableSourceElementsView: ElementContainerView {
         guard currentActionType.canBeCustomized else { return }
         
         for metadataCase in MetadataType.allCases {
-            let elementInfo = Element(
+            let elementInfo = ActionElement(
                 elementTypeId: metadataCase.id,
                 displayText: metadataCase.shortDescription)
             let actionElement = DraggableElement(element: elementInfo)
             sourceElements.append(actionElement)
         }
         
-        var optionalElements = [Element]()
+        var optionalElements = [ActionElement]()
         
         for elementCase in ElementType.allCases {
-            let elementInfo = Element(
+            let elementInfo = ActionElement(
                 elementTypeId: elementCase.id,
                 displayText: elementCase.description)
             optionalElements.append(elementInfo)
@@ -80,7 +80,7 @@ struct DraggableSourceElementsView: ElementContainerView {
     // MARK: Private functions
     
     @ViewBuilder
-    private func elementAsIconAndText(elementInfo: Element) -> some View {
+    private func elementAsIconAndText(elementInfo: ActionElement) -> some View {
         let label = elementInfo.displayText
         let options = getElementOptionsByTypeId(typeId: elementInfo.elementTypeId)
         

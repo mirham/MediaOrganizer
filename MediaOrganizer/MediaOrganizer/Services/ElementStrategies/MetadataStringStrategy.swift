@@ -10,7 +10,7 @@ struct MetadataStringStrategy : ElementStrategy {
     let typeKey: Int
     let metadataKey: MetadataType
     
-    func elementAsString(context: Element) -> String? {
+    func elementAsString(context: ActionElement) -> String? {
         context.fileMetadata[metadataKey] as? String
     }
 }

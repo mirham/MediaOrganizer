@@ -10,6 +10,13 @@ import Foundation
 class Condition : Codable, Identifiable, Equatable {
     var id = UUID()
     var type = ConditionType.cIf
+    var elements: [ConditionElement] = [ConditionElement]()
+    
+    func description() -> String {
+        let result = type.description
+        
+        return result
+    }
     
     static func == (lhs: Condition, rhs: Condition) -> Bool {
         return lhs.id == rhs.id

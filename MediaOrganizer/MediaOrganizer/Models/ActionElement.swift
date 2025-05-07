@@ -1,5 +1,5 @@
 //
-//  Element.swift
+//  ActionElement.swift
 //  MediaOrganizer
 //
 //  Created by UglyGeorge on 01.10.2024.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Element : Codable, Equatable {
+class ActionElement : Element {
     let id: UUID
     let elementTypeId: Int
     let displayText: String
@@ -48,21 +48,21 @@ class Element : Codable, Equatable {
         self.id = UUID()
         self.elementTypeId = elementTypeId
         self.displayText = displayText
-        self.settingType = Element.valueTypesMap[elementTypeId] ?? .text
+        self.settingType = ActionElement.valueTypesMap[elementTypeId] ?? .text
         self.selectedFormatTypeId = nil
         self.customDate = nil
         self.customText = nil
     }
     
-    func clone() -> Element {
-        let result = Element(
+    func clone() -> any Element {
+        let result = ActionElement(
             elementTypeId: self.elementTypeId,
             displayText: self.displayText)
         
         return result
     }
     
-    static func == (lhs: Element, rhs: Element) -> Bool {
+    static func == (lhs: ActionElement, rhs: ActionElement) -> Bool {
         return lhs.id == rhs.id
     }
 }

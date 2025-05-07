@@ -51,4 +51,8 @@ class ServiceBase : ServiceBaseType {
     internal func doesCurrentActionExist() -> Bool {
         appState.current.action != nil
     }
+    
+    internal func doesCurrentConditionExist() -> Bool {
+        appState.current.condition != nil
+    }
 }
