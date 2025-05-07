@@ -35,10 +35,10 @@ struct ActionEditView: View {
                     }
                 }
                 .pickerStyle(.menu)
-                DraggableConditionElementsView(
+                DraggableActionElementsView(
                     selectedActionTypeId: $selectedActionTypeId,
                     draggedItem: $draggedItem,
-                    conditionElements: $actionElements)
+                    actionElements: $actionElements)
                 .onAppear {
                     selectedActionTypeId = appState.current.action?.type.id ?? ActionType.rename.id
                     

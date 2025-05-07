@@ -38,7 +38,7 @@ struct ActionElementEditView: ElementContainerView {
     
     var body: some View {
         HStack {
-            Text(getEffectiveDispalyText())
+            Text(getEffectiveDispalyText() + getFormatDescription())
                 .contentShape(Rectangle())
                 .padding(5)
             Button(String(), systemImage: Constants.iconEdit) {
@@ -75,6 +75,20 @@ struct ActionElementEditView: ElementContainerView {
         return result
     }
     
+    private func getFormatDescription() -> String {
+        guard self.selectedTypeId != nil && elementOptions.valueType == .date else { return String() }
+        
+        let dateFormatType = DateFormatType.init(rawValue: self.selectedTypeId!)
+        
+        guard dateFormatType != nil else { return String() }
+        
+        let result = dateFormatType == .amPm
+            ? " (\(dateFormatType!.description))"
+            : " (\(dateFormatType!.description.firstLowercased))"
+        
+        return result
+    }
+    
     @ViewBuilder
     private func renderEditor() -> some View {
         switch element.settingType {
@@ -90,7 +104,7 @@ struct ActionElementEditView: ElementContainerView {
     @ViewBuilder
     private func renderDateFormatSelection() -> some View {
         HStack {
-            Text(element.displayText)
+            Text(element.displayText + getFormatDescription())
                 .padding(.trailing, -10)
                 .isHidden(hidden: elementOptions.editable, remove: true)
             DatePicker(String(),

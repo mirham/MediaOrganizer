@@ -1,5 +1,5 @@
 //
-//  DraggableConditionElementsView.swift
+//  DraggableActionElementsView.swift
 //  MediaOrganizer
 //
 //  Created by UglyGeorge on 01.10.2024.
@@ -8,17 +8,17 @@
 import SwiftUI
 import WrappingHStack
 
-struct DraggableConditionElementsView: View {
+struct DraggableActionElementsView: View {
     @EnvironmentObject var appState: AppState
     
     @Binding var selectedActionTypeId: Int
     @Binding var draggedItem: DraggableElement?
-    @Binding var conditionElements: [DraggableElement]
+    @Binding var actionElements: [DraggableElement]
     
     var body: some View {
         HStack {
             WrappingHStack(alignment: .leading) {
-                ForEach(conditionElements, id: \.id) {conditionElement in
+                ForEach(actionElements, id: \.id) {conditionElement in
                     ActionElementEditView(element: conditionElement.element)
                         .onDrag({
                             self.draggedItem = conditionElement
@@ -26,7 +26,7 @@ struct DraggableConditionElementsView: View {
                         })
                         .onDrop(of: [.text], delegate: DropViewDelegate(
                             draggedItem: $draggedItem,
-                            items: $conditionElements,
+                            items: $actionElements,
                             item: conditionElement))
                 }
             }
