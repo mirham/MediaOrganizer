@@ -11,6 +11,10 @@ import Factory
 class ActionService : ServiceBase, ActionServiceType {
     @Injected(\.elementService) private var elementService
     
+    func addNewAction() {
+        appState.current.rule!.actions.append(Action())
+    }
+    
     func isCurrentAction(actionId: UUID) -> Bool {
         guard doesCurrentActionExist() else { return false }
         
@@ -37,15 +41,6 @@ class ActionService : ServiceBase, ActionServiceType {
         guard appState.current.rule != nil else { return }
         
         if let actionIndex = appState.current.rule!.actions.firstIndex(where: { $0.id == actionId }) {
-            appState.current.rule!.actions.remove(at: actionIndex)
-            appState.objectWillChange.send()
-        }
-    }
-    
-    func removeCurrentAction() {
-        guard doesCurrentRuleExist() && doesCurrentActionExist() else { return }
-        
-        if let actionIndex = appState.current.rule!.actions.firstIndex(where: { $0.id == appState.current.action!.id }) {
             appState.current.rule!.actions.remove(at: actionIndex)
             appState.objectWillChange.send()
         }

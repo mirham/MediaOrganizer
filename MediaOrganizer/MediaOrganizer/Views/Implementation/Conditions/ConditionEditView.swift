@@ -22,19 +22,7 @@ struct ConditionEditView: View {
     var body: some View {
         HStack {
             VStack {
-                Picker(String(), selection: Binding(
-                    get: { selectedConditionTypeId },
-                    set: {
-                        selectedConditionTypeId = $0
-                        appState.current.condition!.type = ConditionType(rawValue: $0) ?? .cIf
-                        appState.objectWillChange.send()
-                    }
-                )) {
-                    ForEach(ConditionType.allCases, id: \.id) { item in
-                        Text(item.description)
-                    }
-                }
-                .pickerStyle(.menu)
+                Text(ConditionType(rawValue: selectedConditionTypeId)?.description ?? String())
                 DraggableConditionElementsView(
                     selectedConditionTypeId: $selectedConditionTypeId,
                     draggedItem: $draggedItem,

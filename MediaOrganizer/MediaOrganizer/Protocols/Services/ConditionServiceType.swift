@@ -9,7 +9,7 @@
 import Foundation
 
 protocol ConditionServiceType : ServiceBaseType {
+    func addNewCondition()
     func isCurrentCondition(conditionId: UUID) -> Bool
     func removeConditionById(conditionId: UUID)
-    func removeCurrentCondition()
 }

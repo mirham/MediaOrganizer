@@ -14,6 +14,8 @@ struct RulesEditView: View {
     @Environment(\.controlActiveState) private var controlActiveState
     
     @Injected(\.ruleService) private var ruleService
+    @Injected(\.conditionService) private var conditionService
+    @Injected(\.actionService) private var actionService
     
     var body: some View {
         ScrollView(.vertical) {
@@ -36,7 +38,7 @@ struct RulesEditView: View {
                         }
                     }
                     Button(String(), systemImage: Constants.iconAdd) {
-                        rule.conditions.append(Condition())
+                        conditionService.addNewCondition()
                     }
                     .withAddButtonStyle(activeState: controlActiveState)
                     .isHidden(hidden: !ruleService.isCurrentRule(ruleId: rule.id) , remove: true)
@@ -58,7 +60,7 @@ struct RulesEditView: View {
                         }
                     }
                     Button(String(), systemImage: Constants.iconAdd) {
-                        rule.actions.append(Action())
+                        actionService.addNewAction()
                     }
                     .withAddButtonStyle(activeState: controlActiveState)
                     .isHidden(hidden: !ruleService.isCurrentRule(ruleId: rule.id) , remove: true)
