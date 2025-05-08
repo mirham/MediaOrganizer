@@ -377,7 +377,6 @@
 				35447F482C985A670000C0B1 /* Protocols */,
 				35CA7C932C9471B800765522 /* Extensions */,
 				35CA7C922C9471AB00765522 /* Modifiers */,
-				35CA7C982C94724600765522 /* JobsView.swift */,
 				35E02F292DCC931C00D81F7F /* Implementation */,
 			);
 			path = Views;
@@ -412,13 +411,13 @@
 		35E02EE92DCC930200D81F7F /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				35E02EE12DCC930200D81F7F /* ElementStrategyFactoryType.swift */,
+				35E02EE32DCC930200D81F7F /* FileActionStrategyFactoryType.swift */,
 				35E02EDD2DCC930200D81F7F /* ActionServiceType.swift */,
 				35E02EDE2DCC930200D81F7F /* ConditionServiceType.swift */,
 				35E02EDF2DCC930200D81F7F /* ElementServiceType.swift */,
 				35E02EE02DCC930200D81F7F /* ElementStrategy.swift */,
-				35E02EE12DCC930200D81F7F /* ElementStrategyFactoryType.swift */,
 				35E02EE22DCC930200D81F7F /* FileActionStrategy.swift */,
-				35E02EE32DCC930200D81F7F /* FileActionStrategyFactoryType.swift */,
 				35E02EE42DCC930200D81F7F /* FileServiceType.swift */,
 				35E02EE52DCC930200D81F7F /* JobServiceType.swift */,
 				35E02EE62DCC930200D81F7F /* MetadataServiceType.swift */,
@@ -431,9 +430,9 @@
 		35E02EFD2DCC930C00D81F7F /* ElementStrategies */ = {
 			isa = PBXGroup;
 			children = (
+				35E02EF82DCC930C00D81F7F /* ElementStrategyFactory.swift */,
 				35E02EF62DCC930C00D81F7F /* CustomDateStrategy.swift */,
 				35E02EF72DCC930C00D81F7F /* CustomTextStrategy.swift */,
-				35E02EF82DCC930C00D81F7F /* ElementStrategyFactory.swift */,
 				35E02EF92DCC930C00D81F7F /* FileExtensionStrategy.swift */,
 				35E02EFA2DCC930C00D81F7F /* MetadataDateStrategy.swift */,
 				35E02EFB2DCC930C00D81F7F /* MetadataStringStrategy.swift */,
@@ -445,9 +444,9 @@
 		35E02F0B2DCC931500D81F7F /* FileActionStrategies */ = {
 			isa = PBXGroup;
 			children = (
+				35E02F072DCC931500D81F7F /* FileActionStrategyFactory.swift */,
 				35E02F052DCC931500D81F7F /* CopyToFolderStrategy.swift */,
 				35E02F062DCC931500D81F7F /* DeleteStrategy.swift */,
-				35E02F072DCC931500D81F7F /* FileActionStrategyFactory.swift */,
 				35E02F082DCC931500D81F7F /* MoveToFolderStrategy.swift */,
 				35E02F092DCC931500D81F7F /* RenameStrategy.swift */,
 				35E02F0A2DCC931500D81F7F /* SkipStrategy.swift */,
@@ -458,10 +457,10 @@
 		35E02F172DCC931C00D81F7F /* Actions */ = {
 			isa = PBXGroup;
 			children = (
+				35E02F152DCC931C00D81F7F /* ActionView.swift */,
 				35E02F122DCC931C00D81F7F /* ActionEditView.swift */,
 				35E02F132DCC931C00D81F7F /* ActionElementEditView.swift */,
 				35E02F142DCC931C00D81F7F /* ActionPreviewView.swift */,
-				35E02F152DCC931C00D81F7F /* ActionView.swift */,
 				35E02F162DCC931C00D81F7F /* DraggableActionElementsView.swift */,
 			);
 			path = Actions;
@@ -479,10 +478,10 @@
 		35E02F202DCC931C00D81F7F /* Conditions */ = {
 			isa = PBXGroup;
 			children = (
+				35E02F1E2DCC931C00D81F7F /* ConditionView.swift */,
 				35E02F1B2DCC931C00D81F7F /* ConditionEditView.swift */,
 				35E02F1C2DCC931C00D81F7F /* ConditionElementEditView.swift */,
 				35E02F1D2DCC931C00D81F7F /* ConditionPreviewView.swift */,
-				35E02F1E2DCC931C00D81F7F /* ConditionView.swift */,
 				35E02F1F2DCC931C00D81F7F /* DraggableConditionElementsView.swift */,
 			);
 			path = Conditions;
@@ -491,6 +490,7 @@
 		35E02F252DCC931C00D81F7F /* Jobs */ = {
 			isa = PBXGroup;
 			children = (
+				35CA7C982C94724600765522 /* JobsView.swift */,
 				35E02F212DCC931C00D81F7F /* JobGeneralSettingsEditView.swift */,
 				35E02F222DCC931C00D81F7F /* JobSettingsView.swift */,
 				35E02F232DCC931C00D81F7F /* JobsHeaderToolbarView.swift */,
@@ -511,11 +511,11 @@
 		35E02F292DCC931C00D81F7F /* Implementation */ = {
 			isa = PBXGroup;
 			children = (
-				35E02F172DCC931C00D81F7F /* Actions */,
 				35E02F1A2DCC931C00D81F7F /* Common */,
-				35E02F202DCC931C00D81F7F /* Conditions */,
 				35E02F252DCC931C00D81F7F /* Jobs */,
 				35E02F282DCC931C00D81F7F /* Rules */,
+				35E02F202DCC931C00D81F7F /* Conditions */,
+				35E02F172DCC931C00D81F7F /* Actions */,
 			);
 			path = Implementation;
 			sourceTree = "<group>";
