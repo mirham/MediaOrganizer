@@ -1,5 +1,5 @@
 //
-//  ActionPreviewView.swift
+//  ConditionPreviewView.swift
 //  MediaOrganizer
 //
 //  Created by UglyGeorge on 05.10.2024.

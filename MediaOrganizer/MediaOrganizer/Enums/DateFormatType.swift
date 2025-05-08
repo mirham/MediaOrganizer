@@ -1,5 +1,5 @@
 //
-//  FolderType.swift
+//  DateFormatType.swift
 //  MediaOrganizer
 //
 //  Created by UglyGeorge on 13.09.2024.

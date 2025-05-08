@@ -48,7 +48,7 @@ struct JobSettingsView : View {
         
         if (appState.current.job == nil) {
             currentEditMode = .add
-            appState.current.job = Job.makeDefault()
+            appState.current.job = Job.initDefault()
         }
     }
     

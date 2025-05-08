@@ -1,5 +1,5 @@
 //
-//  ButtonExtension.swift
+//  ButtonExtensions.swift
 //  MediaOrganizer
 //
 //  Created by UglyGeorge on 07.10.2024.

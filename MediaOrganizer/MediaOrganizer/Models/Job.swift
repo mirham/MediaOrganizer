@@ -24,7 +24,7 @@ class Job : Codable, Identifiable, Equatable {
         self.outputFolder = outputFolder
     }
     
-    static func makeDefault() -> Job {
+    static func initDefault() -> Job {
         let result = Job(
             name: Constants.defaultJobName,
             sourceFolder: Constants.stubNotSelected,

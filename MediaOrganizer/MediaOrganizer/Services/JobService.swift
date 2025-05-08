@@ -13,12 +13,12 @@ class JobService: ServiceBase, JobServiceType {
     @Injected(\.ruleService) private var ruleService
     
     func createJob() {
-        appState.current.job = Job.makeDefault()
+        appState.current.job = Job.initDefault()
     }
     
     func addJob() {
         guard doesCurrentJobExist()
-                && appState.current.job != Job.makeDefault()
+                && appState.current.job != Job.initDefault()
                 && getJobIndexByJobId(jobId: appState.current.job!.id) == nil
         else { return }
         

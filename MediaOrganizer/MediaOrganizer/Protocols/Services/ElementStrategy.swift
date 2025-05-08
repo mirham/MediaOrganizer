@@ -1,5 +1,5 @@
 //
-//  ActionStrategy.swift
+//  ElementStrategy.swift
 //  MediaOrganizer
 //
 //  Created by UglyGeorge on 06.05.2025.

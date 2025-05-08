@@ -1,5 +1,5 @@
 //
-//  ActionStrategyFactory.swift
+//  ElementStrategyFactoryType.swift
 //  MediaOrganizer
 //
 //  Created by UglyGeorge on 06.05.2025.
