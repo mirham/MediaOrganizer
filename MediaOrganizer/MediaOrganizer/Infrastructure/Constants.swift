@@ -18,6 +18,7 @@ struct Constants {
     static let defaultJobName = "New job"
     static let dragAndDropTimeToleranceInSeconds: Int = 1
     static let space = "   "
+    static let spaceShort = " "
     static let slash = "/"
     static let customTextLimit = 100
     

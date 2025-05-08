@@ -2,7 +2,7 @@
 //  ConditionService.swift
 //  MediaOrganizer
 //
-//  Created by UglyGeorge on 07.05.2024.
+//  Created by UglyGeorge on 07.05.2025.
 //
 
 import Foundation

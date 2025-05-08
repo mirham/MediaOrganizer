@@ -19,31 +19,29 @@ struct ConditionPreviewView: ElementContainerView {
     
     var body: some View {
         WrappingHStack(alignment: .leading, horizontalSpacing: 0) {
-            Text("Example: ")
+            Text("Condition: ")
                 .font(.subheadline)
-            ForEach(conditionElements, id: \.id) { elementInfo in
-                let elementOptions = getElementOptionsByTypeId(typeId: elementInfo.elementTypeId)
-                switch elementInfo.settingType {
-                    case .date:
-                        HStack(spacing: 0) {
-                            Text(getFormattedDate(elementInfo: elementInfo))
-                        }
-                        .font(.subheadline)
-                        .background(
-                            RoundedRectangle(cornerRadius: 2, style: .continuous)
-                                .fill(elementOptions.background)
-                        )
-                    default:
-                        HStack(spacing: 0) {
-                            Text(MetadataType(rawValue: elementInfo.elementTypeId)?.example
-                                 ?? elementInfo.displayText)
-                        }
-                        .font(.subheadline)
-                        .background(
-                            RoundedRectangle(cornerRadius: 2, style: .continuous)
-                                .fill(elementOptions.background)
-                        )
+            ForEach(conditionElements, id: \.id) { element in
+                let elementOptions = getElementOptionsByTypeId(typeId: element.elementTypeId)
+                HStack(spacing: 0) {
+                    Text(element.displayText
+                         + getConditionFormatDescription(
+                            conditionValueType: elementOptions.conditionValueType,
+                            selectedFormatTypeId: element.selectedFormatTypeId))
+                        .padding(.trailing, 3)
+                    Text(getOperatorDescription(
+                        conditionValueType: elementOptions.conditionValueType,
+                        selectedOperatorTypeId: element.selectedOperatorTypeId))
+                        .foregroundStyle(.gray)
+                        .font(.system(size: 10))
+                        .padding(.trailing, 3)
+                    Text(element.value.toString())
                 }
+                .font(.subheadline)
+                .background(
+                    RoundedRectangle(cornerRadius: 2, style: .continuous)
+                        .fill(elementOptions.background)
+                )
             }
         }
         .opacity(0.8)

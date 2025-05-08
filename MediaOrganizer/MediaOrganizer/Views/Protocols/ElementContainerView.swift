@@ -13,9 +13,9 @@ extension ElementContainerView {
     private static var defaultElementOptions: ElementOptions { ElementOptions(
         icon: nil,
         background: Color(.gray),
-        valueType: ElementValueType.text,
         hasFormula: false,
-        editable: false)
+        editable: false,
+        elementValueType: ElementValueType.text)
     }
     
     private static var customizationMap: [Int: Bool] { [
@@ -33,132 +33,143 @@ extension ElementContainerView {
             ElementOptions(
                 icon: nil,
                 background: Color(hex: Constants.colorHexCustomElement),
-                valueType: ElementValueType.date,
                 hasFormula: true,
-                editable: true),
+                editable: true,
+                elementValueType: .date),
         OptionalElementType.customText.id:
             ElementOptions(
                 icon: nil,
                 background: Color(hex: Constants.colorHexCustomElement),
-                valueType: ElementValueType.text,
                 hasFormula: false,
-                editable: true),
+                editable: true,
+                elementValueType: .text),
         MetadataType.fileName.id:
             ElementOptions(
                 icon: Image(systemName: Constants.iconFile),
                 background: Color(hex: Constants.colorHexFileElement),
-                valueType: ElementValueType.text,
                 hasFormula: false,
-                editable: false),
+                editable: false,
+                elementValueType: .text,
+                conditionValueType: .string),
         MetadataType.fileExtension.id:
             ElementOptions(
                 icon: Image(systemName: Constants.iconFile),
                 background: Color(hex: Constants.colorHexFileElement),
-                valueType: ElementValueType.text,
                 hasFormula: false,
-                editable: false),
+                editable: false,
+                elementValueType: .text,
+                conditionValueType: .string),
         MetadataType.fileDateCreated.id:
             ElementOptions(
                 icon: Image(systemName: Constants.iconFile),
                 background: Color(hex: Constants.colorHexFileElement),
-                valueType: ElementValueType.date,
                 hasFormula: true,
-                editable: false),
+                editable: false,
+                elementValueType: .date,
+                conditionValueType: .date),
         MetadataType.fileDateModified.id:
             ElementOptions(
                 icon: Image(systemName: Constants.iconFile),
                 background: Color(hex: Constants.colorHexFileElement),
-                valueType: ElementValueType.date,
                 hasFormula: true,
-                editable: false),
+                editable: false,
+                elementValueType: .date,
+                conditionValueType: .date),
         MetadataType.metadataDateOriginal.id:
             ElementOptions(
                 icon: Image(.exificon),
                 background: Color(hex: Constants.colorHexExifElement),
-                valueType: ElementValueType.date,
                 hasFormula: true,
-                editable: false),
+                editable: false,
+                elementValueType: .date,
+                conditionValueType: .date),
         MetadataType.metadataDateDigitilized.id:
             ElementOptions(
                 icon: Image(.exificon),
                 background: Color(hex: Constants.colorHexExifElement),
-                valueType: ElementValueType.date,
                 hasFormula: true,
-                editable: false),
+                editable: false,
+                elementValueType: .date,
+                conditionValueType: .date),
         MetadataType.metadataCameraModel.id:
             ElementOptions(
                 icon: Image(.exificon),
                 background: Color(hex: Constants.colorHexExifElement),
-                valueType: ElementValueType.text,
                 hasFormula: false,
-                editable: false),
+                editable: false,
+                elementValueType: .text,
+                conditionValueType: .string),
         MetadataType.metadataPixelXDimention.id:
             ElementOptions(
                 icon: Image(.exificon),
                 background: Color(hex: Constants.colorHexExifElement),
-                valueType: ElementValueType.number,
                 hasFormula: false,
-                editable: false),
+                editable: false,
+                elementValueType: .number,
+                conditionValueType: .int),
         MetadataType.metadataPixelYDimention.id:
             ElementOptions(
                 icon: Image(.exificon),
                 background: Color(hex: Constants.colorHexExifElement),
-                valueType: ElementValueType.number,
                 hasFormula: false,
-                editable: false),
+                editable: false,
+                elementValueType: .number,
+                conditionValueType: .int),
         MetadataType.metadataLatitude.rawValue:
             ElementOptions(
                 icon: Image(.exificon),
                 background: Color(hex: Constants.colorHexExifElement),
-                valueType: ElementValueType.number,
                 hasFormula: false,
-                editable: false),
+                editable: false,
+                elementValueType: .number,
+                conditionValueType: .double),
         MetadataType.metadataLongitude.id:
             ElementOptions(
                 icon: Image(.exificon),
                 background: Color(hex: Constants.colorHexExifElement),
-                valueType: ElementValueType.number,
                 hasFormula: false,
-                editable: false),
+                editable: false,
+                elementValueType: .number,
+                conditionValueType: .double),
         ActionType.rename.id:
             ElementOptions(
                 icon: nil,
                 background: Color.blue,
-                valueType: ElementValueType.text,
                 hasFormula: false,
-                editable: false
+                editable: false,
+                elementValueType: ElementValueType.text
             ),
         ActionType.copyToFolder.id:
             ElementOptions(
                 icon: nil,
                 background: Color.blue,
-                valueType: ElementValueType.text,
                 hasFormula: false,
-                editable: false
+                editable: false,
+                elementValueType: ElementValueType.text
             ),
         ActionType.moveToFolder.id:
             ElementOptions(
                 icon: nil,
                 background: Color.blue,
-                valueType: ElementValueType.text,
                 hasFormula: false,
-                editable: false
+                editable: false,
+                elementValueType: ElementValueType.text
             ),
         ActionType.skip.id:
             ElementOptions(
                 icon: nil,
                 background: Color.gray,
-                valueType: ElementValueType.text,
                 hasFormula: false,
-                editable: false
+                editable: false,
+                elementValueType: ElementValueType.text
             ),
         ActionType.delete.id:
             ElementOptions(
                 icon: nil,
                 background: Color.red,
-                valueType: ElementValueType.text,
                 hasFormula: false,
-                editable: false
+                editable: false,
+                elementValueType: ElementValueType.text
             )]
     }
     
@@ -211,5 +222,40 @@ extension ElementContainerView {
         }
         
         return result
+    }
+    
+    func getConditionFormatDescription(
+        conditionValueType: ConditionValueType?,
+        selectedFormatTypeId: Int?) -> String {
+        guard conditionValueType == .date else { return String() }
+        
+        let dateFormatType = selectedFormatTypeId == nil
+            ? DateFormatType.asIs
+            : DateFormatType.init(rawValue: selectedFormatTypeId!)
+        
+        guard dateFormatType != nil else { return String() }
+        
+        let result = " (\(dateFormatType!.description.firstLowercased))"
+        
+        return result
+    }
+    
+    func getOperatorDescription(
+        conditionValueType: ConditionValueType?,
+        selectedOperatorTypeId: Int?) -> String {
+        switch conditionValueType {
+            case .string:
+                return selectedOperatorTypeId == nil
+                ? StringOperatorType.equals.description
+                : StringOperatorType.init(rawValue: selectedOperatorTypeId!)?.description
+                ?? String()
+            case .int, .double, .date:
+                return selectedOperatorTypeId == nil
+                ? NumberAndDateOperatorType.equals.description
+                : NumberAndDateOperatorType.init(rawValue: selectedOperatorTypeId!)?.description
+                ?? String()
+            default:
+                return String()
+        }
     }
 }

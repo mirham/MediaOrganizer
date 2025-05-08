@@ -76,7 +76,7 @@ struct ActionElementEditView: ElementContainerView {
     }
     
     private func getFormatDescription() -> String {
-        guard self.selectedTypeId != nil && elementOptions.valueType == .date else { return String() }
+        guard self.selectedTypeId != nil && elementOptions.elementValueType == .date else { return String() }
         
         let dateFormatType = DateFormatType.init(rawValue: self.selectedTypeId!)
         
@@ -123,7 +123,7 @@ struct ActionElementEditView: ElementContainerView {
                     selectedTypeId = $0
                 }
             )) {
-                ForEach(DateFormatType.allCases, id: \.id) { item in
+                ForEach(DateFormatType.selectForAction(), id: \.id) { item in
                     HStack {
                         Text(item.description) + Text(Constants.space) +
                         (Text(item.example)

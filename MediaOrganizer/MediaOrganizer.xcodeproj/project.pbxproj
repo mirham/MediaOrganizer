@@ -11,6 +11,9 @@
 		351514072C9B18B4000E4CAB /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351514062C9B18B4000E4CAB /* ColorExtensions.swift */; };
 		3515140B2C9B1D4F000E4CAB /* RuleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3515140A2C9B1D4F000E4CAB /* RuleService.swift */; };
 		3515140E2C9C0744000E4CAB /* DividerWithImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3515140D2C9C0744000E4CAB /* DividerWithImage.swift */; };
+		3519DFE42DCCCF39007D8B30 /* NumberAndDateOperatorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3519DFE32DCCCF39007D8B30 /* NumberAndDateOperatorType.swift */; };
+		3519DFE62DCCD394007D8B30 /* StringOperatorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3519DFE52DCCD394007D8B30 /* StringOperatorType.swift */; };
+		3519DFE82DCCD6C3007D8B30 /* ConditionValueType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3519DFE72DCCD6C3007D8B30 /* ConditionValueType.swift */; };
 		352B6F012C99BCF80000789D /* JobService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B6F002C99BCF70000789D /* JobService.swift */; };
 		352B6F032C99BD1D0000789D /* ServiceBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B6F022C99BD1C0000789D /* ServiceBase.swift */; };
 		352B6F0B2C9A0BAC0000789D /* ConditionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B6F0A2C9A0BAC0000789D /* ConditionType.swift */; };
@@ -112,6 +115,9 @@
 		351514062C9B18B4000E4CAB /* ColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
 		3515140A2C9B1D4F000E4CAB /* RuleService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RuleService.swift; sourceTree = "<group>"; };
 		3515140D2C9C0744000E4CAB /* DividerWithImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DividerWithImage.swift; sourceTree = "<group>"; };
+		3519DFE32DCCCF39007D8B30 /* NumberAndDateOperatorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberAndDateOperatorType.swift; sourceTree = "<group>"; };
+		3519DFE52DCCD394007D8B30 /* StringOperatorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringOperatorType.swift; sourceTree = "<group>"; };
+		3519DFE72DCCD6C3007D8B30 /* ConditionValueType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionValueType.swift; sourceTree = "<group>"; };
 		352B6F002C99BCF70000789D /* JobService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobService.swift; sourceTree = "<group>"; };
 		352B6F022C99BD1C0000789D /* ServiceBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceBase.swift; sourceTree = "<group>"; };
 		352B6F0A2C9A0BAC0000789D /* ConditionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConditionType.swift; sourceTree = "<group>"; };
@@ -343,9 +349,12 @@
 				352B6F0A2C9A0BAC0000789D /* ConditionType.swift */,
 				352B6F0E2C9A13C20000789D /* ActionType.swift */,
 				35DF883E2CABDCEC007626CB /* ElementValueType.swift */,
+				3519DFE72DCCD6C3007D8B30 /* ConditionValueType.swift */,
 				35DF88392CAB2FB2007626CB /* OptionalElementType.swift */,
 				352B6F0C2C9A0D9E0000789D /* MetadataType.swift */,
 				35DF88522CAED3CB007626CB /* DateFormatType.swift */,
+				3519DFE52DCCD394007D8B30 /* StringOperatorType.swift */,
+				3519DFE32DCCCF39007D8B30 /* NumberAndDateOperatorType.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -623,6 +632,7 @@
 				35E02F322DCC931C00D81F7F /* ConditionElementEditView.swift in Sources */,
 				35E02F332DCC931C00D81F7F /* ConditionPreviewView.swift in Sources */,
 				35E02F342DCC931C00D81F7F /* ConditionView.swift in Sources */,
+				3519DFE62DCCD394007D8B30 /* StringOperatorType.swift in Sources */,
 				35E02F352DCC931C00D81F7F /* DraggableConditionElementsView.swift in Sources */,
 				35E02F362DCC931C00D81F7F /* JobGeneralSettingsEditView.swift in Sources */,
 				35E02F372DCC931C00D81F7F /* JobSettingsView.swift in Sources */,
@@ -632,12 +642,14 @@
 				35E02F3B2DCC931C00D81F7F /* RulesToolbarView.swift in Sources */,
 				35E02EEB2DCC930200D81F7F /* ConditionServiceType.swift in Sources */,
 				35E02EEC2DCC930200D81F7F /* ElementServiceType.swift in Sources */,
+				3519DFE82DCCD6C3007D8B30 /* ConditionValueType.swift in Sources */,
 				35E02EED2DCC930200D81F7F /* ElementStrategy.swift in Sources */,
 				35E02EEE2DCC930200D81F7F /* ElementStrategyFactoryType.swift in Sources */,
 				35E02EEF2DCC930200D81F7F /* FileActionStrategy.swift in Sources */,
 				35E02EF02DCC930200D81F7F /* FileActionStrategyFactoryType.swift in Sources */,
 				35E02EF12DCC930200D81F7F /* FileServiceType.swift in Sources */,
 				35E02EF22DCC930200D81F7F /* JobServiceType.swift in Sources */,
+				3519DFE42DCCCF39007D8B30 /* NumberAndDateOperatorType.swift in Sources */,
 				35E02EF32DCC930200D81F7F /* MetadataServiceType.swift in Sources */,
 				35E02EF42DCC930200D81F7F /* RuleServiceType.swift in Sources */,
 				35E02EF52DCC930200D81F7F /* ServiceBaseType.swift in Sources */,

@@ -42,10 +42,10 @@ struct RulesEditView: View {
                     }
                     .withAddButtonStyle(activeState: controlActiveState)
                     .isHidden(hidden: !ruleService.isCurrentRule(ruleId: rule.id) , remove: true)
-                    .padding(.bottom, 3)
+                    .padding(.top, 3)
+                    .padding(.bottom, 5)
                     Text(Constants.elActions)
                         .asRuleElementCaption()
-                        .padding(.top, 5)
                     HStack(alignment: .center) {
                         VStack(alignment: .leading) {
                             Text(Constants.elNoActions)
@@ -59,6 +59,7 @@ struct RulesEditView: View {
                             }
                         }
                     }
+                    .padding(.bottom, 5)
                     Button(String(), systemImage: Constants.iconAdd) {
                         actionService.addNewAction()
                     }

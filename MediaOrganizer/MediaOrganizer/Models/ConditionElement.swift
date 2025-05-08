@@ -13,6 +13,7 @@ class ConditionElement : ElementType {
     let displayText: String
     var settingType: ElementValueType
     var selectedFormatTypeId: Int?
+    var selectedOperatorTypeId: Int?
     var value: ConditionValue
     var fileMetadata: [MetadataType: Any?] = [:]
     
@@ -22,6 +23,7 @@ class ConditionElement : ElementType {
         case displayText
         case settingType
         case selectedFormatTypeId
+        case selectedOperatorTypeId
         case value
     }
     

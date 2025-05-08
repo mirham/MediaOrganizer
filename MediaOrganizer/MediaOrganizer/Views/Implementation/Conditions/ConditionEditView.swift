@@ -21,8 +21,10 @@ struct ConditionEditView: View {
     
     var body: some View {
         HStack {
-            VStack {
+            VStack(alignment: .leading) {
                 Text(ConditionType(rawValue: selectedConditionTypeId)?.description ?? String())
+                    .fontWeight(.bold)
+                    .padding(.leading, 10)
                 DraggableConditionElementsView(
                     selectedConditionTypeId: $selectedConditionTypeId,
                     draggedItem: $draggedItem,
