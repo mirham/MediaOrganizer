@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -55,6 +55,49 @@
 		35DF88532CAED3CB007626CB /* DateFormatType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DF88522CAED3CB007626CB /* DateFormatType.swift */; };
 		35DF88572CAF341F007626CB /* WrappingHStack in Frameworks */ = {isa = PBXBuildFile; productRef = 35DF88562CAF341F007626CB /* WrappingHStack */; };
 		35DF885A2CAF344C007626CB /* WrappingHStack in Frameworks */ = {isa = PBXBuildFile; productRef = 35DF88592CAF344C007626CB /* WrappingHStack */; };
+		35E02EEA2DCC930200D81F7F /* ActionServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02EDD2DCC930200D81F7F /* ActionServiceType.swift */; };
+		35E02EEB2DCC930200D81F7F /* ConditionServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02EDE2DCC930200D81F7F /* ConditionServiceType.swift */; };
+		35E02EEC2DCC930200D81F7F /* ElementServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02EDF2DCC930200D81F7F /* ElementServiceType.swift */; };
+		35E02EED2DCC930200D81F7F /* ElementStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02EE02DCC930200D81F7F /* ElementStrategy.swift */; };
+		35E02EEE2DCC930200D81F7F /* ElementStrategyFactoryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02EE12DCC930200D81F7F /* ElementStrategyFactoryType.swift */; };
+		35E02EEF2DCC930200D81F7F /* FileActionStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02EE22DCC930200D81F7F /* FileActionStrategy.swift */; };
+		35E02EF02DCC930200D81F7F /* FileActionStrategyFactoryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02EE32DCC930200D81F7F /* FileActionStrategyFactoryType.swift */; };
+		35E02EF12DCC930200D81F7F /* FileServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02EE42DCC930200D81F7F /* FileServiceType.swift */; };
+		35E02EF22DCC930200D81F7F /* JobServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02EE52DCC930200D81F7F /* JobServiceType.swift */; };
+		35E02EF32DCC930200D81F7F /* MetadataServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02EE62DCC930200D81F7F /* MetadataServiceType.swift */; };
+		35E02EF42DCC930200D81F7F /* RuleServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02EE72DCC930200D81F7F /* RuleServiceType.swift */; };
+		35E02EF52DCC930200D81F7F /* ServiceBaseType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02EE82DCC930200D81F7F /* ServiceBaseType.swift */; };
+		35E02EFE2DCC930C00D81F7F /* CustomDateStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02EF62DCC930C00D81F7F /* CustomDateStrategy.swift */; };
+		35E02EFF2DCC930C00D81F7F /* CustomTextStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02EF72DCC930C00D81F7F /* CustomTextStrategy.swift */; };
+		35E02F002DCC930C00D81F7F /* ElementStrategyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02EF82DCC930C00D81F7F /* ElementStrategyFactory.swift */; };
+		35E02F012DCC930C00D81F7F /* FileExtensionStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02EF92DCC930C00D81F7F /* FileExtensionStrategy.swift */; };
+		35E02F022DCC930C00D81F7F /* MetadataDateStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02EFA2DCC930C00D81F7F /* MetadataDateStrategy.swift */; };
+		35E02F032DCC930C00D81F7F /* MetadataStringStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02EFB2DCC930C00D81F7F /* MetadataStringStrategy.swift */; };
+		35E02F042DCC930C00D81F7F /* SlashStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02EFC2DCC930C00D81F7F /* SlashStrategy.swift */; };
+		35E02F0C2DCC931500D81F7F /* CopyToFolderStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02F052DCC931500D81F7F /* CopyToFolderStrategy.swift */; };
+		35E02F0D2DCC931500D81F7F /* DeleteStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02F062DCC931500D81F7F /* DeleteStrategy.swift */; };
+		35E02F0E2DCC931500D81F7F /* FileActionStrategyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02F072DCC931500D81F7F /* FileActionStrategyFactory.swift */; };
+		35E02F0F2DCC931500D81F7F /* MoveToFolderStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02F082DCC931500D81F7F /* MoveToFolderStrategy.swift */; };
+		35E02F102DCC931500D81F7F /* RenameStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02F092DCC931500D81F7F /* RenameStrategy.swift */; };
+		35E02F112DCC931500D81F7F /* SkipStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02F0A2DCC931500D81F7F /* SkipStrategy.swift */; };
+		35E02F2A2DCC931C00D81F7F /* ActionEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02F122DCC931C00D81F7F /* ActionEditView.swift */; };
+		35E02F2B2DCC931C00D81F7F /* ActionElementEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02F132DCC931C00D81F7F /* ActionElementEditView.swift */; };
+		35E02F2C2DCC931C00D81F7F /* ActionPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02F142DCC931C00D81F7F /* ActionPreviewView.swift */; };
+		35E02F2D2DCC931C00D81F7F /* ActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02F152DCC931C00D81F7F /* ActionView.swift */; };
+		35E02F2E2DCC931C00D81F7F /* DraggableActionElementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02F162DCC931C00D81F7F /* DraggableActionElementsView.swift */; };
+		35E02F2F2DCC931C00D81F7F /* DraggableSourceElementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02F182DCC931C00D81F7F /* DraggableSourceElementsView.swift */; };
+		35E02F302DCC931C00D81F7F /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02F192DCC931C00D81F7F /* InfoView.swift */; };
+		35E02F312DCC931C00D81F7F /* ConditionEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02F1B2DCC931C00D81F7F /* ConditionEditView.swift */; };
+		35E02F322DCC931C00D81F7F /* ConditionElementEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02F1C2DCC931C00D81F7F /* ConditionElementEditView.swift */; };
+		35E02F332DCC931C00D81F7F /* ConditionPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02F1D2DCC931C00D81F7F /* ConditionPreviewView.swift */; };
+		35E02F342DCC931C00D81F7F /* ConditionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02F1E2DCC931C00D81F7F /* ConditionView.swift */; };
+		35E02F352DCC931C00D81F7F /* DraggableConditionElementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02F1F2DCC931C00D81F7F /* DraggableConditionElementsView.swift */; };
+		35E02F362DCC931C00D81F7F /* JobGeneralSettingsEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02F212DCC931C00D81F7F /* JobGeneralSettingsEditView.swift */; };
+		35E02F372DCC931C00D81F7F /* JobSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02F222DCC931C00D81F7F /* JobSettingsView.swift */; };
+		35E02F382DCC931C00D81F7F /* JobsHeaderToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02F232DCC931C00D81F7F /* JobsHeaderToolbarView.swift */; };
+		35E02F392DCC931C00D81F7F /* JobsToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02F242DCC931C00D81F7F /* JobsToolbarView.swift */; };
+		35E02F3A2DCC931C00D81F7F /* RulesEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02F262DCC931C00D81F7F /* RulesEditView.swift */; };
+		35E02F3B2DCC931C00D81F7F /* RulesToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E02F272DCC931C00D81F7F /* RulesToolbarView.swift */; };
 		35E39A322CC29305003D6360 /* FileAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E39A312CC29305003D6360 /* FileAction.swift */; };
 		35E39A362CC2A13E003D6360 /* IsoExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E39A332CC2A13E003D6360 /* IsoExtensions.swift */; };
 		35E39A372CC2A13E003D6360 /* UrlExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E39A342CC2A13E003D6360 /* UrlExtensions.swift */; };
@@ -112,6 +155,49 @@
 		35DF884A2CAD6997007626CB /* ActionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionService.swift; sourceTree = "<group>"; };
 		35DF884C2CAD7EC1007626CB /* ElementOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementOptions.swift; sourceTree = "<group>"; };
 		35DF88522CAED3CB007626CB /* DateFormatType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatType.swift; sourceTree = "<group>"; };
+		35E02EDD2DCC930200D81F7F /* ActionServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionServiceType.swift; sourceTree = "<group>"; };
+		35E02EDE2DCC930200D81F7F /* ConditionServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionServiceType.swift; sourceTree = "<group>"; };
+		35E02EDF2DCC930200D81F7F /* ElementServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementServiceType.swift; sourceTree = "<group>"; };
+		35E02EE02DCC930200D81F7F /* ElementStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementStrategy.swift; sourceTree = "<group>"; };
+		35E02EE12DCC930200D81F7F /* ElementStrategyFactoryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementStrategyFactoryType.swift; sourceTree = "<group>"; };
+		35E02EE22DCC930200D81F7F /* FileActionStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileActionStrategy.swift; sourceTree = "<group>"; };
+		35E02EE32DCC930200D81F7F /* FileActionStrategyFactoryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileActionStrategyFactoryType.swift; sourceTree = "<group>"; };
+		35E02EE42DCC930200D81F7F /* FileServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileServiceType.swift; sourceTree = "<group>"; };
+		35E02EE52DCC930200D81F7F /* JobServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobServiceType.swift; sourceTree = "<group>"; };
+		35E02EE62DCC930200D81F7F /* MetadataServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataServiceType.swift; sourceTree = "<group>"; };
+		35E02EE72DCC930200D81F7F /* RuleServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleServiceType.swift; sourceTree = "<group>"; };
+		35E02EE82DCC930200D81F7F /* ServiceBaseType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceBaseType.swift; sourceTree = "<group>"; };
+		35E02EF62DCC930C00D81F7F /* CustomDateStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDateStrategy.swift; sourceTree = "<group>"; };
+		35E02EF72DCC930C00D81F7F /* CustomTextStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextStrategy.swift; sourceTree = "<group>"; };
+		35E02EF82DCC930C00D81F7F /* ElementStrategyFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementStrategyFactory.swift; sourceTree = "<group>"; };
+		35E02EF92DCC930C00D81F7F /* FileExtensionStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileExtensionStrategy.swift; sourceTree = "<group>"; };
+		35E02EFA2DCC930C00D81F7F /* MetadataDateStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataDateStrategy.swift; sourceTree = "<group>"; };
+		35E02EFB2DCC930C00D81F7F /* MetadataStringStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataStringStrategy.swift; sourceTree = "<group>"; };
+		35E02EFC2DCC930C00D81F7F /* SlashStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlashStrategy.swift; sourceTree = "<group>"; };
+		35E02F052DCC931500D81F7F /* CopyToFolderStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyToFolderStrategy.swift; sourceTree = "<group>"; };
+		35E02F062DCC931500D81F7F /* DeleteStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteStrategy.swift; sourceTree = "<group>"; };
+		35E02F072DCC931500D81F7F /* FileActionStrategyFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileActionStrategyFactory.swift; sourceTree = "<group>"; };
+		35E02F082DCC931500D81F7F /* MoveToFolderStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveToFolderStrategy.swift; sourceTree = "<group>"; };
+		35E02F092DCC931500D81F7F /* RenameStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameStrategy.swift; sourceTree = "<group>"; };
+		35E02F0A2DCC931500D81F7F /* SkipStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkipStrategy.swift; sourceTree = "<group>"; };
+		35E02F122DCC931C00D81F7F /* ActionEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionEditView.swift; sourceTree = "<group>"; };
+		35E02F132DCC931C00D81F7F /* ActionElementEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionElementEditView.swift; sourceTree = "<group>"; };
+		35E02F142DCC931C00D81F7F /* ActionPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionPreviewView.swift; sourceTree = "<group>"; };
+		35E02F152DCC931C00D81F7F /* ActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionView.swift; sourceTree = "<group>"; };
+		35E02F162DCC931C00D81F7F /* DraggableActionElementsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableActionElementsView.swift; sourceTree = "<group>"; };
+		35E02F182DCC931C00D81F7F /* DraggableSourceElementsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableSourceElementsView.swift; sourceTree = "<group>"; };
+		35E02F192DCC931C00D81F7F /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
+		35E02F1B2DCC931C00D81F7F /* ConditionEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionEditView.swift; sourceTree = "<group>"; };
+		35E02F1C2DCC931C00D81F7F /* ConditionElementEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionElementEditView.swift; sourceTree = "<group>"; };
+		35E02F1D2DCC931C00D81F7F /* ConditionPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionPreviewView.swift; sourceTree = "<group>"; };
+		35E02F1E2DCC931C00D81F7F /* ConditionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionView.swift; sourceTree = "<group>"; };
+		35E02F1F2DCC931C00D81F7F /* DraggableConditionElementsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableConditionElementsView.swift; sourceTree = "<group>"; };
+		35E02F212DCC931C00D81F7F /* JobGeneralSettingsEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobGeneralSettingsEditView.swift; sourceTree = "<group>"; };
+		35E02F222DCC931C00D81F7F /* JobSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobSettingsView.swift; sourceTree = "<group>"; };
+		35E02F232DCC931C00D81F7F /* JobsHeaderToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobsHeaderToolbarView.swift; sourceTree = "<group>"; };
+		35E02F242DCC931C00D81F7F /* JobsToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobsToolbarView.swift; sourceTree = "<group>"; };
+		35E02F262DCC931C00D81F7F /* RulesEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesEditView.swift; sourceTree = "<group>"; };
+		35E02F272DCC931C00D81F7F /* RulesToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesToolbarView.swift; sourceTree = "<group>"; };
 		35E39A312CC29305003D6360 /* FileAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileAction.swift; sourceTree = "<group>"; };
 		35E39A332CC2A13E003D6360 /* IsoExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsoExtensions.swift; sourceTree = "<group>"; };
 		35E39A342CC2A13E003D6360 /* UrlExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlExtensions.swift; sourceTree = "<group>"; };
@@ -119,13 +205,6 @@
 		35F872392DCA0EBD0064B304 /* ContainerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerExtensions.swift; sourceTree = "<group>"; };
 		35F872592DCA5D5E0064B304 /* ElementService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		3559D9662DCC8F8800B8D0D5 /* Implementation */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Implementation; sourceTree = "<group>"; };
-		35F872472DCA22430064B304 /* Services */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Services; sourceTree = "<group>"; };
-		35F8724A2DCA2F670064B304 /* FileActionStrategies */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = FileActionStrategies; sourceTree = "<group>"; };
-		35F8725D2DCA5EEA0064B304 /* ElementStrategies */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ElementStrategies; sourceTree = "<group>"; };
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		35CA7C712C946D9000765522 /* Frameworks */ = {
@@ -250,7 +329,7 @@
 			children = (
 				35CA7C902C94715900765522 /* Settable.swift */,
 				3559D9602DCBADB300B8D0D5 /* ElementType.swift */,
-				35F872472DCA22430064B304 /* Services */,
+				35E02EE92DCC930200D81F7F /* Services */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -274,8 +353,8 @@
 		35CA7C8A2C94703300765522 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				35F8725D2DCA5EEA0064B304 /* ElementStrategies */,
-				35F8724A2DCA2F670064B304 /* FileActionStrategies */,
+				35E02EFD2DCC930C00D81F7F /* ElementStrategies */,
+				35E02F0B2DCC931500D81F7F /* FileActionStrategies */,
 				352B6F022C99BD1C0000789D /* ServiceBase.swift */,
 				352B6F002C99BCF70000789D /* JobService.swift */,
 				3515140A2C9B1D4F000E4CAB /* RuleService.swift */,
@@ -299,7 +378,7 @@
 				35CA7C932C9471B800765522 /* Extensions */,
 				35CA7C922C9471AB00765522 /* Modifiers */,
 				35CA7C982C94724600765522 /* JobsView.swift */,
-				3559D9662DCC8F8800B8D0D5 /* Implementation */,
+				35E02F292DCC931C00D81F7F /* Implementation */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -330,6 +409,117 @@
 			path = Delegates;
 			sourceTree = "<group>";
 		};
+		35E02EE92DCC930200D81F7F /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				35E02EDD2DCC930200D81F7F /* ActionServiceType.swift */,
+				35E02EDE2DCC930200D81F7F /* ConditionServiceType.swift */,
+				35E02EDF2DCC930200D81F7F /* ElementServiceType.swift */,
+				35E02EE02DCC930200D81F7F /* ElementStrategy.swift */,
+				35E02EE12DCC930200D81F7F /* ElementStrategyFactoryType.swift */,
+				35E02EE22DCC930200D81F7F /* FileActionStrategy.swift */,
+				35E02EE32DCC930200D81F7F /* FileActionStrategyFactoryType.swift */,
+				35E02EE42DCC930200D81F7F /* FileServiceType.swift */,
+				35E02EE52DCC930200D81F7F /* JobServiceType.swift */,
+				35E02EE62DCC930200D81F7F /* MetadataServiceType.swift */,
+				35E02EE72DCC930200D81F7F /* RuleServiceType.swift */,
+				35E02EE82DCC930200D81F7F /* ServiceBaseType.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		35E02EFD2DCC930C00D81F7F /* ElementStrategies */ = {
+			isa = PBXGroup;
+			children = (
+				35E02EF62DCC930C00D81F7F /* CustomDateStrategy.swift */,
+				35E02EF72DCC930C00D81F7F /* CustomTextStrategy.swift */,
+				35E02EF82DCC930C00D81F7F /* ElementStrategyFactory.swift */,
+				35E02EF92DCC930C00D81F7F /* FileExtensionStrategy.swift */,
+				35E02EFA2DCC930C00D81F7F /* MetadataDateStrategy.swift */,
+				35E02EFB2DCC930C00D81F7F /* MetadataStringStrategy.swift */,
+				35E02EFC2DCC930C00D81F7F /* SlashStrategy.swift */,
+			);
+			path = ElementStrategies;
+			sourceTree = "<group>";
+		};
+		35E02F0B2DCC931500D81F7F /* FileActionStrategies */ = {
+			isa = PBXGroup;
+			children = (
+				35E02F052DCC931500D81F7F /* CopyToFolderStrategy.swift */,
+				35E02F062DCC931500D81F7F /* DeleteStrategy.swift */,
+				35E02F072DCC931500D81F7F /* FileActionStrategyFactory.swift */,
+				35E02F082DCC931500D81F7F /* MoveToFolderStrategy.swift */,
+				35E02F092DCC931500D81F7F /* RenameStrategy.swift */,
+				35E02F0A2DCC931500D81F7F /* SkipStrategy.swift */,
+			);
+			path = FileActionStrategies;
+			sourceTree = "<group>";
+		};
+		35E02F172DCC931C00D81F7F /* Actions */ = {
+			isa = PBXGroup;
+			children = (
+				35E02F122DCC931C00D81F7F /* ActionEditView.swift */,
+				35E02F132DCC931C00D81F7F /* ActionElementEditView.swift */,
+				35E02F142DCC931C00D81F7F /* ActionPreviewView.swift */,
+				35E02F152DCC931C00D81F7F /* ActionView.swift */,
+				35E02F162DCC931C00D81F7F /* DraggableActionElementsView.swift */,
+			);
+			path = Actions;
+			sourceTree = "<group>";
+		};
+		35E02F1A2DCC931C00D81F7F /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				35E02F182DCC931C00D81F7F /* DraggableSourceElementsView.swift */,
+				35E02F192DCC931C00D81F7F /* InfoView.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		35E02F202DCC931C00D81F7F /* Conditions */ = {
+			isa = PBXGroup;
+			children = (
+				35E02F1B2DCC931C00D81F7F /* ConditionEditView.swift */,
+				35E02F1C2DCC931C00D81F7F /* ConditionElementEditView.swift */,
+				35E02F1D2DCC931C00D81F7F /* ConditionPreviewView.swift */,
+				35E02F1E2DCC931C00D81F7F /* ConditionView.swift */,
+				35E02F1F2DCC931C00D81F7F /* DraggableConditionElementsView.swift */,
+			);
+			path = Conditions;
+			sourceTree = "<group>";
+		};
+		35E02F252DCC931C00D81F7F /* Jobs */ = {
+			isa = PBXGroup;
+			children = (
+				35E02F212DCC931C00D81F7F /* JobGeneralSettingsEditView.swift */,
+				35E02F222DCC931C00D81F7F /* JobSettingsView.swift */,
+				35E02F232DCC931C00D81F7F /* JobsHeaderToolbarView.swift */,
+				35E02F242DCC931C00D81F7F /* JobsToolbarView.swift */,
+			);
+			path = Jobs;
+			sourceTree = "<group>";
+		};
+		35E02F282DCC931C00D81F7F /* Rules */ = {
+			isa = PBXGroup;
+			children = (
+				35E02F262DCC931C00D81F7F /* RulesEditView.swift */,
+				35E02F272DCC931C00D81F7F /* RulesToolbarView.swift */,
+			);
+			path = Rules;
+			sourceTree = "<group>";
+		};
+		35E02F292DCC931C00D81F7F /* Implementation */ = {
+			isa = PBXGroup;
+			children = (
+				35E02F172DCC931C00D81F7F /* Actions */,
+				35E02F1A2DCC931C00D81F7F /* Common */,
+				35E02F202DCC931C00D81F7F /* Conditions */,
+				35E02F252DCC931C00D81F7F /* Jobs */,
+				35E02F282DCC931C00D81F7F /* Rules */,
+			);
+			path = Implementation;
+			sourceTree = "<group>";
+		};
 		35E39A352CC2A13E003D6360 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -355,12 +545,6 @@
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				3559D9662DCC8F8800B8D0D5 /* Implementation */,
-				35F872472DCA22430064B304 /* Services */,
-				35F8724A2DCA2F670064B304 /* FileActionStrategies */,
-				35F8725D2DCA5EEA0064B304 /* ElementStrategies */,
 			);
 			name = MediaOrganizer;
 			productName = MediaOrganizer;
@@ -427,6 +611,36 @@
 				3559D9512DCB913200B8D0D5 /* ConditionElement.swift in Sources */,
 				351514052C9B1105000E4CAB /* Condition.swift in Sources */,
 				352B6F132C9A19D10000789D /* Action.swift in Sources */,
+				35E02EEA2DCC930200D81F7F /* ActionServiceType.swift in Sources */,
+				35E02F2A2DCC931C00D81F7F /* ActionEditView.swift in Sources */,
+				35E02F2B2DCC931C00D81F7F /* ActionElementEditView.swift in Sources */,
+				35E02F2C2DCC931C00D81F7F /* ActionPreviewView.swift in Sources */,
+				35E02F2D2DCC931C00D81F7F /* ActionView.swift in Sources */,
+				35E02F2E2DCC931C00D81F7F /* DraggableActionElementsView.swift in Sources */,
+				35E02F2F2DCC931C00D81F7F /* DraggableSourceElementsView.swift in Sources */,
+				35E02F302DCC931C00D81F7F /* InfoView.swift in Sources */,
+				35E02F312DCC931C00D81F7F /* ConditionEditView.swift in Sources */,
+				35E02F322DCC931C00D81F7F /* ConditionElementEditView.swift in Sources */,
+				35E02F332DCC931C00D81F7F /* ConditionPreviewView.swift in Sources */,
+				35E02F342DCC931C00D81F7F /* ConditionView.swift in Sources */,
+				35E02F352DCC931C00D81F7F /* DraggableConditionElementsView.swift in Sources */,
+				35E02F362DCC931C00D81F7F /* JobGeneralSettingsEditView.swift in Sources */,
+				35E02F372DCC931C00D81F7F /* JobSettingsView.swift in Sources */,
+				35E02F382DCC931C00D81F7F /* JobsHeaderToolbarView.swift in Sources */,
+				35E02F392DCC931C00D81F7F /* JobsToolbarView.swift in Sources */,
+				35E02F3A2DCC931C00D81F7F /* RulesEditView.swift in Sources */,
+				35E02F3B2DCC931C00D81F7F /* RulesToolbarView.swift in Sources */,
+				35E02EEB2DCC930200D81F7F /* ConditionServiceType.swift in Sources */,
+				35E02EEC2DCC930200D81F7F /* ElementServiceType.swift in Sources */,
+				35E02EED2DCC930200D81F7F /* ElementStrategy.swift in Sources */,
+				35E02EEE2DCC930200D81F7F /* ElementStrategyFactoryType.swift in Sources */,
+				35E02EEF2DCC930200D81F7F /* FileActionStrategy.swift in Sources */,
+				35E02EF02DCC930200D81F7F /* FileActionStrategyFactoryType.swift in Sources */,
+				35E02EF12DCC930200D81F7F /* FileServiceType.swift in Sources */,
+				35E02EF22DCC930200D81F7F /* JobServiceType.swift in Sources */,
+				35E02EF32DCC930200D81F7F /* MetadataServiceType.swift in Sources */,
+				35E02EF42DCC930200D81F7F /* RuleServiceType.swift in Sources */,
+				35E02EF52DCC930200D81F7F /* ServiceBaseType.swift in Sources */,
 				35B1B14D2C9C77F700B39FFC /* DraggableElement.swift in Sources */,
 				3559D9612DCBADB700B8D0D5 /* ElementType.swift in Sources */,
 				35DF883A2CAB2FB2007626CB /* OptionalElementType.swift in Sources */,
@@ -434,6 +648,12 @@
 				35CA7C8F2C94710F00765522 /* AppDelegate.swift in Sources */,
 				35CA7C992C94724600765522 /* JobsView.swift in Sources */,
 				35E39A362CC2A13E003D6360 /* IsoExtensions.swift in Sources */,
+				35E02F0C2DCC931500D81F7F /* CopyToFolderStrategy.swift in Sources */,
+				35E02F0D2DCC931500D81F7F /* DeleteStrategy.swift in Sources */,
+				35E02F0E2DCC931500D81F7F /* FileActionStrategyFactory.swift in Sources */,
+				35E02F0F2DCC931500D81F7F /* MoveToFolderStrategy.swift in Sources */,
+				35E02F102DCC931500D81F7F /* RenameStrategy.swift in Sources */,
+				35E02F112DCC931500D81F7F /* SkipStrategy.swift in Sources */,
 				35E39A372CC2A13E003D6360 /* UrlExtensions.swift in Sources */,
 				3515140E2C9C0744000E4CAB /* DividerWithImage.swift in Sources */,
 				352B6F112C9A160A0000789D /* Rule.swift in Sources */,
@@ -447,6 +667,13 @@
 				35DF884B2CAD6997007626CB /* ActionService.swift in Sources */,
 				3515140B2C9B1D4F000E4CAB /* RuleService.swift in Sources */,
 				35CA7C8D2C94708500765522 /* Constants.swift in Sources */,
+				35E02EFE2DCC930C00D81F7F /* CustomDateStrategy.swift in Sources */,
+				35E02EFF2DCC930C00D81F7F /* CustomTextStrategy.swift in Sources */,
+				35E02F002DCC930C00D81F7F /* ElementStrategyFactory.swift in Sources */,
+				35E02F012DCC930C00D81F7F /* FileExtensionStrategy.swift in Sources */,
+				35E02F022DCC930C00D81F7F /* MetadataDateStrategy.swift in Sources */,
+				35E02F032DCC930C00D81F7F /* MetadataStringStrategy.swift in Sources */,
+				35E02F042DCC930C00D81F7F /* SlashStrategy.swift in Sources */,
 				352B6F0D2C9A0D9E0000789D /* MetadataType.swift in Sources */,
 				3559D94F2DCB83CE00B8D0D5 /* StringExtensions.swift in Sources */,
 				35DF883F2CABDCEC007626CB /* ElementValueType.swift in Sources */,
