@@ -14,7 +14,17 @@ extension ElementContainerView {
         icon: nil,
         background: Color(.gray),
         hasFormula: false,
-        editable: false,
+        editableInAction: false,
+        editableInCondition: false,
+        elementValueType: ElementValueType.text)
+    }
+    
+    private static var defaultExpressionElementOptions: ElementOptions { ElementOptions(
+        icon: nil,
+        background: Color(hex: Constants.colorHexExpressionElement),
+        hasFormula: false,
+        editableInAction: false,
+        editableInCondition: false,
         elementValueType: ElementValueType.text)
     }
     
@@ -34,21 +44,24 @@ extension ElementContainerView {
                 icon: nil,
                 background: Color(hex: Constants.colorHexCustomElement),
                 hasFormula: true,
-                editable: true,
+                editableInAction: true,
+                editableInCondition: false,
                 elementValueType: .date),
         OptionalElementType.customText.id:
             ElementOptions(
                 icon: nil,
                 background: Color(hex: Constants.colorHexCustomElement),
                 hasFormula: false,
-                editable: true,
+                editableInAction: true,
+                editableInCondition: false,
                 elementValueType: .text),
         MetadataType.fileName.id:
             ElementOptions(
                 icon: Image(systemName: Constants.iconFile),
                 background: Color(hex: Constants.colorHexFileElement),
                 hasFormula: false,
-                editable: false,
+                editableInAction: false,
+                editableInCondition: true,
                 elementValueType: .text,
                 conditionValueType: .string),
         MetadataType.fileExtension.id:
@@ -56,7 +69,8 @@ extension ElementContainerView {
                 icon: Image(systemName: Constants.iconFile),
                 background: Color(hex: Constants.colorHexFileElement),
                 hasFormula: false,
-                editable: false,
+                editableInAction: false,
+                editableInCondition: true,
                 elementValueType: .text,
                 conditionValueType: .string),
         MetadataType.fileDateCreated.id:
@@ -64,7 +78,8 @@ extension ElementContainerView {
                 icon: Image(systemName: Constants.iconFile),
                 background: Color(hex: Constants.colorHexFileElement),
                 hasFormula: true,
-                editable: false,
+                editableInAction: false,
+                editableInCondition: true,
                 elementValueType: .date,
                 conditionValueType: .date),
         MetadataType.fileDateModified.id:
@@ -72,7 +87,8 @@ extension ElementContainerView {
                 icon: Image(systemName: Constants.iconFile),
                 background: Color(hex: Constants.colorHexFileElement),
                 hasFormula: true,
-                editable: false,
+                editableInAction: false,
+                editableInCondition: true,
                 elementValueType: .date,
                 conditionValueType: .date),
         MetadataType.metadataDateOriginal.id:
@@ -80,7 +96,8 @@ extension ElementContainerView {
                 icon: Image(.exificon),
                 background: Color(hex: Constants.colorHexExifElement),
                 hasFormula: true,
-                editable: false,
+                editableInAction: false,
+                editableInCondition: true,
                 elementValueType: .date,
                 conditionValueType: .date),
         MetadataType.metadataDateDigitilized.id:
@@ -88,7 +105,8 @@ extension ElementContainerView {
                 icon: Image(.exificon),
                 background: Color(hex: Constants.colorHexExifElement),
                 hasFormula: true,
-                editable: false,
+                editableInAction: false,
+                editableInCondition: true,
                 elementValueType: .date,
                 conditionValueType: .date),
         MetadataType.metadataCameraModel.id:
@@ -96,7 +114,8 @@ extension ElementContainerView {
                 icon: Image(.exificon),
                 background: Color(hex: Constants.colorHexExifElement),
                 hasFormula: false,
-                editable: false,
+                editableInAction: false,
+                editableInCondition: true,
                 elementValueType: .text,
                 conditionValueType: .string),
         MetadataType.metadataPixelXDimention.id:
@@ -104,7 +123,8 @@ extension ElementContainerView {
                 icon: Image(.exificon),
                 background: Color(hex: Constants.colorHexExifElement),
                 hasFormula: false,
-                editable: false,
+                editableInAction: false,
+                editableInCondition: true,
                 elementValueType: .number,
                 conditionValueType: .int),
         MetadataType.metadataPixelYDimention.id:
@@ -112,7 +132,8 @@ extension ElementContainerView {
                 icon: Image(.exificon),
                 background: Color(hex: Constants.colorHexExifElement),
                 hasFormula: false,
-                editable: false,
+                editableInAction: false,
+                editableInCondition: true,
                 elementValueType: .number,
                 conditionValueType: .int),
         MetadataType.metadataLatitude.rawValue:
@@ -120,7 +141,8 @@ extension ElementContainerView {
                 icon: Image(.exificon),
                 background: Color(hex: Constants.colorHexExifElement),
                 hasFormula: false,
-                editable: false,
+                editableInAction: false,
+                editableInCondition: true,
                 elementValueType: .number,
                 conditionValueType: .double),
         MetadataType.metadataLongitude.id:
@@ -128,7 +150,8 @@ extension ElementContainerView {
                 icon: Image(.exificon),
                 background: Color(hex: Constants.colorHexExifElement),
                 hasFormula: false,
-                editable: false,
+                editableInAction: false,
+                editableInCondition: true,
                 elementValueType: .number,
                 conditionValueType: .double),
         ActionType.rename.id:
@@ -136,7 +159,8 @@ extension ElementContainerView {
                 icon: nil,
                 background: Color.blue,
                 hasFormula: false,
-                editable: false,
+                editableInAction: false,
+                editableInCondition: false,
                 elementValueType: ElementValueType.text
             ),
         ActionType.copyToFolder.id:
@@ -144,7 +168,8 @@ extension ElementContainerView {
                 icon: nil,
                 background: Color.blue,
                 hasFormula: false,
-                editable: false,
+                editableInAction: false,
+                editableInCondition: false,
                 elementValueType: ElementValueType.text
             ),
         ActionType.moveToFolder.id:
@@ -152,7 +177,8 @@ extension ElementContainerView {
                 icon: nil,
                 background: Color.blue,
                 hasFormula: false,
-                editable: false,
+                editableInAction: false,
+                editableInCondition: false,
                 elementValueType: ElementValueType.text
             ),
         ActionType.skip.id:
@@ -160,7 +186,8 @@ extension ElementContainerView {
                 icon: nil,
                 background: Color.gray,
                 hasFormula: false,
-                editable: false,
+                editableInAction: false,
+                editableInCondition: false,
                 elementValueType: ElementValueType.text
             ),
         ActionType.delete.id:
@@ -168,15 +195,26 @@ extension ElementContainerView {
                 icon: nil,
                 background: Color.red,
                 hasFormula: false,
-                editable: false,
+                editableInAction: false,
+                editableInCondition: false,
                 elementValueType: ElementValueType.text
-            )]
+            ),
+        ExpressionElementType.and.id:
+            defaultExpressionElementOptions,
+        ExpressionElementType.or.id:
+            defaultExpressionElementOptions,
+        ExpressionElementType.leftParen.id:
+            defaultExpressionElementOptions,
+        ExpressionElementType.rightParen.id:
+            defaultExpressionElementOptions,
+        ]
     }
     
     private static var optionalElementsMap: [Int: Bool] { [
         ActionType.rename.id: true,
         ActionType.copyToFolder.id: true,
-        ActionType.moveToFolder.id: true
+        ConditionType.cIf.id: true,
+        ConditionType.cElseIf.id: true
     ] }
     
     func getCustomizationAbilityByTypeId(typeId: Int) -> Bool {
@@ -218,6 +256,17 @@ extension ElementContainerView {
             for optionalElement in optionalElements.filter({ $0.elementTypeId != OptionalElementType.slash.id }) {
                 let actionElement = DraggableElement(element: optionalElement)
                 result.append(actionElement)
+            }
+        }
+        
+        if typeId == ConditionType.cIf.id || typeId == ConditionType.cElseIf.id {
+            for elementCase in ExpressionElementType.allCases {
+                let element = T.init(
+                    elementTypeId: elementCase.id,
+                    displayText: elementCase.description
+                )
+                let conditionElement = DraggableElement(element: element)
+                result.append(conditionElement)
             }
         }
         

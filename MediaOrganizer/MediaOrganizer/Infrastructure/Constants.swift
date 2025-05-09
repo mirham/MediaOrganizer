@@ -20,6 +20,8 @@ struct Constants {
     static let space = "   "
     static let spaceShort = " "
     static let slash = "/"
+    static let dot = "."
+    static let comma = ","
     static let customTextLimit = 100
     
     // MARK: Settings key names
@@ -49,6 +51,7 @@ struct Constants {
     static let colorHexFileElement = "#681892"
     static let colorHexExifElement = "#093576"
     static let colorHexCustomElement = "#C49518"
+    static let colorHexExpressionElement = "#39C43A"
     
     // MARK: Regexes
     static let regexLocationInIso6709 = "([+-][0-9.]+)([+-][0-9.]+)"
@@ -67,6 +70,8 @@ struct Constants {
     static let elActions = "Actions"
     static let elNoConditions = "No conditions"
     static let elNoActions = "No actions"
+    static let elActionPreview = "Action: "
+    static let elConditionPreview = "Condition: "
     
     // MARK: Masks
     static let maskSource =  "Source: %1$@"

@@ -129,4 +129,17 @@ enum DateFormatType : Int, CaseIterable, Identifiable, Codable, Equatable {
         
         return result
     }
+    
+    func getConditionValueType() -> ConditionValueType {
+        switch self {
+            case .oneOrTwoDigitMonth,
+                .oneOrTwoDigitDay,
+                .oneOrTwoDigitHour24,
+                .oneOrTwoDigitMinute,
+                .oneOrTwoDigitSecond:
+                return .int
+            default:
+                return .date
+        }
+    }
 }

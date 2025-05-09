@@ -18,24 +18,26 @@ struct ConditionPreviewView: ElementContainerView {
     private let extensionExample = Date.now
     
     var body: some View {
-        WrappingHStack(alignment: .leading, horizontalSpacing: 0) {
-            Text("Condition: ")
+        WrappingHStack(alignment: .leading, horizontalSpacing: 5) {
+            Text(Constants.elConditionPreview)
                 .font(.subheadline)
             ForEach(conditionElements, id: \.id) { element in
                 let elementOptions = getElementOptionsByTypeId(typeId: element.elementTypeId)
-                HStack(spacing: 0) {
+                let operatorDescription = getOperatorDescription(
+                    conditionValueType: elementOptions.conditionValueType,
+                    selectedOperatorTypeId: element.selectedOperatorTypeId)
+                
+                HStack() {
                     Text(element.displayText
                          + getConditionFormatDescription(
                             conditionValueType: elementOptions.conditionValueType,
                             selectedFormatTypeId: element.selectedFormatTypeId))
-                        .padding(.trailing, 3)
-                    Text(getOperatorDescription(
-                        conditionValueType: elementOptions.conditionValueType,
-                        selectedOperatorTypeId: element.selectedOperatorTypeId))
+                    Text(operatorDescription)
                         .foregroundStyle(.gray)
                         .font(.system(size: 10))
-                        .padding(.trailing, 3)
+                        .isHidden(hidden: operatorDescription == String(), remove: true)
                     Text(element.value.toString())
+                        .isHidden(hidden: element.value.toString() == String(), remove: true)
                 }
                 .font(.subheadline)
                 .background(

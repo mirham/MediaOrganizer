@@ -64,7 +64,9 @@ enum ConditionValue: Codable, Equatable {
                 return String(value)
             case .date(let value):
                 let formatter = DateFormatter()
-                formatter.dateFormat = "yyyy-MM-dd" // Adjust as needed
+                formatter.dateStyle = .short
+                formatter.timeStyle = .medium
+                formatter.locale = Locale.current
                 return formatter.string(from: value)
             case .string(let value):
                 return value

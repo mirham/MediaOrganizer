@@ -41,22 +41,26 @@ struct ConditionElementEditView: ElementContainerView {
         self.conditionValueString = element.value.stringValue ?? String()
         self.conditionValueInt = element.value.intValue ?? 0
         self.conditionValueDate = element.value.dateValue ?? Date.distantPast
-        self.conditionValueDouble = element.value.doubleValue ?? 0
+        self.conditionValueDouble = element.value.doubleValue ?? 0.0
     }
     
     var body: some View {
         HStack {
             HStack {
+                let operatorDescription = getOperatorDescription(
+                    conditionValueType: elementOptions.conditionValueType,
+                    selectedOperatorTypeId: element.selectedOperatorTypeId)
+                
                 Text(element.displayText
                      + getConditionFormatDescription(
                         conditionValueType: elementOptions.conditionValueType,
                         selectedFormatTypeId: self.selectedFormatTypeId))
-                Text(getOperatorDescription(
-                    conditionValueType: elementOptions.conditionValueType,
-                    selectedOperatorTypeId: self.selectedOperatorTypeId))
+                Text(operatorDescription)
                     .foregroundStyle(.gray)
                     .font(.system(size: 12))
+                    .isHidden(hidden: operatorDescription == String(), remove: true)
                 Text(element.value.toString())
+                    .isHidden(hidden: element.value.toString() == String(), remove: true)
             }
             .contentShape(Rectangle())
             .padding(5)
@@ -65,6 +69,9 @@ struct ConditionElementEditView: ElementContainerView {
             }
             .withEditButtonStyle(activeState: controlActiveState)
             .padding(.leading, -5)
+            .isHidden(
+                hidden: !elementOptions.editableInCondition,
+                remove: true)
             
         }
         .background(
@@ -86,17 +93,27 @@ struct ConditionElementEditView: ElementContainerView {
         element.selectedFormatTypeId = selectedFormatTypeId
         element.selectedOperatorTypeId = selectedOperatorTypeId
         
-        switch elementOptions.conditionValueType {
-            case .string:
-                element.value = .string(conditionValueString)
-            case .int:
-                element.value = .int(conditionValueInt)
-            case .double:
-                element.value = .double(conditionValueDouble)
-            case .date:
-                element.value = .date(conditionValueDate)
-            default:
-                return
+        let valuesMap: [ConditionValueType: ConditionValue] = [
+            .string: .string(conditionValueString),
+            .int: .int(conditionValueInt),
+            .double: .double(conditionValueDouble),
+            .date: .date(conditionValueDate)
+        ]
+        
+        let dateFormatsMap: [ConditionValueType: ConditionValue] = [
+            .date: .date(conditionValueDate),
+            .int: .int(conditionValueInt)
+        ]
+        
+        guard let conditionType = elementOptions.conditionValueType else {
+            return
+        }
+        
+        if conditionType == .date, let selectedFormatTypeId = selectedFormatTypeId,
+           let dateFormat = DateFormatType(rawValue: selectedFormatTypeId) {
+            element.value = dateFormatsMap[dateFormat.getConditionValueType(), default: .date(conditionValueDate)]
+        } else {
+            element.value = valuesMap[conditionType, default: .date(conditionValueDate)]
         }
         
         appState.objectWillChange.send()
@@ -106,13 +123,13 @@ struct ConditionElementEditView: ElementContainerView {
     private func renderEditor() -> some View {
         switch elementOptions.conditionValueType {
             case .string:
-                renderStringInput()
+                renderStringExpression()
             case .int:
-                renderIntInput()
+                renderIntExpression()
             case .double:
-                renderDoubleInput()
+                renderDoubleExpression()
             case .date:
-                renderDateFormatSelection()
+                renderDateExpression()
             default:
                 EmptyView()
         }
@@ -155,7 +172,23 @@ struct ConditionElementEditView: ElementContainerView {
     }
     
     @ViewBuilder
-    private func renderStringInput() -> some View {
+    private func renderIntInput() -> some View {
+        TextField(Constants.hintCustomText, value:$conditionValueInt, formatter: NumberFormatter())
+    }
+    
+    @ViewBuilder
+    private func renderDatePicker() -> some View {
+        DatePickerWithSecondsPopover(date: $conditionValueDate)
+            .frame(maxWidth: 185)
+        .onAppear(perform: {
+            if (conditionValueDate == Date.distantPast) {
+                conditionValueDate = Date.now
+            }
+        })
+    }
+    
+    @ViewBuilder
+    private func renderStringExpression() -> some View {
         HStack {
             Text(element.displayText)
             renderStringOperatorPicker()
@@ -173,11 +206,11 @@ struct ConditionElementEditView: ElementContainerView {
     }
     
     @ViewBuilder
-    private func renderIntInput() -> some View {
+    private func renderIntExpression() -> some View {
         HStack {
             Text(element.displayText)
             renderNumberAndDateOperatorPicker()
-            TextField(Constants.hintCustomText, value:$conditionValueInt, formatter: NumberFormatter())
+            renderIntInput()
                 .onChange(of: conditionValueInt) {
                     // TODO RUSS: Validation here
                 }
@@ -191,15 +224,21 @@ struct ConditionElementEditView: ElementContainerView {
     }
     
     @ViewBuilder
-    private func renderDoubleInput() -> some View {
+    private func renderDoubleExpression() -> some View {
         HStack {
+            let valueBinding = Binding(
+                get: { self.conditionValueDouble },
+                set: {
+                    self.conditionValueDouble = Double(String(format:"%.4f", $0)) ?? 0.0
+                })
+            
             Text(element.displayText)
             renderNumberAndDateOperatorPicker()
-            TextField(Constants.hintCustomText, value:$conditionValueDouble, formatter: NumberFormatter())
+            TextField(Constants.hintCustomText, value:valueBinding, formatter: NumberFormatters.fourFractionDigits)
                 .onChange(of: conditionValueDouble) {
                     // TODO RUSS: Validation here
                 }
-                .frame(maxWidth: 15)
+                .frame(maxWidth: 100)
             Button(String(), systemImage: Constants.iconCheck) {
                 showEditor = false
             }
@@ -208,24 +247,13 @@ struct ConditionElementEditView: ElementContainerView {
         .isHidden(hidden: !showEditor, remove: true)
     }
     
-    private func renderDateFormatSelection() -> some View {
+    private func renderDateExpression() -> some View {
         HStack {
             Text(element.displayText
                  + getConditionFormatDescription(
                     conditionValueType: elementOptions.conditionValueType,
                     selectedFormatTypeId: selectedFormatTypeId))
                 .padding(.trailing, -10)
-                .isHidden(hidden: elementOptions.editable, remove: true)
-            DatePicker(String(),
-                       selection: $conditionValueDate,
-                       displayedComponents: [.date, .hourAndMinute])
-            .datePickerStyle(.compact)
-                .isHidden(hidden: !elementOptions.editable, remove: true)
-                .onAppear(perform: {
-                    if (conditionValueDate == Date.distantPast) {
-                        conditionValueDate = Date.now
-                    }
-                })
             Picker(String(), selection: Binding(
                 get: { selectedFormatTypeId ?? DateFormatType.asIs.id },
                 set: {
@@ -244,6 +272,7 @@ struct ConditionElementEditView: ElementContainerView {
             .pickerStyle(.menu)
             .frame(maxWidth: 20)
             renderNumberAndDateOperatorPicker()
+            renderInputWithSelectedType()
             Button(String(), systemImage: Constants.iconCheck) {
                 element.selectedFormatTypeId = selectedFormatTypeId
                 showEditor = false
@@ -251,6 +280,24 @@ struct ConditionElementEditView: ElementContainerView {
             .withRemoveButtonStyle(activeState: controlActiveState)
         }
         .isHidden(hidden: !showEditor, remove: true)
+    }
+    
+    @ViewBuilder
+    private func renderInputWithSelectedType() -> some View {
+        if selectedFormatTypeId != nil {
+            let dateFormat = DateFormatType(rawValue: selectedFormatTypeId!)
+            
+            if dateFormat != nil {
+                if(dateFormat!.getConditionValueType() == .date) {
+                    renderDatePicker()
+                }
+                
+                if(dateFormat!.getConditionValueType() == .int) {
+                    renderIntInput()
+                        .frame(maxWidth: 50)
+                }
+            }
+        }
     }
 }
 

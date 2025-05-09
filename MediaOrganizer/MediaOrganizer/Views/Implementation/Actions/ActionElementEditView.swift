@@ -47,7 +47,7 @@ struct ActionElementEditView: ElementContainerView {
             .withEditButtonStyle(activeState: controlActiveState)
             .padding(.leading, -5)
             .isHidden(
-                hidden: !(elementOptions.editable || elementOptions.hasFormula),
+                hidden: !(elementOptions.editableInAction || elementOptions.hasFormula),
                 remove: true)
             
         }
@@ -106,12 +106,12 @@ struct ActionElementEditView: ElementContainerView {
         HStack {
             Text(element.displayText + getFormatDescription())
                 .padding(.trailing, -10)
-                .isHidden(hidden: elementOptions.editable, remove: true)
+                .isHidden(hidden: elementOptions.editableInAction, remove: true)
             DatePicker(String(),
                        selection: $customDate,
                        displayedComponents: [.date, .hourAndMinute])
             .datePickerStyle(.compact)
-                .isHidden(hidden: !elementOptions.editable, remove: true)
+                .isHidden(hidden: !elementOptions.editableInAction, remove: true)
                 .onAppear(perform: {
                     if (customDate == Date.distantPast) {
                         customDate = Date()

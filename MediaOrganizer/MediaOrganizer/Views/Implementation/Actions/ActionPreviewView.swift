@@ -19,7 +19,7 @@ struct ActionPreviewView: ElementContainerView {
     
     var body: some View {
         WrappingHStack(alignment: .leading, horizontalSpacing: 0) {
-            Text("Example: ")
+            Text(Constants.elActionPreview)
                 .font(.subheadline)
             ForEach(actionElements, id: \.id) { elementInfo in
                 let elementOptions = getElementOptionsByTypeId(typeId: elementInfo.elementTypeId)
