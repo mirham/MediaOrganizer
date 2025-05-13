@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ServiceBase {
+class ServiceBase : ServiceBaseType {
     let appState = AppState.shared
     
     internal func doesCurrentJobExist() -> Bool {
@@ -50,5 +50,9 @@ class ServiceBase {
     
     internal func doesCurrentActionExist() -> Bool {
         appState.current.action != nil
+    }
+    
+    internal func doesCurrentConditionExist() -> Bool {
+        appState.current.condition != nil
     }
 }

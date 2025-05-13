@@ -6,19 +6,19 @@
 //
 
 import Foundation
+import Factory
 
-class JobService: ServiceBase {
-    static let shared = JobService()
-    
-    private let fileService = FileService.shared
+class JobService: ServiceBase, JobServiceType {
+    @Injected(\.fileService) private var fileService
+    @Injected(\.ruleService) private var ruleService
     
     func createJob() {
-        appState.current.job = Job.makeDefault()
+        appState.current.job = Job.initDefault()
     }
     
     func addJob() {
         guard doesCurrentJobExist()
-                && appState.current.job != Job.makeDefault()
+                && appState.current.job != Job.initDefault()
                 && getJobIndexByJobId(jobId: appState.current.job!.id) == nil
         else { return }
         
@@ -82,7 +82,7 @@ class JobService: ServiceBase {
             
             for fileInfo in mediaFiles {
                 for rule in job.rules {
-                    let fileActions = rule.apply(fileInfo: fileInfo)
+                    let fileActions = self.ruleService.applyRule(rule:rule, fileInfo: fileInfo)
                     await self.fileService.peformFileActionsAsync(
                         outputPath: job.outputFolder,
                         fileInfo: fileInfo,

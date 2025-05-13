@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import Factory
 
-class RuleService: ServiceBase {
-    static let shared = RuleService()
+class RuleService: ServiceBase, RuleServiceType {
+    @Injected(\.actionService) private var actionService
     
     func createRule() {
         appState.current.rule = Rule()
@@ -32,6 +33,21 @@ class RuleService: ServiceBase {
         guard doesCurrentRuleExist() else { return false }
         
         let result = appState.current.rule!.id == ruleId
+        
+        return result
+    }
+    
+    func applyRule(rule:Rule, fileInfo: MediaFileInfo) -> [FileAction] {
+        // TODO: Apply conditions here
+        
+        var result = [FileAction]()
+        
+        for action in rule.actions {
+            let fileAction = actionService.actionToFileAction(
+                action: action, fileInfo: fileInfo)
+            
+            result.append(fileAction)
+        }
         
         return result
     }

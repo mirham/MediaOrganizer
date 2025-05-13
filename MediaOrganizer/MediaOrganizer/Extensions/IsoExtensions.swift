@@ -1,5 +1,5 @@
 //
-//  StringIsoExtensions.swift
+//  IsoExtensions.swift
 //  MediaOrganizer
 //
 //  Created by UglyGeorge on 10.10.2024.

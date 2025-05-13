@@ -9,9 +9,7 @@ import Foundation
 import ImageIO
 import AVFoundation
 
-class MetadataService: ServiceBase {
-    static let shared = MetadataService()
-    
+class MetadataService: ServiceBase, MetadataServiceType {
     func getFileMetadataAsync(fileUrl: URL) async -> [MetadataType: Any?] {
         var result = [MetadataType: Any?]()
         
@@ -34,7 +32,7 @@ class MetadataService: ServiceBase {
             let creationDate = attributes[FileAttributeKey.creationDate] as? Date
             result[MetadataType.fileDateCreated] = creationDate
             result[MetadataType.fileDateModified] = modificationDate
-        }catch{
+        } catch {
             print("Error getting attributes of file.")
         }
         

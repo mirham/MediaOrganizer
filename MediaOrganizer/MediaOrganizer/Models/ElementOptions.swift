@@ -10,7 +10,9 @@ import SwiftUI
 struct ElementOptions {
     let icon: Image?
     let background: Color
-    let valueType: ElementValueType
     let hasFormula: Bool
-    let editable: Bool
+    let editableInAction: Bool
+    let editableInCondition: Bool
+    let elementValueType: ElementValueType
+    var conditionValueType: ConditionValueType? = nil
 }
