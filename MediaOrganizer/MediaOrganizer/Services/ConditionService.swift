@@ -30,6 +30,37 @@ class ConditionService : ServiceBase, ConditionServiceType {
         return result
     }
     
+    func applyConditions(
+        conditions: [Condition],
+        fileInfo: MediaFileInfo) -> Bool {
+        let result = true
+        
+        guard !conditions.isEmpty else { return result }
+        
+        for condition in conditions {
+            for element in condition.elements {
+                element.fileMetadata = fileInfo.metadata
+            }
+            
+            do {
+                let parser = ExpressionParser(elements: condition.elements)
+                let ast = try parser.parse()
+                ast.printAST()
+                
+                let astResult = ast.evaluate()
+                
+                guard astResult else {
+                    return false
+                }
+            }
+            catch {
+                print("Error when parsing:" + error.localizedDescription)
+            }
+        }
+        
+        return result
+    }
+    
     func removeConditionById(conditionId: UUID) {
         guard appState.current.rule != nil else { return }
         

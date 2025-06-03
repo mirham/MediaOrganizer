@@ -12,13 +12,12 @@ struct CustomDateStrategy : ElementStrategy {
     
     func elementAsString(context: ActionElement) -> String? {
         guard let date = context.customDate,
-              let formatTypeId = context.selectedFormatTypeId,
-              let formatType = DateFormatType(rawValue: formatTypeId) else {
+              let dateFormatType = context.selectedDateFormatType else {
             return nil
         }
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = formatType.formula
+        dateFormatter.dateFormat = dateFormatType.formula
         let result = dateFormatter.string(from: date)
         
         return result

@@ -10,6 +10,7 @@ import Factory
 
 class RuleService: ServiceBase, RuleServiceType {
     @Injected(\.actionService) private var actionService
+    @Injected(\.conditionService) private var conditionService
     
     func createRule() {
         appState.current.rule = Rule()
@@ -38,9 +39,11 @@ class RuleService: ServiceBase, RuleServiceType {
     }
     
     func applyRule(rule:Rule, fileInfo: MediaFileInfo) -> [FileAction] {
-        // TODO: Apply conditions here
-        
         var result = [FileAction]()
+        
+        let matchAllConditions = conditionService.applyConditions(conditions: rule.conditions, fileInfo: fileInfo)
+        
+        guard matchAllConditions else { return result }
         
         for action in rule.actions {
             let fileAction = actionService.actionToFileAction(

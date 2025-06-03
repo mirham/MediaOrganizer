@@ -31,6 +31,9 @@
 		3557DC1F2DCE373300BE779E /* NumberFormatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3557DC1E2DCE373000BE779E /* NumberFormatters.swift */; };
 		3557DC262DCE632C00BE779E /* DatePickerWithSeconds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3557DC252DCE632400BE779E /* DatePickerWithSeconds.swift */; };
 		3557DC282DCE657100BE779E /* DatePickerWithSecondsPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3557DC272DCE656500BE779E /* DatePickerWithSecondsPopover.swift */; };
+		3558E6E62DEF1FBB00A0B3AE /* ASTNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3558E6E52DEF1FAD00A0B3AE /* ASTNode.swift */; };
+		3558E6E82DEF205000A0B3AE /* ExpressionParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3558E6E72DEF204500A0B3AE /* ExpressionParser.swift */; };
+		3558E6EA2DEF206E00A0B3AE /* ASTError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3558E6E92DEF206B00A0B3AE /* ASTError.swift */; };
 		3559D94F2DCB83CE00B8D0D5 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3559D94E2DCB83C700B8D0D5 /* StringExtensions.swift */; };
 		3559D9512DCB913200B8D0D5 /* ConditionElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3559D9502DCB913200B8D0D5 /* ConditionElement.swift */; };
 		3559D9532DCB9B1A00B8D0D5 /* ConditionValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3559D9522DCB9B1400B8D0D5 /* ConditionValue.swift */; };
@@ -139,6 +142,9 @@
 		3557DC1E2DCE373000BE779E /* NumberFormatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberFormatters.swift; sourceTree = "<group>"; };
 		3557DC252DCE632400BE779E /* DatePickerWithSeconds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerWithSeconds.swift; sourceTree = "<group>"; };
 		3557DC272DCE656500BE779E /* DatePickerWithSecondsPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerWithSecondsPopover.swift; sourceTree = "<group>"; };
+		3558E6E52DEF1FAD00A0B3AE /* ASTNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASTNode.swift; sourceTree = "<group>"; };
+		3558E6E72DEF204500A0B3AE /* ExpressionParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressionParser.swift; sourceTree = "<group>"; };
+		3558E6E92DEF206B00A0B3AE /* ASTError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASTError.swift; sourceTree = "<group>"; };
 		3559D94E2DCB83C700B8D0D5 /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 		3559D9502DCB913200B8D0D5 /* ConditionElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionElement.swift; sourceTree = "<group>"; };
 		3559D9522DCB9B1400B8D0D5 /* ConditionValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionValue.swift; sourceTree = "<group>"; };
@@ -288,6 +294,27 @@
 			path = Styles;
 			sourceTree = "<group>";
 		};
+		3558E6E42DEF1F7F00A0B3AE /* Expressions */ = {
+			isa = PBXGroup;
+			children = (
+				3558E6E52DEF1FAD00A0B3AE /* ASTNode.swift */,
+				3558E6E92DEF206B00A0B3AE /* ASTError.swift */,
+				3558E6E72DEF204500A0B3AE /* ExpressionParser.swift */,
+			);
+			path = Expressions;
+			sourceTree = "<group>";
+		};
+		3558E6EB2DEF335700A0B3AE /* Strategies */ = {
+			isa = PBXGroup;
+			children = (
+				35E02EE02DCC930200D81F7F /* ElementStrategy.swift */,
+				35E02EE22DCC930200D81F7F /* FileActionStrategy.swift */,
+				35E02EE12DCC930200D81F7F /* ElementStrategyFactoryType.swift */,
+				35E02EE32DCC930200D81F7F /* FileActionStrategyFactoryType.swift */,
+			);
+			path = Strategies;
+			sourceTree = "<group>";
+		};
 		35CA7C6B2C946D9000765522 = {
 			isa = PBXGroup;
 			children = (
@@ -376,6 +403,7 @@
 			children = (
 				35E02EFD2DCC930C00D81F7F /* ElementStrategies */,
 				35E02F0B2DCC931500D81F7F /* FileActionStrategies */,
+				3558E6E42DEF1F7F00A0B3AE /* Expressions */,
 				352B6F022C99BD1C0000789D /* ServiceBase.swift */,
 				352B6F002C99BCF70000789D /* JobService.swift */,
 				3515140A2C9B1D4F000E4CAB /* RuleService.swift */,
@@ -432,18 +460,15 @@
 		35E02EE92DCC930200D81F7F /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				35E02EE12DCC930200D81F7F /* ElementStrategyFactoryType.swift */,
-				35E02EE32DCC930200D81F7F /* FileActionStrategyFactoryType.swift */,
+				3558E6EB2DEF335700A0B3AE /* Strategies */,
+				35E02EE82DCC930200D81F7F /* ServiceBaseType.swift */,
+				35E02EE52DCC930200D81F7F /* JobServiceType.swift */,
+				35E02EE72DCC930200D81F7F /* RuleServiceType.swift */,
 				35E02EDD2DCC930200D81F7F /* ActionServiceType.swift */,
 				35E02EDE2DCC930200D81F7F /* ConditionServiceType.swift */,
 				35E02EDF2DCC930200D81F7F /* ElementServiceType.swift */,
-				35E02EE02DCC930200D81F7F /* ElementStrategy.swift */,
-				35E02EE22DCC930200D81F7F /* FileActionStrategy.swift */,
 				35E02EE42DCC930200D81F7F /* FileServiceType.swift */,
-				35E02EE52DCC930200D81F7F /* JobServiceType.swift */,
 				35E02EE62DCC930200D81F7F /* MetadataServiceType.swift */,
-				35E02EE72DCC930200D81F7F /* RuleServiceType.swift */,
-				35E02EE82DCC930200D81F7F /* ServiceBaseType.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -660,6 +685,7 @@
 				35E02EEE2DCC930200D81F7F /* ElementStrategyFactoryType.swift in Sources */,
 				35E02EEF2DCC930200D81F7F /* FileActionStrategy.swift in Sources */,
 				35E02EF02DCC930200D81F7F /* FileActionStrategyFactoryType.swift in Sources */,
+				3558E6E62DEF1FBB00A0B3AE /* ASTNode.swift in Sources */,
 				35E02EF12DCC930200D81F7F /* FileServiceType.swift in Sources */,
 				35E02EF22DCC930200D81F7F /* JobServiceType.swift in Sources */,
 				3519DFE42DCCCF39007D8B30 /* NumberAndDateOperatorType.swift in Sources */,
@@ -710,10 +736,12 @@
 				35E39A392CC2A303003D6360 /* ElementContainerView.swift in Sources */,
 				35DF88412CABE194007626CB /* ActionElement.swift in Sources */,
 				35CBFF252CB828E0003E3DBE /* MediaFileInfo.swift in Sources */,
+				3558E6EA2DEF206E00A0B3AE /* ASTError.swift in Sources */,
 				3557DC282DCE657100BE779E /* DatePickerWithSecondsPopover.swift in Sources */,
 				352B6F012C99BCF80000789D /* JobService.swift in Sources */,
 				35447F452C9848AA0000C0B1 /* Job.swift in Sources */,
 				35DF88532CAED3CB007626CB /* DateFormatType.swift in Sources */,
+				3558E6E82DEF205000A0B3AE /* ExpressionParser.swift in Sources */,
 				352B6F0F2C9A13C20000789D /* ActionType.swift in Sources */,
 				35CA7C9F2C94855B00765522 /* FolderType.swift in Sources */,
 				3559D9572DCBA1CD00B8D0D5 /* ConditionService.swift in Sources */,

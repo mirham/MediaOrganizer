@@ -275,12 +275,12 @@ extension ElementContainerView {
     
     func getConditionFormatDescription(
         conditionValueType: ConditionValueType?,
-        selectedFormatTypeId: Int?) -> String {
+        selectedDateFormatTypeId: Int?) -> String {
         guard conditionValueType == .date else { return String() }
         
-        let dateFormatType = selectedFormatTypeId == nil
+        let dateFormatType = selectedDateFormatTypeId == nil
             ? DateFormatType.asIs
-            : DateFormatType.init(rawValue: selectedFormatTypeId!)
+            : DateFormatType.init(rawValue: selectedDateFormatTypeId!)
         
         guard dateFormatType != nil else { return String() }
         

@@ -12,7 +12,7 @@ class ActionElement : ElementType {
     let elementTypeId: Int
     let displayText: String
     let settingType: ElementValueType
-    var selectedFormatTypeId: Int?
+    var selectedDateFormatType: DateFormatType?
     var customDate: Date?
     var customText: String?
     var fileMetadata: [MetadataType: Any?] = [:]
@@ -22,7 +22,7 @@ class ActionElement : ElementType {
         case elementTypeId
         case displayText
         case settingType
-        case selectedFormatTypeId
+        case selectedDateFormatType
         case customDate
         case customText
     }
@@ -49,7 +49,7 @@ class ActionElement : ElementType {
         self.elementTypeId = elementTypeId
         self.displayText = displayText
         self.settingType = ActionElement.valueTypesMap[elementTypeId] ?? .text
-        self.selectedFormatTypeId = nil
+        self.selectedDateFormatType = nil
         self.customDate = nil
         self.customText = nil
     }

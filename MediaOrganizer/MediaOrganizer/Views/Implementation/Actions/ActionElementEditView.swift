@@ -13,7 +13,7 @@ struct ActionElementEditView: ElementContainerView {
     @Environment(\.controlActiveState) private var controlActiveState
     
     @State private var showEditor: Bool = false
-    @State private var selectedTypeId: Int?
+    @State private var selectedDateFormatTypeId: Int?
     @State private var customText: String
     @State private var customDate: Date
     
@@ -31,7 +31,9 @@ struct ActionElementEditView: ElementContainerView {
     
     init(element: ActionElement) {
         self.element = element
-        self.selectedTypeId = element.selectedFormatTypeId ?? DateFormatType.dateEu.id
+        self.selectedDateFormatTypeId = element.selectedDateFormatType != nil
+            ? element.selectedDateFormatType!.id
+            : DateFormatType.dateEu.id
         self.customText = element.customText ?? String()
         self.customDate = element.customDate ?? Date.distantPast
     }
@@ -76,9 +78,9 @@ struct ActionElementEditView: ElementContainerView {
     }
     
     private func getFormatDescription() -> String {
-        guard self.selectedTypeId != nil && elementOptions.elementValueType == .date else { return String() }
+        guard self.selectedDateFormatTypeId != nil && elementOptions.elementValueType == .date else { return String() }
         
-        let dateFormatType = DateFormatType.init(rawValue: self.selectedTypeId!)
+        let dateFormatType = DateFormatType.init(rawValue: self.selectedDateFormatTypeId!)
         
         guard dateFormatType != nil else { return String() }
         
@@ -118,9 +120,9 @@ struct ActionElementEditView: ElementContainerView {
                     }
                 })
             Picker(String(), selection: Binding(
-                get: { selectedTypeId ?? DateFormatType.dateEu.id },
+                get: { selectedDateFormatTypeId ?? DateFormatType.dateEu.id },
                 set: {
-                    selectedTypeId = $0
+                    selectedDateFormatTypeId = $0
                 }
             )) {
                 ForEach(DateFormatType.selectForAction(), id: \.id) { item in
@@ -135,7 +137,9 @@ struct ActionElementEditView: ElementContainerView {
             .pickerStyle(.menu)
             .frame(maxWidth: 20)
             Button(String(), systemImage: Constants.iconCheck) {
-                element.selectedFormatTypeId = selectedTypeId
+                element.selectedDateFormatType = selectedDateFormatTypeId != nil
+                    ? DateFormatType(rawValue: selectedDateFormatTypeId!)
+                    : nil
                 element.customDate = customDate
                 showEditor = false
             }

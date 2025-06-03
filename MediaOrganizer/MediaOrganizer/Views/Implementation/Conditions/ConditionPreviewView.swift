@@ -31,7 +31,7 @@ struct ConditionPreviewView: ElementContainerView {
                     Text(element.displayText
                          + getConditionFormatDescription(
                             conditionValueType: elementOptions.conditionValueType,
-                            selectedFormatTypeId: element.selectedFormatTypeId))
+                            selectedDateFormatTypeId: element.selectedDateFormatType?.id))
                     Text(operatorDescription)
                         .foregroundStyle(.gray)
                         .font(.system(size: 10))
@@ -54,7 +54,7 @@ struct ConditionPreviewView: ElementContainerView {
     // MARK: Private functions
     
     private func getFormattedDate(elementInfo: ConditionElement) -> String {
-        dateFormatter.dateFormat = DateFormatType(rawValue: elementInfo.selectedFormatTypeId ?? DateFormatType.dateEu.id)!.formula
+        dateFormatter.dateFormat = (elementInfo.selectedDateFormatType ?? DateFormatType.dateEu).formula
         let date = dateExample
         let result = dateFormatter.string(from: date)
         

@@ -9,10 +9,12 @@ import Foundation
 
 class ConditionElement : ElementType {
     let id: UUID
+    // MetadataType or ExpressionElementType
     let elementTypeId: Int
     let displayText: String
     var settingType: ElementValueType
-    var selectedFormatTypeId: Int?
+    var selectedDateFormatType: DateFormatType?
+    // StringOperatorType or NumberAndDateOperatorType
     var selectedOperatorTypeId: Int?
     var value: ConditionValue
     var fileMetadata: [MetadataType: Any?] = [:]
@@ -22,7 +24,7 @@ class ConditionElement : ElementType {
         case elementTypeId
         case displayText
         case settingType
-        case selectedFormatTypeId
+        case selectedDateFormatType
         case selectedOperatorTypeId
         case value
     }

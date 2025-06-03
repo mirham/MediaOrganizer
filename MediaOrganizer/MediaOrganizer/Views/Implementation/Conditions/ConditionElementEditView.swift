@@ -13,7 +13,8 @@ struct ConditionElementEditView: ElementContainerView {
     @Environment(\.controlActiveState) private var controlActiveState
     
     @State private var showEditor: Bool = false
-    @State private var selectedFormatTypeId: Int?
+    @State private var selectedDateFormatTypeId: Int?
+    // NumberAndDateOperatorType or StringOperatorType
     @State private var selectedOperatorTypeId: Int?
     @State private var conditionValueString: String
     @State private var conditionValueInt: Int
@@ -36,7 +37,7 @@ struct ConditionElementEditView: ElementContainerView {
     
     init(element: ConditionElement) {
         self.element = element
-        self.selectedFormatTypeId = element.selectedFormatTypeId
+        self.selectedDateFormatTypeId = element.selectedDateFormatType?.id
         self.selectedOperatorTypeId = element.selectedOperatorTypeId
         self.conditionValueString = element.value.stringValue ?? String()
         self.conditionValueInt = element.value.intValue ?? 0
@@ -54,7 +55,7 @@ struct ConditionElementEditView: ElementContainerView {
                 Text(element.displayText
                      + getConditionFormatDescription(
                         conditionValueType: elementOptions.conditionValueType,
-                        selectedFormatTypeId: self.selectedFormatTypeId))
+                        selectedDateFormatTypeId: self.selectedDateFormatTypeId))
                 Text(operatorDescription)
                     .foregroundStyle(.gray)
                     .font(.system(size: 12))
@@ -90,7 +91,9 @@ struct ConditionElementEditView: ElementContainerView {
     // MARK: Private functions
     
     private func saveCondition() {
-        element.selectedFormatTypeId = selectedFormatTypeId
+        element.selectedDateFormatType = selectedDateFormatTypeId != nil
+            ? DateFormatType(rawValue: selectedDateFormatTypeId!)
+            : nil
         element.selectedOperatorTypeId = selectedOperatorTypeId
         
         let valuesMap: [ConditionValueType: ConditionValue] = [
@@ -109,8 +112,8 @@ struct ConditionElementEditView: ElementContainerView {
             return
         }
         
-        if conditionType == .date, let selectedFormatTypeId = selectedFormatTypeId,
-           let dateFormat = DateFormatType(rawValue: selectedFormatTypeId) {
+        if conditionType == .date, let selectedDateFormatTypeId = selectedDateFormatTypeId,
+           let dateFormat = DateFormatType(rawValue: selectedDateFormatTypeId) {
             element.value = dateFormatsMap[dateFormat.getConditionValueType(), default: .date(conditionValueDate)]
         } else {
             element.value = valuesMap[conditionType, default: .date(conditionValueDate)]
@@ -252,12 +255,12 @@ struct ConditionElementEditView: ElementContainerView {
             Text(element.displayText
                  + getConditionFormatDescription(
                     conditionValueType: elementOptions.conditionValueType,
-                    selectedFormatTypeId: selectedFormatTypeId))
+                    selectedDateFormatTypeId: selectedDateFormatTypeId))
                 .padding(.trailing, -10)
             Picker(String(), selection: Binding(
-                get: { selectedFormatTypeId ?? DateFormatType.asIs.id },
+                get: { selectedDateFormatTypeId ?? DateFormatType.asIs.id },
                 set: {
-                    selectedFormatTypeId = $0
+                    selectedDateFormatTypeId = $0
                 }
             )) {
                 ForEach(DateFormatType.selectForCondition(), id: \.id) { item in
@@ -274,18 +277,25 @@ struct ConditionElementEditView: ElementContainerView {
             renderNumberAndDateOperatorPicker()
             renderInputWithSelectedType()
             Button(String(), systemImage: Constants.iconCheck) {
-                element.selectedFormatTypeId = selectedFormatTypeId
+                element.selectedDateFormatType = selectedDateFormatTypeId != nil
+                    ? DateFormatType(rawValue: selectedDateFormatTypeId!)
+                    : nil
                 showEditor = false
             }
             .withRemoveButtonStyle(activeState: controlActiveState)
         }
+        .onAppear(perform: {
+            if selectedDateFormatTypeId == nil {
+                selectedDateFormatTypeId = DateFormatType.asIs.id
+            }
+        })
         .isHidden(hidden: !showEditor, remove: true)
     }
     
     @ViewBuilder
     private func renderInputWithSelectedType() -> some View {
-        if selectedFormatTypeId != nil {
-            let dateFormat = DateFormatType(rawValue: selectedFormatTypeId!)
+        if selectedDateFormatTypeId != nil {
+            let dateFormat = DateFormatType(rawValue: selectedDateFormatTypeId!)
             
             if dateFormat != nil {
                 if(dateFormat!.getConditionValueType() == .date) {
