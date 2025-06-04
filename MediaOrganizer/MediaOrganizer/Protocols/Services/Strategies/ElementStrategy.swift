@@ -12,4 +12,5 @@ protocol ElementStrategy {
     var typeKey : Int { get }
     
     func elementAsString(context: ActionElement) -> String?
+    func checkCondition(context: ConditionElement) -> Bool
 }

@@ -11,5 +11,6 @@ import Foundation
 protocol ConditionServiceType : ServiceBaseType {
     func addNewCondition()
     func isCurrentCondition(conditionId: UUID) -> Bool
+    func applyConditions(conditions: [Condition], fileInfo: MediaFileInfo) -> Bool
     func removeConditionById(conditionId: UUID)
 }

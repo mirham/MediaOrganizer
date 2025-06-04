@@ -10,6 +10,7 @@ import Factory
 
 class ConditionService : ServiceBase, ConditionServiceType {
     @Injected(\.elementService) private var elementService
+    @Injected(\.elementStrategyFactory) private var elementStrategyFactory
     
     func addNewCondition() {
         let conditionType = appState.current.rule!.conditions.count == 0
@@ -26,6 +27,37 @@ class ConditionService : ServiceBase, ConditionServiceType {
         guard doesCurrentConditionExist() else { return false }
         
         let result = appState.current.condition!.id == conditionId
+        
+        return result
+    }
+    
+    func applyConditions(
+        conditions: [Condition],
+        fileInfo: MediaFileInfo) -> Bool {
+        let result = true
+        
+        guard !conditions.isEmpty else { return result }
+        
+        for condition in conditions {
+            for element in condition.elements {
+                element.fileMetadata = fileInfo.metadata
+            }
+            
+            do {
+                let parser = ExpressionParser(elements: condition.elements)
+                let ast = try parser.parse()
+                ast.printOutput(elementStrategyFactory)
+                
+                let astResult = ast.evaluate(elementStrategyFactory)
+                
+                guard astResult else {
+                    return false
+                }
+            }
+            catch {
+                print("Error when parsing:" + error.localizedDescription)
+            }
+        }
         
         return result
     }

@@ -78,11 +78,12 @@ class JobService: ServiceBase, JobServiceType {
         Task.detached(priority: .high) {
             let mediaFiles = await self.fileService.getFolderMediaFilesAsync(path: job.sourceFolder)
             
-            // TODO: Apply conditions (filter files)
-            
             for fileInfo in mediaFiles {
                 for rule in job.rules {
                     let fileActions = self.ruleService.applyRule(rule:rule, fileInfo: fileInfo)
+                    
+                    guard !fileActions.isEmpty else { continue }
+                    
                     await self.fileService.peformFileActionsAsync(
                         outputPath: job.outputFolder,
                         fileInfo: fileInfo,

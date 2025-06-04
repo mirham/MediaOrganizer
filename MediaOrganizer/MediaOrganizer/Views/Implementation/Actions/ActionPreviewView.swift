@@ -67,7 +67,7 @@ struct ActionPreviewView: ElementContainerView {
     // MARK: Private functions
     
     private func getFormattedDate(elementInfo: ActionElement) -> String {
-        dateFormatter.dateFormat = DateFormatType(rawValue: elementInfo.selectedFormatTypeId ?? DateFormatType.dateEu.id)!.formula
+        dateFormatter.dateFormat = (elementInfo.selectedDateFormatType ?? DateFormatType.dateEu)!.formula
         let date = elementInfo.customDate == nil || elementInfo.customDate == Date.distantPast
             ? dateExample
             : elementInfo.customDate!
