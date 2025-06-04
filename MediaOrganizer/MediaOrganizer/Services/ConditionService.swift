@@ -10,6 +10,7 @@ import Factory
 
 class ConditionService : ServiceBase, ConditionServiceType {
     @Injected(\.elementService) private var elementService
+    @Injected(\.elementStrategyFactory) private var elementStrategyFactory
     
     func addNewCondition() {
         let conditionType = appState.current.rule!.conditions.count == 0
@@ -45,9 +46,9 @@ class ConditionService : ServiceBase, ConditionServiceType {
             do {
                 let parser = ExpressionParser(elements: condition.elements)
                 let ast = try parser.parse()
-                ast.printAST()
+                ast.printOutput(elementStrategyFactory)
                 
-                let astResult = ast.evaluate()
+                let astResult = ast.evaluate(elementStrategyFactory)
                 
                 guard astResult else {
                     return false

@@ -22,4 +22,8 @@ struct CustomDateStrategy : ElementStrategy {
         
         return result
     }
+    
+    func checkCondition(context: ConditionElement) -> Bool {
+        abort()
+    }
 }

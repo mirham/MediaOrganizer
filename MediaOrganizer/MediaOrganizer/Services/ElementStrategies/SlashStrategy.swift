@@ -5,13 +5,16 @@
 //  Created by UglyGeorge on 06.05.2025.
 //
 
-
 import Foundation
 
-struct SlashStrategy: ElementStrategy {    
+struct SlashStrategy: ElementStrategy {
     var typeKey = OptionalElementType.slash.rawValue
     
     func elementAsString(context: ActionElement) -> String? {
         Constants.slash
+    }
+    
+    func checkCondition(context: ConditionElement) -> Bool {
+        abort()
     }
 }

@@ -104,7 +104,7 @@ extension SharedContainer {
     }
     
     var fileNameStrategy: Factory<ElementStrategy> {
-        Factory(self) { MetadataStringStrategy(
+        Factory(self) { MetadataTextStrategy(
             typeKey: MetadataType.fileName.rawValue,
             metadataKey: MetadataType.fileName) }
     }
@@ -138,31 +138,31 @@ extension SharedContainer {
     }
     
     var metadataCameraModelStrategy: Factory<ElementStrategy> {
-        Factory(self) { MetadataStringStrategy(
+        Factory(self) { MetadataTextStrategy(
             typeKey: MetadataType.metadataCameraModel.rawValue,
             metadataKey: MetadataType.metadataCameraModel) }
     }
     
     var metadataPixelXDimentionStrategy: Factory<ElementStrategy> {
-        Factory(self) { MetadataStringStrategy(
+        Factory(self) { MetadataNumberStrategy(
             typeKey: MetadataType.metadataPixelXDimention.rawValue,
             metadataKey: MetadataType.metadataPixelXDimention) }
     }
     
     var metadataPixelYDimentionStrategy: Factory<ElementStrategy> {
-        Factory(self) { MetadataStringStrategy(
+        Factory(self) { MetadataNumberStrategy(
             typeKey: MetadataType.metadataPixelYDimention.rawValue,
             metadataKey: MetadataType.metadataPixelYDimention) }
     }
     
     var metadataLatitudeStrategy: Factory<ElementStrategy> {
-        Factory(self) { MetadataStringStrategy(
+        Factory(self) { MetadataNumberStrategy(
             typeKey: MetadataType.metadataLatitude.rawValue,
             metadataKey: MetadataType.metadataLatitude) }
     }
     
     var metadataLongitudeStrategy: Factory<ElementStrategy> {
-        Factory(self) { MetadataStringStrategy(
+        Factory(self) { MetadataNumberStrategy(
             typeKey: MetadataType.metadataLongitude.rawValue,
             metadataKey: MetadataType.metadataLongitude) }
     }

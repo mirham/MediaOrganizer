@@ -23,7 +23,6 @@ struct ExpressionParser {
                 switch exprType {
                     case .and, .or:
                         let opNode = ASTNode.logical(exprType, [])
-                        // Pop operators with higher or equal precedence
                         while let lastOp = operators.last,
                               case .logical(let lastOpType, _) = lastOp,
                               lastOpType != .leftParen,
@@ -50,12 +49,10 @@ struct ExpressionParser {
                         }
                 }
             } else {
-                // Expression (field with operator and value)
                 output.append(.comparison(token))
             }
         }
         
-        // Process remaining operators
         while let op = operators.popLast() {
             if case .group = op {
                 output.append(.group([buildNode(from: &output)]))
