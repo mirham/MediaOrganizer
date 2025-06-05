@@ -7,13 +7,23 @@
 
 import Foundation
 
-class Job : Codable, Identifiable, Equatable {
+class Job : Codable, Identifiable, Equatable, ObservableObject {
     var id = UUID()
     var checked: Bool
     var name: String
     var sourceFolder: String
     var outputFolder: String
     var rules: [Rule] = [Rule]()
+    @Published var progress: JobProgress = JobProgress()
+    
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case checked
+        case name
+        case sourceFolder
+        case outputFolder
+        case rules
+    }
     
     init(name: String,
         sourceFolder: String,

@@ -39,13 +39,17 @@ struct JobsView: FolderContainerView {
                     VStack (alignment: .leading) {
                         Text(job.name)
                             .fontWeight(.bold)
+                            .padding(.top, 5)
                             .padding(.bottom, 2)
                         Text(String(format: Constants.maskSource, job.sourceFolder))
                             .foregroundStyle(jobService.isCurrentJob(jobId: job.id) ? .white : .gray)
                         Text(String(format: Constants.maskOutput, job.outputFolder))
                             .foregroundStyle(jobService.isCurrentJob(jobId: job.id) ? .white : .gray)
+                        JobProgressView(job: job)
                     }
-                    Spacer()
+                    HStack {
+                        JobAbortView(job: job)
+                    }
                 }
                 .contentShape(Rectangle())
                 .background(jobService.isCurrentJob(jobId: job.id) ? Color(hex: Constants.colorHexSelection) : .clear)

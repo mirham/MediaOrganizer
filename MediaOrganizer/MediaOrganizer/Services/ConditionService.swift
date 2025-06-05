@@ -34,9 +34,7 @@ class ConditionService : ServiceBase, ConditionServiceType {
     func applyConditions(
         conditions: [Condition],
         fileInfo: MediaFileInfo) -> Bool {
-        let result = true
-        
-        guard !conditions.isEmpty else { return result }
+        guard !conditions.isEmpty else { return false }
         
         for condition in conditions {
             for element in condition.elements {
@@ -48,10 +46,10 @@ class ConditionService : ServiceBase, ConditionServiceType {
                 let ast = try parser.parse()
                 ast.printOutput(elementStrategyFactory)
                 
-                let astResult = ast.evaluate(elementStrategyFactory)
+                let isMatch = ast.evaluate(elementStrategyFactory)
                 
-                guard astResult else {
-                    return false
+                if isMatch {
+                    return true
                 }
             }
             catch {
@@ -59,7 +57,7 @@ class ConditionService : ServiceBase, ConditionServiceType {
             }
         }
         
-        return result
+        return false
     }
     
     func removeConditionById(conditionId: UUID) {

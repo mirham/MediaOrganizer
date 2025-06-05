@@ -17,20 +17,29 @@ struct JobsHeaderToolbarView : View {
     @Injected(\.jobService) private var jobService
     
     @State private var showOverRunJobs = false
+    @State private var showOverAbortJobs = false
     
     var body: some View {
         Section {
             Button(Constants.toolbarRunJobs, systemImage: Constants.iconRun) {
-                Task {
-                    await jobService.runCheckedJobsAsync()
-                }
+                jobService.runCheckedJobs()
             }
-            .withToolbarButtonStyle(showOver: showOverRunJobs, activeState: controlActiveState, color: .blue)
+            .withToolbarButtonStyle(showOver: showOverRunJobs, activeState: controlActiveState, color: .green)
             .popover(isPresented: $showOverRunJobs, content: {
                 renderHint(hint: Constants.toolbarRunJobs)
             })
             .onHover(perform: { hovering in
                 showOverRunJobs = hovering && controlActiveState == .key
+            })
+            Button(Constants.toolbarAbortActiveJobs, systemImage: Constants.iconStop) {
+                jobService.abortActiveJobs()
+            }
+            .withToolbarButtonStyle(showOver: showOverAbortJobs, activeState: controlActiveState, color: .red)
+            .popover(isPresented: $showOverAbortJobs, content: {
+                renderHint(hint: Constants.toolbarAbortActiveJobs)
+            })
+            .onHover(perform: { hovering in
+                showOverAbortJobs = hovering && controlActiveState == .key
             })
         }
     }
@@ -49,10 +58,11 @@ struct JobsHeaderToolbarView : View {
 private extension Button {
     func withToolbarButtonStyle(showOver: Bool, activeState: ControlActiveState, color: Color) -> some View {
         self.buttonStyle(.plain)
-            .foregroundColor(showOver && activeState == .key ? color : .gray)
+            .foregroundColor(showOver && activeState == .key ? color : .blue)
             .focusEffectDisabled()
             .font(.system(size: 30))
             .opacity(getViewOpacity(state: activeState))
+            .padding(.trailing, 15)
     }
 }
 
