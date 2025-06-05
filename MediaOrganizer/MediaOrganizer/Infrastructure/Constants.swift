@@ -12,7 +12,7 @@ struct Constants {
     static let appName = "MirHam Media Organizer"
     static let step: Int = 1
     static let progressBarUpdateInterval: Double = 0.1
-    static let threadChunk = 500
+    static let threadChunk = 50
     static let minPercentage: Double = 0
     static let maxPercentage: Double = 100
     static let defaultJobName = "New job"
@@ -23,6 +23,7 @@ struct Constants {
     static let dot = "."
     static let comma = ","
     static let customTextLimit = 100
+    static let defaultToleranceInNanoseconds: UInt64 = 100_000_000
     
     // MARK: Settings key names
     static let settingsKeyJobs = "jobs"
@@ -33,7 +34,7 @@ struct Constants {
     
     // MARK: Icons
     static let iconApp = "AppIcon"
-    static let iconRun = "play.circle.fill"
+    static let iconRun = "play.fill"
     static let iconArrowForward = "arrow.forward"
     static let iconAdd = "plus.circle.fill"
     static let iconRemove = "minus.circle.fill"
@@ -44,6 +45,7 @@ struct Constants {
     static let iconCheck = "checkmark.circle.fill"
     static let iconEdit = "pencil.circle.fill"
     static let iconFile = "doc.fill"
+    static let iconStop = "stop.fill"
     
     // MARK: Colors
     static let colorHexSelection = "#244EC9"
@@ -72,6 +74,10 @@ struct Constants {
     static let elNoActions = "No actions"
     static let elActionPreview = "Action: "
     static let elConditionPreview = "Condition: "
+    static let elCompleted = " completed "
+    static let elCanceled = " cancelled "
+    static let elNotYetRun = " not yet run "
+    static let elAnalyzingFiles = "Analyzing files..."
     
     // MARK: Masks
     static let maskSource =  "Source: %1$@"
@@ -79,6 +85,7 @@ struct Constants {
     
     // MARK: Toolbars
     static let toolbarRunJobs = "Run all checked jobs"
+    static let toolbarAbortActiveJobs = "Abort active jobs"
     static let toolbarAddJob = "Add job"
     static let toolbarRemoveJob = "Remove job"
     static let toolbarAddRule = "Add rule"
@@ -91,6 +98,7 @@ struct Constants {
     static let hintFolder = "Select a folder..."
     static let hintJobName = "A job name"
     static let hintCustomText = "Custom text"
+    static let hintAbortJob = "Abort '%1$@' job"
     
     // MARK: Drag and Drop
     static let ddFolder = "public.file-url"

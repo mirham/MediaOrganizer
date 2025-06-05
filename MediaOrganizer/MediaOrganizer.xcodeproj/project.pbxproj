@@ -23,6 +23,11 @@
 		352B6F132C9A19D10000789D /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352B6F122C9A19D10000789D /* Action.swift */; };
 		352E1F5F2CB3F8DC0035C492 /* ButtonExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352E1F5E2CB3F8DC0035C492 /* ButtonExtensions.swift */; };
 		3538D5022DF06CCA00179C3C /* MetadataTextStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3538D5012DF06CCA00179C3C /* MetadataTextStrategy.swift */; };
+		3538D5042DF1968400179C3C /* JobProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3538D5032DF1967B00179C3C /* JobProgress.swift */; };
+		3538D50C2DF1C1BD00179C3C /* SequenceExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3538D50B2DF1C1B200179C3C /* SequenceExtensions.swift */; };
+		3538D50E2DF1CE0B00179C3C /* JobProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3538D50D2DF1CE0400179C3C /* JobProgressView.swift */; };
+		3538D5102DF20D3C00179C3C /* JobAbortView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3538D50F2DF20D3C00179C3C /* JobAbortView.swift */; };
+		3538D5142DF233C300179C3C /* AnimatedProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3538D5132DF233C100179C3C /* AnimatedProgressView.swift */; };
 		35447F452C9848AA0000C0B1 /* Job.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35447F442C9848AA0000C0B1 /* Job.swift */; };
 		35447F4A2C985A890000C0B1 /* FolderContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35447F492C985A890000C0B1 /* FolderContainerView.swift */; };
 		35447F4F2C98618C0000C0B1 /* ViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35447F4E2C98618C0000C0B1 /* ViewHelper.swift */; };
@@ -135,6 +140,11 @@
 		352B6F122C9A19D10000789D /* Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
 		352E1F5E2CB3F8DC0035C492 /* ButtonExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonExtensions.swift; sourceTree = "<group>"; };
 		3538D5012DF06CCA00179C3C /* MetadataTextStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataTextStrategy.swift; sourceTree = "<group>"; };
+		3538D5032DF1967B00179C3C /* JobProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobProgress.swift; sourceTree = "<group>"; };
+		3538D50B2DF1C1B200179C3C /* SequenceExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceExtensions.swift; sourceTree = "<group>"; };
+		3538D50D2DF1CE0400179C3C /* JobProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobProgressView.swift; sourceTree = "<group>"; };
+		3538D50F2DF20D3C00179C3C /* JobAbortView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobAbortView.swift; sourceTree = "<group>"; };
+		3538D5132DF233C100179C3C /* AnimatedProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedProgressView.swift; sourceTree = "<group>"; };
 		35447F442C9848AA0000C0B1 /* Job.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Job.swift; sourceTree = "<group>"; };
 		35447F492C985A890000C0B1 /* FolderContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderContainerView.swift; sourceTree = "<group>"; };
 		35447F4E2C98618C0000C0B1 /* ViewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewHelper.swift; sourceTree = "<group>"; };
@@ -246,6 +256,7 @@
 		3515140C2C9C0725000E4CAB /* Controls */ = {
 			isa = PBXGroup;
 			children = (
+				3538D5132DF233C100179C3C /* AnimatedProgressView.swift */,
 				35B1B14C2C9C77F700B39FFC /* DraggableElement.swift */,
 				3515140D2C9C0744000E4CAB /* DividerWithImage.swift */,
 				3557DC252DCE632400BE779E /* DatePickerWithSeconds.swift */,
@@ -258,6 +269,7 @@
 			isa = PBXGroup;
 			children = (
 				35447F442C9848AA0000C0B1 /* Job.swift */,
+				3538D5032DF1967B00179C3C /* JobProgress.swift */,
 				352B6F102C9A160A0000789D /* Rule.swift */,
 				351514042C9B1105000E4CAB /* Condition.swift */,
 				3559D9522DCB9B1400B8D0D5 /* ConditionValue.swift */,
@@ -540,6 +552,8 @@
 			isa = PBXGroup;
 			children = (
 				35CA7C982C94724600765522 /* JobsView.swift */,
+				3538D50D2DF1CE0400179C3C /* JobProgressView.swift */,
+				3538D50F2DF20D3C00179C3C /* JobAbortView.swift */,
 				35E02F212DCC931C00D81F7F /* JobGeneralSettingsEditView.swift */,
 				35E02F222DCC931C00D81F7F /* JobSettingsView.swift */,
 				35E02F232DCC931C00D81F7F /* JobsHeaderToolbarView.swift */,
@@ -574,6 +588,7 @@
 			children = (
 				35F872392DCA0EBD0064B304 /* ContainerExtensions.swift */,
 				3559D94E2DCB83C700B8D0D5 /* StringExtensions.swift */,
+				3538D50B2DF1C1B200179C3C /* SequenceExtensions.swift */,
 				35E39A332CC2A13E003D6360 /* IsoExtensions.swift */,
 				35E39A342CC2A13E003D6360 /* UrlExtensions.swift */,
 			);
@@ -662,6 +677,7 @@
 				351514052C9B1105000E4CAB /* Condition.swift in Sources */,
 				352B6F132C9A19D10000789D /* Action.swift in Sources */,
 				35E02EEA2DCC930200D81F7F /* ActionServiceType.swift in Sources */,
+				3538D5142DF233C300179C3C /* AnimatedProgressView.swift in Sources */,
 				35E02F2A2DCC931C00D81F7F /* ActionEditView.swift in Sources */,
 				35E02F2B2DCC931C00D81F7F /* ActionElementEditView.swift in Sources */,
 				35E02F2C2DCC931C00D81F7F /* ActionPreviewView.swift in Sources */,
@@ -695,6 +711,7 @@
 				35E02EF32DCC930200D81F7F /* MetadataServiceType.swift in Sources */,
 				35E02EF42DCC930200D81F7F /* RuleServiceType.swift in Sources */,
 				35E02EF52DCC930200D81F7F /* ServiceBaseType.swift in Sources */,
+				3538D50E2DF1CE0B00179C3C /* JobProgressView.swift in Sources */,
 				35B1B14D2C9C77F700B39FFC /* DraggableElement.swift in Sources */,
 				3559D9612DCBADB700B8D0D5 /* ElementType.swift in Sources */,
 				35DF883A2CAB2FB2007626CB /* OptionalElementType.swift in Sources */,
@@ -712,8 +729,10 @@
 				3515140E2C9C0744000E4CAB /* DividerWithImage.swift in Sources */,
 				352B6F112C9A160A0000789D /* Rule.swift in Sources */,
 				35CBFF1B2CB804A2003E3DBE /* FileService.swift in Sources */,
+				3538D50C2DF1C1BD00179C3C /* SequenceExtensions.swift in Sources */,
 				35CA7C9D2C94743100765522 /* AppState.swift in Sources */,
 				352B6F032C99BD1D0000789D /* ServiceBase.swift in Sources */,
+				3538D5042DF1968400179C3C /* JobProgress.swift in Sources */,
 				35CBFF272CB82B99003E3DBE /* MetadataService.swift in Sources */,
 				35CA7C782C946D9000765522 /* MediaOrganizerApp.swift in Sources */,
 				352E1F5F2CB3F8DC0035C492 /* ButtonExtensions.swift in Sources */,
@@ -744,6 +763,7 @@
 				352B6F012C99BCF80000789D /* JobService.swift in Sources */,
 				35447F452C9848AA0000C0B1 /* Job.swift in Sources */,
 				35DF88532CAED3CB007626CB /* DateFormatType.swift in Sources */,
+				3538D5102DF20D3C00179C3C /* JobAbortView.swift in Sources */,
 				3558E6E82DEF205000A0B3AE /* ExpressionParser.swift in Sources */,
 				352B6F0F2C9A13C20000789D /* ActionType.swift in Sources */,
 				35CA7C9F2C94855B00765522 /* FolderType.swift in Sources */,

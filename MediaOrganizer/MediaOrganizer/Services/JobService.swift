@@ -12,6 +12,8 @@ class JobService: ServiceBase, JobServiceType {
     @Injected(\.fileService) private var fileService
     @Injected(\.ruleService) private var ruleService
     
+    var jobsTask: Task<Void, Never>?
+    
     func createJob() {
         appState.current.job = Job.initDefault()
     }
@@ -49,14 +51,39 @@ class JobService: ServiceBase, JobServiceType {
         return result
     }
     
-    func runCheckedJobsAsync() async {
-        let checkedJobs = appState.userData.jobs.filter({ $0.checked })
+    func runCheckedJobs() {
+        let checkedInactiveJobs = appState.userData.jobs
+            .filter({ $0.checked && !$0.progress.inProgress })
         
-        guard !checkedJobs.isEmpty else { return }
+        guard !checkedInactiveJobs.isEmpty else { return }
         
-        for job in checkedJobs {
-            await runJobAsync(job: job)
+        appState.current.hasActiveJobs = true
+        
+        jobsTask = Task.detached(priority: .userInitiated) {
+            await withTaskGroup(of: Void.self) { group in
+                for job in checkedInactiveJobs {
+                    group.addTask {
+                        await self.runJobAsync(job: job)
+                    }
+                }
+                
+                await group.waitForAll()
+            }
         }
+        
+        appState.current.hasActiveJobs = false
+    }
+    
+    func abortActiveJobs() {
+        let activeJobs = appState.userData.jobs.filter({ $0.progress.inProgress })
+        
+        guard !activeJobs.isEmpty else { return }
+        
+        for activeJob in activeJobs {
+            activeJob.progress.isCancelRequested = true
+        }
+        
+        jobsTask?.cancel()
     }
     
     func resetCurrentJob() {
@@ -75,21 +102,65 @@ class JobService: ServiceBase, JobServiceType {
     // MARK: Private functions
     
     private func runJobAsync(job: Job) async {
-        Task.detached(priority: .high) {
-            let mediaFiles = await self.fileService.getFolderMediaFilesAsync(path: job.sourceFolder)
-            
-            for fileInfo in mediaFiles {
-                for rule in job.rules {
-                    let fileActions = self.ruleService.applyRule(rule:rule, fileInfo: fileInfo)
+        await MainActor.run {
+            job.progress.reset()
+            job.progress.isAnalyzing = true
+        }
+        
+        let mediaFiles = await fileService.getFolderMediaFilesAsync(path: job.sourceFolder)
+        let batchSize = Constants.threadChunk
+        
+        await MainActor.run {
+            job.progress.isAnalyzing = false
+            job.progress.totalCount = mediaFiles.count
+            job.progress.inProgress = true
+        }
+        
+        do {
+            for batch in mediaFiles.chunked(into: batchSize) {
+                try await batch.asyncForEach { fileInfo in
+                    try Task.checkCancellation()
                     
-                    guard !fileActions.isEmpty else { continue }
+                    if job.progress.isCancelRequested {
+                        throw CancellationError()
+                    }
                     
-                    await self.fileService.peformFileActionsAsync(
-                        outputPath: job.outputFolder,
-                        fileInfo: fileInfo,
-                        fileActions: fileActions)
+                    let wasProcessed = await processFile(fileInfo, for: job)
+                    
+                    await MainActor.run {
+                        job.progress.processedCount += Constants.step
+                        
+                        if !wasProcessed {
+                            job.progress.skippedCount += Constants.step
+                        }
+                    }
                 }
             }
+        } catch is CancellationError {
+            print("Job \(job.id) cancelled")
         }
+        catch {
+            print("Job \(job.id) failed: \(error)")
+        }
+        
+        await MainActor.run {
+            job.progress.inProgress = false
+        }
+    }
+    
+    private func processFile(_ fileInfo: MediaFileInfo, for job: Job) async -> Bool {
+        for rule in job.rules {
+            let fileActions = ruleService.applyRule(rule: rule, fileInfo: fileInfo)
+            
+            guard !fileActions.isEmpty else { continue }
+            
+            await fileService.peformFileActionsAsync(
+                outputPath: job.outputFolder,
+                fileInfo: fileInfo,
+                fileActions: fileActions
+            )
+            return true
+        }
+        return false
     }
 }

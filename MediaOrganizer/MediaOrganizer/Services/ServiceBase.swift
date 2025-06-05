@@ -11,7 +11,9 @@ class ServiceBase : ServiceBaseType {
     let appState = AppState.shared
     
     internal func doesCurrentJobExist() -> Bool {
-        appState.current.job != nil
+        guard appState.current.job != nil else { return false }
+        
+        return true
     }
     
     internal func getCurrentJobId() -> UUID? {
@@ -29,7 +31,9 @@ class ServiceBase : ServiceBaseType {
     }
     
     internal func doesCurrentRuleExist() -> Bool {
-        appState.current.rule != nil
+        guard appState.current.rule != nil else { return false }
+        
+        return true
     }
     
     internal func getCurrentRuleId() -> UUID? {
@@ -49,10 +53,14 @@ class ServiceBase : ServiceBaseType {
     }
     
     internal func doesCurrentActionExist() -> Bool {
-        appState.current.action != nil
+        guard appState.current.action != nil else { return false }
+        
+        return true
     }
     
     internal func doesCurrentConditionExist() -> Bool {
-        appState.current.condition != nil
+        guard appState.current.condition != nil else { return false }
+        
+        return true
     }
 }
