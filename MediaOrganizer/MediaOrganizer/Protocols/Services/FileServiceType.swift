@@ -9,7 +9,9 @@
 import Foundation
 
 protocol FileServiceType {
-    func getFolderMediaFilesAsync(path: String) async -> [MediaFileInfo]
+    func getFolderMediaFilesAsync(
+        path: String,
+        jobProgress: JobProgress) async throws -> [MediaFileInfo]
     func peformFileActionsAsync(
         outputPath: String,
         fileInfo: MediaFileInfo,

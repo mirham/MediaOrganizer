@@ -28,6 +28,7 @@
 		3538D50E2DF1CE0B00179C3C /* JobProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3538D50D2DF1CE0400179C3C /* JobProgressView.swift */; };
 		3538D5102DF20D3C00179C3C /* JobAbortView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3538D50F2DF20D3C00179C3C /* JobAbortView.swift */; };
 		3538D5142DF233C300179C3C /* AnimatedProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3538D5132DF233C100179C3C /* AnimatedProgressView.swift */; };
+		3538D5162DF2DCBE00179C3C /* JobRunView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3538D5152DF2DCBE00179C3C /* JobRunView.swift */; };
 		35447F452C9848AA0000C0B1 /* Job.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35447F442C9848AA0000C0B1 /* Job.swift */; };
 		35447F4A2C985A890000C0B1 /* FolderContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35447F492C985A890000C0B1 /* FolderContainerView.swift */; };
 		35447F4F2C98618C0000C0B1 /* ViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35447F4E2C98618C0000C0B1 /* ViewHelper.swift */; };
@@ -145,6 +146,7 @@
 		3538D50D2DF1CE0400179C3C /* JobProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobProgressView.swift; sourceTree = "<group>"; };
 		3538D50F2DF20D3C00179C3C /* JobAbortView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobAbortView.swift; sourceTree = "<group>"; };
 		3538D5132DF233C100179C3C /* AnimatedProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedProgressView.swift; sourceTree = "<group>"; };
+		3538D5152DF2DCBE00179C3C /* JobRunView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobRunView.swift; sourceTree = "<group>"; };
 		35447F442C9848AA0000C0B1 /* Job.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Job.swift; sourceTree = "<group>"; };
 		35447F492C985A890000C0B1 /* FolderContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderContainerView.swift; sourceTree = "<group>"; };
 		35447F4E2C98618C0000C0B1 /* ViewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewHelper.swift; sourceTree = "<group>"; };
@@ -552,12 +554,13 @@
 			isa = PBXGroup;
 			children = (
 				35CA7C982C94724600765522 /* JobsView.swift */,
-				3538D50D2DF1CE0400179C3C /* JobProgressView.swift */,
-				3538D50F2DF20D3C00179C3C /* JobAbortView.swift */,
-				35E02F212DCC931C00D81F7F /* JobGeneralSettingsEditView.swift */,
-				35E02F222DCC931C00D81F7F /* JobSettingsView.swift */,
 				35E02F232DCC931C00D81F7F /* JobsHeaderToolbarView.swift */,
 				35E02F242DCC931C00D81F7F /* JobsToolbarView.swift */,
+				3538D5152DF2DCBE00179C3C /* JobRunView.swift */,
+				3538D50F2DF20D3C00179C3C /* JobAbortView.swift */,
+				3538D50D2DF1CE0400179C3C /* JobProgressView.swift */,
+				35E02F212DCC931C00D81F7F /* JobGeneralSettingsEditView.swift */,
+				35E02F222DCC931C00D81F7F /* JobSettingsView.swift */,
 			);
 			path = Jobs;
 			sourceTree = "<group>";
@@ -699,6 +702,7 @@
 				35E02F3B2DCC931C00D81F7F /* RulesToolbarView.swift in Sources */,
 				35E02EEB2DCC930200D81F7F /* ConditionServiceType.swift in Sources */,
 				35E02EEC2DCC930200D81F7F /* ElementServiceType.swift in Sources */,
+				3538D5162DF2DCBE00179C3C /* JobRunView.swift in Sources */,
 				3519DFE82DCCD6C3007D8B30 /* ConditionValueType.swift in Sources */,
 				35E02EED2DCC930200D81F7F /* ElementStrategy.swift in Sources */,
 				35E02EEE2DCC930200D81F7F /* ElementStrategyFactoryType.swift in Sources */,

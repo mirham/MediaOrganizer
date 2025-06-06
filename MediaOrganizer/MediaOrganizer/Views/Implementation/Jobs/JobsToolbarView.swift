@@ -35,7 +35,8 @@ struct JobsToolbarView : View {
                 isJobRemoving = true
             }
             .withToolbarButtonStyle(showOver: showOverRemoveJob, activeState: controlActiveState, color: .red)
-            .disabled(!jobService.doesCurrentJobExist())
+            .disabled(!jobService.doesCurrentJobExist()
+                      || (appState.current.job != nil && appState.current.job!.progress.isActive))
             .isHidden(hidden: !jobService.doesCurrentJobExist(), remove: true)
             .onHover(perform: { hovering in
                 showOverRemoveJob = hovering && controlActiveState == .key
