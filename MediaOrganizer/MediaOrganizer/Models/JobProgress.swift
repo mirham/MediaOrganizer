@@ -5,8 +5,13 @@
 //  Created by UglyGeorge on 05.06.2025.
 //
 
+import Foundation
+
 struct JobProgress {
     var notYetRun: Bool = true
+    var isActive: Bool {
+        get { (isAnalyzing || inProgress) && !(isCompleted || isCancelled) }
+    }
     var isAnalyzing: Bool = false {
         didSet {
             notYetRun = false
@@ -14,10 +19,15 @@ struct JobProgress {
     }
     var inProgress: Bool = false
     var isCompleted: Bool = false
-    var isCancelRequested: Bool = false {
+    var isCancelled: Bool = false {
         didSet {
-            if progress == Constants.maxPercentage || processedCount == totalCount {
-                isCancelRequested = false
+            if progress == Constants.maxPercentage
+                || (processedCount == totalCount && !isEmpty()) {
+                isCancelled = false
+            }
+            
+            if isCancelled {
+                resetProgressFlags()
             }
         }
     }
@@ -29,7 +39,7 @@ struct JobProgress {
             
             if (progress == Constants.maxPercentage
                 || processedCount == totalCount) {
-                inProgress = false
+                resetProgressFlags()
                 isCompleted = true
             }
         }
@@ -46,12 +56,23 @@ struct JobProgress {
     }
     
     mutating func reset() {
-        self.isCancelRequested = false
+        self.isCancelled = false
+        self.isCompleted = false
+        self.resetProgressFlags()
+        self.resetCounters()
+    }
+    
+    // MARK: Private functions
+    
+    private mutating func resetProgressFlags() {
+        self.isAnalyzing = false
+        self.inProgress = false
+    }
+    
+    private mutating func resetCounters() {
         self.progress = 0.0
         self.processedCount = 0
         self.skippedCount = 0
         self.totalCount = 0
-        self.isAnalyzing = false
-        self.isCompleted = false
     }
 }

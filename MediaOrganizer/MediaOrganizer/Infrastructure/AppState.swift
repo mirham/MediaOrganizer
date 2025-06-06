@@ -23,7 +23,6 @@ extension AppState {
         var isConditionInEditMode = false
         var action: Action? = nil
         var isActionInEditMode = false
-        var hasActiveJobs = false
         
         static func == (lhs: Current, rhs: Current) -> Bool {
             let result = lhs.job == rhs.job
@@ -32,7 +31,6 @@ extension AppState {
                 && lhs.isConditionInEditMode == rhs.isConditionInEditMode
                 && lhs.action == rhs.action
                 && lhs.isActionInEditMode == rhs.isActionInEditMode
-                && lhs.hasActiveJobs == rhs.hasActiveJobs
             
             return result
         }

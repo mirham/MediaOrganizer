@@ -15,6 +15,9 @@ protocol JobServiceType : ServiceBaseType {
     func toggleJob(jobId: UUID, checked: Bool)
     func isCurrentJob(jobId: UUID) -> Bool
     func runCheckedJobs()
+    func runJob(jobId: UUID)
+    func hasActiveJobs() -> Bool
+    func hasCheckedInactiveJobs() -> Bool
     func abortActiveJobs()
     func resetCurrentJob()
     func removeCurrentJob()

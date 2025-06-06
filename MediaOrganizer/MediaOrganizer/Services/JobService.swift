@@ -53,11 +53,9 @@ class JobService: ServiceBase, JobServiceType {
     
     func runCheckedJobs() {
         let checkedInactiveJobs = appState.userData.jobs
-            .filter({ $0.checked && !$0.progress.inProgress })
+            .filter({ $0.checked && !$0.progress.isActive })
         
         guard !checkedInactiveJobs.isEmpty else { return }
-        
-        appState.current.hasActiveJobs = true
         
         jobsTask = Task.detached(priority: .userInitiated) {
             await withTaskGroup(of: Void.self) { group in
@@ -70,17 +68,40 @@ class JobService: ServiceBase, JobServiceType {
                 await group.waitForAll()
             }
         }
+    }
+    
+    func runJob(jobId: UUID) {
+        let job = appState.userData.jobs
+            .first(where: { $0.id == jobId && !$0.progress.isActive })
         
-        appState.current.hasActiveJobs = false
+        guard let job = job else { return }
+        
+        Task.detached(priority: .userInitiated) {
+            await self.runJobAsync(job: job)
+        }
+    }
+    
+    func hasActiveJobs() -> Bool {
+        let result = appState.userData.jobs
+            .contains(where: {$0.progress.isActive})
+        
+        return result
+    }
+    
+    func hasCheckedInactiveJobs() -> Bool {
+        let result = appState.userData.jobs
+            .contains(where: {$0.checked && !$0.progress.isActive})
+        
+        return result
     }
     
     func abortActiveJobs() {
-        let activeJobs = appState.userData.jobs.filter({ $0.progress.inProgress })
+        let activeJobs = appState.userData.jobs.filter({ $0.progress.isActive })
         
         guard !activeJobs.isEmpty else { return }
         
         for activeJob in activeJobs {
-            activeJob.progress.isCancelRequested = true
+            activeJob.progress.isCancelled = true
         }
         
         jobsTask?.cancel()
@@ -105,23 +126,30 @@ class JobService: ServiceBase, JobServiceType {
         await MainActor.run {
             job.progress.reset()
             job.progress.isAnalyzing = true
-        }
-        
-        let mediaFiles = await fileService.getFolderMediaFilesAsync(path: job.sourceFolder)
-        let batchSize = Constants.threadChunk
-        
-        await MainActor.run {
-            job.progress.isAnalyzing = false
-            job.progress.totalCount = mediaFiles.count
-            job.progress.inProgress = true
+            appState.objectWillChange.send()
         }
         
         do {
+            let mediaFiles = try await fileService.getFolderMediaFilesAsync(
+            path: job.sourceFolder,
+            jobProgress: job.progress)
+        
+            if !job.progress.isCancelled {
+                await MainActor.run {
+                    job.progress.isAnalyzing = false
+                    job.progress.totalCount = mediaFiles.count
+                    job.progress.inProgress = true
+                    appState.objectWillChange.send()
+                }
+            }
+            
+            let batchSize = Constants.threadChunk
+
             for batch in mediaFiles.chunked(into: batchSize) {
                 try await batch.asyncForEach { fileInfo in
                     try Task.checkCancellation()
                     
-                    if job.progress.isCancelRequested {
+                    if job.progress.isCancelled {
                         throw CancellationError()
                     }
                     
@@ -145,6 +173,7 @@ class JobService: ServiceBase, JobServiceType {
         
         await MainActor.run {
             job.progress.inProgress = false
+            appState.objectWillChange.send()
         }
     }
     

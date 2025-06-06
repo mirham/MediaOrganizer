@@ -14,6 +14,7 @@ class Job : Codable, Identifiable, Equatable, ObservableObject {
     var sourceFolder: String
     var outputFolder: String
     var rules: [Rule] = [Rule]()
+    
     @Published var progress: JobProgress = JobProgress()
     
     private enum CodingKeys: String, CodingKey {

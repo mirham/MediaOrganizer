@@ -84,7 +84,7 @@ struct Constants {
     static let maskOutput =  "Output: %1$@"
     
     // MARK: Toolbars
-    static let toolbarRunJobs = "Run all checked jobs"
+    static let toolbarRunJobs = "Run checked inactive jobs"
     static let toolbarAbortActiveJobs = "Abort active jobs"
     static let toolbarAddJob = "Add job"
     static let toolbarRemoveJob = "Remove job"
@@ -98,6 +98,7 @@ struct Constants {
     static let hintFolder = "Select a folder..."
     static let hintJobName = "A job name"
     static let hintCustomText = "Custom text"
+    static let hintRunJob = "Run '%1$@' job"
     static let hintAbortJob = "Abort '%1$@' job"
     
     // MARK: Drag and Drop
@@ -105,7 +106,7 @@ struct Constants {
     
     // MARK: Dialogs
     static let dialogHeaderRemoveJob = "Delete job '%1$@'"
-    static let dialogBodyRemoveJob = "This operation cannot be undone. The folders will be preserved."
+    static let dialogBodyRemoveJob = "This operation cannot be undone.\nThe folders will be preserved."
     static let dialogHeaderRemoveRule = "Delete rule"
     static let dialogBodyRemoveRule = "This operation cannot be undone."
     static let dialogButtonDelete = "Remove"

@@ -48,6 +48,7 @@ struct JobsView: FolderContainerView {
                         JobProgressView(job: job)
                     }
                     HStack {
+                        JobRunView(job: job)
                         JobAbortView(job: job)
                     }
                 }

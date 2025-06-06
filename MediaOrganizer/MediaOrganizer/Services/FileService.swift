@@ -15,17 +15,28 @@ class FileService : ServiceBase, FileServiceType {
     
     private let fileManager = FileManager.default
     
-    func getFolderMediaFilesAsync(path: String) async -> [MediaFileInfo] {
+    func getFolderMediaFilesAsync(
+        path: String,
+        jobProgress: JobProgress) async throws -> [MediaFileInfo] {
         var result = [MediaFileInfo]()
         let path = URL( string: path)
         
         let options: FileManager.DirectoryEnumerationOptions = [.skipsHiddenFiles, .skipsPackageDescendants]
         
-        let filteredFileUrls = await listFilesInFolderAsync(at: path!, options: options).filter {
-            $0.isImageFile || $0.isVideoFile
-        }
+        let filteredFileUrls = await
+            listFilesInFolderAsync(
+                at: path!,
+                options: options,
+                jobProgress: jobProgress)
+            .filter { $0.isImageFile || $0.isVideoFile }
         
         for await fileUrl in filteredFileUrls {
+            try Task.checkCancellation()
+            
+            if jobProgress.isCancelled {
+                throw CancellationError()
+            }
+            
             let mediaType = fileUrl.isImageFile ? MediaType.photo : MediaType.video
             let metadata = await metadataService.getFileMetadataAsync(fileUrl: fileUrl)
             let mediaInfo = MediaFileInfo(type: mediaType, url: fileUrl, metadata: metadata)
@@ -84,14 +95,26 @@ class FileService : ServiceBase, FileServiceType {
     
     // MARK: Private functions
     
-    private func listFilesInFolderAsync(at url: URL, options: FileManager.DirectoryEnumerationOptions ) async -> AsyncStream<URL> {
+    private func listFilesInFolderAsync(
+        at url: URL,
+        options: FileManager.DirectoryEnumerationOptions,
+        jobProgress: JobProgress) async -> AsyncStream<URL> {
         AsyncStream { continuation in
             Task {
                 let enumerator = FileManager.default.enumerator(at: url, includingPropertiesForKeys: nil, options: options)
                 
                 while let fileURL = enumerator?.nextObject() as? URL {
+                    try Task.checkCancellation()
+                    
+                    if jobProgress.isCancelled {
+                        throw CancellationError()
+                    }
+                    
                     if fileURL.hasDirectoryPath {
-                        for await item in await listFilesInFolderAsync(at: fileURL.standardizedFileURL, options: options) {
+                        for await item in await listFilesInFolderAsync(
+                            at: fileURL.standardizedFileURL,
+                            options: options,
+                            jobProgress: jobProgress) {
                             continuation.yield(item)
                         }
                     } else {

@@ -6,15 +6,18 @@
 //
 
 import SwiftUI
+import Factory
 
-struct JobAbortView: View {
+struct JobRunView: View {
     @ObservedObject var job: Job
     
-    @State private var overAbortButton = false
+    @Injected(\.jobService) private var jobService
+    
+    @State private var overRunButton = false
     
     var body: some View {
-        Button(action: cancelJob, label: {
-            Image(systemName: Constants.iconStop)
+        Button(action: runJob, label: {
+            Image(systemName: Constants.iconRun)
                 .resizable()
                 .scaledToFit()
                 .frame(width: 20, height: 20)
@@ -22,26 +25,24 @@ struct JobAbortView: View {
         })
         .buttonStyle(.plain)
         .focusEffectDisabled()
-        .foregroundStyle(overAbortButton ? .red : .blue)
-        .isHidden(hidden: !job.progress.isActive, remove: true)
-        .popover(isPresented: $overAbortButton, content: {
+        .foregroundStyle(overRunButton ? .green : .blue)
+        .isHidden(hidden: job.progress.isActive, remove: true)
+        .popover(isPresented: $overRunButton, content: {
             renderHint()
         })
         .onHover(perform: {over in
-            overAbortButton = over
+            overRunButton = over
         })
-        Spacer()
-            .frame(width: 10)
     }
     
     // MARK: Private functions
     
-    private func cancelJob() {
-        job.progress.isCancelled = true
+    private func runJob() {
+        jobService.runJob(jobId: job.id)
     }
     
     private func renderHint() -> some View {
-        let result = Text(String(format: Constants.hintAbortJob, job.name))
+        let result = Text(String(format: Constants.hintRunJob, job.name))
             .padding()
             .interactiveDismissDisabled()
         
