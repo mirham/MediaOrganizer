@@ -156,9 +156,10 @@ class JobService: ServiceBase, JobServiceType {
                     let wasProcessed = await processFile(fileInfo, for: job)
                     
                     await MainActor.run {
-                        job.progress.processedCount += Constants.step
-                        
-                        if !wasProcessed {
+                        if wasProcessed {
+                            job.progress.processedCount += Constants.step
+                        }
+                        else {
                             job.progress.skippedCount += Constants.step
                         }
                     }

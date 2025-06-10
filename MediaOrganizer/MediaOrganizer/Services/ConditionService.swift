@@ -46,7 +46,7 @@ class ConditionService : ServiceBase, ConditionServiceType {
                 let ast = try parser.parse()
                 ast.printOutput(elementStrategyFactory)
                 
-                let isMatch = ast.evaluate(elementStrategyFactory)
+                let isMatch = try ast.evaluate(elementStrategyFactory)
                 
                 if isMatch {
                     return true

@@ -13,27 +13,73 @@ enum ASTNode: Equatable {
     case logical(ExpressionElementType, [ASTNode])
     case comparison(ConditionElement)
     case group([ASTNode])
-
-    func evaluate(_ elementStrategyFactory: ElementStrategyFactoryType) -> Bool {
+    
+    func validate() -> Bool {
         switch self {
             case .empty:
                 return true
+            case .logical(_, let children):
+                return children.count >= 2 && children.allSatisfy { $0.validate() }
+            case .comparison:
+                return true
+            case .group(let children):
+                return children.count == 1 && children[0].validate()
+        }
+    }
+
+    func evaluate(_ elementStrategyFactory: ElementStrategyFactoryType) throws -> Bool {
+        switch self {
+            case .empty:
+                return true
+                
             case .logical(let op, let children):
+                guard !children.isEmpty else { return true }
+                
                 switch op {
                     case .and:
-                        return children.allSatisfy { $0.evaluate(elementStrategyFactory) }
+                        return try children.allSatisfy { try  $0.evaluate(elementStrategyFactory) }
                     case .or:
-                        return children.contains { $0.evaluate(elementStrategyFactory) }
+                        return try children.contains { try $0.evaluate(elementStrategyFactory) }
                     default:
-                        return false
+                        throw EvaluationError.unexpectedOperator(op)
                 }
+                
             case .comparison(let element):
-                if let strategy = elementStrategyFactory.getStrategy(elementTypeKey: element.elementTypeId) {
-                    return strategy.checkCondition(context: element)
+                guard let strategy = elementStrategyFactory.getStrategy(elementTypeKey: element.elementTypeId) else {
+                    throw EvaluationError.missingStrategy(element.elementTypeId.description)
                 }
-                return false
+                return strategy.checkCondition(context: element)
+                
             case .group(let children):
-                return children.first?.evaluate(elementStrategyFactory) ?? true
+                guard !children.isEmpty else { return true }
+                guard children.count == 1 else {
+                    throw EvaluationError.invalidGroupStructure
+                }
+                return try children[0].evaluate(elementStrategyFactory)
+        }
+    }
+    
+    // TODO: Kept for debugging, remove in the future.
+    func printStructure(indent: Int = 0) -> String {
+        let indentation = String(repeating: "  ", count: indent)
+        
+        switch self {
+            case .empty:
+                return "\(indentation)Empty"
+            case .logical(let op, let children):
+                var result = "\(indentation)Logical(\(op))\n"
+                for child in children {
+                    result += child.printStructure(indent: indent + 1) + "\n"
+                }
+                return result
+            case .comparison(let element):
+                return "\(indentation)Comparison(elementTypeId: \(element.elementTypeId))"
+            case .group(let children):
+                var result = "\(indentation)Group\n"
+                for child in children {
+                    result += child.printStructure(indent: indent + 1) + "\n"
+                }
+                return result
         }
     }
     
@@ -45,15 +91,23 @@ enum ASTNode: Equatable {
             case .empty:
                 print("\(indentation)Empty (true)")
             case .logical(let op, let children):
-                let result = evaluate(elementStrategyFactory)
-                print("\(indentation)Logical (\(op)) -> \(result)")
+                do {
+                    let result = try evaluate(elementStrategyFactory)
+                    print("\(indentation)Logical (\(op)) -> \(result)")
+                } catch {
+                    print("\(indentation)Logical (\(op)) -> ERROR: \(error.localizedDescription)")
+                }
                 for child in children {
                     child.printOutput(indent: indent + 1, elementStrategyFactory)
                 }
             case .comparison(let element):
-                let result = evaluate(elementStrategyFactory)
-                let fieldName = MetadataType(rawValue: element.elementTypeId)?.shortDescription ?? "unknown"
-                print("\(indentation)Comparison (\(fieldName)) -> \(result)")
+                do {
+                    let result = try evaluate(elementStrategyFactory)
+                    print("\(indentation)Comparison (\(MetadataType(rawValue: element.elementTypeId)?.shortDescription ?? "unknown")) -> \(result)")
+                } catch {
+                    print("\(indentation)Comparison (\(MetadataType(rawValue: element.elementTypeId)?.shortDescription ?? "unknown")) -> ERROR: \(error.localizedDescription)")
+                }
+                
                 if let opId = element.selectedOperatorTypeId {
                     if let op = NumberAndDateOperatorType(rawValue: opId) {
                         print("\(indentation)  Operator: \(op)")
@@ -82,7 +136,7 @@ enum ASTNode: Equatable {
                             if let intVal = rawFieldValue as? Int {
                                 print("\(indentation)  Field Value: \(intVal)")
                             }
-
+                            
                             if let doubleVal = rawFieldValue as? Double {
                                 print("\(indentation)  Field Value: \(doubleVal)")
                             }
@@ -93,8 +147,12 @@ enum ASTNode: Equatable {
                     }
                 }
             case .group(let children):
-                let result = evaluate(elementStrategyFactory)
-                print("\(indentation)Group -> \(result)")
+                do {
+                    let result = try evaluate(elementStrategyFactory)
+                    print("\(indentation)Group -> \(result)")
+                } catch {
+                    print("\(indentation)Group -> ERROR: \(error.localizedDescription)")
+                }
                 for child in children {
                     child.printOutput(indent: indent + 1, elementStrategyFactory)
                 }

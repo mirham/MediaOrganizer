@@ -13,55 +13,110 @@ struct ExpressionParser {
     }
     
     func parse() throws -> ASTNode {
-        var tokens = elements
-        var output: [ASTNode] = []
-        var operators: [ASTNode] = []
+        guard !elements.isEmpty else {
+            throw ASTError.emptyExpression
+        }
         
-        while !tokens.isEmpty {
-            let token = tokens.removeFirst()
-            if let exprType = ExpressionElementType(rawValue: token.elementTypeId) {
+        let tokens = tokenize()
+        return try parseTokens(tokens)
+    }
+    
+    // MARK: Private functions
+    
+    private func tokenize() -> [Token] {
+        return elements.map { element in
+            if let exprType = ExpressionElementType(rawValue: element.elementTypeId) {
                 switch exprType {
                     case .and, .or:
-                        let opNode = ASTNode.logical(exprType, [])
-                        while let lastOp = operators.last,
-                              case .logical(let lastOpType, _) = lastOp,
-                              lastOpType != .leftParen,
-                              precedence(of: lastOpType) >= precedence(of: exprType) {
-                            operators.removeLast()
-                            output.append(lastOp)
-                        }
-                        operators.append(opNode)
+                        return .op(exprType)
                     case .leftParen:
-                        operators.append(.group([]))
+                        return .leftParen
                     case .rightParen:
-                        while let lastOp = operators.last,
-                              case .logical(let lastOpType, _) = lastOp,
-                              lastOpType != .leftParen {
-                            operators.removeLast()
-                            output.append(lastOp)
-                        }
-                        if let lastOp = operators.last,
-                           case .group = lastOp {
-                            operators.removeLast()
-                            output.append(.group([buildNode(from: &output)]))
-                        } else {
-                            throw ASTError.mismatchedParentheses
-                        }
+                        return .rightParen
                 }
             } else {
-                output.append(.comparison(token))
+                return .operand(element)
+            }
+        }
+    }
+    
+    private func parseTokens(_ tokens: [Token]) throws -> ASTNode {
+        var tokenQueue = tokens
+        var outputQueue: [ASTNode] = []
+        var operatorStack: [Token] = []
+        
+        while !tokenQueue.isEmpty {
+            let token = tokenQueue.removeFirst()
+            
+            switch token {
+                case .operand(let element):
+                    outputQueue.append(.comparison(element))
+                case .op(let op):
+                    while let stackTop = operatorStack.last,
+                          case .op(let stackOp) = stackTop,
+                          precedence(of: stackOp) >= precedence(of: op) {
+                        operatorStack.removeLast()
+                        try processOperator(stackOp, outputQueue: &outputQueue)
+                    }
+                    operatorStack.append(token)
+                    
+                case .leftParen:
+                    operatorStack.append(token)
+                    
+                case .rightParen:
+                    var foundLeftParen = false
+                    while let stackTop = operatorStack.last {
+                        operatorStack.removeLast()
+                        if case .leftParen = stackTop {
+                            foundLeftParen = true
+                            break
+                        } else if case .op(let op) = stackTop {
+                            try processOperator(op, outputQueue: &outputQueue)
+                        }
+                    }
+                    
+                    if !foundLeftParen {
+                        throw ASTError.mismatchedParentheses
+                    }
             }
         }
         
-        while let op = operators.popLast() {
-            if case .group = op {
-                output.append(.group([buildNode(from: &output)]))
+        while let stackTop = operatorStack.last {
+            operatorStack.removeLast()
+            switch stackTop {
+                case .leftParen, .rightParen:
+                    throw ASTError.mismatchedParentheses
+                case .op(let op):
+                    try processOperator(op, outputQueue: &outputQueue)
+                case .operand:
+                    break
+            }
+        }
+        
+        return try buildFinalNode(from: outputQueue)
+    }
+    
+    private func processOperator(_ op: ExpressionElementType, outputQueue: inout [ASTNode]) throws {
+        guard outputQueue.count >= 2 else {
+            throw ASTError.invalidExpression
+        }
+        
+        let right = outputQueue.removeLast()
+        let left = outputQueue.removeLast()
+        let logicalNode = ASTNode.logical(op, [left, right])
+        outputQueue.append(logicalNode)
+    }
+    
+    private func buildFinalNode(from outputQueue: [ASTNode]) throws -> ASTNode {
+        guard outputQueue.count == 1 else {
+            if outputQueue.isEmpty {
+                return .empty
             } else {
-                output.append(op)
+                throw ASTError.invalidExpression
             }
         }
         
-        return buildNode(from: &output)
+        return outputQueue[0]
     }
     
     private func precedence(of exprType: ExpressionElementType) -> Int {
@@ -72,19 +127,12 @@ struct ExpressionParser {
         }
     }
     
-    private func buildNode(from output: inout [ASTNode]) -> ASTNode {
-        guard let node = output.popLast() else {
-            return .empty
-        }
-        switch node {
-            case .logical(let op, _):
-                let right = buildNode(from: &output)
-                let left = buildNode(from: &output)
-                return .logical(op, [left, right].filter { $0 != .empty })
-            case .group(let children):
-                return .group(children)
-            default:
-                return node
-        }
+    // MARK: Inner types
+    
+    private enum Token {
+        case operand(ConditionElement)
+        case op(ExpressionElementType)
+        case leftParen
+        case rightParen
     }
 }

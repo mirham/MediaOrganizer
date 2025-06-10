@@ -31,6 +31,7 @@ class FileService : ServiceBase, FileServiceType {
             .filter { $0.isImageFile || $0.isVideoFile }
         
         for await fileUrl in filteredFileUrls {
+            print(fileUrl.absoluteString)
             try Task.checkCancellation()
             
             if jobProgress.isCancelled {
@@ -59,8 +60,8 @@ class FileService : ServiceBase, FileServiceType {
                 let fileActionStrategy = fileActionStrategyFactory.getStrategy(actionType: fileAction.actionType)
                 let currentUrl = try fileActionStrategy?.performAction(outputPath: outputPath, fileInfo: fileInfo, fileAction: fileAction)
                 
-                if (currentUrl != nil) {
-                    fileInfo.currentUrl = currentUrl!
+                if let currentUrl = currentUrl {
+                    fileInfo.currentUrl = currentUrl
                 }
             }
         }
@@ -84,7 +85,12 @@ class FileService : ServiceBase, FileServiceType {
         
         let newUrl = URL(fileURLWithPath: subfolderPath + Constants.slash + fileUrl.lastPathComponent)
         
-        try fileManager.moveItem(at: fileUrl, to: newUrl)
+        do {
+            try fileManager.moveItem(at: fileUrl, to: newUrl)
+        }
+        catch {
+            print("---- \nCannot move:" + error.localizedDescription + "\n -----")
+        }
         
         return newUrl
     }
@@ -101,27 +107,29 @@ class FileService : ServiceBase, FileServiceType {
         jobProgress: JobProgress) async -> AsyncStream<URL> {
         AsyncStream { continuation in
             Task {
-                let enumerator = FileManager.default.enumerator(at: url, includingPropertiesForKeys: nil, options: options)
-                
-                while let fileURL = enumerator?.nextObject() as? URL {
-                    try Task.checkCancellation()
+                do {
+                    let enumerator = FileManager.default.enumerator(
+                        at: url,
+                        includingPropertiesForKeys: nil,
+                        options: options
+                    )
                     
-                    if jobProgress.isCancelled {
-                        throw CancellationError()
-                    }
-                    
-                    if fileURL.hasDirectoryPath {
-                        for await item in await listFilesInFolderAsync(
-                            at: fileURL.standardizedFileURL,
-                            options: options,
-                            jobProgress: jobProgress) {
-                            continuation.yield(item)
+                    while let fileURL = enumerator?.nextObject() as? URL {
+                        try Task.checkCancellation()
+                        
+                        if jobProgress.isCancelled {
+                            continuation.finish()
+                            return
                         }
-                    } else {
-                        continuation.yield( fileURL )
+                        
+                        if !fileURL.hasDirectoryPath {
+                            continuation.yield(fileURL)
+                        }
                     }
+                    continuation.finish()
+                } catch {
+                    continuation.finish()
                 }
-                continuation.finish()
             }
         }
     }
