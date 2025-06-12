@@ -35,10 +35,10 @@ struct JobProgress {
         didSet {
             guard processedCount != 0 || totalCount != 0 else { return }
             
-            progress = (Double(processedCount) / Double(totalCount)) * Constants.maxPercentage
+            progress = (Double(processedCount + skippedCount) / Double(totalCount)) * Constants.maxPercentage
             
             if (progress == Constants.maxPercentage
-                || processedCount == totalCount) {
+                || (processedCount + skippedCount) == totalCount) {
                 resetProgressFlags()
                 isCompleted = true
             }

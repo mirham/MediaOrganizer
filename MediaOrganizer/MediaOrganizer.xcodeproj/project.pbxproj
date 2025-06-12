@@ -41,6 +41,7 @@
 		3558E6E62DEF1FBB00A0B3AE /* ASTNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3558E6E52DEF1FAD00A0B3AE /* ASTNode.swift */; };
 		3558E6E82DEF205000A0B3AE /* ExpressionParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3558E6E72DEF204500A0B3AE /* ExpressionParser.swift */; };
 		3558E6EA2DEF206E00A0B3AE /* ASTError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3558E6E92DEF206B00A0B3AE /* ASTError.swift */; };
+		3558F63B2DF8B1400058CDD4 /* EvaluationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3558F63A2DF8B13D0058CDD4 /* EvaluationError.swift */; };
 		3559D94F2DCB83CE00B8D0D5 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3559D94E2DCB83C700B8D0D5 /* StringExtensions.swift */; };
 		3559D9512DCB913200B8D0D5 /* ConditionElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3559D9502DCB913200B8D0D5 /* ConditionElement.swift */; };
 		3559D9532DCB9B1A00B8D0D5 /* ConditionValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3559D9522DCB9B1400B8D0D5 /* ConditionValue.swift */; };
@@ -159,6 +160,7 @@
 		3558E6E52DEF1FAD00A0B3AE /* ASTNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASTNode.swift; sourceTree = "<group>"; };
 		3558E6E72DEF204500A0B3AE /* ExpressionParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressionParser.swift; sourceTree = "<group>"; };
 		3558E6E92DEF206B00A0B3AE /* ASTError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASTError.swift; sourceTree = "<group>"; };
+		3558F63A2DF8B13D0058CDD4 /* EvaluationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvaluationError.swift; sourceTree = "<group>"; };
 		3559D94E2DCB83C700B8D0D5 /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 		3559D9502DCB913200B8D0D5 /* ConditionElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionElement.swift; sourceTree = "<group>"; };
 		3559D9522DCB9B1400B8D0D5 /* ConditionValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionValue.swift; sourceTree = "<group>"; };
@@ -313,9 +315,10 @@
 		3558E6E42DEF1F7F00A0B3AE /* Expressions */ = {
 			isa = PBXGroup;
 			children = (
+				3558E6E72DEF204500A0B3AE /* ExpressionParser.swift */,
 				3558E6E52DEF1FAD00A0B3AE /* ASTNode.swift */,
 				3558E6E92DEF206B00A0B3AE /* ASTError.swift */,
-				3558E6E72DEF204500A0B3AE /* ExpressionParser.swift */,
+				3558F63A2DF8B13D0058CDD4 /* EvaluationError.swift */,
 			);
 			path = Expressions;
 			sourceTree = "<group>";
@@ -680,6 +683,7 @@
 				351514052C9B1105000E4CAB /* Condition.swift in Sources */,
 				352B6F132C9A19D10000789D /* Action.swift in Sources */,
 				35E02EEA2DCC930200D81F7F /* ActionServiceType.swift in Sources */,
+				3558F63B2DF8B1400058CDD4 /* EvaluationError.swift in Sources */,
 				3538D5142DF233C300179C3C /* AnimatedProgressView.swift in Sources */,
 				35E02F2A2DCC931C00D81F7F /* ActionEditView.swift in Sources */,
 				35E02F2B2DCC931C00D81F7F /* ActionElementEditView.swift in Sources */,
