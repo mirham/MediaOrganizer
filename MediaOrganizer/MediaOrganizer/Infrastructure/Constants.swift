@@ -63,7 +63,7 @@ struct Constants {
     static let elInfo = "Info"
     static let elJobSettings = "Job settings"
     static let elGeneral = "General"
-    static let elRulesAndActions = "Rules and actions"
+    static let elRules = "Rules"
     static let elAddJob = "Add job"
     static let elEditJob = "Edit job"
     static let elChoose = "Choose..."

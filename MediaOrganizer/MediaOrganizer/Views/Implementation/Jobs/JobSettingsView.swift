@@ -25,7 +25,7 @@ struct JobSettingsView : View {
                 }
             RulesEditView()
                 .tabItem {
-                    Text(Constants.elRulesAndActions)
+                    Text(Constants.elRules)
                 }
         }
         .onAppear(perform: {
