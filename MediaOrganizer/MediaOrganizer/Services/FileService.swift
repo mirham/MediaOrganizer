@@ -15,6 +15,13 @@ class FileService : ServiceBase, FileServiceType {
     
     private let fileManager = FileManager.default
     
+    func doesFolderExist(path: String) -> Bool {
+        let url = URL(fileURLWithPath: path)
+        let result = (try? url.resourceValues(forKeys: [.isDirectoryKey]).isDirectory) ?? false
+        
+        return result
+    }
+    
     func getFolderMediaFilesAsync(
         path: String,
         jobProgress: JobProgress) async throws -> [MediaFileInfo] {
@@ -134,10 +141,8 @@ class FileService : ServiceBase, FileServiceType {
         }
     }
     
-    private func createFolderIfDoesNotExist(path: String) throws {
-        var isDir: ObjCBool = false
-        
-        if (!fileManager.fileExists(atPath: path, isDirectory: &isDir)) {
+    private func createFolderIfDoesNotExist(path: String) throws {        
+        if (!doesFolderExist(path: path)) {
             try fileManager.createDirectory(atPath: path, withIntermediateDirectories: true)
         }
     }

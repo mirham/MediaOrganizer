@@ -18,15 +18,15 @@ struct InfoView: View {
                 
                 Text(String(format: Constants.aboutVersion, version!))
                     .font(.system(size: 18))
-                    .padding(.top, 60)
-                    .padding(.leading, 20)
+                    .padding(.top, 100)
+                    .padding(.leading, 25)
                 HStack {
                     Text(Constants.aboutGetSupport)
                     Link(mail, destination: URL(string: String(format: Constants.aboutMailTo, mail))!)
                         .buttonStyle(.plain)
                         .focusEffectDisabled()
                 }
-                .padding(.top, 80)
+                .padding(.top, 30)
                 Link(Constants.aboutGitHub, destination: URL(string: Constants.aboutGitHubLink)!)
                     .focusEffectDisabled()
             }

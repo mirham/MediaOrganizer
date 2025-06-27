@@ -9,6 +9,7 @@
 import Foundation
 
 protocol FileServiceType {
+    func doesFolderExist(path: String) -> Bool
     func getFolderMediaFilesAsync(
         path: String,
         jobProgress: JobProgress) async throws -> [MediaFileInfo]
