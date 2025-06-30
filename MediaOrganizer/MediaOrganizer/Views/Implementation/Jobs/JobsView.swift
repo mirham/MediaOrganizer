@@ -58,10 +58,10 @@ struct JobsView: FolderContainerView {
                 .padding(.leading, 10)
                 .padding(.trailing, 10)
                 .gesture(TapGesture(count: 2).onEnded {
-                    jobItemDoubleClickHandler(job: job)
+                    handleJobItemDoubleClick(job: job)
                 })
                 .simultaneousGesture(TapGesture().onEnded {
-                    jobItemClickHandler(job: job)
+                    handleJobItemClick(job: job)
                 })
                 Divider()
             }
@@ -78,7 +78,7 @@ struct JobsView: FolderContainerView {
             .background(Color(hex: Constants.colorHexPanelDark))
         })
         .onTapGesture {
-            jobScrollViewClickHandler()
+            hanldeJobScrollViewClick()
         }
         .toolbar(content: {
             JobsHeaderToolbarView()
@@ -94,19 +94,19 @@ struct JobsView: FolderContainerView {
     
     // MARK: Private functions
     
-    private func jobScrollViewClickHandler () {
+    private func hanldeJobScrollViewClick () {
         guard !appState.views.isJobSettingsViewShown else { return }
         
         jobService.resetCurrentJob()
     }
     
-    private func jobItemClickHandler (job : Job) {
+    private func handleJobItemClick (job : Job) {
         guard !appState.views.isJobSettingsViewShown else { return }
         
         appState.current.job = job
     }
     
-    private func jobItemDoubleClickHandler (job : Job) {
+    private func handleJobItemDoubleClick (job : Job) {
         appState.current.job = job
         showEditJobWindow()
     }

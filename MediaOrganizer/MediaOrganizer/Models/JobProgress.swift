@@ -49,8 +49,7 @@ struct JobProgress {
     var totalCount: Int = 0
     
     func isEmpty() -> Bool {
-        return self.progress == 0.0
-            && self.processedCount == 0
+        return self.processedCount == 0
             && self.skippedCount == 0
             && self.totalCount == 0
     }

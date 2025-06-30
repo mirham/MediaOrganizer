@@ -21,4 +21,12 @@ class Action : Codable, Identifiable, Equatable, ObservableObject {
     static func == (lhs: Action, rhs: Action) -> Bool {
         return lhs.id == rhs.id
     }
+    
+    func clone() -> Action {
+        let result = Action()
+        result.type = self.type
+        result.elements = self.elements
+        
+        return result
+    }
 }

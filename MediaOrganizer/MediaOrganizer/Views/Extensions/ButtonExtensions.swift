@@ -30,7 +30,7 @@ extension Button {
             .foregroundStyle(.blue)
     }
     
-    func withSmallRemoveButtonStyle(activeState: ControlActiveState) -> some View {
+    func withSmallDestructiveButtonStyle(activeState: ControlActiveState) -> some View {
         self.withSmallPlainButtonStyle(activeState: activeState)
             .foregroundStyle(.red)
     }

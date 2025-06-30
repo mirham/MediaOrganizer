@@ -46,6 +46,7 @@ struct Constants {
     static let iconEdit = "pencil.circle.fill"
     static let iconFile = "doc.fill"
     static let iconStop = "stop.fill"
+    static let iconCancel = "xmark.circle.fill"
     
     // MARK: Colors
     static let colorHexSelection = "#244EC9"
@@ -109,8 +110,11 @@ struct Constants {
     static let dialogBodyRemoveJob = "This operation cannot be undone.\nThe folders will be preserved."
     static let dialogHeaderRemoveRule = "Delete rule"
     static let dialogBodyRemoveRule = "This operation cannot be undone."
+    static let dialogHeaderCompleteAction = "Complete the action."
+    static let dialogBodyCompleteAction = "Some changes are not completed. Please complete or reject them before closing this window."
     static let dialogButtonDelete = "Remove"
     static let dialogButtonCancel = "Cancel"
+    static let dialogButtonOk = "OK"
     
     // MARK: About
     static let aboutSupportMail = "bWlyaGFtQGFidi5iZw=="

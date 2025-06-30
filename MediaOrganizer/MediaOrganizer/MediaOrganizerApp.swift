@@ -6,12 +6,15 @@
 //
 
 import SwiftUI
+import AppKit
 
 @main
 struct MediaOrganizerApp: App {
     let appState = AppState.shared
     
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
+    @Environment(\.scenePhase) private var scenePhase
     
     var body: some Scene {
         WindowGroup {
@@ -25,13 +28,28 @@ struct MediaOrganizerApp: App {
             CommandGroup(replacing: CommandGroupPlacement.appInfo) {
                 Button("About \(Bundle.main.bundleURL.lastPathComponent.replacing(".\(Bundle.main.bundleURL.pathExtension)", with: String()))") { appDelegate.showInfoWindow() }
             }
-        } 
+        }
+        .onChange(of: scenePhase, initial: true) { _, newPhase in
+            if newPhase == .active {
+                appDelegate.setAppState(appState)
+            }
+        }
+        .windowResizability(.contentSize)
         
         WindowGroup(id:Constants.windowIdJobSettings, content: {
             JobSettingsView()
                 .environmentObject(appState)
                 .navigationTitle(Constants.elJobSettings)
                 .frame(minWidth: 560, minHeight: 500)
-        }).windowResizability(.contentSize)
+                .onAppear {
+                    for window in NSApplication.shared.windows {
+                        let windowId = String(window.identifier?.rawValue ?? String())
+                        
+                        if(windowId.starts(with: Constants.windowIdJobSettings)) {
+                            window.delegate = appDelegate
+                        }
+                    }
+                }
+        })
     }
 }

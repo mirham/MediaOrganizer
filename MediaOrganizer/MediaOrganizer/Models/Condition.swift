@@ -21,4 +21,12 @@ class Condition : Codable, Identifiable, Equatable {
     static func == (lhs: Condition, rhs: Condition) -> Bool {
         return lhs.id == rhs.id
     }
+    
+    func clone() -> Condition {
+        let result = Condition()
+        result.type = self.type
+        result.elements = self.elements
+        
+        return result
+    }
 }

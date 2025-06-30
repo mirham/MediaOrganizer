@@ -37,6 +37,16 @@ class ActionService : ServiceBase, ActionServiceType {
         return FileAction(actionType: action.type, value: value)
     }
     
+    func replaceAction(actionId: UUID, action: Action) {
+        guard appState.current.rule != nil else { return }
+        
+        if let actionIndex = appState.current.rule!.actions.firstIndex(where: { $0.id == actionId })  {
+            appState.current.rule!.actions[actionIndex] = action
+            
+            appState.objectWillChange.send()
+        }
+    }
+    
     func removeActionById(actionId: UUID) {
         guard appState.current.rule != nil else { return }
         

@@ -24,6 +24,10 @@ extension AppState {
         var action: Action? = nil
         var isActionInEditMode = false
         
+        func allowWindowClose() -> Bool {
+            return !isActionInEditMode && !isConditionInEditMode
+        }
+        
         static func == (lhs: Current, rhs: Current) -> Bool {
             let result = lhs.job == rhs.job
                 && lhs.rule == rhs.rule

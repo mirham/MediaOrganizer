@@ -60,6 +60,16 @@ class ConditionService : ServiceBase, ConditionServiceType {
         return false
     }
     
+    func replaceCondition(conditionId: UUID, condition: Condition) {
+        guard appState.current.rule != nil else { return }
+        
+        if let conditionIndex = appState.current.rule!.conditions.firstIndex(where: { $0.id == conditionId }) {
+            appState.current.rule!.conditions[conditionIndex] = condition
+            
+            appState.objectWillChange.send()
+        }
+    }
+    
     func removeConditionById(conditionId: UUID) {
         guard appState.current.rule != nil else { return }
         
