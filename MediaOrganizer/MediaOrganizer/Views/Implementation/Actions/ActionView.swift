@@ -13,10 +13,11 @@ struct ActionView: ElementContainerView {
     
     @Environment(\.controlActiveState) private var controlActiveState
     
-    @State private var showEditor: Bool = false
-    
     @Injected(\.ruleService) private var ruleService
     @Injected(\.actionService) private var actionService
+    
+    @State private var showEditor: Bool = false
+    @State private var prevAction: Action?
     
     private var ruleId: UUID
     private var action: Action
@@ -50,16 +51,21 @@ struct ActionView: ElementContainerView {
                     .frame(maxWidth: .infinity,  alignment: .leading)
                     .padding(.leading, 10)
                     .padding(.trailing, 10)
-                    .onChange(of: action.elements, {  })
-                Button(String(), systemImage: Constants.iconEdit, action: actionEditClickHandler)
-                    .withSmallEditButtonStyle(activeState: controlActiveState)
-                    .isHidden(hidden: !ruleService.isCurrentRule(ruleId: ruleId) || appState.current.isActionInEditMode, remove: true )
-                Button(String(), systemImage: Constants.iconCheck, action: actionSaveClickHanlder)
-                    .withSmallSaveButtonStyle(activeState: controlActiveState)
-                    .isHidden(hidden: !showEditor, remove: true )
-                Button(String(), systemImage: Constants.iconRemove, action: actionRemoveClickHandler)
-                    .withSmallRemoveButtonStyle(activeState: controlActiveState)
-                    .isHidden(hidden: !ruleService.isCurrentRule(ruleId: ruleId), remove: true )
+                    .onChange(of: action.elements, {})
+                HStack {
+                    Button(String(), systemImage: Constants.iconCheck, action: handleSaveClick)
+                        .withSmallSaveButtonStyle(activeState: controlActiveState)
+                    Button(String(), systemImage: Constants.iconCancel, action: hanldeCancelClick)
+                        .withSmallDestructiveButtonStyle(activeState: controlActiveState)
+                }
+                .isHidden(hidden: !showEditor, remove: true )
+                HStack {
+                    Button(String(), systemImage: Constants.iconEdit, action: handeEditClick)
+                        .withSmallEditButtonStyle(activeState: controlActiveState)
+                    Button(String(), systemImage: Constants.iconRemove, action: handleRemoveClick)
+                        .withSmallDestructiveButtonStyle(activeState: controlActiveState)
+                }
+                .isHidden(hidden: shouldActionButtonBeHidden(ruleId: ruleId), remove: true )
             }
             .background(actionService.isCurrentAction(actionId: action.id) && appState.current.isActionInEditMode
                         ? Color(hex: Constants.colorHexSelection)
@@ -70,21 +76,38 @@ struct ActionView: ElementContainerView {
     
     // MARK: Private functions
     
-    private func actionEditClickHandler () {
+    private func handeEditClick () {
+        self.prevAction = action.clone()
         appState.current.action = action
         appState.current.isActionInEditMode = true
         showEditor = true
     }
     
-    private func actionSaveClickHanlder() {
+    private func handleSaveClick() {
         appState.current.isActionInEditMode = false
         showEditor = false
     }
     
-    private func actionRemoveClickHandler () {
+    private func hanldeCancelClick() {
+        if let prevAction = prevAction {
+            actionService.replaceAction(
+                actionId: action.id,
+                action: prevAction)
+            appState.current.isActionInEditMode = false
+            showEditor = false
+        }
+    }
+    
+    private func handleRemoveClick () {
         actionService.removeActionById(actionId: action.id)
         appState.current.isActionInEditMode = false
         showEditor = false
+    }
+    
+    private func shouldActionButtonBeHidden(ruleId: UUID) -> Bool {
+        return !ruleService.isCurrentRule(ruleId: ruleId)
+            || appState.current.isConditionInEditMode
+            || appState.current.isActionInEditMode
     }
 }
 

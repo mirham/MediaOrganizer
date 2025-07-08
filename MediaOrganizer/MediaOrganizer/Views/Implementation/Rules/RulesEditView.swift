@@ -41,8 +41,9 @@ struct RulesEditView: View {
                         conditionService.addNewCondition()
                     }
                     .withAddButtonStyle(activeState: controlActiveState)
-                    .isHidden(hidden: !ruleService.isCurrentRule(ruleId: rule.id) , remove: true)
+                    .isHidden(hidden: isAddButtonShouldBeHidden(ruleId: rule.id) , remove: true)
                     .padding(.top, 3)
+                    .padding(.leading, 10)
                     .padding(.bottom, 5)
                     Text(Constants.elActions)
                         .asRuleElementCaption()
@@ -64,7 +65,8 @@ struct RulesEditView: View {
                         actionService.addNewAction()
                     }
                     .withAddButtonStyle(activeState: controlActiveState)
-                    .isHidden(hidden: !ruleService.isCurrentRule(ruleId: rule.id) , remove: true)
+                    .isHidden(hidden: isAddButtonShouldBeHidden(ruleId: rule.id) , remove: true)
+                    .padding(.leading, 10)
                     .padding(.bottom, 3)
                 }
                 .padding(5)
@@ -74,9 +76,13 @@ struct RulesEditView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 10))
                 .padding(.leading, 10)
                 .padding(.trailing, 10)
-                .simultaneousGesture(TapGesture().onEnded {
-                    ruleItemClickHandler(rule: rule)
-                })
+                .simultaneousGesture(
+                    TapGesture()
+                        .onEnded {
+                            handleRuleItemClick(rule: rule)
+                        }
+                )
+                .disabled(isRuleShouldBeDisabled(ruleId: rule.id))
                 DividerWithImage(imageName: Constants.iconArrowDown, color: Color.gray)
                     .isHidden(hidden: ruleService.getRuleIndexByRuleId(ruleId: rule.id)! == appState.current.job!.rules.count - 1, remove: true)
             }
@@ -99,7 +105,11 @@ struct RulesEditView: View {
     
     // MARK: Private functions
     
-    private func ruleItemClickHandler (rule : Rule) {
+    private func handleRuleItemClick(rule: Rule) {
+        guard !appState.current.isActionInEditMode
+                || !appState.current.isConditionInEditMode
+        else { return }
+        
         if appState.current.rule != rule {
             appState.current.condition = nil
             appState.current.action = nil
@@ -108,10 +118,27 @@ struct RulesEditView: View {
         appState.current.rule = rule
     }
     
-    private func isNoneElementSholuldBeHidden(rule : Rule, array: [Any]) -> Bool {
-        let result = !array.isEmpty || (appState.current.rule != nil && appState.current.rule!.id == rule.id)
+    private func isNoneElementSholuldBeHidden(rule: Rule, array: [Any]) -> Bool {
+        return !array.isEmpty
+                || (appState.current.rule != nil
+                    && appState.current.rule!.id == rule.id)
+    }
+    
+    private func isAddButtonShouldBeHidden(ruleId: UUID) -> Bool {
+        let result = !ruleService.isCurrentRule(ruleId: ruleId)
+            || appState.current.isConditionInEditMode
+            || appState.current.isActionInEditMode
         
         return result
+        
+    }
+    
+    private func isRuleShouldBeDisabled(ruleId: UUID) -> Bool {
+        let result = !ruleService.isCurrentRule(ruleId: ruleId)
+        && (appState.current.isConditionInEditMode || appState.current.isActionInEditMode)
+        
+        return result
+        
     }
 }
 
@@ -119,7 +146,6 @@ private extension Button {
     func withRuleButtonStyle(activeState: ControlActiveState) -> some View {
         self.buttonStyle(.plain)
             .focusEffectDisabled()
-            .font(.system(size: 16))
             .opacity(getViewOpacity(state: activeState))
     }
     

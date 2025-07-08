@@ -44,7 +44,7 @@ struct JobsToolbarView : View {
             .alert(isPresented: $isJobRemoving) {
                 Alert(title: Text(String(format: Constants.dialogHeaderRemoveJob, appState.current.job?.name ?? String())),
                       message: Text(Constants.dialogBodyRemoveJob),
-                      primaryButton: Alert.Button.destructive(Text(Constants.dialogButtonDelete), action: removeJobClickHandler),
+                      primaryButton: Alert.Button.destructive(Text(Constants.dialogButtonDelete), action: handleRemoveJobClick),
                       secondaryButton: .default(Text(Constants.dialogButtonCancel)))
             }
         }
@@ -52,7 +52,7 @@ struct JobsToolbarView : View {
     
     // MARK: Private functions
     
-    private func removeJobClickHandler() {
+    private func handleRemoveJobClick() {
         jobService.removeCurrentJob()
         isJobRemoving = false
     }

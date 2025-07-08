@@ -46,6 +46,8 @@ struct Constants {
     static let iconEdit = "pencil.circle.fill"
     static let iconFile = "doc.fill"
     static let iconStop = "stop.fill"
+    static let iconCancel = "xmark.circle.fill"
+    static let iconWarning = "exclamationmark.triangle"
     
     // MARK: Colors
     static let colorHexSelection = "#244EC9"
@@ -58,6 +60,45 @@ struct Constants {
     // MARK: Regexes
     static let regexLocationInIso6709 = "([+-][0-9.]+)([+-][0-9.]+)"
     static let regexEncodedLocationInIso6709 = "%+09.5f%+010.5f%+.0fCRSWGS_84/"
+    
+    // MARK: Validation
+    static let stringMinLength = 1
+    static let stringMaxLength = 50
+    static let yearMinValue = 1900
+    static let yearMaхValue = 2100
+    static let monthMinValue = 1
+    static let monthMaхValue = 12
+    static let dayMinValue = 1
+    static let dayMaхValue = 31
+    static let hourMinValue = 0
+    static let hourMaхValue = 24
+    static let minuteMinValue = hourMinValue
+    static let minuteMaхValue = 59
+    static let secondMinValue = hourMinValue
+    static let secondMaхValue = minuteMaхValue
+    static let resolutionMinValue = 1
+    static let resolutionMaxValue = 16384
+    static let latitudeMinValue: Double = -90.0
+    static let latitudeMaxValue: Double = 90.0
+    static let longitudeMinValue: Double = -180.0
+    static let longitudeMaxValue: Double = 180.0
+    static let defaultValidationDateFormat = "yyyy/MM/dd HH:mm:ss"
+    static let dateMinValueString = "1900/01/01 00:00:00"
+    static let dateMaxValueString = "2100/12/31 23:59:59"
+    
+    // MARK: Validation messages
+    static let vmStringLengthIsIncorrect = "The string must contain no more than \(stringMinLength) characters and no less than \(stringMaxLength) characters.";
+    static let vmYearIsIncorrect = "The year must be not before \(yearMinValue) and not after \(yearMaхValue).";
+    static let vmMonthIsIncorrect = "The month must be between \(monthMinValue) and \(monthMaхValue).";
+    static let vmDayIsIncorrect = "The day must be between \(dayMinValue) and \(dayMaхValue).";
+    static let vmHourIsIncorrect = "Hours must be between \(hourMinValue) and \(hourMaхValue).";
+    static let vmMinuteIsIncorrect = "Minutes must be between \(minuteMinValue) and \(minuteMaхValue).";
+    static let vmSecondIsIncorrect = "Seconds must be between \(secondMinValue) and \(secondMaхValue).";
+    static let vmDateIsIncorrect = "Date must be between '\(dateMinValueString)' and '\(dateMaxValueString)'.";
+    static let vmResolutionIsIncorrect = "The resolution value must be between \(resolutionMinValue) and \(resolutionMaxValue).";
+    static let vmLatitudeIsIncorrect = "The latitude must be between \(latitudeMinValue) and \(latitudeMaxValue).";
+    static let vmLongitudeIsIncorrect = "The longitude must be between \(longitudeMinValue) and \(longitudeMaxValue).";
+    static let vmNotSupportedValue = "This value currently is not supported.";
     
     // MARK: Element names
     static let elInfo = "Info"
@@ -109,8 +150,11 @@ struct Constants {
     static let dialogBodyRemoveJob = "This operation cannot be undone.\nThe folders will be preserved."
     static let dialogHeaderRemoveRule = "Delete rule"
     static let dialogBodyRemoveRule = "This operation cannot be undone."
+    static let dialogHeaderCompleteAction = "Complete the action."
+    static let dialogBodyCompleteAction = "Some changes are not completed. Please complete or reject them before closing this window."
     static let dialogButtonDelete = "Remove"
     static let dialogButtonCancel = "Cancel"
+    static let dialogButtonOk = "OK"
     
     // MARK: About
     static let aboutSupportMail = "bWlyaGFtQGFidi5iZw=="

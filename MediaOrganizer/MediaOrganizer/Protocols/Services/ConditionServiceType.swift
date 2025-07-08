@@ -12,5 +12,6 @@ protocol ConditionServiceType : ServiceBaseType {
     func addNewCondition()
     func isCurrentCondition(conditionId: UUID) -> Bool
     func applyConditions(conditions: [Condition], fileInfo: MediaFileInfo) -> Bool
+    func replaceCondition(conditionId: UUID, condition: Condition)
     func removeConditionById(conditionId: UUID)
 }
