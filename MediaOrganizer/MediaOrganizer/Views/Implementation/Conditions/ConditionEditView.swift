@@ -47,6 +47,7 @@ struct ConditionEditView: View {
                     }
                     appState.objectWillChange.send()
                 }
+                ValidationMessageView()
                 DraggableSourceElementsView<ConditionElement>(
                     selectedTypeId: $selectedConditionTypeId,
                     draggedItem: $draggedItem,

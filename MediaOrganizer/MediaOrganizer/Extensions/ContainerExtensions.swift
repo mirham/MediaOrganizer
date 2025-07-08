@@ -41,6 +41,10 @@ extension Container {
         Factory(self) { ElementService() }
     }
     
+    var validationService: Factory<ValidationServiceType> {
+        Factory(self) { ValidationService() }
+    }
+    
     // MARK: Element strategies registration
     
     static var elementStrategies: [KeyPath<Container, Factory<ElementStrategy>>] = [

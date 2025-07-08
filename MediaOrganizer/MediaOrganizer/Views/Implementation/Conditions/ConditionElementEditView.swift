@@ -6,11 +6,14 @@
 //
 
 import SwiftUI
+import Factory
 
 struct ConditionElementEditView: ElementContainerView {
     @EnvironmentObject var appState: AppState
     
     @Environment(\.controlActiveState) private var controlActiveState
+    
+    @Injected(\.validationService) private var validationService
     
     @State private var showEditor: Bool = false
     @State private var selectedDateFormatTypeId: Int?
@@ -20,6 +23,7 @@ struct ConditionElementEditView: ElementContainerView {
     @State private var conditionValueInt: Int
     @State private var conditionValueDate: Date
     @State private var conditionValueDouble: Double
+    @State private var hasError: Bool
     
     private let element: ConditionElement
     
@@ -43,6 +47,7 @@ struct ConditionElementEditView: ElementContainerView {
         self.conditionValueInt = element.value.intValue ?? 0
         self.conditionValueDate = element.value.dateValue ?? Date.distantPast
         self.conditionValueDouble = element.value.doubleValue ?? 0.0
+        self.hasError = false
     }
     
     var body: some View {
@@ -82,7 +87,9 @@ struct ConditionElementEditView: ElementContainerView {
         renderEditor()
             .padding(3)
             .background(
-                RoundedRectangle(cornerRadius: 5, style: .continuous).fill(.blue)
+                self.hasError
+                    ? RoundedRectangle(cornerRadius: 5, style: .continuous).fill(.red)
+                    : RoundedRectangle(cornerRadius: 5, style: .continuous).fill(.blue)
             )
             .isHidden(hidden: !showEditor, remove: true)
             .onDisappear(perform: saveCondition)
@@ -201,7 +208,8 @@ struct ConditionElementEditView: ElementContainerView {
                 }
                 .frame(maxWidth: 100)
             Button(String(), systemImage: Constants.iconCheck) {
-                showEditor = false
+                let validationResult = validationService.isValidString(input: conditionValueString)
+                handleValidationResult(validationResult: validationResult)
             }
             .withRemoveButtonStyle(activeState: controlActiveState)
         }
@@ -214,12 +222,12 @@ struct ConditionElementEditView: ElementContainerView {
             Text(element.displayText)
             renderNumberAndDateOperatorPicker()
             renderIntInput()
-                .onChange(of: conditionValueInt) {
-                    // TODO RUSS: Validation here
-                }
                 .frame(maxWidth: 70)
             Button(String(), systemImage: Constants.iconCheck) {
-                showEditor = false
+                let validationResult = validationService.isValidInt(
+                    input: conditionValueInt,
+                    dateFormatType: nil)
+                handleValidationResult(validationResult: validationResult)
             }
             .withRemoveButtonStyle(activeState: controlActiveState)
         }
@@ -238,12 +246,9 @@ struct ConditionElementEditView: ElementContainerView {
             Text(element.displayText)
             renderNumberAndDateOperatorPicker()
             TextField(Constants.hintCustomText, value:valueBinding, formatter: NumberFormatters.fourFractionDigits)
-                .onChange(of: conditionValueDouble) {
-                    // TODO RUSS: Validation here
-                }
                 .frame(maxWidth: 100)
             Button(String(), systemImage: Constants.iconCheck) {
-                showEditor = false
+                handleDoubleInputSaveClick()
             }
             .withRemoveButtonStyle(activeState: controlActiveState)
         }
@@ -280,7 +285,7 @@ struct ConditionElementEditView: ElementContainerView {
                 element.selectedDateFormatType = selectedDateFormatTypeId != nil
                     ? DateFormatType(rawValue: selectedDateFormatTypeId!)
                     : nil
-                showEditor = false
+                handleInputWithSelectedTypeSaveClick()
             }
             .withRemoveButtonStyle(activeState: controlActiveState)
         }
@@ -308,6 +313,53 @@ struct ConditionElementEditView: ElementContainerView {
                 }
             }
         }
+    }
+    
+    private func handleInputWithSelectedTypeSaveClick() {
+        guard let selectedDateFormatTypeId = selectedDateFormatTypeId,
+              let dateFormat = DateFormatType(rawValue: selectedDateFormatTypeId)
+        else { return }
+        
+        let validationResult: ValidationResult
+        
+        let valueType = dateFormat.getConditionValueType()
+        
+        switch valueType {
+            case .int:
+                validationResult = validationService.isValidInt(
+                    input: conditionValueInt,
+                    dateFormatType: element.selectedDateFormatType)
+            
+                break
+            case .date:
+                validationResult = validationService.isValidDate(
+                    input: conditionValueDate)
+                
+                break
+            default:
+                validationResult = ValidationResult()
+                
+                break
+        }
+
+        handleValidationResult(validationResult: validationResult)
+    }
+    
+    private func handleDoubleInputSaveClick() {
+        guard let metadataType = MetadataType(rawValue: element.elementTypeId)
+        else { return }
+        
+        let validationResult = validationService.isValidDouble(
+            input: conditionValueDouble,
+            metadataType: metadataType)
+        
+        handleValidationResult(validationResult: validationResult)
+    }
+    
+    private func handleValidationResult(validationResult: ValidationResult) {
+        hasError = !validationResult.isValid
+        showEditor = hasError
+        appState.current.validationMessage = validationResult.message
     }
 }
 
