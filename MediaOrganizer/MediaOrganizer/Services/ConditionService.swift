@@ -44,8 +44,6 @@ class ConditionService : ServiceBase, ConditionServiceType {
             do {
                 let parser = ExpressionParser(elements: condition.elements)
                 let ast = try parser.parse()
-                ast.printOutput(elementStrategyFactory)
-                
                 let isMatch = try ast.evaluate(elementStrategyFactory)
                 
                 if isMatch {
@@ -53,6 +51,7 @@ class ConditionService : ServiceBase, ConditionServiceType {
                 }
             }
             catch {
+                // TODO: Log needed.
                 print("Error when parsing:" + error.localizedDescription)
             }
         }

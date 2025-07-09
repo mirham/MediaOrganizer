@@ -61,6 +61,12 @@ struct Constants {
     static let regexLocationInIso6709 = "([+-][0-9.]+)([+-][0-9.]+)"
     static let regexEncodedLocationInIso6709 = "%+09.5f%+010.5f%+.0fCRSWGS_84/"
     
+    // MARK: Condition elements supported types
+    static let ceString = "string";
+    static let ceInt = "int";
+    static let ceDouble = "double";
+    static let ceDate = "date";
+    
     // MARK: Validation
     static let stringMinLength = 1
     static let stringMaxLength = 50
@@ -90,15 +96,23 @@ struct Constants {
     static let vmStringLengthIsIncorrect = "The string must contain no more than \(stringMinLength) characters and no less than \(stringMaxLength) characters.";
     static let vmYearIsIncorrect = "The year must be not before \(yearMinValue) and not after \(yearMaхValue).";
     static let vmMonthIsIncorrect = "The month must be between \(monthMinValue) and \(monthMaхValue).";
-    static let vmDayIsIncorrect = "The day must be between \(dayMinValue) and \(dayMaхValue).";
-    static let vmHourIsIncorrect = "Hours must be between \(hourMinValue) and \(hourMaхValue).";
+    static let vmDayIsIncorrect = "The day must be between \(dayMinValue) and \(dayMaхValue)."
+    static let vmHourIsIncorrect = "Hours must be between \(hourMinValue) and \(hourMaхValue)."
     static let vmMinuteIsIncorrect = "Minutes must be between \(minuteMinValue) and \(minuteMaхValue).";
     static let vmSecondIsIncorrect = "Seconds must be between \(secondMinValue) and \(secondMaхValue).";
     static let vmDateIsIncorrect = "Date must be between '\(dateMinValueString)' and '\(dateMaxValueString)'.";
     static let vmResolutionIsIncorrect = "The resolution value must be between \(resolutionMinValue) and \(resolutionMaxValue).";
     static let vmLatitudeIsIncorrect = "The latitude must be between \(latitudeMinValue) and \(latitudeMaxValue).";
     static let vmLongitudeIsIncorrect = "The longitude must be between \(longitudeMinValue) and \(longitudeMaxValue).";
-    static let vmNotSupportedValue = "This value currently is not supported.";
+    static let vmNotSupportedValue = "This value currently is not supported."
+    static let vmFinishEditing = "Please finish editing.";
+    static let vmSetupElements = "Please setup all editable elements.";
+    static let vmMismatchedParentheses = "Mismatched parentheses in expression."
+    static let vmEmptyParentheses = "Empty parentheses in expression."
+    static let vmInvalidExpressionStructure = "Invalid expression structure."
+    static let vmUnexpectedToken = "Unexpected: %1$@."
+    static let vmEmptyExpression = "Expression cannot be empty."
+    static let vmExpressionParsingError = "Error when parsing expression: %1$@."
     
     // MARK: Element names
     static let elInfo = "Info"

@@ -25,7 +25,7 @@ class Condition : Codable, Identifiable, Equatable {
     func clone() -> Condition {
         let result = Condition()
         result.type = self.type
-        result.elements = self.elements
+        result.elements = self.elements.map({$0.clone(withValue: true) as! ConditionElement})
         
         return result
     }

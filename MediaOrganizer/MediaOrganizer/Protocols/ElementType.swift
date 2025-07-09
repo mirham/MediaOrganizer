@@ -11,5 +11,5 @@ protocol ElementType: Codable, Equatable, Identifiable {
     
     init(elementTypeId: Int, displayText: String)
     
-    func clone() -> any ElementType
+    func clone(withValue: Bool) -> any ElementType
 }

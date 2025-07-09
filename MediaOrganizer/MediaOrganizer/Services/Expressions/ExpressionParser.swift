@@ -13,8 +13,17 @@ struct ExpressionParser {
     }
     
     func parse() throws -> ASTNode {
-        guard !elements.isEmpty else {
+        guard !elements.isEmpty,
+              let firstElement = elements.first,
+              let lastElement = elements.last else {
             throw ASTError.emptyExpression
+        }
+        
+        guard firstElement.elementTypeId != ExpressionElementType.and.id
+                && firstElement.elementTypeId != ExpressionElementType.or.id
+                && lastElement.elementTypeId != ExpressionElementType.and.id
+                && lastElement.elementTypeId != ExpressionElementType.or.id else {
+            throw ASTError.invalidExpression
         }
         
         let tokens = tokenize()
@@ -44,6 +53,12 @@ struct ExpressionParser {
         var tokenQueue = tokens
         var outputQueue: [ASTNode] = []
         var operatorStack: [Token] = []
+        
+        for i in 1 ..< tokens.count {
+            if tokens[i - 1] == .leftParen && tokens[i] == .rightParen {
+                throw ASTError.emptyParentheses
+            }
+        }
         
         while !tokenQueue.isEmpty {
             let token = tokenQueue.removeFirst()
@@ -109,11 +124,7 @@ struct ExpressionParser {
     
     private func buildFinalNode(from outputQueue: [ASTNode]) throws -> ASTNode {
         guard outputQueue.count == 1 else {
-            if outputQueue.isEmpty {
-                return .empty
-            } else {
-                throw ASTError.invalidExpression
-            }
+            throw ASTError.invalidExpression
         }
         
         return outputQueue[0]
@@ -129,7 +140,7 @@ struct ExpressionParser {
     
     // MARK: Inner types
     
-    private enum Token {
+    private enum Token : Equatable {
         case operand(ConditionElement)
         case op(ExpressionElementType)
         case leftParen

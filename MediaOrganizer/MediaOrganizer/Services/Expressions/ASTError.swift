@@ -7,20 +7,23 @@
 
 enum ASTError: Error {
     case mismatchedParentheses
+    case emptyParentheses
     case invalidExpression
     case unexpectedToken(String)
     case emptyExpression
     
-    var errorDescription: String? {
+    var errorDescription: String {
         switch self {
             case .mismatchedParentheses:
-                return "Mismatched parentheses in expression"
+                return Constants.vmMismatchedParentheses
+            case .emptyParentheses:
+                return Constants.vmEmptyParentheses
             case .invalidExpression:
-                return "Invalid expression structure"
+                return Constants.vmInvalidExpressionStructure
             case .unexpectedToken(let token):
-                return "Unexpected token: \(token)"
+                return String(format: Constants.vmUnexpectedToken, token)
             case .emptyExpression:
-                return "Expression cannot be empty"
+                return Constants.vmEmptyExpression
         }
     }
 }
