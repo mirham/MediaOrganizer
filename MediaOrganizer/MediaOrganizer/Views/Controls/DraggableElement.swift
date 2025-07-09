@@ -19,7 +19,7 @@ struct DraggableElement<T: ElementType> : Equatable, Identifiable {
     }
     
     func clone() -> DraggableElement {
-        let clonedElement = element.clone()
+        let clonedElement = element.clone(withValue: false)
         let result = DraggableElement(element: clonedElement as! T)
         
         return result

@@ -21,8 +21,10 @@ extension AppState {
         var rule: Rule? = nil
         var condition: Condition? = nil
         var isConditionInEditMode = false
+        var isConditionElementInEditMode = false
         var action: Action? = nil
         var isActionInEditMode = false
+        var isActionElementInEditMode = false
         var validationMessage: String? = nil
         
         func allowWindowClose() -> Bool {
@@ -34,8 +36,10 @@ extension AppState {
                 && lhs.rule == rhs.rule
                 && lhs.condition == rhs.condition
                 && lhs.isConditionInEditMode == rhs.isConditionInEditMode
+                && lhs.isConditionElementInEditMode == rhs.isConditionElementInEditMode
                 && lhs.action == rhs.action
                 && lhs.isActionInEditMode == rhs.isActionInEditMode
+                && lhs.isActionElementInEditMode == rhs.isActionElementInEditMode
                 && lhs.validationMessage == rhs.validationMessage
             
             return result

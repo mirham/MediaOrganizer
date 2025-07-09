@@ -43,17 +43,25 @@ enum ConditionValue: Codable, Equatable {
         let type = try container.decode(String.self, forKey: .type)
         
         switch type {
-            case "int":
+            case Constants.ceInt:
                 self = .int(try container.decode(Int.self, forKey: .value))
-            case "double":
+            case Constants.ceDouble:
                 self = .double(try container.decode(Double.self, forKey: .value))
-            case "date":
+            case Constants.ceDate:
                 self = .date(try container.decode(Date.self, forKey: .value))
-            case "string":
+            case Constants.ceString:
                 self = .string(try container.decode(String.self, forKey: .value))
             default:
+                // TODO: Logging
                 throw DecodingError.dataCorruptedError(forKey: .type, in: container, debugDescription: "Invalid type")
         }
+    }
+    
+    func hasValue() -> Bool {
+        return (stringValue != nil && !stringValue!.isEmpty)
+                || intValue != nil
+                || doubleValue != nil
+                || dateValue != nil
     }
     
     func toString() -> String {
@@ -78,16 +86,16 @@ enum ConditionValue: Codable, Equatable {
         
         switch self {
             case .int(let value):
-                try container.encode("int", forKey: .type)
+                try container.encode(Constants.ceString, forKey: .type)
                 try container.encode(value, forKey: .value)
             case .double(let value):
-                try container.encode("double", forKey: .type)
+                try container.encode(Constants.ceDouble, forKey: .type)
                 try container.encode(value, forKey: .value)
             case .date(let value):
-                try container.encode("date", forKey: .type)
+                try container.encode(Constants.ceDate, forKey: .type)
                 try container.encode(value, forKey: .value)
             case .string(let value):
-                try container.encode("string", forKey: .type)
+                try container.encode(Constants.ceString, forKey: .type)
                 try container.encode(value, forKey: .value)
         }
     }

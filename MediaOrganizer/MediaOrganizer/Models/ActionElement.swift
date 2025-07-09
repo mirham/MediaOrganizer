@@ -54,7 +54,7 @@ class ActionElement : ElementType {
         self.customText = nil
     }
     
-    func clone() -> any ElementType {
+    func clone(withValue: Bool = false) -> any ElementType {
         let result = ActionElement(
             elementTypeId: self.elementTypeId,
             displayText: self.displayText)

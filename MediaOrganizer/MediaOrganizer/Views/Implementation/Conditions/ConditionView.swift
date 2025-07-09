@@ -15,6 +15,7 @@ struct ConditionView: ElementContainerView {
     
     @Injected(\.ruleService) private var ruleService
     @Injected(\.conditionService) private var conditionService
+    @Injected(\.elementStrategyFactory) private var elementStrategyFactory
     
     @State private var showEditor: Bool = false
     @State private var prevCondition: Condition?
@@ -84,6 +85,15 @@ struct ConditionView: ElementContainerView {
     }
     
     private func handleSaveClick() {
+        guard isValidCondition() else {
+            return
+        }
+        
+        if let conditionIndex = appState.current.rule!.conditions.firstIndex(where: {$0.id == appState.current.condition!.id}) {
+            appState.current.rule!.conditions[conditionIndex].elements
+            = appState.current.condition!.elements
+        }
+        
         appState.current.isConditionInEditMode = false
         showEditor = false
     }
@@ -109,5 +119,53 @@ struct ConditionView: ElementContainerView {
                 || appState.current.isConditionInEditMode
                 || appState.current.isActionInEditMode
     }
+    
+    private func isValidCondition() -> Bool {
+        guard !appState.current.isConditionElementInEditMode
+        else {
+            appState.current.validationMessage = Constants.vmFinishEditing
+            
+            return false
+        }
+        
+        guard hasAllSetupElements() else { return false }
+        guard isValidExpression() else { return false }
+        guard appState.current.validationMessage == nil else { return false }
+        
+        return true
+    }
+    
+    private func hasAllSetupElements() -> Bool {
+        for element in appState.current.condition!.elements {
+            if !element.hasValue() {
+                appState.current.validationMessage = Constants.vmSetupElements
+                
+                return false
+            }
+        }
+        
+        return true
+    }
+    
+    private func isValidExpression() -> Bool {
+        do {
+            appState.current.validationMessage = nil
+            let parser = ExpressionParser(elements: appState.current.condition!.elements)
+            _ = try parser.parse()
+        }
+        catch let astError as ASTError {
+            appState.current.validationMessage = astError.errorDescription
+            
+            return false
+        }
+        catch {
+            appState.current.validationMessage = String(
+                format: Constants.vmExpressionParsingError,
+                error.localizedDescription)
+            
+            return false
+        }
+        
+        return true
+    }
 }
-

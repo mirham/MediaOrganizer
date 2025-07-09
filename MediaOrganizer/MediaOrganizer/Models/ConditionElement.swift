@@ -51,10 +51,26 @@ class ConditionElement : ElementType {
         self.value = .string(String())
     }
     
-    func clone() -> any ElementType {
+    func hasValue() -> Bool {
+        guard MetadataType(rawValue: elementTypeId) != nil
+        else {
+            return true
+        }
+        
+        return value.hasValue()
+    }
+    
+    func clone(withValue: Bool = false) -> any ElementType {
         let result = ConditionElement(
             elementTypeId: self.elementTypeId,
             displayText: self.displayText)
+        
+        if withValue {
+            result.settingType = self.settingType
+            result.selectedDateFormatType = self.selectedDateFormatType
+            result.selectedOperatorTypeId = self.selectedOperatorTypeId
+            result.value = self.value
+        }
         
         return result
     }

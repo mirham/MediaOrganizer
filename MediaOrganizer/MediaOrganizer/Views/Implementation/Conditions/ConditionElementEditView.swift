@@ -70,9 +70,7 @@ struct ConditionElementEditView: ElementContainerView {
             }
             .contentShape(Rectangle())
             .padding(5)
-            Button(String(), systemImage: Constants.iconEdit) {
-                showEditor = true
-            }
+            Button(String(), systemImage: Constants.iconEdit, action: handleEditButtonClick)
             .withEditButtonStyle(activeState: controlActiveState)
             .padding(.leading, -5)
             .isHidden(
@@ -315,6 +313,17 @@ struct ConditionElementEditView: ElementContainerView {
         }
     }
     
+    private func handleEditButtonClick() {
+        guard !appState.current.isConditionElementInEditMode
+        else {
+            appState.current.validationMessage = Constants.vmFinishEditing
+            return
+        }
+        
+        showEditor = true
+        appState.current.isConditionElementInEditMode = true
+    }
+    
     private func handleInputWithSelectedTypeSaveClick() {
         guard let selectedDateFormatTypeId = selectedDateFormatTypeId,
               let dateFormat = DateFormatType(rawValue: selectedDateFormatTypeId)
@@ -359,6 +368,7 @@ struct ConditionElementEditView: ElementContainerView {
     private func handleValidationResult(validationResult: ValidationResult) {
         hasError = !validationResult.isValid
         showEditor = hasError
+        appState.current.isConditionElementInEditMode = hasError
         appState.current.validationMessage = validationResult.message
     }
 }
