@@ -15,7 +15,6 @@ struct ActionPreviewView: ElementContainerView {
     
     private let dateFormatter = DateFormatter()
     private let dateExample = Date.now
-    private let extensionExample = Date.now
     
     var body: some View {
         WrappingHStack(alignment: .leading, horizontalSpacing: 0) {

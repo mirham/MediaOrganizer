@@ -21,7 +21,10 @@ struct DraggableConditionElementsView: View {
                 ForEach(conditionElements, id: \.id) {conditionElement in
                     ConditionElementEditView(element: conditionElement.element)
                         .onDrag({
-                            self.draggedItem = conditionElement
+                            if appState.current.isDragAllowed {
+                                self.draggedItem = conditionElement
+                            }
+                            
                             return NSItemProvider(object: conditionElement.element.displayText as NSString)
                         })
                         .onDrop(of: [.text], delegate: DropViewDelegate(

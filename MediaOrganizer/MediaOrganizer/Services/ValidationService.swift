@@ -132,4 +132,96 @@ class ValidationService: ServiceBase, ValidationServiceType {
         
         return result
     }
+    
+    func isValidFilename(input: String) -> ValidationResult {
+        let invalidCharacters = CharacterSet(charactersIn: Constants.slash)
+            .union(.controlCharacters)
+            .union(.illegalCharacters)
+            .union(.newlines)
+        
+        if input.isEmpty {
+            return ValidationResult(message: Constants.vmEmptyFilename)
+        }
+        
+        if input.unicodeScalars.contains(where: { invalidCharacters.contains($0) }) {
+            return ValidationResult(message: Constants.vmInvalidCharactersFilename)
+        }
+        
+        if input.utf16.count > 255 {
+            return ValidationResult(message: Constants.vmTooLongFilename)
+        }
+        
+        if input.hasPrefix(Constants.spaceShort) || input.hasSuffix(Constants.spaceShort) {
+            return ValidationResult(message: Constants.vmFilenameStartsOrEndsWithSpace)
+        }
+        if input.hasSuffix(Constants.dot) {
+            return ValidationResult(message: Constants.vmFilenameEndsWithDot)
+        }
+        
+        if input.hasPrefix(Constants.dot) {
+            return ValidationResult(message: Constants.vmFilenameStartsWithDot)
+        }
+        
+        if !input.contains(Constants.dot)
+            || input.hasSuffix(Constants.dot)
+            || input.components(separatedBy: Constants.dot).last?.isEmpty == true {
+            return ValidationResult(message: Constants.vmFilenameMustHaveExtension)
+        }
+        
+        return ValidationResult()
+    }
+    
+    func isValidFolderPath(input: String, parentFolderPathLength: Int) -> ValidationResult {
+        /*if input.isEmpty {
+            return ValidationResult(message: "Folder path cannot be empty.")
+        }*/
+        
+        let invalidCharacters = CharacterSet(charactersIn: Constants.nullChar)
+            .union(.controlCharacters)
+            .union(.illegalCharacters)
+            .union(.newlines)
+        
+        if input.unicodeScalars.contains(where: { invalidCharacters.contains($0) }) {
+            return ValidationResult(message: Constants.vmInvalidCharactersFolderPath)
+        }
+        
+        if input.contains(Constants.regexTwoSlashes) {
+            return ValidationResult(message: Constants.vmFolderPathContainsMultipleSlashes)
+        }
+        
+        if parentFolderPathLength + input.utf16.count > Constants.maxFolderPathLength {
+            return ValidationResult(message: Constants.vmTooLongPath)
+        }
+        
+        let pathComponents = input.components(separatedBy: Constants.slash).filter { !$0.isEmpty }
+        
+        /*if pathComponents.isEmpty && !input.hasPrefix(Constants.slash) {
+            return ValidationResult(message: "Folder path is invalid or contains no components.")
+        }*/
+        
+        for component in pathComponents {
+            if component.utf16.count > Constants.maxFileNameLength {
+                return ValidationResult(message: String(
+                    format: Constants.vmTooLongPathComponent, component))
+            }
+            
+            if component.hasPrefix(Constants.space) || component.hasSuffix(Constants.space) {
+                return ValidationResult(message: String(
+                    format: Constants.vmPathComponentStartsOrEndsWithSpace, component))
+            }
+            
+            if component.hasSuffix(Constants.dot) {
+                return ValidationResult(message: String(
+                    format: Constants.vmPathComponentEndsWithDot, component))
+            }
+            
+            if component.hasPrefix(Constants.dot) {
+                return ValidationResult(message:String(
+                    format: Constants.vmPathComponentStartsWithDot, component))
+            }
+        }
+        
+        // If all checks pass
+        return ValidationResult()
+    }
 }

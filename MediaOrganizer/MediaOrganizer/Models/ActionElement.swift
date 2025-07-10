@@ -54,10 +54,31 @@ class ActionElement : ElementType {
         self.customText = nil
     }
     
+    func hasValue() -> Bool {
+        if let optionalElementType = OptionalElementType(rawValue: elementTypeId) {
+            switch optionalElementType {
+                case .customDate:
+                    return customDate != nil && customDate != .distantPast
+                case .customText:
+                    return customText != nil && !customText!.isEmpty
+                default:
+                    return true
+            }
+        }
+        
+        return true
+    }
+    
     func clone(withValue: Bool = false) -> any ElementType {
         let result = ActionElement(
             elementTypeId: self.elementTypeId,
             displayText: self.displayText)
+        
+        if withValue {
+            result.selectedDateFormatType = self.selectedDateFormatType
+            result.customDate = self.customDate
+            result.customText = self.customText
+        }
         
         return result
     }

@@ -25,7 +25,7 @@ class Action : Codable, Identifiable, Equatable, ObservableObject {
     func clone() -> Action {
         let result = Action()
         result.type = self.type
-        result.elements = self.elements
+        result.elements = self.elements.map({$0.clone(withValue: true) as! ActionElement})
         
         return result
     }

@@ -12,4 +12,6 @@ protocol ValidationServiceType {
     func isValidInt(input: Int, dateFormatType: DateFormatType?) -> ValidationResult
     func isValidDate(input: Date) -> ValidationResult
     func isValidDouble(input: Double, metadataType: MetadataType?) -> ValidationResult
+    func isValidFilename(input: String) -> ValidationResult
+    func isValidFolderPath(input: String, parentFolderPathLength: Int) -> ValidationResult
 }

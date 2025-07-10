@@ -6,16 +6,20 @@
 //
 
 import SwiftUI
+import Factory
 
 struct ActionElementEditView: ElementContainerView {
     @EnvironmentObject var appState: AppState
     
     @Environment(\.controlActiveState) private var controlActiveState
     
+    @Injected(\.validationService) private var validationService
+    
     @State private var showEditor: Bool = false
     @State private var selectedDateFormatTypeId: Int?
     @State private var customText: String
     @State private var customDate: Date
+    @State private var hasError: Bool
     
     private let element: ActionElement
     
@@ -36,6 +40,7 @@ struct ActionElementEditView: ElementContainerView {
             : DateFormatType.dateEu.id
         self.customText = element.customText ?? String()
         self.customDate = element.customDate ?? Date.distantPast
+        self.hasError = false
     }
     
     var body: some View {
@@ -43,9 +48,7 @@ struct ActionElementEditView: ElementContainerView {
             Text(getEffectiveDispalyText() + getFormatDescription())
                 .contentShape(Rectangle())
                 .padding(5)
-            Button(String(), systemImage: Constants.iconEdit) {
-                showEditor = true
-            }
+            Button(String(), systemImage: Constants.iconEdit, action: handleEditButtonClick)
             .withEditButtonStyle(activeState: controlActiveState)
             .padding(.leading, -5)
             .isHidden(
@@ -136,13 +139,9 @@ struct ActionElementEditView: ElementContainerView {
             }
             .pickerStyle(.menu)
             .frame(maxWidth: 20)
-            Button(String(), systemImage: Constants.iconCheck) {
-                element.selectedDateFormatType = selectedDateFormatTypeId != nil
-                    ? DateFormatType(rawValue: selectedDateFormatTypeId!)
-                    : nil
-                element.customDate = customDate
-                showEditor = false
-            }
+            Button(String(),
+                   systemImage: Constants.iconCheck,
+                   action: handleDateInputSaveClick)
             .withRemoveButtonStyle(activeState: controlActiveState)
         }
         .isHidden(hidden: !showEditor, remove: true)
@@ -155,13 +154,59 @@ struct ActionElementEditView: ElementContainerView {
                     customText = String(customText.prefix(Constants.customTextLimit))
                 }
             .frame(maxWidth: 100)
-            Button(String(), systemImage: Constants.iconCheck) {
-                element.customText = customText
-                showEditor = false
-            }
+            Button(String(),
+                systemImage: Constants.iconCheck,
+                action: handleTextInputSaveClick)
             .withRemoveButtonStyle(activeState: controlActiveState)
         }
         .isHidden(hidden: !showEditor, remove: true)
+    }
+    
+    private func handleEditButtonClick() {
+        guard !appState.current.isActionElementInEditMode
+        else {
+            appState.current.validationMessage = Constants.vmFinishEditing
+            return
+        }
+        
+        showEditor = true
+        appState.current.isActionElementInEditMode = true
+    }
+    
+    private func handleDateInputSaveClick() {
+        element.selectedDateFormatType = selectedDateFormatTypeId != nil
+            ? DateFormatType(rawValue: selectedDateFormatTypeId!)
+            : nil
+        
+        if customDate != Date.distantPast {
+            let validationResult = validationService.isValidDate(input: customDate)
+            handleValidationResult(validationResult: validationResult)
+            
+            guard !hasError else { return }
+            
+            element.customDate = customDate
+        }
+        else {
+            showEditor = false
+            appState.current.isActionElementInEditMode = false
+            appState.current.validationMessage = nil
+        }
+    }
+    
+    private func handleTextInputSaveClick() {
+        let validationResult = validationService.isValidString(input: customText)
+        handleValidationResult(validationResult: validationResult)
+        
+        guard !hasError else { return }
+        
+        element.customText = customText
+    }
+    
+    private func handleValidationResult(validationResult: ValidationResult) {
+        hasError = !validationResult.isValid
+        showEditor = hasError
+        appState.current.isActionElementInEditMode = hasError
+        appState.current.validationMessage = validationResult.message
     }
 }
 
