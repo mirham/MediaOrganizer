@@ -12,6 +12,7 @@ protocol ActionServiceType : ServiceBaseType {
     func addNewAction()
     func isCurrentAction(actionId: UUID) -> Bool
     func actionToFileAction(action: Action, fileInfo: MediaFileInfo) -> FileAction
+    func actionToExampleString(action: Action) -> String
     func replaceAction(actionId: UUID, action: Action)
     func removeActionById(actionId: UUID)
 }

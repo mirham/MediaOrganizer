@@ -33,12 +33,14 @@ struct ConditionEditView: View {
                     selectedConditionTypeId = appState.current.condition?.type.id ?? ConditionType.cIf.id
                     
                     if appState.current.condition != nil {
-                        conditionElements = appState.current.condition!.elements.map({ return DraggableElement(element: $0) })
+                        conditionElements = appState.current.condition!.elements
+                            .map({ return DraggableElement(element: $0) })
                     }
                 }
                 .onChange(of: conditionElements) {
                     if appState.current.condition != nil {
-                        appState.current.condition!.elements = conditionElements.map({ return $0.element })
+                        appState.current.condition!.elements = conditionElements
+                            .map({ return $0.element })
                     }
                     appState.objectWillChange.send()
                 }
@@ -47,7 +49,8 @@ struct ConditionEditView: View {
                     selectedTypeId: $selectedConditionTypeId,
                     draggedItem: $draggedItem,
                     destinationElements: $conditionElements)
-                ConditionPreviewView(conditionElements: conditionElements.map({ return $0.element }))
+                ConditionPreviewView(conditionElements: conditionElements
+                    .map({ return $0.element }))
                     .padding(10)
             }
         }

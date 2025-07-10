@@ -18,16 +18,19 @@ struct DraggableActionElementsView: View {
     var body: some View {
         HStack {
             WrappingHStack(alignment: .leading) {
-                ForEach(actionElements, id: \.id) {conditionElement in
-                    ActionElementEditView(element: conditionElement.element)
+                ForEach(actionElements, id: \.id) {actionElement in
+                    ActionElementEditView(element: actionElement.element)
                         .onDrag({
-                            self.draggedItem = conditionElement
-                            return NSItemProvider(object: conditionElement.element.displayText as NSString)
+                            if appState.current.isDragAllowed {
+                                self.draggedItem = actionElement
+                            }
+                            
+                            return NSItemProvider(object: actionElement.element.displayText as NSString)
                         })
                         .onDrop(of: [.text], delegate: DropViewDelegate(
                             draggedItem: $draggedItem,
                             items: $actionElements,
-                            item: conditionElement))
+                            item: actionElement))
                 }
             }
             .padding(5)

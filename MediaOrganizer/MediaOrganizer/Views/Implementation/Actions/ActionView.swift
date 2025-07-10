@@ -15,6 +15,7 @@ struct ActionView: ElementContainerView {
     
     @Injected(\.ruleService) private var ruleService
     @Injected(\.actionService) private var actionService
+    @Injected(\.validationService) private var validationService
     
     @State private var showEditor: Bool = false
     @State private var prevAction: Action?
@@ -84,6 +85,15 @@ struct ActionView: ElementContainerView {
     }
     
     private func handleSaveClick() {
+        guard isValidAction() else {
+            return
+        }
+        
+        if let actionIndex = appState.current.rule!.actions.firstIndex(where: {$0.id == appState.current.action!.id}) {
+            appState.current.rule!.actions[actionIndex].elements
+            = appState.current.action!.elements
+        }
+        
         appState.current.isActionInEditMode = false
         showEditor = false
     }
@@ -108,6 +118,80 @@ struct ActionView: ElementContainerView {
         return !ruleService.isCurrentRule(ruleId: ruleId)
             || appState.current.isConditionInEditMode
             || appState.current.isActionInEditMode
+    }
+    
+    private func isValidAction() -> Bool {
+        guard !appState.current.isActionElementInEditMode
+        else {
+            appState.current.validationMessage = Constants.vmFinishEditing
+            
+            return false
+        }
+        
+        guard hasAllSetupElements() else { return false }
+        guard isValidFileAction() else { return false }
+        guard appState.current.validationMessage == nil else { return false }
+        
+        return true
+    }
+    
+    private func hasAllSetupElements() -> Bool {
+        for element in appState.current.action!.elements {
+            if !element.hasValue() {
+                appState.current.validationMessage = Constants.vmSetupElements
+                
+                return false
+            }
+        }
+        
+        return true
+    }
+    
+    private func isValidFileAction() -> Bool {
+        guard let currentAction = appState.current.action else {
+            return false
+        }
+        
+        let fileActionExample = actionService.actionToExampleString(action: currentAction)
+        
+        switch currentAction.type {
+            case .rename:
+                return isValidFileName(fileName: fileActionExample)
+            case .copyToFolder, .moveToFolder:
+                return isValidFolderPath(folderPath: fileActionExample)
+            default:
+                return true
+        }
+    }
+    
+    private func isValidFileName(fileName: String) -> Bool {
+        let validationResult = validationService.isValidFilename(input: fileName)
+        
+        if !validationResult.isValid {
+            appState.current.validationMessage = validationResult.message
+            
+            return false
+        }
+        
+        return true
+    }
+    
+    private func isValidFolderPath(folderPath: String) -> Bool {
+        guard let parentFolderPath = appState.current.job?.outputFolder else {
+            return false
+        }
+        
+        let validationResult = validationService.isValidFolderPath(
+            input: folderPath,
+            parentFolderPathLength: parentFolderPath.count)
+        
+        if !validationResult.isValid {
+            appState.current.validationMessage = validationResult.message
+            
+            return false
+        }
+        
+        return true
     }
 }
 

@@ -17,13 +17,20 @@ struct Constants {
     static let maxPercentage: Double = 100
     static let defaultJobName = "New job"
     static let dragAndDropTimeToleranceInSeconds: Int = 1
+    static let customTextLimit = 100
+    static let defaultToleranceInNanoseconds: UInt64 = 100_000_000
+    static let maxFileNameLength = 255
+    static let maxFolderPathLength = 1024
+    
+    // MARK: Symbols and strings
     static let space = "   "
     static let spaceShort = " "
     static let slash = "/"
+    static let slashChar: Character = "/"
     static let dot = "."
     static let comma = ","
-    static let customTextLimit = 100
-    static let defaultToleranceInNanoseconds: UInt64 = 100_000_000
+    static let nullChar = "\0"
+    static let colon = ":"
     
     // MARK: Settings key names
     static let settingsKeyJobs = "jobs"
@@ -60,6 +67,8 @@ struct Constants {
     // MARK: Regexes
     static let regexLocationInIso6709 = "([+-][0-9.]+)([+-][0-9.]+)"
     static let regexEncodedLocationInIso6709 = "%+09.5f%+010.5f%+.0fCRSWGS_84/"
+    static let regexSlash = /\//
+    static let regexTwoSlashes = /\/\//
     
     // MARK: Condition elements supported types
     static let ceString = "string";
@@ -113,6 +122,20 @@ struct Constants {
     static let vmUnexpectedToken = "Unexpected: %1$@."
     static let vmEmptyExpression = "Expression cannot be empty."
     static let vmExpressionParsingError = "Error when parsing expression: %1$@."
+    static let vmEmptyFilename = "Filename cannot be empty."
+    static let vmInvalidCharactersFilename = "Filename contains invalid characters (e.g., / or control characters)."
+    static let vmTooLongFilename = "Filename is too long (max \(maxFileNameLength) UTF-16 code units)."
+    static let vmFilenameStartsOrEndsWithSpace = "Filename cannot start or end with a space."
+    static let vmFilenameEndsWithDot = "Filename cannot end with a dot."
+    static let vmFilenameStartsWithDot = "Filename starts with a dot, which will be hidden on macOS."
+    static let vmFilenameMustHaveExtension = "Filename must include a valid extension, please add extension element to the end or setup an extension with custom text element."
+    static let vmInvalidCharactersFolderPath = "Folder path contains invalid characters (e.g., control characters or null)."
+    static let vmFolderPathContainsMultipleSlashes = "Folder path cannot contain multiple slashes."
+    static let vmTooLongPath = "Folder path is too long (max \(maxFolderPathLength) UTF-16 code units)."
+    static let vmTooLongPathComponent = "Folder name '%1$@' is too long (max \(maxFileNameLength) UTF-16 code units)."
+    static let vmPathComponentStartsOrEndsWithSpace = "Folder name '%1$@' cannot start or end with a space."
+    static let vmPathComponentEndsWithDot = "Folder name '%1$@' cannot end with a dot."
+    static let vmPathComponentStartsWithDot = "Folder name '%1$@' starts with a dot, which will be hidden on macOS."
     
     // MARK: Element names
     static let elInfo = "Info"

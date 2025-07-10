@@ -42,26 +42,25 @@ struct ActionEditView: View {
                 .onAppear {
                     selectedActionTypeId = appState.current.action?.type.id ?? ActionType.rename.id
                     
-                    if (appState.current.action != nil) {
-                        actionElements = appState.current.action!.elements.map({ return DraggableElement(element: $0) })
+                    if appState.current.action != nil {
+                        actionElements = appState.current.action!.elements
+                            .map({ return DraggableElement(element: $0) })
                     }
                 }
-                .onDisappear {
-                    if (appState.current.action != nil) {
-                        appState.current.action!.elements = actionElements.map({ return $0.element })
-                        
-                        if let actionIndex = appState.current.rule!.actions.firstIndex(where: {$0.id == appState.current.action!.id}) {
-                            appState.current.rule!.actions[actionIndex].elements
-                            = appState.current.action!.elements
-                        }
+                .onChange(of: actionElements) {
+                    if appState.current.action != nil {
+                        appState.current.action!.elements = actionElements
+                            .map({ return $0.element })
                     }
                     appState.objectWillChange.send()
                 }
+                ValidationMessageView()
                 DraggableSourceElementsView(
                     selectedTypeId: $selectedActionTypeId,
                     draggedItem: $draggedItem,
                     destinationElements: $actionElements)
-                ActionPreviewView(actionElements: actionElements.map({ return $0.element }))
+                ActionPreviewView(actionElements: actionElements
+                    .map({ return $0.element }))
                     .padding(10)
             }
         }

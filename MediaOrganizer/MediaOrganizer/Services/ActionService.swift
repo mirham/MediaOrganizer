@@ -11,6 +11,23 @@ import Factory
 class ActionService : ServiceBase, ActionServiceType {
     @Injected(\.elementService) private var elementService
     
+    private let dateFormatter: DateFormatter
+    private let dateExample: Date
+    
+    override init() {
+        dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = Constants.defaultValidationDateFormat
+        
+        if let dateExample = dateFormatter.date(from: Constants.dateMaxValueString) {
+            self.dateExample = dateExample
+        }
+        else {
+            self.dateExample = Date.distantFuture
+        }
+        
+        super.init()
+    }
+    
     func addNewAction() {
         appState.current.rule!.actions.append(Action())
     }
@@ -37,6 +54,24 @@ class ActionService : ServiceBase, ActionServiceType {
         return FileAction(actionType: action.type, value: value)
     }
     
+    func actionToExampleString(action: Action) -> String {
+        var result: String = String()
+        
+        for element in action.elements {
+            switch element.settingType {
+                case .date:
+                    result.append(getFormattedDate(element: element))
+                default:
+                    let stringExample = MetadataType(rawValue: element.elementTypeId)?.example
+                        ?? element.customText
+                        ?? element.displayText
+                    result.append(stringExample)
+            }
+        }
+        
+        return result
+    }
+    
     func replaceAction(actionId: UUID, action: Action) {
         guard appState.current.rule != nil else { return }
         
@@ -54,5 +89,23 @@ class ActionService : ServiceBase, ActionServiceType {
             appState.current.rule!.actions.remove(at: actionIndex)
             appState.objectWillChange.send()
         }
+    }
+    
+    // MARK: Private functions
+    
+    private func getFormattedDate(element: ActionElement) -> String {
+        dateFormatter.dateFormat = (element.selectedDateFormatType
+            ?? DateFormatType.dateEu)!.formula
+        let date = element.customDate == nil || element.customDate == Date.distantPast
+            ? dateExample
+            : element.customDate!
+        
+        var result = dateFormatter.string(from: date)
+        
+        if result.contains(where: {$0 == Constants.slashChar}) {
+            result = result.replacing(Constants.regexSlash, with: Constants.colon)
+        }
+        
+        return result
     }
 }
