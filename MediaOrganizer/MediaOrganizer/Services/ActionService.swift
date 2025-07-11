@@ -29,13 +29,15 @@ class ActionService : ServiceBase, ActionServiceType {
     }
     
     func addNewAction() {
-        appState.current.rule!.actions.append(Action())
+        guard let currentRule = appState.current.rule else { return }
+        
+        currentRule.actions.append(Action())
     }
     
     func isCurrentAction(actionId: UUID) -> Bool {
-        guard doesCurrentActionExist() else { return false }
+        guard let currentAction = appState.current.action else { return false }
         
-        let result = appState.current.action!.id == actionId
+        let result = currentAction.id == actionId
         
         return result
     }
@@ -73,20 +75,20 @@ class ActionService : ServiceBase, ActionServiceType {
     }
     
     func replaceAction(actionId: UUID, action: Action) {
-        guard appState.current.rule != nil else { return }
+        guard let currentRule = appState.current.rule else { return }
         
-        if let actionIndex = appState.current.rule!.actions.firstIndex(where: { $0.id == actionId })  {
-            appState.current.rule!.actions[actionIndex] = action
+        if let actionIndex = currentRule.actions.firstIndex(where: { $0.id == actionId })  {
+            currentRule.actions[actionIndex] = action
             
             appState.objectWillChange.send()
         }
     }
     
     func removeActionById(actionId: UUID) {
-        guard appState.current.rule != nil else { return }
+        guard let currentRule = appState.current.rule else { return }
         
-        if let actionIndex = appState.current.rule!.actions.firstIndex(where: { $0.id == actionId }) {
-            appState.current.rule!.actions.remove(at: actionIndex)
+        if let actionIndex = currentRule.actions.firstIndex(where: { $0.id == actionId }) {
+            currentRule.actions.remove(at: actionIndex)
             appState.objectWillChange.send()
         }
     }

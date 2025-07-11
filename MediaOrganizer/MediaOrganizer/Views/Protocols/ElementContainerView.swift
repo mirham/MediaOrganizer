@@ -295,13 +295,13 @@ extension ElementContainerView {
         switch conditionValueType {
             case .string:
                 return selectedOperatorTypeId == nil
-                ? StringOperatorType.equals.description
-                : StringOperatorType.init(rawValue: selectedOperatorTypeId!)?.description
+                    ? StringOperatorType.equals.description
+                    : StringOperatorType.init(rawValue: selectedOperatorTypeId!)?.description
                 ?? String()
             case .int, .double, .date:
                 return selectedOperatorTypeId == nil
-                ? NumberAndDateOperatorType.equals.description
-                : NumberAndDateOperatorType.init(rawValue: selectedOperatorTypeId!)?.description
+                    ? NumberAndDateOperatorType.equals.description
+                    : NumberAndDateOperatorType.init(rawValue: selectedOperatorTypeId!)?.description
                 ?? String()
             default:
                 return String()

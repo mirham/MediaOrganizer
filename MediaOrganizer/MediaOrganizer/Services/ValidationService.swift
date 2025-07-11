@@ -221,7 +221,73 @@ class ValidationService: ServiceBase, ValidationServiceType {
             }
         }
         
-        // If all checks pass
+        return ValidationResult()
+    }
+    
+    func areValidActions(actions: [Action]) -> ValidationResult {
+        if actions.isEmpty {
+            return ValidationResult(message: Constants.vmNoActions)
+        }
+        
+        var skipActionsCount: Int = 0
+        var deleteActionsCount: Int = 0
+        var renameActionsCount: Int = 0
+        var copyToFolderActionsCount: Int = 0
+        var moveToFolderToActionsCount: Int = 0
+        
+        for checkedAction in actions {
+            switch checkedAction.type {
+                case .skip:
+                    skipActionsCount += 1
+                    break
+                case .delete:
+                    deleteActionsCount += 1
+                    break
+                case.rename:
+                    renameActionsCount += 1
+                    break
+                case .copyToFolder:
+                    copyToFolderActionsCount += 1
+                    break
+                case .moveToFolder:
+                    moveToFolderToActionsCount += 1
+                    break
+            }
+        }
+        
+        let isActionsMess = (skipActionsCount >= 1 || deleteActionsCount >= 1)
+            && (renameActionsCount > 0 || copyToFolderActionsCount > 0 || moveToFolderToActionsCount > 0)
+        let isCopyMoveActionsMess = copyToFolderActionsCount > 0 && moveToFolderToActionsCount > 0
+        let isExtraSkipOrDeleteAction = (skipActionsCount > 1 || deleteActionsCount > 1)
+            || (skipActionsCount > 0 && deleteActionsCount > 0)
+        let isExtraRenameAction = renameActionsCount > 1
+        let isExtraCopyToFolderAction = copyToFolderActionsCount > 1
+        let isExtraMoveToFolderAction = moveToFolderToActionsCount > 1
+        
+        if isActionsMess {
+            return ValidationResult(message: Constants.vmActionsMess)
+        }
+        
+        if isCopyMoveActionsMess {
+            return ValidationResult(message: Constants.vmCopyMoveActionsMess)
+        }
+        
+        if isExtraSkipOrDeleteAction {
+            return ValidationResult(message: Constants.vmExtraSkipOrDeleteAction)
+        }
+        
+        if isExtraRenameAction {
+            return ValidationResult(message: Constants.vmExtraRenameAction)
+        }
+        
+        if isExtraCopyToFolderAction {
+            return ValidationResult(message: Constants.vmExtraCopyToFolderAction)
+        }
+        
+        if isExtraMoveToFolderAction {
+            return ValidationResult(message: Constants.vmExtraMoveToFolderAction)
+        }
+        
         return ValidationResult()
     }
 }

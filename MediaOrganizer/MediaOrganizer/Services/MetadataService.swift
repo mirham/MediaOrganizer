@@ -33,6 +33,7 @@ class MetadataService: ServiceBase, MetadataServiceType {
             result[MetadataType.fileDateCreated] = creationDate
             result[MetadataType.fileDateModified] = modificationDate
         } catch {
+            // TODO: Log needed
             print("Error getting attributes of file.")
         }
         
@@ -72,7 +73,7 @@ class MetadataService: ServiceBase, MetadataServiceType {
     private func getVideoMetadataAsync(fileUrl: URL) async -> [MetadataType: Any?] {
         var result = [MetadataType: Any?]()
         
-        let asset = AVAsset(url: fileUrl)
+        let asset = AVURLAsset(url: fileUrl)
             
         do {
             let iTunesMetadata = try await asset.loadMetadata(for: .quickTimeMetadata)

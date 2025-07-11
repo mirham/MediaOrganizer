@@ -10,6 +10,8 @@ import Foundation
 
 protocol JobServiceType : ServiceBaseType {
     func createJob()
+    func doesCurrentJobExist() -> Bool
+    func getCurrentJobId() -> UUID?
     func addJob()
     func updateJob()
     func toggleJob(jobId: UUID, checked: Bool)

@@ -12,7 +12,7 @@ class ViewHelper {
         for window in NSApplication.shared.windows {
             let windowId = String(window.identifier?.rawValue ?? String())
             
-            if(windowId.starts(with: viewName)) {
+            if windowId.starts(with: viewName) {
                 window.level = onTop ? .floating : .normal
                 window.standardWindowButton(.zoomButton)?.isHidden = true
                 window.standardWindowButton(.miniaturizeButton)?.isHidden = true
@@ -24,8 +24,8 @@ class ViewHelper {
         for window in NSApplication.shared.windows {
             let windowId = String(window.identifier?.rawValue ?? String())
             
-            if(windowId.starts(with: viewId)) {
-                if (simple) {
+            if windowId.starts(with: viewId) {
+                if simple {
                     window.makeKeyAndOrderFront(window)
                 }
                 else {
@@ -40,11 +40,21 @@ class ViewHelper {
         }
     }
     
+    static func setUpCloseViewButton(viewName: String, enable: Bool) {
+        for window in NSApplication.shared.windows {
+            let windowId = String(window.identifier?.rawValue ?? String())
+            
+            if windowId.starts(with: viewName) {
+                window.standardWindowButton(.closeButton)?.isEnabled = enable
+            }
+        }
+    }
+    
     static func closeView(viewName: String) {
         for window in NSApplication.shared.windows {
             let windowId = String(window.identifier?.rawValue ?? String())
             
-            if(windowId.starts(with: viewName)) {
+            if windowId.starts(with: viewName) {
                 window.close()
             }
         }

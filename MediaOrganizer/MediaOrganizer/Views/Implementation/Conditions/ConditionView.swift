@@ -52,7 +52,7 @@ struct ConditionView: ElementContainerView {
                     .frame(maxWidth: .infinity,  alignment: .leading)
                     .padding(.leading, 10)
                     .padding(.trailing, 10)
-                    .onChange(of: condition.elements, {  })
+                    .onChange(of: condition.elements, resetValidationMessage)
                 HStack {
                     Button(String(), systemImage: Constants.iconCheck, action: handleSaveClick)
                         .withSmallSaveButtonStyle(activeState: controlActiveState)
@@ -79,9 +79,7 @@ struct ConditionView: ElementContainerView {
     
     private func handleEditClick() {
         self.prevCondition = condition.clone()
-        appState.current.condition = condition
-        appState.current.isConditionInEditMode = true
-        showEditor = true
+        enterEditMode()
     }
     
     private func handleSaveClick() {
@@ -94,8 +92,7 @@ struct ConditionView: ElementContainerView {
             = appState.current.condition!.elements
         }
         
-        appState.current.isConditionInEditMode = false
-        showEditor = false
+        exitEditMode()
     }
     
     private func hanldeCancelClick() {
@@ -103,8 +100,7 @@ struct ConditionView: ElementContainerView {
             conditionService.replaceCondition(
                 conditionId: condition.id,
                 condition: prevCondition)
-            appState.current.isConditionInEditMode = false
-            showEditor = false
+            exitEditMode()
         }
     }
     
@@ -149,7 +145,7 @@ struct ConditionView: ElementContainerView {
     
     private func isValidExpression() -> Bool {
         do {
-            appState.current.validationMessage = nil
+            resetValidationMessage()
             let parser = ExpressionParser(elements: appState.current.condition!.elements)
             _ = try parser.parse()
         }
@@ -167,5 +163,26 @@ struct ConditionView: ElementContainerView {
         }
         
         return true
+    }
+    
+    private func enterEditMode() {
+        appState.current.condition = condition
+        appState.current.isConditionInEditMode = true
+        showEditor = true
+        ViewHelper.setUpCloseViewButton(
+            viewName: Constants.windowIdJobSettings,
+            enable: false)
+    }
+    
+    private func exitEditMode() {
+        appState.current.isConditionInEditMode = false
+        showEditor = false
+        ViewHelper.setUpCloseViewButton(
+            viewName: Constants.windowIdJobSettings,
+            enable: true)
+    }
+    
+    private func resetValidationMessage() {
+        appState.current.validationMessage = nil
     }
 }

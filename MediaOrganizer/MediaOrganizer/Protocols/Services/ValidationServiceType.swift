@@ -14,4 +14,5 @@ protocol ValidationServiceType {
     func isValidDouble(input: Double, metadataType: MetadataType?) -> ValidationResult
     func isValidFilename(input: String) -> ValidationResult
     func isValidFolderPath(input: String, parentFolderPathLength: Int) -> ValidationResult
+    func areValidActions(actions: [Action]) -> ValidationResult
 }

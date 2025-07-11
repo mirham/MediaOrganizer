@@ -17,6 +17,7 @@ struct ActionEditView: View {
     @State private var actionElements = [DraggableElement<ActionElement>]()
     @State private var draggedItem: DraggableElement<ActionElement>?
     
+    @Injected(\.ruleService) private var ruleService
     @Injected(\.actionService) private var actionService
     
     var body: some View {
@@ -27,6 +28,7 @@ struct ActionEditView: View {
                     set: {
                         selectedActionTypeId = $0
                         appState.current.action!.type = ActionType(rawValue: $0) ?? .rename
+                        ruleService.validateRule(rule: appState.current.rule)
                         appState.objectWillChange.send()
                     }
                 )) {
@@ -54,13 +56,18 @@ struct ActionEditView: View {
                     }
                     appState.objectWillChange.send()
                 }
-                ValidationMessageView()
+                ValidationMessageView(
+                    text: appState.current.validationMessage ?? String(),
+                    offset: -20,
+                    paddingBottom: -25,
+                    hideFunc: hideValidationMessage)
                 DraggableSourceElementsView(
                     selectedTypeId: $selectedActionTypeId,
                     draggedItem: $draggedItem,
                     destinationElements: $actionElements)
                 ActionPreviewView(actionElements: actionElements
                     .map({ return $0.element }))
+                    .isHidden(hidden:!isPreviewEnabled(), remove:true)
                     .padding(10)
             }
         }
@@ -69,5 +76,17 @@ struct ActionEditView: View {
         .padding(.trailing, 5)
         .contentShape(Rectangle())
         .clipShape(RoundedRectangle(cornerRadius: 10))
+    }
+    
+    // MARK: Private functions
+    
+    private func isPreviewEnabled() -> Bool {
+        return selectedActionTypeId == ActionType.rename.id
+            || selectedActionTypeId == ActionType.copyToFolder.id
+            || selectedActionTypeId == ActionType.moveToFolder.id
+    }
+    
+    private func hideValidationMessage() -> Bool {
+        return appState.current.validationMessage == nil
     }
 }

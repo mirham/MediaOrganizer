@@ -27,10 +27,8 @@ extension AppState {
         var isActionElementInEditMode = false
         var validationMessage: String? = nil
         
-        var isDragAllowed: Bool { get { return !isConditionElementInEditMode && !isActionElementInEditMode } }
-        
-        func allowWindowClose() -> Bool {
-            return !isActionInEditMode && !isConditionInEditMode
+        var isDragAllowed: Bool {
+            get { return !isConditionElementInEditMode && !isActionElementInEditMode }
         }
         
         static func == (lhs: Current, rhs: Current) -> Bool {

@@ -8,13 +8,4 @@
 
 import Foundation
 
-protocol ServiceBaseType {
-    func doesCurrentJobExist() -> Bool
-    func getCurrentJobId() -> UUID?
-    func getJobIndexByJobId(jobId: UUID) -> Int?
-    func doesCurrentRuleExist() -> Bool
-    func getCurrentRuleId() -> UUID?
-    func getRuleIndexByRuleId(ruleId: UUID) -> Int?
-    func doesCurrentConditionExist() -> Bool
-    func doesCurrentActionExist() -> Bool
-}
+protocol ServiceBaseType {}
