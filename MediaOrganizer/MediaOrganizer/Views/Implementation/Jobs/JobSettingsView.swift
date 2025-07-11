@@ -31,6 +31,8 @@ struct JobSettingsView : View {
                     Text(Constants.elRules)
                 }
         }
+        .tabViewStyle(.grouped)
+        .padding(10)
         .onAppear(perform: openView)
         .onDisappear(perform: closeView)
         .opacity(getViewOpacity(state: controlActiveState))
