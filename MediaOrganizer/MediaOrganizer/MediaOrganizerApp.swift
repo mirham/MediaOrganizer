@@ -29,27 +29,13 @@ struct MediaOrganizerApp: App {
                 Button("About \(Bundle.main.bundleURL.lastPathComponent.replacing(".\(Bundle.main.bundleURL.pathExtension)", with: String()))") { appDelegate.showInfoWindow() }
             }
         }
-        .onChange(of: scenePhase, initial: true) { _, newPhase in
-            if newPhase == .active {
-                appDelegate.setAppState(appState)
-            }
-        }
         .windowResizability(.contentSize)
         
-        WindowGroup(id:Constants.windowIdJobSettings, content: {
+        WindowGroup(id:Constants.windowIdJobSettings, makeContent: {
             JobSettingsView()
                 .environmentObject(appState)
                 .navigationTitle(Constants.elJobSettings)
                 .frame(minWidth: 560, minHeight: 500)
-                .onAppear {
-                    for window in NSApplication.shared.windows {
-                        let windowId = String(window.identifier?.rawValue ?? String())
-                        
-                        if(windowId.starts(with: Constants.windowIdJobSettings)) {
-                            window.delegate = appDelegate
-                        }
-                    }
-                }
         })
     }
 }

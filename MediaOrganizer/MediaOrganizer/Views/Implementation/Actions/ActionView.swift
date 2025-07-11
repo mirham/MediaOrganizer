@@ -52,7 +52,7 @@ struct ActionView: ElementContainerView {
                     .frame(maxWidth: .infinity,  alignment: .leading)
                     .padding(.leading, 10)
                     .padding(.trailing, 10)
-                    .onChange(of: action.elements, {})
+                    .onChange(of: action.elements, resetValidationMessage)
                 HStack {
                     Button(String(), systemImage: Constants.iconCheck, action: handleSaveClick)
                         .withSmallSaveButtonStyle(activeState: controlActiveState)
@@ -79,23 +79,27 @@ struct ActionView: ElementContainerView {
     
     private func handeEditClick () {
         self.prevAction = action.clone()
-        appState.current.action = action
-        appState.current.isActionInEditMode = true
-        showEditor = true
+        enterEditMode()
     }
     
     private func handleSaveClick() {
-        guard isValidAction() else {
-            return
+        guard isValidAction() else { return }
+        guard let currentActionType = appState.current.action?.type else { return }
+        
+        let cleanUpElements = currentActionType == ActionType.skip
+            || currentActionType == ActionType.delete
+        
+        if cleanUpElements {
+            appState.current.action?.elements.removeAll()
+        } else {
+            if let actionIndex = appState.current.rule!.actions
+                .firstIndex(where: {$0.id == appState.current.action!.id}) {
+                appState.current.rule!.actions[actionIndex].elements
+                = appState.current.action!.elements
+            }
         }
         
-        if let actionIndex = appState.current.rule!.actions.firstIndex(where: {$0.id == appState.current.action!.id}) {
-            appState.current.rule!.actions[actionIndex].elements
-            = appState.current.action!.elements
-        }
-        
-        appState.current.isActionInEditMode = false
-        showEditor = false
+        exitEditMode()
     }
     
     private func hanldeCancelClick() {
@@ -103,15 +107,15 @@ struct ActionView: ElementContainerView {
             actionService.replaceAction(
                 actionId: action.id,
                 action: prevAction)
-            appState.current.isActionInEditMode = false
-            showEditor = false
+            resetValidationMessage()
+            exitEditMode()
         }
     }
     
     private func handleRemoveClick () {
         actionService.removeActionById(actionId: action.id)
-        appState.current.isActionInEditMode = false
-        showEditor = false
+        ruleService.validateRule(rule: appState.current.rule)
+        exitEditMode()
     }
     
     private func shouldActionButtonBeHidden(ruleId: UUID) -> Bool {
@@ -167,13 +171,7 @@ struct ActionView: ElementContainerView {
     private func isValidFileName(fileName: String) -> Bool {
         let validationResult = validationService.isValidFilename(input: fileName)
         
-        if !validationResult.isValid {
-            appState.current.validationMessage = validationResult.message
-            
-            return false
-        }
-        
-        return true
+        return processValidationResult(validationResult: validationResult)
     }
     
     private func isValidFolderPath(folderPath: String) -> Bool {
@@ -185,13 +183,45 @@ struct ActionView: ElementContainerView {
             input: folderPath,
             parentFolderPathLength: parentFolderPath.count)
         
+        return processValidationResult(validationResult: validationResult)
+    }
+    
+    private func processValidationResult(validationResult: ValidationResult) -> Bool {
         if !validationResult.isValid {
             appState.current.validationMessage = validationResult.message
+            ViewHelper.setUpCloseViewButton(
+                viewName: Constants.windowIdJobSettings,
+                enable: false)
             
             return false
         }
         
+        ViewHelper.setUpCloseViewButton(
+            viewName: Constants.windowIdJobSettings,
+            enable: true)
+        
         return true
+    }
+    
+    private func enterEditMode() {
+        appState.current.action = action
+        appState.current.isActionInEditMode = true
+        showEditor = true
+        ViewHelper.setUpCloseViewButton(
+            viewName: Constants.windowIdJobSettings,
+            enable: false)
+    }
+    
+    private func exitEditMode() {
+        appState.current.isActionInEditMode = false
+        showEditor = false
+        ViewHelper.setUpCloseViewButton(
+            viewName: Constants.windowIdJobSettings,
+            enable: true)
+    }
+    
+    private func resetValidationMessage() {
+        appState.current.validationMessage = nil
     }
 }
 

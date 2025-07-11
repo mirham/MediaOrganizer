@@ -44,7 +44,11 @@ struct ConditionEditView: View {
                     }
                     appState.objectWillChange.send()
                 }
-                ValidationMessageView()
+                ValidationMessageView(
+                    text: appState.current.validationMessage ?? String(),
+                    offset: -20,
+                    paddingBottom: -25,
+                    hideFunc: hideValidationMessage)
                 DraggableSourceElementsView<ConditionElement>(
                     selectedTypeId: $selectedConditionTypeId,
                     draggedItem: $draggedItem,
@@ -59,5 +63,11 @@ struct ConditionEditView: View {
         .padding(.trailing, 5)
         .contentShape(Rectangle())
         .clipShape(RoundedRectangle(cornerRadius: 10))
+    }
+    
+    // MARK: Private functions
+    
+    private func hideValidationMessage() -> Bool {
+        return appState.current.validationMessage == nil
     }
 }

@@ -18,6 +18,18 @@ class JobService: ServiceBase, JobServiceType {
         appState.current.job = Job.initDefault()
     }
     
+    func doesCurrentJobExist() -> Bool {
+        guard appState.current.job != nil else { return false }
+        
+        return true
+    }
+    
+    func getCurrentJobId() -> UUID? {
+        guard let currentJob = appState.current.job else { return nil }
+        
+        return currentJob.id
+    }
+    
     func addJob() {
         guard doesCurrentJobExist()
                 && appState.current.job != Job.initDefault()
@@ -28,10 +40,12 @@ class JobService: ServiceBase, JobServiceType {
     }
     
     func updateJob() {
-        guard doesCurrentJobExist() else { return }
+        guard let currentJobId = getCurrentJobId(),
+              let currentJob = appState.current.job
+        else { return }
         
-        if let jobIndex = getJobIndexByJobId(jobId: getCurrentJobId()!) {
-            appState.userData.jobs[jobIndex] = appState.current.job!
+        if let jobIndex = getJobIndexByJobId(jobId: currentJobId) {
+            appState.userData.jobs[jobIndex] = currentJob
         }
     }
     
@@ -44,11 +58,9 @@ class JobService: ServiceBase, JobServiceType {
     }
     
     func isCurrentJob(jobId: UUID) -> Bool {
-        guard appState.current.job != nil else { return false }
+        guard let currentJob = appState.current.job else { return false }
         
-        let result = appState.current.job!.id == jobId
-        
-        return result
+        return currentJob.id == jobId
     }
     
     func runCheckedJobs() {
@@ -112,15 +124,21 @@ class JobService: ServiceBase, JobServiceType {
     }
     
     func removeCurrentJob() {
-        guard appState.current.job != nil else { return }
+        guard let currentJobId = getCurrentJobId() else { return }
         
-        if let jobIndex = getJobIndexByJobId(jobId: getCurrentJobId()!) {
+        if let jobIndex = getJobIndexByJobId(jobId: currentJobId) {
             appState.userData.jobs.remove(at: jobIndex)
             resetCurrentJob()
         }
     }
     
     // MARK: Private functions
+    
+    private func getJobIndexByJobId(jobId: UUID) -> Int? {
+        let result = appState.userData.jobs.firstIndex(where: {$0.id == jobId})
+        
+        return result
+    }
     
     private func runJobAsync(job: Job) async {
         await MainActor.run {

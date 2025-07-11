@@ -60,9 +60,13 @@ struct RulesEditView: View {
                             }
                         }
                     }
+                    .onAppear(perform: { validateRule(rule: rule) })
                     .padding(.bottom, 5)
+                    ValidationMessageView(
+                        text: rule.validationMessage ?? String(),
+                        hideFunc: { return rule.validationMessage == nil })
                     Button(String(), systemImage: Constants.iconAdd) {
-                        actionService.addNewAction()
+                        handleAddRuleButtonClick(rule: rule)
                     }
                     .withAddButtonStyle(activeState: controlActiveState)
                     .isHidden(hidden: isAddButtonShouldBeHidden(ruleId: rule.id) , remove: true)
@@ -72,7 +76,10 @@ struct RulesEditView: View {
                 .padding(5)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .contentShape(Rectangle())
-                .background(ruleService.isCurrentRule(ruleId: rule.id) && !appState.current.isActionInEditMode ? Color(hex: Constants.colorHexSelection) : .clear)
+                .background(ruleService.isCurrentRule(ruleId: rule.id)
+                            && !appState.current.isActionInEditMode
+                            ? Color(hex: Constants.colorHexSelection)
+                            : .clear)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
                 .padding(.leading, 10)
                 .padding(.trailing, 10)
@@ -118,6 +125,11 @@ struct RulesEditView: View {
         appState.current.rule = rule
     }
     
+    private func handleAddRuleButtonClick(rule: Rule) {
+        actionService.addNewAction()
+        validateRule(rule: rule)
+    }
+    
     private func isNoneElementSholuldBeHidden(rule: Rule, array: [Any]) -> Bool {
         return !array.isEmpty
                 || (appState.current.rule != nil
@@ -125,20 +137,18 @@ struct RulesEditView: View {
     }
     
     private func isAddButtonShouldBeHidden(ruleId: UUID) -> Bool {
-        let result = !ruleService.isCurrentRule(ruleId: ruleId)
+        return !ruleService.isCurrentRule(ruleId: ruleId)
             || appState.current.isConditionInEditMode
             || appState.current.isActionInEditMode
-        
-        return result
-        
     }
     
     private func isRuleShouldBeDisabled(ruleId: UUID) -> Bool {
-        let result = !ruleService.isCurrentRule(ruleId: ruleId)
-        && (appState.current.isConditionInEditMode || appState.current.isActionInEditMode)
-        
-        return result
-        
+        return !ruleService.isCurrentRule(ruleId: ruleId)
+            && (appState.current.isConditionInEditMode || appState.current.isActionInEditMode)
+    }
+    
+    private func validateRule(rule: Rule) {
+        ruleService.validateRule(rule: rule)
     }
 }
 

@@ -11,29 +11,46 @@ import Factory
 class RuleService: ServiceBase, RuleServiceType {
     @Injected(\.actionService) private var actionService
     @Injected(\.conditionService) private var conditionService
+    @Injected(\.validationService) private var validationService
     
     func createRule() {
         appState.current.rule = Rule()
     }
     
-    func addRule() {
-        guard doesCurrentJobExist() && doesCurrentRuleExist() else { return }
+    func doesCurrentRuleExist() -> Bool {
+        guard appState.current.rule != nil else { return false }
         
-        appState.current.job!.rules.append(appState.current.rule!)
+        return true
+    }
+    
+    func getRuleIndexByRuleId(ruleId: UUID) -> Int? {
+        guard let currentJob = appState.current.job else { return nil }
+        
+        return currentJob.rules.firstIndex(where: {$0.id == ruleId})
+    }
+    
+    func addRule() {
+        guard let currentJob = appState.current.job,
+              let currentRule = appState.current.rule
+        else { return }
+        
+        currentJob.rules.append(currentRule)
     }
     
     func updateRule() {
-        guard doesCurrentJobExist() && doesCurrentRuleExist() else { return }
+        guard let currentJob = appState.current.job,
+              let currentRule = appState.current.rule
+        else { return }
         
         if let ruleIndex = getRuleIndexByRuleId(ruleId: getCurrentRuleId()!) {
-            appState.current.job!.rules[ruleIndex] = appState.current.rule!
+            currentJob.rules[ruleIndex] = currentRule
         }
     }
     
     func isCurrentRule(ruleId: UUID) -> Bool {
-        guard doesCurrentRuleExist() else { return false }
+        guard let currentRule = appState.current.rule else { return false }
         
-        let result = appState.current.rule!.id == ruleId
+        let result = currentRule.id == ruleId
         
         return result
     }
@@ -55,16 +72,36 @@ class RuleService: ServiceBase, RuleServiceType {
         return result
     }
     
+    func validateRule(rule: Rule?) {
+        guard let currentRule = rule else { return }
+        
+        let validationResult = validationService.areValidActions(
+            actions: currentRule.actions)
+        
+        currentRule.isValid = validationResult.isValid
+        currentRule.validationMessage = validationResult.message
+        
+        appState.objectWillChange.send()
+    }
+    
     func resetCurrentRule() {
         appState.current.rule = nil
     }
     
     func removeCurrentRule() {
-        guard appState.current.job != nil else { return }
+        guard let currentJob = appState.current.job else { return }
         
         if let ruleIndex = getRuleIndexByRuleId(ruleId: getCurrentRuleId()!) {
-            appState.current.job!.rules.remove(at: ruleIndex)
+            currentJob.rules.remove(at: ruleIndex)
             resetCurrentRule()
         }
+    }
+    
+    // MARK: Private functions
+    
+    private func getCurrentRuleId() -> UUID? {
+        guard let currentRule = appState.current.rule else { return nil }
+        
+        return currentRule.id
     }
 }

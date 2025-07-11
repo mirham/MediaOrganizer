@@ -7,15 +7,18 @@
 
 import SwiftUI
 import Factory
+import Combine
 
 struct JobSettingsView : View {
     @EnvironmentObject var appState: AppState
     
     @Environment(\.controlActiveState) var controlActiveState
+    @Environment(\.dismiss) private var dismiss
     
     @Injected(\.jobService) private var jobService
     
     @State private var currentEditMode: JobEditMode = .edit
+    @State private var showAlert = false
     
     var body: some View {
         TabView {
@@ -28,12 +31,8 @@ struct JobSettingsView : View {
                     Text(Constants.elRules)
                 }
         }
-        .onAppear(perform: {
-            openView()
-        })
-        .onDisappear(perform: {
-            closeView()
-        })
+        .onAppear(perform: openView)
+        .onDisappear(perform: closeView)
         .opacity(getViewOpacity(state: controlActiveState))
     }
     
@@ -46,14 +45,14 @@ struct JobSettingsView : View {
             viewName: Constants.windowIdJobSettings,
             onTop: false)
         
-        if (appState.current.job == nil) {
+        if appState.current.job == nil {
             currentEditMode = .add
             appState.current.job = Job.initDefault()
         }
     }
     
     private func closeView() {
-        if (currentEditMode == .add) {
+        if currentEditMode == .add {
             jobService.addJob()
         }
         else {

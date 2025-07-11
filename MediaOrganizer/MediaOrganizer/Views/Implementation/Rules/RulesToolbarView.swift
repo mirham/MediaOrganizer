@@ -22,38 +22,60 @@ struct RulesToolbarView : View {
     
     var body: some View {
         HStack {
-            Button(Constants.toolbarAddRule, systemImage: Constants.iconAdd) {
-                ruleService.resetCurrentRule()
-                ruleService.createRule()
-                ruleService.addRule()
-            }
-            .withToolbarButtonStyle(showOver: showOverAddRule, activeState: controlActiveState, color: .green)
+            Button(
+                Constants.toolbarAddRule,
+                systemImage: Constants.iconAdd,
+                action: handleAddRuleButtonClick)
+            .withToolbarButtonStyle(
+                showOver: showOverAddRule,
+                activeState: controlActiveState,
+                color: .green)
             .onHover(perform: { hovering in
                 showOverAddRule = hovering && controlActiveState == .key
             })
             Button(Constants.toolbarRemoveRule, systemImage: Constants.iconRemove) {
                 isRuleRemoving = true
             }
-            .withToolbarButtonStyle(showOver: showOverRemoveRule, activeState: controlActiveState, color: .red)
+            .withToolbarButtonStyle(
+                showOver: showOverRemoveRule,
+                activeState: controlActiveState,
+                color: .red)
             .disabled(!ruleService.doesCurrentRuleExist())
             .isHidden(hidden: !ruleService.doesCurrentRuleExist(), remove: true)
             .onHover(perform: { hovering in
                 showOverRemoveRule = hovering && controlActiveState == .key
             })
             .alert(isPresented: $isRuleRemoving) {
-                Alert(title: Text(Constants.dialogHeaderRemoveRule),
-                      message: Text(Constants.dialogBodyRemoveRule),
-                      primaryButton: Alert.Button.destructive(Text(Constants.dialogButtonDelete), action: removeRuleClickHandler),
-                      secondaryButton: .default(Text(Constants.dialogButtonCancel)))
+                Alert(
+                    title: Text(Constants.dialogHeaderRemoveRule),
+                    message: Text(Constants.dialogBodyRemoveRule),
+                    primaryButton: Alert.Button.destructive(Text(Constants.dialogButtonDelete), action: handleRemoveRuleButtonClick),
+                    secondaryButton: .default(Text(Constants.dialogButtonCancel)))
             }
         }
     }
     
     // MARK: Private functions
     
-    private func removeRuleClickHandler() {
+    private func handleAddRuleButtonClick() {
+        ruleService.resetCurrentRule()
+        ruleService.createRule()
+        ruleService.addRule()
+        ViewHelper.setUpCloseViewButton(
+            viewName: Constants.windowIdJobSettings,
+            enable: false)
+    }
+    
+    private func handleRemoveRuleButtonClick() {
         ruleService.removeCurrentRule()
         isRuleRemoving = false
+        
+        if let currentJob = appState.current.job {
+            let hasEmptyRule = currentJob.rules.contains(where: { $0.isEmpty })
+            ViewHelper.setUpCloseViewButton(
+                viewName: Constants.windowIdJobSettings,
+                enable: !hasEmptyRule)
+        }
     }
     
     private func renderHint(hint: String) -> some View {
