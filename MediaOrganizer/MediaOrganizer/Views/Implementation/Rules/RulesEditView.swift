@@ -38,7 +38,7 @@ struct RulesEditView: View {
                         }
                     }
                     Button(String(), systemImage: Constants.iconAdd) {
-                        conditionService.addNewCondition()
+                        handleAddConditionButtonClick()
                     }
                     .withAddButtonStyle(activeState: controlActiveState)
                     .isHidden(hidden: isAddButtonShouldBeHidden(ruleId: rule.id) , remove: true)
@@ -66,7 +66,7 @@ struct RulesEditView: View {
                         text: rule.validationMessage ?? String(),
                         hideFunc: { return rule.validationMessage == nil })
                     Button(String(), systemImage: Constants.iconAdd) {
-                        handleAddRuleButtonClick(rule: rule)
+                        handleAddActionButtonClick(rule: rule)
                     }
                     .withAddButtonStyle(activeState: controlActiveState)
                     .isHidden(hidden: isAddButtonShouldBeHidden(ruleId: rule.id) , remove: true)
@@ -94,6 +94,7 @@ struct RulesEditView: View {
                     .isHidden(hidden: ruleService.getRuleIndexByRuleId(ruleId: rule.id)! == appState.current.job!.rules.count - 1, remove: true)
             }
         }
+        .onChange(of: appState.current.refreshSignal, setupCloseButton)
         .safeAreaInset(edge: .bottom, content: {
             VStack {
                 Divider()
@@ -105,9 +106,6 @@ struct RulesEditView: View {
             }
             .background(Color(hex: Constants.colorHexPanelDark))
         })
-        .onDisappear() {
-            appState.current.isActionInEditMode = false
-        }
     }
     
     // MARK: Private functions
@@ -125,9 +123,14 @@ struct RulesEditView: View {
         appState.current.rule = rule
     }
     
-    private func handleAddRuleButtonClick(rule: Rule) {
+    private func handleAddConditionButtonClick() {
+        conditionService.addNewCondition()
+    }
+    
+    private func handleAddActionButtonClick(rule: Rule) {
         actionService.addNewAction()
         validateRule(rule: rule)
+        setupCloseButton()
     }
     
     private func isNoneElementSholuldBeHidden(rule: Rule, array: [Any]) -> Bool {
@@ -149,6 +152,13 @@ struct RulesEditView: View {
     
     private func validateRule(rule: Rule) {
         ruleService.validateRule(rule: rule)
+        appState.current.refreshSignal.toggle()
+    }
+    
+    private func setupCloseButton() {
+        ViewHelper.setUpCloseViewButton(
+            viewName: Constants.windowIdJobSettings,
+            enable: appState.current.allRulesValid)
     }
 }
 

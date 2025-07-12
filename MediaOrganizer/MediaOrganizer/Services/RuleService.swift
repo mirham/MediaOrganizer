@@ -81,7 +81,7 @@ class RuleService: ServiceBase, RuleServiceType {
         currentRule.isValid = validationResult.isValid
         currentRule.validationMessage = validationResult.message
         
-        appState.objectWillChange.send()
+        appState.current.refreshSignal.toggle()
     }
     
     func resetCurrentRule() {

@@ -115,7 +115,7 @@ struct ActionView: ElementContainerView {
     private func handleRemoveClick () {
         actionService.removeActionById(actionId: action.id)
         ruleService.validateRule(rule: appState.current.rule)
-        exitEditMode()
+        exitEditMode(enableCloseButton: nil)
     }
     
     private func shouldActionButtonBeHidden(ruleId: UUID) -> Bool {
@@ -196,10 +196,6 @@ struct ActionView: ElementContainerView {
             return false
         }
         
-        ViewHelper.setUpCloseViewButton(
-            viewName: Constants.windowIdJobSettings,
-            enable: true)
-        
         return true
     }
     
@@ -207,21 +203,24 @@ struct ActionView: ElementContainerView {
         appState.current.action = action
         appState.current.isActionInEditMode = true
         showEditor = true
-        ViewHelper.setUpCloseViewButton(
-            viewName: Constants.windowIdJobSettings,
-            enable: false)
+        setupCloseButton(enable: false)
     }
     
-    private func exitEditMode() {
+    private func exitEditMode(enableCloseButton: Bool? = true) {
         appState.current.isActionInEditMode = false
+        appState.current.isActionElementInEditMode = false
         showEditor = false
-        ViewHelper.setUpCloseViewButton(
-            viewName: Constants.windowIdJobSettings,
-            enable: true)
+        setupCloseButton(enable: enableCloseButton)
     }
     
     private func resetValidationMessage() {
         appState.current.validationMessage = nil
+    }
+    
+    private func setupCloseButton(enable: Bool? = nil) {
+        ViewHelper.setUpCloseViewButton(
+            viewName: Constants.windowIdJobSettings,
+            enable: enable ?? appState.current.allRulesValid)
     }
 }
 

@@ -17,18 +17,42 @@ class AppState : ObservableObject {
 
 extension AppState {
     struct Current : Equatable {
+        var refreshSignal: Bool = false
         var job: Job? = nil
         var rule: Rule? = nil
         var condition: Condition? = nil
         var isConditionInEditMode = false
+        var conditionElement: ConditionElement? = nil
         var isConditionElementInEditMode = false
         var action: Action? = nil
         var isActionInEditMode = false
+        var actionElement: ActionElement? = nil
         var isActionElementInEditMode = false
         var validationMessage: String? = nil
         
-        var isDragAllowed: Bool {
-            get { return !isConditionElementInEditMode && !isActionElementInEditMode }
+        var isRuleSetupComplete: Bool {
+            get {
+                return !isConditionInEditMode
+                    && !isActionInEditMode
+                    && validationMessage == nil
+            }
+        }
+        
+        var isRuleElementSetupComplete: Bool {
+            get {
+                return !isConditionElementInEditMode
+                    && !isActionElementInEditMode
+            }
+        }
+        
+        var allRulesValid: Bool {
+            get {
+                if let currentJob = job {
+                    return currentJob.rules.allSatisfy({$0.isValid})
+                }
+                
+                return true
+            }
         }
         
         static func == (lhs: Current, rhs: Current) -> Bool {

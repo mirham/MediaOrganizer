@@ -108,6 +108,7 @@ struct ConditionView: ElementContainerView {
         conditionService.removeConditionById(conditionId: condition.id)
         appState.current.isConditionInEditMode = false
         showEditor = false
+        setupCloseButton()
     }
     
     private func shouldActionButtonBeHidden(ruleId: UUID) -> Bool {
@@ -169,20 +170,23 @@ struct ConditionView: ElementContainerView {
         appState.current.condition = condition
         appState.current.isConditionInEditMode = true
         showEditor = true
-        ViewHelper.setUpCloseViewButton(
-            viewName: Constants.windowIdJobSettings,
-            enable: false)
+        setupCloseButton(enable: false)
     }
     
     private func exitEditMode() {
         appState.current.isConditionInEditMode = false
+        appState.current.isConditionElementInEditMode = false
         showEditor = false
-        ViewHelper.setUpCloseViewButton(
-            viewName: Constants.windowIdJobSettings,
-            enable: true)
+        setupCloseButton(enable: true)
     }
     
     private func resetValidationMessage() {
         appState.current.validationMessage = nil
+    }
+    
+    private func setupCloseButton(enable: Bool? = nil) {
+        ViewHelper.setUpCloseViewButton(
+            viewName: Constants.windowIdJobSettings,
+            enable: enable ?? appState.current.allRulesValid)
     }
 }

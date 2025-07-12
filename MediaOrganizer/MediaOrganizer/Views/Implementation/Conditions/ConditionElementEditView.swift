@@ -81,6 +81,7 @@ struct ConditionElementEditView: ElementContainerView {
         .background(
             RoundedRectangle(cornerRadius: 5, style: .continuous).fill(elementOptions.background)
         )
+        .onAppear(perform: handleOnAppear)
         .isHidden(hidden: showEditor, remove: true)
         renderEditor()
             .padding(3)
@@ -124,7 +125,7 @@ struct ConditionElementEditView: ElementContainerView {
             element.value = valuesMap[conditionType, default: .date(conditionValueDate)]
         }
         
-        appState.objectWillChange.send()
+        appState.current.refreshSignal.toggle()
     }
     
     @ViewBuilder
@@ -313,6 +314,17 @@ struct ConditionElementEditView: ElementContainerView {
         }
     }
     
+    private func handleOnAppear() {
+        guard let prevCondition = appState.current.conditionElement else {
+            return
+        }
+        
+        if element.id == prevCondition.id {
+            prevCondition.copyValues(other: element)
+            enterEditMode()
+        }
+    }
+    
     private func handleEditButtonClick() {
         guard !appState.current.isConditionElementInEditMode
         else {
@@ -320,8 +332,7 @@ struct ConditionElementEditView: ElementContainerView {
             return
         }
         
-        showEditor = true
-        appState.current.isConditionElementInEditMode = true
+        enterEditMode()
     }
     
     private func handleInputWithSelectedTypeSaveClick() {
@@ -367,9 +378,20 @@ struct ConditionElementEditView: ElementContainerView {
     
     private func handleValidationResult(validationResult: ValidationResult) {
         hasError = !validationResult.isValid
+        appState.current.validationMessage = validationResult.message
+        exitEditMode(hasError: hasError)
+    }
+    
+    private func enterEditMode() {
+        appState.current.conditionElement = self.element
+        showEditor = true
+        appState.current.isConditionElementInEditMode = true
+    }
+    
+    private func exitEditMode(hasError: Bool) {
         showEditor = hasError
         appState.current.isConditionElementInEditMode = hasError
-        appState.current.validationMessage = validationResult.message
+        appState.current.conditionElement = hasError ? self.element : nil
     }
 }
 

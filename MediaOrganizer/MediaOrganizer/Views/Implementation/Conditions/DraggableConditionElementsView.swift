@@ -21,7 +21,7 @@ struct DraggableConditionElementsView: View {
                 ForEach(conditionElements, id: \.id) {conditionElement in
                     ConditionElementEditView(element: conditionElement.element)
                         .onDrag({
-                            if appState.current.isDragAllowed {
+                            if appState.current.isRuleElementSetupComplete {
                                 self.draggedItem = conditionElement
                             }
                             

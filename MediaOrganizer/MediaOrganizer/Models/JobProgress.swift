@@ -8,6 +8,7 @@
 import Foundation
 
 struct JobProgress {
+    var refreshSignal: Bool = false
     var notYetRun: Bool = true
     var isActive: Bool {
         get { (isAnalyzing || inProgress) && !(isCompleted || isCancelled) }

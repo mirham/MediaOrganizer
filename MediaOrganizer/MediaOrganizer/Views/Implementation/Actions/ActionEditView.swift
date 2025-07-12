@@ -29,7 +29,7 @@ struct ActionEditView: View {
                         selectedActionTypeId = $0
                         appState.current.action!.type = ActionType(rawValue: $0) ?? .rename
                         ruleService.validateRule(rule: appState.current.rule)
-                        appState.objectWillChange.send()
+                        appState.current.refreshSignal.toggle()
                     }
                 )) {
                     ForEach(ActionType.allCases, id: \.id) { item in
@@ -54,7 +54,7 @@ struct ActionEditView: View {
                         appState.current.action!.elements = actionElements
                             .map({ return $0.element })
                     }
-                    appState.objectWillChange.send()
+                    appState.current.refreshSignal.toggle()
                 }
                 ValidationMessageView(
                     text: appState.current.validationMessage ?? String(),
