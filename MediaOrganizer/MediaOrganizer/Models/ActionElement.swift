@@ -83,6 +83,12 @@ class ActionElement : ElementType {
         return result
     }
     
+    func copyValues(other: ActionElement) {
+        other.selectedDateFormatType = self.selectedDateFormatType
+        other.customDate = self.customDate
+        other.customText = self.customText
+    }
+    
     static func == (lhs: ActionElement, rhs: ActionElement) -> Bool {
         return lhs.id == rhs.id
     }

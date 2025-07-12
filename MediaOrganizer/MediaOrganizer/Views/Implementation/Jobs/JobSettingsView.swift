@@ -19,17 +19,30 @@ struct JobSettingsView : View {
     
     @State private var currentEditMode: JobEditMode = .edit
     @State private var showAlert = false
+    @State private var selectedTab: Int = 0
     
     var body: some View {
-        TabView {
+        TabView(selection: Binding(
+            get: { selectedTab },
+            set: { newTab in
+                if appState.current.isRuleSetupComplete && appState.current.allRulesValid {
+                    selectedTab = newTab
+                }
+                else {
+                    appState.current.refreshSignal.toggle()
+                }
+            }
+        )) {
             JobGeneralSettingsEditView()
                 .tabItem {
                     Text(Constants.elGeneral)
                 }
+                .tag(0)
             RulesEditView()
                 .tabItem {
                     Text(Constants.elRules)
                 }
+                .tag(1)
         }
         .tabViewStyle(.grouped)
         .padding(10)

@@ -103,7 +103,7 @@ struct JobGeneralSettingsEditView: FolderContainerView {
                         appState.current.job?.outputFolder = path
                 }
                 
-                self.appState.objectWillChange.send()
+                self.appState.current.refreshSignal.toggle()
             }
         }
     }
@@ -144,7 +144,7 @@ struct JobGeneralSettingsEditView: FolderContainerView {
                 appState.current.job?.outputFolder = url.path(percentEncoded: false)
         }
         
-        self.appState.objectWillChange.send()
+        self.appState.current.refreshSignal.toggle()
     }
 }
 

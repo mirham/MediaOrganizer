@@ -75,6 +75,13 @@ class ConditionElement : ElementType {
         return result
     }
     
+    func copyValues(other: ConditionElement) {
+        other.settingType = self.settingType
+        other.selectedDateFormatType = self.selectedDateFormatType
+        other.selectedOperatorTypeId = self.selectedOperatorTypeId
+        other.value = self.value
+    }
+    
     static func == (lhs: ConditionElement, rhs: ConditionElement) -> Bool {
         return lhs.id == rhs.id
     }

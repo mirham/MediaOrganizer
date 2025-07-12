@@ -21,7 +21,7 @@ struct DraggableActionElementsView: View {
                 ForEach(actionElements, id: \.id) {actionElement in
                     ActionElementEditView(element: actionElement.element)
                         .onDrag({
-                            if appState.current.isDragAllowed {
+                            if appState.current.isRuleElementSetupComplete {
                                 self.draggedItem = actionElement
                             }
                             

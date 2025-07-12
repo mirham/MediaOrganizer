@@ -67,7 +67,7 @@ class ConditionService : ServiceBase, ConditionServiceType {
         if let conditionIndex = currentRule.conditions.firstIndex(where: { $0.id == conditionId }) {
             currentRule.conditions[conditionIndex] = condition
             
-            appState.objectWillChange.send()
+            appState.current.refreshSignal.toggle()
         }
     }
     
@@ -81,7 +81,7 @@ class ConditionService : ServiceBase, ConditionServiceType {
                 currentRule.conditions.first?.type = .cIf
             }
             
-            appState.objectWillChange.send()
+            appState.current.refreshSignal.toggle()
         }
     }
 }

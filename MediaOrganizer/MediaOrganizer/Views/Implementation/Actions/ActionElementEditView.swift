@@ -16,9 +16,15 @@ struct ActionElementEditView: ElementContainerView {
     @Injected(\.validationService) private var validationService
     
     @State private var showEditor: Bool = false
-    @State private var selectedDateFormatTypeId: Int?
-    @State private var customText: String
-    @State private var customDate: Date
+    @State private var selectedDateFormatTypeId: Int? {
+        didSet { handleSelectedDateFormatTypeIdDidSet() }
+    }
+    @State private var customText: String {
+        didSet { handleCustomTextDidSet() }
+    }
+    @State private var customDate: Date {
+        didSet { handleCustomDateDidSet() }
+    }
     @State private var hasError: Bool
     
     private let element: ActionElement
@@ -59,6 +65,7 @@ struct ActionElementEditView: ElementContainerView {
         .background(
             RoundedRectangle(cornerRadius: 5, style: .continuous).fill(elementOptions.background)
         )
+        .onAppear(perform: handleOnAppear)
         .isHidden(hidden: showEditor, remove: true)
         renderEditor()
             .padding(3)
@@ -92,6 +99,21 @@ struct ActionElementEditView: ElementContainerView {
             : " (\(dateFormatType!.description.firstLowercased))"
         
         return result
+    }
+    
+    private func handleSelectedDateFormatTypeIdDidSet() {
+        appState.current.actionElement?.selectedDateFormatType
+        = selectedDateFormatTypeId == nil
+            ? nil
+            : DateFormatType(rawValue: selectedDateFormatTypeId!)
+    }
+    
+    private func handleCustomTextDidSet() {
+        appState.current.actionElement?.customText = customText
+    }
+    
+    private func handleCustomDateDidSet() {
+        appState.current.actionElement?.customDate = customDate
     }
     
     @ViewBuilder
@@ -162,6 +184,17 @@ struct ActionElementEditView: ElementContainerView {
         .isHidden(hidden: !showEditor, remove: true)
     }
     
+    private func handleOnAppear() {
+        guard let prevAction = appState.current.actionElement else {
+            return
+        }
+        
+        if element.id == prevAction.id {
+            prevAction.copyValues(other: element)
+            enterEditMode()
+        }
+    }
+    
     private func handleEditButtonClick() {
         guard !appState.current.isActionElementInEditMode
         else {
@@ -169,8 +202,7 @@ struct ActionElementEditView: ElementContainerView {
             return
         }
         
-        showEditor = true
-        appState.current.isActionElementInEditMode = true
+        enterEditMode()
     }
     
     private func handleDateInputSaveClick() {
@@ -187,9 +219,7 @@ struct ActionElementEditView: ElementContainerView {
             element.customDate = customDate
         }
         else {
-            showEditor = false
-            appState.current.isActionElementInEditMode = false
-            appState.current.validationMessage = nil
+            exitEditMode(hasError: false)
         }
     }
     
@@ -204,9 +234,20 @@ struct ActionElementEditView: ElementContainerView {
     
     private func handleValidationResult(validationResult: ValidationResult) {
         hasError = !validationResult.isValid
+        appState.current.validationMessage = validationResult.message
+        exitEditMode(hasError: hasError)
+    }
+    
+    private func enterEditMode() {
+        appState.current.actionElement = self.element
+        showEditor = true
+        appState.current.isActionElementInEditMode = true
+    }
+    
+    private func exitEditMode(hasError: Bool) {
         showEditor = hasError
         appState.current.isActionElementInEditMode = hasError
-        appState.current.validationMessage = validationResult.message
+        appState.current.actionElement = hasError ? self.element : nil
     }
 }
 

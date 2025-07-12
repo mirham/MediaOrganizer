@@ -79,8 +79,7 @@ class ActionService : ServiceBase, ActionServiceType {
         
         if let actionIndex = currentRule.actions.firstIndex(where: { $0.id == actionId })  {
             currentRule.actions[actionIndex] = action
-            
-            appState.objectWillChange.send()
+            appState.current.refreshSignal.toggle()
         }
     }
     
@@ -89,7 +88,7 @@ class ActionService : ServiceBase, ActionServiceType {
         
         if let actionIndex = currentRule.actions.firstIndex(where: { $0.id == actionId }) {
             currentRule.actions.remove(at: actionIndex)
-            appState.objectWillChange.send()
+            appState.current.refreshSignal.toggle()
         }
     }
     

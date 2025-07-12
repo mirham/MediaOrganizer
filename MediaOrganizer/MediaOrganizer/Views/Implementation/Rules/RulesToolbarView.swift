@@ -33,6 +33,7 @@ struct RulesToolbarView : View {
             .onHover(perform: { hovering in
                 showOverAddRule = hovering && controlActiveState == .key
             })
+            .disabled(!appState.current.isRuleSetupComplete)
             Button(Constants.toolbarRemoveRule, systemImage: Constants.iconRemove) {
                 isRuleRemoving = true
             }
@@ -40,7 +41,7 @@ struct RulesToolbarView : View {
                 showOver: showOverRemoveRule,
                 activeState: controlActiveState,
                 color: .red)
-            .disabled(!ruleService.doesCurrentRuleExist())
+            .disabled(!ruleService.doesCurrentRuleExist() || !appState.current.isRuleSetupComplete)
             .isHidden(hidden: !ruleService.doesCurrentRuleExist(), remove: true)
             .onHover(perform: { hovering in
                 showOverRemoveRule = hovering && controlActiveState == .key

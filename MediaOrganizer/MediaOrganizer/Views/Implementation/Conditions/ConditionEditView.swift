@@ -42,7 +42,7 @@ struct ConditionEditView: View {
                         appState.current.condition!.elements = conditionElements
                             .map({ return $0.element })
                     }
-                    appState.objectWillChange.send()
+                    appState.current.refreshSignal.toggle()
                 }
                 ValidationMessageView(
                     text: appState.current.validationMessage ?? String(),

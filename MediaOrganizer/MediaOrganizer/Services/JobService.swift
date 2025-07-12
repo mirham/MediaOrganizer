@@ -144,7 +144,7 @@ class JobService: ServiceBase, JobServiceType {
         await MainActor.run {
             job.progress.reset()
             job.progress.isAnalyzing = true
-            appState.objectWillChange.send()
+            job.progress.refreshSignal.toggle()
         }
         
         do {
@@ -157,7 +157,7 @@ class JobService: ServiceBase, JobServiceType {
                     job.progress.isAnalyzing = false
                     job.progress.totalCount = mediaFiles.count
                     job.progress.inProgress = true
-                    appState.objectWillChange.send()
+                    job.progress.refreshSignal.toggle()
                 }
             }
             
@@ -192,7 +192,7 @@ class JobService: ServiceBase, JobServiceType {
         
         await MainActor.run {
             job.progress.inProgress = false
-            appState.objectWillChange.send()
+            job.progress.refreshSignal.toggle()
         }
     }
     
