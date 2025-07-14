@@ -79,7 +79,8 @@ struct ConditionElementEditView: ElementContainerView {
             
         }
         .background(
-            RoundedRectangle(cornerRadius: 5, style: .continuous).fill(elementOptions.background)
+            RoundedRectangle(cornerRadius: 5, style: .continuous)
+                .fill(elementOptions.background)
         )
         .onAppear(perform: handleOnAppear)
         .isHidden(hidden: showEditor, remove: true)
@@ -118,8 +119,9 @@ struct ConditionElementEditView: ElementContainerView {
             return
         }
         
-        if conditionType == .date, let selectedDateFormatTypeId = selectedDateFormatTypeId,
-           let dateFormat = DateFormatType(rawValue: selectedDateFormatTypeId) {
+        if conditionType == .date,
+            let selectedDateFormatTypeId = selectedDateFormatTypeId,
+            let dateFormat = DateFormatType(rawValue: selectedDateFormatTypeId) {
             element.value = dateFormatsMap[dateFormat.getConditionValueType(), default: .date(conditionValueDate)]
         } else {
             element.value = valuesMap[conditionType, default: .date(conditionValueDate)]
@@ -182,7 +184,9 @@ struct ConditionElementEditView: ElementContainerView {
     
     @ViewBuilder
     private func renderIntInput() -> some View {
-        TextField(Constants.hintCustomText, value:$conditionValueInt, formatter: NumberFormatter())
+        TextField(Constants.hintCustomText,
+                  value:$conditionValueInt,
+                  formatter: NumberFormatter())
     }
     
     @ViewBuilder
@@ -207,7 +211,13 @@ struct ConditionElementEditView: ElementContainerView {
                 }
                 .frame(maxWidth: 100)
             Button(String(), systemImage: Constants.iconCheck) {
-                let validationResult = validationService.isValidString(input: conditionValueString)
+                let isArray = selectedOperatorTypeId == nil
+                    ? false
+                    : StringOperatorType(rawValue: selectedOperatorTypeId!) == .oIn
+                let validationResult = validationService.isValidString(
+                    input: conditionValueString,
+                    isArray: isArray)
+                conditionValueString = validationResult.adjustedResult ?? conditionValueString
                 handleValidationResult(validationResult: validationResult)
             }
             .withRemoveButtonStyle(activeState: controlActiveState)
@@ -302,13 +312,12 @@ struct ConditionElementEditView: ElementContainerView {
             let dateFormat = DateFormatType(rawValue: selectedDateFormatTypeId!)
             
             if dateFormat != nil {
-                if(dateFormat!.getConditionValueType() == .date) {
+                if dateFormat!.getConditionValueType() == .date {
                     renderDatePicker()
                 }
                 
-                if(dateFormat!.getConditionValueType() == .int) {
-                    renderIntInput()
-                        .frame(maxWidth: 50)
+                if dateFormat!.getConditionValueType() == .int {
+                    renderIntInput().frame(maxWidth: 50)
                 }
             }
         }
@@ -340,29 +349,27 @@ struct ConditionElementEditView: ElementContainerView {
               let dateFormat = DateFormatType(rawValue: selectedDateFormatTypeId)
         else { return }
         
-        let validationResult: ValidationResult
-        
         let valueType = dateFormat.getConditionValueType()
         
         switch valueType {
             case .int:
-                validationResult = validationService.isValidInt(
+                let intValidationResult = validationService.isValidInt(
                     input: conditionValueInt,
                     dateFormatType: element.selectedDateFormatType)
+                handleValidationResult(validationResult: intValidationResult)
             
                 break
             case .date:
-                validationResult = validationService.isValidDate(
+                let dateValidationResult = validationService.isValidDate(
                     input: conditionValueDate)
+                handleValidationResult(validationResult: dateValidationResult)
                 
                 break
             default:
-                validationResult = ValidationResult()
+                handleValidationResult(validationResult: ValidationResult<String>())
                 
                 break
         }
-
-        handleValidationResult(validationResult: validationResult)
     }
     
     private func handleDoubleInputSaveClick() {
@@ -376,7 +383,7 @@ struct ConditionElementEditView: ElementContainerView {
         handleValidationResult(validationResult: validationResult)
     }
     
-    private func handleValidationResult(validationResult: ValidationResult) {
+    private func handleValidationResult<T>(validationResult: ValidationResult<T>) {
         hasError = !validationResult.isValid
         appState.current.validationMessage = validationResult.message
         exitEditMode(hasError: hasError)

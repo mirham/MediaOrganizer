@@ -17,7 +17,11 @@ class ValidationService: ServiceBase, ValidationServiceType {
         super.init()
     }
     
-    func isValidString(input: String) -> ValidationResult {
+    func isValidString(input: String, isArray: Bool) -> ValidationResult<String> {
+        if isArray {
+            return isValidStringArray(input: input)
+        }
+        
         let isValid = input.count >= Constants.stringMinLength
             && input.count <= Constants.stringMaxLength
         
@@ -26,8 +30,8 @@ class ValidationService: ServiceBase, ValidationServiceType {
             : ValidationResult(message: Constants.vmStringLengthIsIncorrect)
     }
     
-    func isValidInt(input: Int, dateFormatType: DateFormatType?) -> ValidationResult {
-        var result: ValidationResult
+    func isValidInt(input: Int, dateFormatType: DateFormatType?) -> ValidationResult<Int> {
+        var result: ValidationResult<Int>
         
         if dateFormatType == nil {
             let isValid = input >= Constants.resolutionMinValue
@@ -96,7 +100,7 @@ class ValidationService: ServiceBase, ValidationServiceType {
         return result
     }
     
-    func isValidDate(input: Date) -> ValidationResult {
+    func isValidDate(input: Date) -> ValidationResult<Date> {
         guard let minDate = dateFormatter.date(from: Constants.dateMinValueString),
               let maxDate = dateFormatter.date(from: Constants.dateMaxValueString)
         else { return ValidationResult(message: Constants.vmNotSupportedValue) }
@@ -108,8 +112,8 @@ class ValidationService: ServiceBase, ValidationServiceType {
             : ValidationResult(message: Constants.vmDateIsIncorrect)
     }
     
-    func isValidDouble(input: Double, metadataType: MetadataType?) -> ValidationResult {
-        var result: ValidationResult
+    func isValidDouble(input: Double, metadataType: MetadataType?) -> ValidationResult<Double> {
+        var result: ValidationResult<Double>
         
         switch metadataType {
             case .metadataLatitude:
@@ -133,7 +137,7 @@ class ValidationService: ServiceBase, ValidationServiceType {
         return result
     }
     
-    func isValidFilename(input: String) -> ValidationResult {
+    func isValidFilename(input: String) -> ValidationResult<String> {
         let invalidCharacters = CharacterSet(charactersIn: Constants.slash)
             .union(.controlCharacters)
             .union(.illegalCharacters)
@@ -171,11 +175,7 @@ class ValidationService: ServiceBase, ValidationServiceType {
         return ValidationResult()
     }
     
-    func isValidFolderPath(input: String, parentFolderPathLength: Int) -> ValidationResult {
-        /*if input.isEmpty {
-            return ValidationResult(message: "Folder path cannot be empty.")
-        }*/
-        
+    func isValidFolderPath(input: String, parentFolderPathLength: Int) -> ValidationResult<String> {
         let invalidCharacters = CharacterSet(charactersIn: Constants.nullChar)
             .union(.controlCharacters)
             .union(.illegalCharacters)
@@ -193,11 +193,8 @@ class ValidationService: ServiceBase, ValidationServiceType {
             return ValidationResult(message: Constants.vmTooLongPath)
         }
         
-        let pathComponents = input.components(separatedBy: Constants.slash).filter { !$0.isEmpty }
-        
-        /*if pathComponents.isEmpty && !input.hasPrefix(Constants.slash) {
-            return ValidationResult(message: "Folder path is invalid or contains no components.")
-        }*/
+        let pathComponents = input.components(separatedBy: Constants.slash)
+            .filter { !$0.isEmpty }
         
         for component in pathComponents {
             if component.utf16.count > Constants.maxFileNameLength {
@@ -224,45 +221,47 @@ class ValidationService: ServiceBase, ValidationServiceType {
         return ValidationResult()
     }
     
-    func areValidActions(actions: [Action]) -> ValidationResult {
+    func areValidActions(actions: [Action]) -> ValidationResult<[Action]> {
         if actions.isEmpty {
             return ValidationResult(message: Constants.vmNoActions)
         }
         
-        var skipActionsCount: Int = 0
-        var deleteActionsCount: Int = 0
-        var renameActionsCount: Int = 0
-        var copyToFolderActionsCount: Int = 0
-        var moveToFolderToActionsCount: Int = 0
+        let zero = 0
+        let one = 1
+        var skipActionsCount: Int = zero
+        var deleteActionsCount: Int = zero
+        var renameActionsCount: Int = zero
+        var copyToFolderActionsCount: Int = zero
+        var moveToFolderToActionsCount: Int = zero
         
         for checkedAction in actions {
             switch checkedAction.type {
                 case .skip:
-                    skipActionsCount += 1
+                    skipActionsCount += one
                     break
                 case .delete:
-                    deleteActionsCount += 1
+                    deleteActionsCount += one
                     break
                 case.rename:
-                    renameActionsCount += 1
+                    renameActionsCount += one
                     break
                 case .copyToFolder:
-                    copyToFolderActionsCount += 1
+                    copyToFolderActionsCount += one
                     break
                 case .moveToFolder:
-                    moveToFolderToActionsCount += 1
+                    moveToFolderToActionsCount += one
                     break
             }
         }
         
-        let isActionsMess = (skipActionsCount >= 1 || deleteActionsCount >= 1)
-            && (renameActionsCount > 0 || copyToFolderActionsCount > 0 || moveToFolderToActionsCount > 0)
-        let isCopyMoveActionsMess = copyToFolderActionsCount > 0 && moveToFolderToActionsCount > 0
-        let isExtraSkipOrDeleteAction = (skipActionsCount > 1 || deleteActionsCount > 1)
-            || (skipActionsCount > 0 && deleteActionsCount > 0)
-        let isExtraRenameAction = renameActionsCount > 1
-        let isExtraCopyToFolderAction = copyToFolderActionsCount > 1
-        let isExtraMoveToFolderAction = moveToFolderToActionsCount > 1
+        let isActionsMess = (skipActionsCount >= one || deleteActionsCount >= one)
+            && (renameActionsCount > zero || copyToFolderActionsCount > zero || moveToFolderToActionsCount > zero)
+        let isCopyMoveActionsMess = copyToFolderActionsCount > zero && moveToFolderToActionsCount > zero
+        let isExtraSkipOrDeleteAction = (skipActionsCount > one || deleteActionsCount > one)
+            || (skipActionsCount > zero && deleteActionsCount > zero)
+        let isExtraRenameAction = renameActionsCount > one
+        let isExtraCopyToFolderAction = copyToFolderActionsCount > one
+        let isExtraMoveToFolderAction = moveToFolderToActionsCount > one
         
         if isActionsMess {
             return ValidationResult(message: Constants.vmActionsMess)
@@ -289,5 +288,25 @@ class ValidationService: ServiceBase, ValidationServiceType {
         }
         
         return ValidationResult()
+    }
+    
+    // MARK: Private functions
+    
+    private func isValidStringArray(input: String) -> ValidationResult<String> {
+        let arrayInput = input.replacingOccurrences(
+            of: Constants.spaceShort,
+            with: String())
+        
+        guard isValidString(input: arrayInput, isArray: false).isValid
+        else {
+            return ValidationResult(message: Constants.vmStringLengthIsIncorrect)
+        }
+        
+        guard arrayInput.components(separatedBy: Constants.comma).count > 1
+        else {
+            return ValidationResult(message: Constants.vmCannotParseArray)
+        }
+        
+        return ValidationResult(adjustedResult: arrayInput)
     }
 }

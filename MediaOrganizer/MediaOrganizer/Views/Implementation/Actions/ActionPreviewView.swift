@@ -14,7 +14,8 @@ struct ActionPreviewView: ElementContainerView {
     var actionElements: [ActionElement]
     
     private let dateFormatter = DateFormatter()
-    private let dateExample = Date.now
+    private let dateExample = NSCalendar(identifier: .gregorian)!
+        .date(from: Constants.exampleDateComponents)!
     
     var body: some View {
         WrappingHStack(alignment: .leading, horizontalSpacing: 0) {

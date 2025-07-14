@@ -31,6 +31,7 @@ struct Constants {
     static let comma = ","
     static let nullChar = "\0"
     static let colon = ":"
+    static let sharp = "#"
     
     // MARK: Settings key names
     static let settingsKeyJobs = "jobs"
@@ -101,6 +102,11 @@ struct Constants {
     static let dateMinValueString = "1900/01/01 00:00:00"
     static let dateMaxValueString = "2100/12/31 23:59:59"
     
+    // MARK: Errors
+    static let errorNoStrategyForElementType = "No strategy found for element type: %1$@."
+    static let errorUnexpectedLogicalOperator = "Unexpected logical operator: %1$@."
+    static let errorAstInvalidGroupStructure = "Invalid group structure in AST."
+    
     // MARK: Validation messages
     static let vmStringLengthIsIncorrect = "The string must contain no more than \(stringMinLength) characters and no less than \(stringMaxLength) characters.";
     static let vmYearIsIncorrect = "The year must be not before \(yearMinValue) and not after \(yearMaхValue).";
@@ -143,9 +149,11 @@ struct Constants {
     static let vmExtraRenameAction = "The 'Rename' action should only appear once."
     static let vmExtraCopyToFolderAction = "The 'Copy to Folder' action should only appear once."
     static let vmExtraMoveToFolderAction = "The 'Move to Folder' action should only appear once."
+    static let vmCannotParseArray = "Unable to parse array values. Make sure there is more than one value and they are separated by a comma."
     
     // MARK: Element names
     static let elInfo = "Info"
+    static let elAbout = "About"
     static let elJobSettings = "Job settings"
     static let elGeneral = "General"
     static let elRules = "Rules"
@@ -163,6 +171,8 @@ struct Constants {
     static let elCanceled = " cancelled "
     static let elNotYetRun = " not yet run "
     static let elAnalyzingFiles = "Analyzing files..."
+    static let elChecked = "Checked"
+    static let elUnchecked = "Unchecked"
     
     // MARK: Masks
     static let maskSource =  "Source: %1$@"
@@ -211,4 +221,15 @@ struct Constants {
     static let aboutVersion = "Version: %1$@"
     static let aboutMailTo = "mailto:%1$@"
     static let aboutGitHub = "GitHub"
+    
+    // MARK: Static data
+    static let exampleDateComponents = DateComponents(
+        timeZone: TimeZone(identifier: "Europe/Sofia"),
+        year: 2025,
+        month: 05,
+        day: 01,
+        hour: 09,
+        minute: 01,
+        second: 05
+    )
 }

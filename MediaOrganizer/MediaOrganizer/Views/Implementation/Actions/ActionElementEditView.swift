@@ -88,7 +88,8 @@ struct ActionElementEditView: ElementContainerView {
     }
     
     private func getFormatDescription() -> String {
-        guard self.selectedDateFormatTypeId != nil && elementOptions.elementValueType == .date else { return String() }
+        guard self.selectedDateFormatTypeId != nil && elementOptions.elementValueType == .date
+        else { return String() }
         
         let dateFormatType = DateFormatType.init(rawValue: self.selectedDateFormatTypeId!)
         
@@ -134,11 +135,9 @@ struct ActionElementEditView: ElementContainerView {
             Text(element.displayText + getFormatDescription())
                 .padding(.trailing, -10)
                 .isHidden(hidden: elementOptions.editableInAction, remove: true)
-            DatePicker(String(),
-                       selection: $customDate,
-                       displayedComponents: [.date, .hourAndMinute])
-            .datePickerStyle(.compact)
+            DatePickerWithSecondsPopover(date: $customDate)
                 .isHidden(hidden: !elementOptions.editableInAction, remove: true)
+                .frame(maxWidth: 150)
                 .onAppear(perform: {
                     if (customDate == Date.distantPast) {
                         customDate = Date()
@@ -219,12 +218,12 @@ struct ActionElementEditView: ElementContainerView {
             element.customDate = customDate
         }
         else {
-            exitEditMode(hasError: false)
+            handleValidationResult(validationResult: ValidationResult<Date>())
         }
     }
     
     private func handleTextInputSaveClick() {
-        let validationResult = validationService.isValidString(input: customText)
+        let validationResult = validationService.isValidString(input: customText, isArray: false)
         handleValidationResult(validationResult: validationResult)
         
         guard !hasError else { return }
@@ -232,7 +231,7 @@ struct ActionElementEditView: ElementContainerView {
         element.customText = customText
     }
     
-    private func handleValidationResult(validationResult: ValidationResult) {
+    private func handleValidationResult<T>(validationResult: ValidationResult<T>) {
         hasError = !validationResult.isValid
         appState.current.validationMessage = validationResult.message
         exitEditMode(hasError: hasError)

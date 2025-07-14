@@ -134,7 +134,9 @@ struct JobGeneralSettingsEditView: FolderContainerView {
         
         var resultStorage: ObjCBool = true
         
-        guard FileManager.default.fileExists(atPath: url.path(percentEncoded: false), isDirectory: &resultStorage)
+        guard FileManager.default.fileExists(
+            atPath: url.path(percentEncoded: false),
+            isDirectory: &resultStorage)
         else { return }
         
         switch folderType {

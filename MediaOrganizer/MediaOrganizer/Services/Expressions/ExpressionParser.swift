@@ -111,7 +111,9 @@ struct ExpressionParser {
         return try buildFinalNode(from: outputQueue)
     }
     
-    private func processOperator(_ op: ExpressionElementType, outputQueue: inout [ASTNode]) throws {
+    private func processOperator(
+        _ op: ExpressionElementType,
+        outputQueue: inout [ASTNode]) throws {
         guard outputQueue.count >= 2 else {
             throw ASTError.invalidExpression
         }

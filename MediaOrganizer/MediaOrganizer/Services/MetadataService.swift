@@ -27,7 +27,8 @@ class MetadataService: ServiceBase, MetadataServiceType {
         result[MetadataType.fileExtension] = fileUrl.pathExtension
         
         do {
-            let attributes:[FileAttributeKey:Any] = try FileManager.default.attributesOfItem(atPath: fileUrl.path(percentEncoded: false))
+            let attributes:[FileAttributeKey:Any] = try FileManager.default
+                .attributesOfItem(atPath: fileUrl.path(percentEncoded: false))
             let modificationDate = attributes[FileAttributeKey.modificationDate] as? Date
             let creationDate = attributes[FileAttributeKey.creationDate] as? Date
             result[MetadataType.fileDateCreated] = creationDate
@@ -78,27 +79,34 @@ class MetadataService: ServiceBase, MetadataServiceType {
         do {
             let iTunesMetadata = try await asset.loadMetadata(for: .quickTimeMetadata)
             
-            let cameraModelMetadata = AVMetadataItem.metadataItems(from: iTunesMetadata, filteredByIdentifier: .quickTimeMetadataModel).first
+            let cameraModelMetadata = AVMetadataItem.metadataItems(
+                from: iTunesMetadata,
+                filteredByIdentifier: .quickTimeMetadataModel).first
             
             let cameraModel = try await cameraModelMetadata?.load(.stringValue)
             result[MetadataType.metadataCameraModel] = cameraModel
             
             
-            let creationDateMetadata = AVMetadataItem.metadataItems(from: iTunesMetadata, filteredByIdentifier: .quickTimeMetadataCreationDate).first
+            let creationDateMetadata = AVMetadataItem.metadataItems(
+                from: iTunesMetadata,
+                filteredByIdentifier: .quickTimeMetadataCreationDate).first
             let creationDate = try await creationDateMetadata?.load(.dateValue)
             result[MetadataType.metadataDateOriginal] = creationDate
             result[MetadataType.metadataDateDigitilized] = result[MetadataType.metadataDateOriginal]
             
             
-            let track = try await AVURLAsset(url: fileUrl).loadTracks(withMediaType: AVMediaType.video).first
-            let size = try await track?.load(.naturalSize).applying(track!.load(.preferredTransform))
+            let track = try await AVURLAsset(url: fileUrl)
+                .loadTracks(withMediaType: AVMediaType.video).first
+            let size = try await track?.load(.naturalSize)
+                .applying(track!.load(.preferredTransform))
             result[MetadataType.metadataPixelXDimention] = size?.width
             result[MetadataType.metadataPixelYDimention] = size?.height
             
             let locationMetadata = AVMetadataItem.metadataItems(from: iTunesMetadata, filteredByIdentifier: .quickTimeMetadataLocationISO6709).first
             
             let locationString = try await locationMetadata?.load(.value)
-            let location = IsoString.parseFromIso6709String(iso6709String: locationString?.description)
+            let location = IsoString.parseFromIso6709String(
+                iso6709String: locationString?.description)
             result[MetadataType.metadataLatitude] = location?.coordinate.latitude
             result[MetadataType.metadataLongitude] = location?.coordinate.longitude
         }

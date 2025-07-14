@@ -7,5 +7,7 @@
 
 extension StringProtocol {
     var firstLowercased: String { return prefix(1).lowercased() + dropFirst() }
+    var withColonsInsteadSlashes: String {
+        return replacingOccurrences(of: Constants.slash, with:Constants.colon) }
 }
 

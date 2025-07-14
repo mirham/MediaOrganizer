@@ -14,8 +14,10 @@ extension FolderContainerView {
         var result = NSImage(resource: .foldericon)
         var isFolder: ObjCBool = true
         
-        if ((folder != String() && folder != Constants.stubNotSelected)
-            && FileManager.default.fileExists(atPath: folder, isDirectory: &isFolder)) {
+        let doesFolderExist = (folder != String() && folder != Constants.stubNotSelected)
+            && FileManager.default.fileExists(atPath: folder, isDirectory: &isFolder)
+        
+        if doesFolderExist {
             result = NSWorkspace.shared.icon(forFile: folder)
         }
         

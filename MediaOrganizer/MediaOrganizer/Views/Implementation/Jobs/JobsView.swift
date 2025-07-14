@@ -95,13 +95,15 @@ struct JobsView: FolderContainerView {
     // MARK: Private functions
     
     private func hanldeJobScrollViewClick () {
-        guard !appState.views.isJobSettingsViewShown else { return }
+        guard !appState.views.isJobSettingsViewShown
+        else { return }
         
         jobService.resetCurrentJob()
     }
     
     private func handleJobItemClick (job : Job) {
-        guard !appState.views.isJobSettingsViewShown else { return }
+        guard !appState.views.isJobSettingsViewShown
+        else { return }
         
         appState.current.job = job
     }

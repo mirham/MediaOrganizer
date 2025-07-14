@@ -186,7 +186,7 @@ struct ActionView: ElementContainerView {
         return processValidationResult(validationResult: validationResult)
     }
     
-    private func processValidationResult(validationResult: ValidationResult) -> Bool {
+    private func processValidationResult<T>(validationResult: ValidationResult<T>) -> Bool {
         if !validationResult.isValid {
             appState.current.validationMessage = validationResult.message
             ViewHelper.setUpCloseViewButton(

@@ -26,7 +26,7 @@ struct MediaOrganizerApp: App {
         .windowResizability(.contentSize)
         .commands {
             CommandGroup(replacing: CommandGroupPlacement.appInfo) {
-                Button("About \(Bundle.main.bundleURL.lastPathComponent.replacing(".\(Bundle.main.bundleURL.pathExtension)", with: String()))") { appDelegate.showInfoWindow() }
+                Button("\(Constants.elAbout) \(Bundle.main.bundleURL.lastPathComponent.replacing(".\(Bundle.main.bundleURL.pathExtension)", with: String()))") { appDelegate.showInfoWindow() }
             }
         }
         .windowResizability(.contentSize)

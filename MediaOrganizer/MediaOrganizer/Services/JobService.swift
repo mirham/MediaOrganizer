@@ -58,7 +58,8 @@ class JobService: ServiceBase, JobServiceType {
     }
     
     func isCurrentJob(jobId: UUID) -> Bool {
-        guard let currentJob = appState.current.job else { return false }
+        guard let currentJob = appState.current.job
+        else { return false }
         
         return currentJob.id == jobId
     }
@@ -184,6 +185,7 @@ class JobService: ServiceBase, JobServiceType {
                 }
             }
         } catch is CancellationError {
+            // TODO: Logging
             print("Job \(job.id) cancelled")
         }
         catch {

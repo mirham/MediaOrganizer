@@ -16,11 +16,15 @@ struct MetadataTextStrategy : ElementStrategy {
     func checkCondition(context: ConditionElement) -> Bool {
         guard let operatorTypeId = context.selectedOperatorTypeId,
               let metadataType = MetadataType(rawValue: context.elementTypeId),
-              let metadataValue = context.fileMetadata[metadataType] else {
+              let metadataValue = context.fileMetadata[metadataType]
+        else {
             return false
         }
         
-        guard let operatorType = StringOperatorType(rawValue: operatorTypeId) else { return false }
+        guard let operatorType = StringOperatorType(rawValue: operatorTypeId)
+        else {
+            return false
+        }
         
         if let metadataString = metadataValue as? String, let conditionString = context.value.stringValue {
             let metadataStringUpper = metadataString.uppercased()
@@ -32,7 +36,11 @@ struct MetadataTextStrategy : ElementStrategy {
                 case .notContains: return !metadataStringUpper.contains(conditionStringUpper)
                 case .startsWith: return metadataStringUpper.hasPrefix(conditionStringUpper)
                 case .endsWith: return metadataStringUpper.hasSuffix(conditionStringUpper)
-                case .oIn: return metadataStringUpper.contains(conditionStringUpper)
+                case .oIn: do {
+                    let extensionsArray = conditionStringUpper.components(
+                        separatedBy: Constants.comma)
+                    return extensionsArray.contains(where: {$0 == metadataStringUpper})
+                }
             }
         }
         

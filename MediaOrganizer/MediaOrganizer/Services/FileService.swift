@@ -28,7 +28,8 @@ class FileService : ServiceBase, FileServiceType {
         var result = [MediaFileInfo]()
         let path = URL( string: path)
         
-        let options: FileManager.DirectoryEnumerationOptions = [.skipsHiddenFiles, .skipsPackageDescendants]
+        let options: FileManager.DirectoryEnumerationOptions
+            = [.skipsHiddenFiles, .skipsPackageDescendants]
         
         let filteredFileUrls = await
             listFilesInFolderAsync(
@@ -61,11 +62,17 @@ class FileService : ServiceBase, FileServiceType {
         fileActions: [FileAction]) async {
         do {
             try createFolderIfDoesNotExist(path: outputPath)
-            fileInfo.currentUrl = try makeTempFileCopy(fileUrl:  fileInfo.currentUrl, outputPath: outputPath)
+            fileInfo.currentUrl = try makeTempFileCopy(
+                fileUrl: fileInfo.currentUrl,
+                outputPath: outputPath)
             
             for fileAction in fileActions {
-                let fileActionStrategy = fileActionStrategyFactory.getStrategy(actionType: fileAction.actionType)
-                let currentUrl = try fileActionStrategy?.performAction(outputPath: outputPath, fileInfo: fileInfo, fileAction: fileAction)
+                let fileActionStrategy = fileActionStrategyFactory.getStrategy(
+                    actionType: fileAction.actionType)
+                let currentUrl = try fileActionStrategy?.performAction(
+                    outputPath: outputPath,
+                    fileInfo: fileInfo,
+                    fileAction: fileAction)
                 
                 if let currentUrl = currentUrl {
                     fileInfo.currentUrl = currentUrl
@@ -73,6 +80,7 @@ class FileService : ServiceBase, FileServiceType {
             }
         }
         catch let fileActionException {
+            // TODO: Log
             print(fileActionException.localizedDescription)
         }
     }
@@ -85,7 +93,10 @@ class FileService : ServiceBase, FileServiceType {
         return newUrl
     }
     
-    func copyToFolder(subfolderName: String, outputPath: String, fileUrl: URL) throws -> URL {
+    func copyToFolder(
+        subfolderName: String,
+        outputPath: String,
+        fileUrl: URL) throws -> URL {
         let subfolderPath = outputPath + subfolderName
         
         try createFolderIfDoesNotExist(path: subfolderPath)
@@ -96,6 +107,7 @@ class FileService : ServiceBase, FileServiceType {
             try fileManager.moveItem(at: fileUrl, to: newUrl)
         }
         catch {
+            // TODO: Log
             print("---- \nCannot move:" + error.localizedDescription + "\n -----")
         }
         
@@ -141,9 +153,11 @@ class FileService : ServiceBase, FileServiceType {
         }
     }
     
-    private func createFolderIfDoesNotExist(path: String) throws {        
+    private func createFolderIfDoesNotExist(path: String) throws {
         if (!doesFolderExist(path: path)) {
-            try fileManager.createDirectory(atPath: path, withIntermediateDirectories: true)
+            try fileManager.createDirectory(
+                atPath: path,
+                withIntermediateDirectories: true)
         }
     }
     

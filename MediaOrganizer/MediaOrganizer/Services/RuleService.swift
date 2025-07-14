@@ -48,7 +48,8 @@ class RuleService: ServiceBase, RuleServiceType {
     }
     
     func isCurrentRule(ruleId: UUID) -> Bool {
-        guard let currentRule = appState.current.rule else { return false }
+        guard let currentRule = appState.current.rule
+        else { return false }
         
         let result = currentRule.id == ruleId
         
@@ -58,7 +59,11 @@ class RuleService: ServiceBase, RuleServiceType {
     func applyRule(rule:Rule, fileInfo: MediaFileInfo) -> [FileAction] {
         var result = [FileAction]()
         
-        let matchAnyCondition = conditionService.applyConditions(conditions: rule.conditions, fileInfo: fileInfo)
+        let matchAnyCondition = rule.conditions.isEmpty
+            ? true
+            : conditionService.applyConditions(
+                conditions: rule.conditions,
+                fileInfo: fileInfo)
         
         guard matchAnyCondition else { return result }
         
@@ -89,7 +94,8 @@ class RuleService: ServiceBase, RuleServiceType {
     }
     
     func removeCurrentRule() {
-        guard let currentJob = appState.current.job else { return }
+        guard let currentJob = appState.current.job
+        else { return }
         
         if let ruleIndex = getRuleIndexByRuleId(ruleId: getCurrentRuleId()!) {
             currentJob.rules.remove(at: ruleIndex)
@@ -100,7 +106,8 @@ class RuleService: ServiceBase, RuleServiceType {
     // MARK: Private functions
     
     private func getCurrentRuleId() -> UUID? {
-        guard let currentRule = appState.current.rule else { return nil }
+        guard let currentRule = appState.current.rule
+        else { return nil }
         
         return currentRule.id
     }

@@ -13,7 +13,8 @@ class ConditionService : ServiceBase, ConditionServiceType {
     @Injected(\.elementStrategyFactory) private var elementStrategyFactory
     
     func addNewCondition() {
-        guard let currentRule = appState.current.rule else { return }
+        guard let currentRule = appState.current.rule
+        else { return }
         
         let conditionType = currentRule.conditions.count == 0
             ? ConditionType.cIf
@@ -26,7 +27,8 @@ class ConditionService : ServiceBase, ConditionServiceType {
     }
     
     func isCurrentCondition(conditionId: UUID) -> Bool {
-        guard let currentCondition = appState.current.condition else { return false }
+        guard let currentCondition = appState.current.condition
+        else { return false }
         
         let result = currentCondition.id == conditionId
         
@@ -62,9 +64,11 @@ class ConditionService : ServiceBase, ConditionServiceType {
     }
     
     func replaceCondition(conditionId: UUID, condition: Condition) {
-        guard let currentRule = appState.current.rule else { return }
+        guard let currentRule = appState.current.rule
+        else { return }
         
-        if let conditionIndex = currentRule.conditions.firstIndex(where: { $0.id == conditionId }) {
+        if let conditionIndex = currentRule.conditions
+            .firstIndex(where: { $0.id == conditionId }) {
             currentRule.conditions[conditionIndex] = condition
             
             appState.current.refreshSignal.toggle()
@@ -72,9 +76,11 @@ class ConditionService : ServiceBase, ConditionServiceType {
     }
     
     func removeConditionById(conditionId: UUID) {
-        guard let currentRule = appState.current.rule else { return }
+        guard let currentRule = appState.current.rule
+        else { return }
         
-        if let conditionIndex = currentRule.conditions.firstIndex(where: { $0.id == conditionId }) {
+        if let conditionIndex = currentRule.conditions
+            .firstIndex(where: { $0.id == conditionId }) {
             currentRule.conditions.remove(at: conditionIndex)
             
             if (conditionIndex == 0 || currentRule.conditions.count == 1) {

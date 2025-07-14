@@ -25,7 +25,10 @@ struct JobSettingsView : View {
         TabView(selection: Binding(
             get: { selectedTab },
             set: { newTab in
-                if appState.current.isRuleSetupComplete && appState.current.allRulesValid {
+                let canTabBeSwitched = appState.current.isRuleSetupComplete
+                    && appState.current.allRulesValid
+                
+                if canTabBeSwitched {
                     selectedTab = newTab
                 }
                 else {
@@ -60,9 +63,11 @@ struct JobSettingsView : View {
             viewName: Constants.windowIdJobSettings,
             onTop: false)
         
-        if appState.current.job == nil {
+        guard appState.current.job != nil else {
             currentEditMode = .add
             appState.current.job = Job.initDefault()
+            
+            return
         }
     }
     

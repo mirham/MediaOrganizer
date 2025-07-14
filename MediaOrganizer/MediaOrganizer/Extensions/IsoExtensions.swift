@@ -15,6 +15,7 @@ public struct IsoString {
             let latitude = results[safe: 1] as NSString?,
             let longitude = results[safe: 2] as NSString?
         else { return nil }
+        
         return CLLocation(latitude: latitude.doubleValue, longitude: longitude.doubleValue)
     }
     
@@ -32,6 +33,7 @@ public struct IsoString {
             let text = text,
             let date = ISO8601DateFormatter().date(from: text)
         else { return nil }
+        
         return Date(timeInterval: 0, since: date)
     }
     
@@ -39,6 +41,7 @@ public struct IsoString {
         let formatter = ISO8601DateFormatter()
         formatter.timeZone = TimeZone.current
         formatter.formatOptions.remove(.withColonSeparatorInTimeZone)
+        
         return formatter.string(from: date)
     }
 }
@@ -47,8 +50,13 @@ private extension String {
         guard
             let regex = try? NSRegularExpression(pattern: pattern),
             let result = regex.firstMatch(in: self, range: NSRange(location: 0, length: count))
-        else { return [] }
-        return (0..<result.numberOfRanges).map { String(self[Range(result.range(at: $0), in: self)!]) }
+        else {
+            return []
+        }
+        
+        return (0..<result.numberOfRanges).map {
+            String(self[Range(result.range(at: $0), in: self)!])
+        }
     }
 }
 
@@ -60,7 +68,11 @@ private extension Collection {
 
 public extension CLLocation {
     convenience init?(iso6709 text: String?) {
-        guard let location = IsoString.parseFromIso6709String(iso6709String: text) else { return nil }
+        guard let location = IsoString.parseFromIso6709String(iso6709String: text)
+        else {
+            return nil
+        }
+        
         self.init(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
     }
     
