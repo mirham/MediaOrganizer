@@ -22,8 +22,10 @@ struct JobProgress {
     var isCompleted: Bool = false
     var isCancelled: Bool = false {
         didSet {
-            if progress == Constants.maxPercentage
-                || (processedCount == totalCount && !isEmpty()) {
+            let isJobCompleted = progress == Constants.maxPercentage
+                || (processedCount == totalCount && !isEmpty())
+            
+            if isJobCompleted {
                 isCancelled = false
             }
             
@@ -34,12 +36,16 @@ struct JobProgress {
     }
     var processedCount: Int = 0 {
         didSet {
-            guard processedCount != 0 || totalCount != 0 else { return }
+            let isJobInProgress = processedCount != 0 || totalCount != 0
+            guard isJobInProgress else { return }
             
-            progress = (Double(processedCount + skippedCount) / Double(totalCount)) * Constants.maxPercentage
+            progress = (Double(processedCount + skippedCount) / Double(totalCount))
+                        * Constants.maxPercentage
             
-            if (progress == Constants.maxPercentage
-                || (processedCount + skippedCount) == totalCount) {
+            let isJobCompleted = progress == Constants.maxPercentage
+                || (processedCount + skippedCount) == totalCount
+            
+            if isJobCompleted {
                 resetProgressFlags()
                 isCompleted = true
             }

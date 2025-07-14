@@ -13,7 +13,8 @@ struct MetadataDateStrategy : ElementStrategy {
     
     func elementAsString(context: ActionElement) -> String? {
         guard let date = context.fileMetadata[metadataKey] as? Date,
-              let dateFormatType = context.selectedDateFormatType else {
+              let dateFormatType = context.selectedDateFormatType
+        else {
             return nil
         }
         
@@ -28,11 +29,15 @@ struct MetadataDateStrategy : ElementStrategy {
         guard let operatorTypeId = context.selectedOperatorTypeId,
               let metadataType = MetadataType(rawValue: context.elementTypeId),
               let metadataValue = context.fileMetadata[metadataType],
-              let dateFormatType = context.selectedDateFormatType else {
+              let dateFormatType = context.selectedDateFormatType
+        else {
             return false
         }
         
-        guard let operatorType = NumberAndDateOperatorType(rawValue: operatorTypeId) else { return false }
+        guard let operatorType = NumberAndDateOperatorType(rawValue: operatorTypeId)
+        else {
+            return false
+        }
         
         let metadataDateValue = metadataValue as? Date
         
@@ -63,7 +68,8 @@ struct MetadataDateStrategy : ElementStrategy {
             }
         }
         
-        if let dateComponent = metadataDateValueComponent, let intValue = conditionIntValue {
+        if let dateComponent = metadataDateValueComponent,
+            let intValue = conditionIntValue {
             switch operatorType {
                 case .equals: return dateComponent == intValue
                 case .notEquals: return dateComponent != intValue
@@ -74,7 +80,8 @@ struct MetadataDateStrategy : ElementStrategy {
             }
         }
         
-        if let dateAsIs = metadataDateValue, let dateValue = conditionDateValue {
+        if let dateAsIs = metadataDateValue,
+           let dateValue = conditionDateValue {
             switch operatorType {
                 case .equals: return dateAsIs == dateValue
                 case .notEquals: return dateAsIs != dateValue

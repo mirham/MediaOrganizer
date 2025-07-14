@@ -37,9 +37,7 @@ struct RulesEditView: View {
                             }
                         }
                     }
-                    Button(String(), systemImage: Constants.iconAdd) {
-                        handleAddConditionButtonClick()
-                    }
+                    Button(String(),systemImage: Constants.iconAdd, action: handleAddConditionButtonClick)
                     .withAddButtonStyle(activeState: controlActiveState)
                     .isHidden(hidden: isAddButtonShouldBeHidden(ruleId: rule.id) , remove: true)
                     .padding(.top, 3)

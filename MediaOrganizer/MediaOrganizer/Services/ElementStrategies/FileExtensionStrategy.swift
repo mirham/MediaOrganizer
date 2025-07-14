@@ -13,7 +13,7 @@ struct FileExtensionStrategy : ElementStrategy {
             return nil
         }
         
-        let result = "." + extensionWithoutDot
+        let result = Constants.dot + extensionWithoutDot
         
         return result
     }
@@ -27,7 +27,8 @@ struct FileExtensionStrategy : ElementStrategy {
         
         guard let operatorType = StringOperatorType(rawValue: operatorTypeId) else { return false }
         
-        if let metadataString = metadataValue as? String, let conditionString = context.value.stringValue {
+        if let metadataString = metadataValue as? String,
+           let conditionString = context.value.stringValue {
             let metadataStringUpper = metadataString.uppercased()
             let conditionStringUpper = conditionString.uppercased()
             

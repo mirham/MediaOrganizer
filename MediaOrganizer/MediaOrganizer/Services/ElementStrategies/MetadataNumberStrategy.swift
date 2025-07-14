@@ -16,11 +16,15 @@ struct MetadataNumberStrategy : ElementStrategy {
     func checkCondition(context: ConditionElement) -> Bool {
         guard let operatorTypeId = context.selectedOperatorTypeId,
               let metadataType = MetadataType(rawValue: context.elementTypeId),
-              let metadataValue = context.fileMetadata[metadataType] else {
+              let metadataValue = context.fileMetadata[metadataType]
+        else {
             return false
         }
         
-        guard let operatorType = NumberAndDateOperatorType(rawValue: operatorTypeId) else { return false }
+        guard let operatorType = NumberAndDateOperatorType(rawValue: operatorTypeId)
+        else {
+            return false
+        }
         
         let metadataIntValue = metadataValue as? Int
         let metadataDoubleValue = metadataValue as? Double
@@ -31,7 +35,8 @@ struct MetadataNumberStrategy : ElementStrategy {
         let conditionIntValue = context.value.intValue
         let conditionDoubleValue = context.value.doubleValue
         
-        if let metadataInt = metadataIntValue, let conditionInt = conditionIntValue {
+        if let metadataInt = metadataIntValue,
+           let conditionInt = conditionIntValue {
             switch operatorType {
                 case .equals: return metadataInt == conditionInt
                 case .notEquals: return metadataInt != conditionInt
@@ -42,7 +47,8 @@ struct MetadataNumberStrategy : ElementStrategy {
             }
         }
         
-        if let metadataDouble = metadataDoubleValue, let conditionDouble = conditionDoubleValue {
+        if let metadataDouble = metadataDoubleValue,
+           let conditionDouble = conditionDoubleValue {
             switch operatorType {
                 case .equals: return metadataDouble == conditionDouble
                 case .notEquals: return metadataDouble != conditionDouble

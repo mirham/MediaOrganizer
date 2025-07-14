@@ -79,7 +79,8 @@ struct ConditionElementEditView: ElementContainerView {
             
         }
         .background(
-            RoundedRectangle(cornerRadius: 5, style: .continuous).fill(elementOptions.background)
+            RoundedRectangle(cornerRadius: 5, style: .continuous)
+                .fill(elementOptions.background)
         )
         .onAppear(perform: handleOnAppear)
         .isHidden(hidden: showEditor, remove: true)
@@ -118,8 +119,9 @@ struct ConditionElementEditView: ElementContainerView {
             return
         }
         
-        if conditionType == .date, let selectedDateFormatTypeId = selectedDateFormatTypeId,
-           let dateFormat = DateFormatType(rawValue: selectedDateFormatTypeId) {
+        if conditionType == .date,
+            let selectedDateFormatTypeId = selectedDateFormatTypeId,
+            let dateFormat = DateFormatType(rawValue: selectedDateFormatTypeId) {
             element.value = dateFormatsMap[dateFormat.getConditionValueType(), default: .date(conditionValueDate)]
         } else {
             element.value = valuesMap[conditionType, default: .date(conditionValueDate)]
@@ -182,7 +184,9 @@ struct ConditionElementEditView: ElementContainerView {
     
     @ViewBuilder
     private func renderIntInput() -> some View {
-        TextField(Constants.hintCustomText, value:$conditionValueInt, formatter: NumberFormatter())
+        TextField(Constants.hintCustomText,
+                  value:$conditionValueInt,
+                  formatter: NumberFormatter())
     }
     
     @ViewBuilder
@@ -302,13 +306,12 @@ struct ConditionElementEditView: ElementContainerView {
             let dateFormat = DateFormatType(rawValue: selectedDateFormatTypeId!)
             
             if dateFormat != nil {
-                if(dateFormat!.getConditionValueType() == .date) {
+                if dateFormat!.getConditionValueType() == .date {
                     renderDatePicker()
                 }
                 
-                if(dateFormat!.getConditionValueType() == .int) {
-                    renderIntInput()
-                        .frame(maxWidth: 50)
+                if dateFormat!.getConditionValueType() == .int {
+                    renderIntInput().frame(maxWidth: 50)
                 }
             }
         }

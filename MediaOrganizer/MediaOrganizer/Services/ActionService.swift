@@ -29,13 +29,15 @@ class ActionService : ServiceBase, ActionServiceType {
     }
     
     func addNewAction() {
-        guard let currentRule = appState.current.rule else { return }
+        guard let currentRule = appState.current.rule
+        else { return }
         
         currentRule.actions.append(Action())
     }
     
     func isCurrentAction(actionId: UUID) -> Bool {
-        guard let currentAction = appState.current.action else { return false }
+        guard let currentAction = appState.current.action
+        else { return false }
         
         let result = currentAction.id == actionId
         
@@ -75,7 +77,8 @@ class ActionService : ServiceBase, ActionServiceType {
     }
     
     func replaceAction(actionId: UUID, action: Action) {
-        guard let currentRule = appState.current.rule else { return }
+        guard let currentRule = appState.current.rule
+        else { return }
         
         if let actionIndex = currentRule.actions.firstIndex(where: { $0.id == actionId })  {
             currentRule.actions[actionIndex] = action
@@ -84,7 +87,8 @@ class ActionService : ServiceBase, ActionServiceType {
     }
     
     func removeActionById(actionId: UUID) {
-        guard let currentRule = appState.current.rule else { return }
+        guard let currentRule = appState.current.rule
+        else { return }
         
         if let actionIndex = currentRule.actions.firstIndex(where: { $0.id == actionId }) {
             currentRule.actions.remove(at: actionIndex)

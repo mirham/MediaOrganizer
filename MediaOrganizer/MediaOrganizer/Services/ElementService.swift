@@ -13,7 +13,8 @@ class ElementService : ElementServiceType {
     @Injected(\.elementStrategyFactory) private var elementStrategyFactory
     
     func elementAsString(element : ActionElement) -> String? {
-        let elementStrategy = elementStrategyFactory.getStrategy(elementTypeKey: element.elementTypeId)
+        let elementStrategy = elementStrategyFactory
+            .getStrategy(elementTypeKey: element.elementTypeId)
         let result = elementStrategy?.elementAsString(context: element) ?? nil
         
         return result

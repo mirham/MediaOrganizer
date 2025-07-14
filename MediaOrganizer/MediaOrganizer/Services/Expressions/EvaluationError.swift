@@ -15,11 +15,11 @@ enum EvaluationError: Error, LocalizedError {
     var errorDescription: String? {
         switch self {
             case .missingStrategy(let elementTypeId):
-                return "No strategy found for element type: \(elementTypeId)"
+                return String(format: Constants.errorNoStrategyForElementType, elementTypeId)
             case .unexpectedOperator(let op):
-                return "Unexpected logical operator: \(op)"
+                return String(format: Constants.errorUnexpectedLogicalOperator, op.description)
             case .invalidGroupStructure:
-                return "Invalid group structure in AST"
+                return Constants.errorAstInvalidGroupStructure
         }
     }
 }

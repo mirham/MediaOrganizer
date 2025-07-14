@@ -172,10 +172,6 @@ class ValidationService: ServiceBase, ValidationServiceType {
     }
     
     func isValidFolderPath(input: String, parentFolderPathLength: Int) -> ValidationResult {
-        /*if input.isEmpty {
-            return ValidationResult(message: "Folder path cannot be empty.")
-        }*/
-        
         let invalidCharacters = CharacterSet(charactersIn: Constants.nullChar)
             .union(.controlCharacters)
             .union(.illegalCharacters)
@@ -193,11 +189,8 @@ class ValidationService: ServiceBase, ValidationServiceType {
             return ValidationResult(message: Constants.vmTooLongPath)
         }
         
-        let pathComponents = input.components(separatedBy: Constants.slash).filter { !$0.isEmpty }
-        
-        /*if pathComponents.isEmpty && !input.hasPrefix(Constants.slash) {
-            return ValidationResult(message: "Folder path is invalid or contains no components.")
-        }*/
+        let pathComponents = input.components(separatedBy: Constants.slash)
+            .filter { !$0.isEmpty }
         
         for component in pathComponents {
             if component.utf16.count > Constants.maxFileNameLength {
@@ -229,40 +222,42 @@ class ValidationService: ServiceBase, ValidationServiceType {
             return ValidationResult(message: Constants.vmNoActions)
         }
         
-        var skipActionsCount: Int = 0
-        var deleteActionsCount: Int = 0
-        var renameActionsCount: Int = 0
-        var copyToFolderActionsCount: Int = 0
-        var moveToFolderToActionsCount: Int = 0
+        let zero = 0
+        let one = 1
+        var skipActionsCount: Int = zero
+        var deleteActionsCount: Int = zero
+        var renameActionsCount: Int = zero
+        var copyToFolderActionsCount: Int = zero
+        var moveToFolderToActionsCount: Int = zero
         
         for checkedAction in actions {
             switch checkedAction.type {
                 case .skip:
-                    skipActionsCount += 1
+                    skipActionsCount += one
                     break
                 case .delete:
-                    deleteActionsCount += 1
+                    deleteActionsCount += one
                     break
                 case.rename:
-                    renameActionsCount += 1
+                    renameActionsCount += one
                     break
                 case .copyToFolder:
-                    copyToFolderActionsCount += 1
+                    copyToFolderActionsCount += one
                     break
                 case .moveToFolder:
-                    moveToFolderToActionsCount += 1
+                    moveToFolderToActionsCount += one
                     break
             }
         }
         
-        let isActionsMess = (skipActionsCount >= 1 || deleteActionsCount >= 1)
-            && (renameActionsCount > 0 || copyToFolderActionsCount > 0 || moveToFolderToActionsCount > 0)
-        let isCopyMoveActionsMess = copyToFolderActionsCount > 0 && moveToFolderToActionsCount > 0
-        let isExtraSkipOrDeleteAction = (skipActionsCount > 1 || deleteActionsCount > 1)
-            || (skipActionsCount > 0 && deleteActionsCount > 0)
-        let isExtraRenameAction = renameActionsCount > 1
-        let isExtraCopyToFolderAction = copyToFolderActionsCount > 1
-        let isExtraMoveToFolderAction = moveToFolderToActionsCount > 1
+        let isActionsMess = (skipActionsCount >= one || deleteActionsCount >= one)
+            && (renameActionsCount > zero || copyToFolderActionsCount > zero || moveToFolderToActionsCount > zero)
+        let isCopyMoveActionsMess = copyToFolderActionsCount > zero && moveToFolderToActionsCount > zero
+        let isExtraSkipOrDeleteAction = (skipActionsCount > one || deleteActionsCount > one)
+            || (skipActionsCount > zero && deleteActionsCount > zero)
+        let isExtraRenameAction = renameActionsCount > one
+        let isExtraCopyToFolderAction = copyToFolderActionsCount > one
+        let isExtraMoveToFolderAction = moveToFolderToActionsCount > one
         
         if isActionsMess {
             return ValidationResult(message: Constants.vmActionsMess)
