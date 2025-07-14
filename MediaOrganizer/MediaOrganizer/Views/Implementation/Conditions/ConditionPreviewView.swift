@@ -14,8 +14,8 @@ struct ConditionPreviewView: ElementContainerView {
     var conditionElements: [ConditionElement]
     
     private let dateFormatter = DateFormatter()
-    private let dateExample = Date.now
-    private let extensionExample = Date.now
+    private let dateExample = NSCalendar(identifier: .gregorian)!
+        .date(from: Constants.exampleDateComponents)!
     
     var body: some View {
         WrappingHStack(alignment: .leading, horizontalSpacing: 5) {

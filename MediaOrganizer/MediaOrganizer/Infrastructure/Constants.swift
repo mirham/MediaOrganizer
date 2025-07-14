@@ -220,4 +220,15 @@ struct Constants {
     static let aboutVersion = "Version: %1$@"
     static let aboutMailTo = "mailto:%1$@"
     static let aboutGitHub = "GitHub"
+    
+    // MARK: Static data
+    static let exampleDateComponents = DateComponents(
+        timeZone: TimeZone(identifier: "Europe/Sofia"),
+        year: 2025,
+        month: 05,
+        day: 01,
+        hour: 09,
+        minute: 01,
+        second: 05
+    )
 }

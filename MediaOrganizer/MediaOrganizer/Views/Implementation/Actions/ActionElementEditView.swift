@@ -88,7 +88,8 @@ struct ActionElementEditView: ElementContainerView {
     }
     
     private func getFormatDescription() -> String {
-        guard self.selectedDateFormatTypeId != nil && elementOptions.elementValueType == .date else { return String() }
+        guard self.selectedDateFormatTypeId != nil && elementOptions.elementValueType == .date
+        else { return String() }
         
         let dateFormatType = DateFormatType.init(rawValue: self.selectedDateFormatTypeId!)
         
@@ -134,11 +135,9 @@ struct ActionElementEditView: ElementContainerView {
             Text(element.displayText + getFormatDescription())
                 .padding(.trailing, -10)
                 .isHidden(hidden: elementOptions.editableInAction, remove: true)
-            DatePicker(String(),
-                       selection: $customDate,
-                       displayedComponents: [.date, .hourAndMinute])
-            .datePickerStyle(.compact)
+            DatePickerWithSecondsPopover(date: $customDate)
                 .isHidden(hidden: !elementOptions.editableInAction, remove: true)
+                .frame(maxWidth: 150)
                 .onAppear(perform: {
                     if (customDate == Date.distantPast) {
                         customDate = Date()
@@ -219,7 +218,7 @@ struct ActionElementEditView: ElementContainerView {
             element.customDate = customDate
         }
         else {
-            exitEditMode(hasError: false)
+            handleValidationResult(validationResult: ValidationResult())
         }
     }
     

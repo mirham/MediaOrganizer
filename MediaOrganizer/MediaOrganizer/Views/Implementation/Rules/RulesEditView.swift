@@ -38,7 +38,7 @@ struct RulesEditView: View {
                         }
                     }
                     Button(String(),systemImage: Constants.iconAdd, action: handleAddConditionButtonClick)
-                    .withAddButtonStyle(activeState: controlActiveState)
+                    .withSmallAddButtonStyle(activeState: controlActiveState)
                     .isHidden(hidden: isAddButtonShouldBeHidden(ruleId: rule.id) , remove: true)
                     .padding(.top, 3)
                     .padding(.leading, 10)
@@ -66,7 +66,7 @@ struct RulesEditView: View {
                     Button(String(), systemImage: Constants.iconAdd) {
                         handleAddActionButtonClick(rule: rule)
                     }
-                    .withAddButtonStyle(activeState: controlActiveState)
+                    .withSmallAddButtonStyle(activeState: controlActiveState)
                     .isHidden(hidden: isAddButtonShouldBeHidden(ruleId: rule.id) , remove: true)
                     .padding(.leading, 10)
                     .padding(.bottom, 3)
@@ -157,24 +157,6 @@ struct RulesEditView: View {
         ViewHelper.setUpCloseViewButton(
             viewName: Constants.windowIdJobSettings,
             enable: appState.current.allRulesValid)
-    }
-}
-
-private extension Button {
-    func withRuleButtonStyle(activeState: ControlActiveState) -> some View {
-        self.buttonStyle(.plain)
-            .focusEffectDisabled()
-            .opacity(getViewOpacity(state: activeState))
-    }
-    
-    func withAddButtonStyle(activeState: ControlActiveState) -> some View {
-        self.withRuleButtonStyle(activeState: activeState)
-            .foregroundStyle(.green)
-    }
-    
-    func withRemoveButtonStyle(activeState: ControlActiveState) -> some View {
-        self.withRuleButtonStyle(activeState: activeState)
-            .foregroundStyle(.red)
     }
 }
 
