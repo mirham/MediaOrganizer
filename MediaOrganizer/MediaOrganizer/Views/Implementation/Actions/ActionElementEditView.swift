@@ -218,12 +218,12 @@ struct ActionElementEditView: ElementContainerView {
             element.customDate = customDate
         }
         else {
-            handleValidationResult(validationResult: ValidationResult())
+            handleValidationResult(validationResult: ValidationResult<Date>())
         }
     }
     
     private func handleTextInputSaveClick() {
-        let validationResult = validationService.isValidString(input: customText)
+        let validationResult = validationService.isValidString(input: customText, isArray: false)
         handleValidationResult(validationResult: validationResult)
         
         guard !hasError else { return }
@@ -231,7 +231,7 @@ struct ActionElementEditView: ElementContainerView {
         element.customText = customText
     }
     
-    private func handleValidationResult(validationResult: ValidationResult) {
+    private func handleValidationResult<T>(validationResult: ValidationResult<T>) {
         hasError = !validationResult.isValid
         appState.current.validationMessage = validationResult.message
         exitEditMode(hasError: hasError)

@@ -38,7 +38,14 @@ struct FileExtensionStrategy : ElementStrategy {
                 case .notContains: return !metadataStringUpper.contains(conditionStringUpper)
                 case .startsWith: return metadataStringUpper.hasPrefix(conditionStringUpper)
                 case .endsWith: return metadataStringUpper.hasSuffix(conditionStringUpper)
-                case .oIn: return metadataStringUpper.contains(conditionStringUpper)
+                case .oIn: do {
+                    let extensionsArray = conditionStringUpper.components(
+                        separatedBy: Constants.comma)
+                    let extensionsWithDotArray = extensionsArray
+                        .map({$0.starts(with: Constants.dot) ? $0 : "\(Constants.dot)\($0)"})
+                    return extensionsArray.contains(where: {$0 == metadataStringUpper})
+                        || extensionsWithDotArray.contains(where: {$0 == metadataStringUpper})
+                }
             }
         }
         

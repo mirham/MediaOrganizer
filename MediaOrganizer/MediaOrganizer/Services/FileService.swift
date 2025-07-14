@@ -80,6 +80,7 @@ class FileService : ServiceBase, FileServiceType {
             }
         }
         catch let fileActionException {
+            // TODO: Log
             print(fileActionException.localizedDescription)
         }
     }

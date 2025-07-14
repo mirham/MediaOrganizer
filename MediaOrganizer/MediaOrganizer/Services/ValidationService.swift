@@ -17,7 +17,11 @@ class ValidationService: ServiceBase, ValidationServiceType {
         super.init()
     }
     
-    func isValidString(input: String) -> ValidationResult {
+    func isValidString(input: String, isArray: Bool) -> ValidationResult<String> {
+        if isArray {
+            return isValidStringArray(input: input)
+        }
+        
         let isValid = input.count >= Constants.stringMinLength
             && input.count <= Constants.stringMaxLength
         
@@ -26,8 +30,8 @@ class ValidationService: ServiceBase, ValidationServiceType {
             : ValidationResult(message: Constants.vmStringLengthIsIncorrect)
     }
     
-    func isValidInt(input: Int, dateFormatType: DateFormatType?) -> ValidationResult {
-        var result: ValidationResult
+    func isValidInt(input: Int, dateFormatType: DateFormatType?) -> ValidationResult<Int> {
+        var result: ValidationResult<Int>
         
         if dateFormatType == nil {
             let isValid = input >= Constants.resolutionMinValue
@@ -96,7 +100,7 @@ class ValidationService: ServiceBase, ValidationServiceType {
         return result
     }
     
-    func isValidDate(input: Date) -> ValidationResult {
+    func isValidDate(input: Date) -> ValidationResult<Date> {
         guard let minDate = dateFormatter.date(from: Constants.dateMinValueString),
               let maxDate = dateFormatter.date(from: Constants.dateMaxValueString)
         else { return ValidationResult(message: Constants.vmNotSupportedValue) }
@@ -108,8 +112,8 @@ class ValidationService: ServiceBase, ValidationServiceType {
             : ValidationResult(message: Constants.vmDateIsIncorrect)
     }
     
-    func isValidDouble(input: Double, metadataType: MetadataType?) -> ValidationResult {
-        var result: ValidationResult
+    func isValidDouble(input: Double, metadataType: MetadataType?) -> ValidationResult<Double> {
+        var result: ValidationResult<Double>
         
         switch metadataType {
             case .metadataLatitude:
@@ -133,7 +137,7 @@ class ValidationService: ServiceBase, ValidationServiceType {
         return result
     }
     
-    func isValidFilename(input: String) -> ValidationResult {
+    func isValidFilename(input: String) -> ValidationResult<String> {
         let invalidCharacters = CharacterSet(charactersIn: Constants.slash)
             .union(.controlCharacters)
             .union(.illegalCharacters)
@@ -171,7 +175,7 @@ class ValidationService: ServiceBase, ValidationServiceType {
         return ValidationResult()
     }
     
-    func isValidFolderPath(input: String, parentFolderPathLength: Int) -> ValidationResult {
+    func isValidFolderPath(input: String, parentFolderPathLength: Int) -> ValidationResult<String> {
         let invalidCharacters = CharacterSet(charactersIn: Constants.nullChar)
             .union(.controlCharacters)
             .union(.illegalCharacters)
@@ -217,7 +221,7 @@ class ValidationService: ServiceBase, ValidationServiceType {
         return ValidationResult()
     }
     
-    func areValidActions(actions: [Action]) -> ValidationResult {
+    func areValidActions(actions: [Action]) -> ValidationResult<[Action]> {
         if actions.isEmpty {
             return ValidationResult(message: Constants.vmNoActions)
         }
@@ -284,5 +288,25 @@ class ValidationService: ServiceBase, ValidationServiceType {
         }
         
         return ValidationResult()
+    }
+    
+    // MARK: Private functions
+    
+    private func isValidStringArray(input: String) -> ValidationResult<String> {
+        let arrayInput = input.replacingOccurrences(
+            of: Constants.spaceShort,
+            with: String())
+        
+        guard isValidString(input: arrayInput, isArray: false).isValid
+        else {
+            return ValidationResult(message: Constants.vmStringLengthIsIncorrect)
+        }
+        
+        guard arrayInput.components(separatedBy: Constants.comma).count > 1
+        else {
+            return ValidationResult(message: Constants.vmCannotParseArray)
+        }
+        
+        return ValidationResult(adjustedResult: arrayInput)
     }
 }

@@ -20,7 +20,10 @@ struct MetadataDateStrategy : ElementStrategy {
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = dateFormatType.formula
-        let result = dateFormatter.string(from: date)
+        var result = dateFormatter.string(from: date)
+        result = setupUsDateFormatIfNeeded(
+            dateFormatType: context.selectedDateFormatType,
+            input: result)
         
         return result
     }
@@ -94,4 +97,20 @@ struct MetadataDateStrategy : ElementStrategy {
         
         return false
     }
+    
+    // MARK: Private functions
+    
+    private func setupUsDateFormatIfNeeded(
+        dateFormatType: DateFormatType?,
+        input: String) -> String {
+            guard let dateFormatType = dateFormatType
+            else { return input }
+            
+            switch dateFormatType {
+                case .dateTimeUs, .dateUs, .monthAndDayUs:
+                    return input.withColonsInsteadSlashes
+                default:
+                    return input
+            }
+        }
 }

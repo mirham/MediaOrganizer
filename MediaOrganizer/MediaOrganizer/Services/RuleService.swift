@@ -59,9 +59,11 @@ class RuleService: ServiceBase, RuleServiceType {
     func applyRule(rule:Rule, fileInfo: MediaFileInfo) -> [FileAction] {
         var result = [FileAction]()
         
-        let matchAnyCondition = conditionService.applyConditions(
-            conditions: rule.conditions,
-            fileInfo: fileInfo)
+        let matchAnyCondition = rule.conditions.isEmpty
+            ? true
+            : conditionService.applyConditions(
+                conditions: rule.conditions,
+                fileInfo: fileInfo)
         
         guard matchAnyCondition else { return result }
         

@@ -36,7 +36,11 @@ struct MetadataTextStrategy : ElementStrategy {
                 case .notContains: return !metadataStringUpper.contains(conditionStringUpper)
                 case .startsWith: return metadataStringUpper.hasPrefix(conditionStringUpper)
                 case .endsWith: return metadataStringUpper.hasSuffix(conditionStringUpper)
-                case .oIn: return metadataStringUpper.contains(conditionStringUpper)
+                case .oIn: do {
+                    let extensionsArray = conditionStringUpper.components(
+                        separatedBy: Constants.comma)
+                    return extensionsArray.contains(where: {$0 == metadataStringUpper})
+                }
             }
         }
         

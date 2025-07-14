@@ -149,6 +149,7 @@ struct Constants {
     static let vmExtraRenameAction = "The 'Rename' action should only appear once."
     static let vmExtraCopyToFolderAction = "The 'Copy to Folder' action should only appear once."
     static let vmExtraMoveToFolderAction = "The 'Move to Folder' action should only appear once."
+    static let vmCannotParseArray = "Unable to parse array values. Make sure there is more than one value and they are separated by a comma."
     
     // MARK: Element names
     static let elInfo = "Info"
