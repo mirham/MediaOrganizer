@@ -37,5 +37,18 @@ struct MediaOrganizerApp: App {
                 .navigationTitle(Constants.elJobSettings)
                 .frame(minWidth: 560, minHeight: 500)
         })
+        
+        WindowGroup(id:Constants.windowIdLog, makeContent: {
+            if let jobId = appState.current.logJobId {
+                JobLogView(jobId: jobId)
+                    .environmentObject(appState)
+                    .navigationTitle(Constants.elJobLog)
+                    .frame(minWidth: 400, minHeight: 400)
+            }
+            else {
+                Text("No job log available")
+                    .frame(minWidth: 400, minHeight: 300)
+            }
+        }).windowResizability(.contentSize)
     }
 }

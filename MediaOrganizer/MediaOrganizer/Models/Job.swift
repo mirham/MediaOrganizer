@@ -8,7 +8,7 @@
 import Foundation
 
 class Job : Codable, Identifiable, Equatable, ObservableObject {
-    var id = UUID()
+    let id = UUID()
     var checked: Bool
     var name: String
     var sourceFolder: String

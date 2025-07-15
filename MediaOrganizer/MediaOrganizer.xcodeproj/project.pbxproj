@@ -51,6 +51,12 @@
 		35896CC92E1D154F0077D9E9 /* ValidationMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35896CC82E1D15430077D9E9 /* ValidationMessageView.swift */; };
 		35B1B14D2C9C77F700B39FFC /* DraggableElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B1B14C2C9C77F700B39FFC /* DraggableElement.swift */; };
 		35B1B1502C9CA33500B39FFC /* WrappingHStack in Frameworks */ = {isa = PBXBuildFile; productRef = 35B1B14F2C9CA33500B39FFC /* WrappingHStack */; };
+		35BE3F992E265D2E0047E041 /* JobLogType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BE3F982E265D2E0047E041 /* JobLogType.swift */; };
+		35BE3F9B2E265DAA0047E041 /* JobLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BE3F9A2E265DAA0047E041 /* JobLog.swift */; };
+		35BE3F9F2E2677620047E041 /* LogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BE3F9E2E26775F0047E041 /* LogLevel.swift */; };
+		35BE3FA12E267E750047E041 /* JobLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BE3FA02E267E750047E041 /* JobLogView.swift */; };
+		35BE3FA32E2680CA0047E041 /* LogEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BE3FA22E2680CA0047E041 /* LogEntry.swift */; };
+		35BE3FA62E2695DC0047E041 /* CodableIgnored.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BE3FA42E2695DC0047E041 /* CodableIgnored.swift */; };
 		35CA7C782C946D9000765522 /* MediaOrganizerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CA7C772C946D9000765522 /* MediaOrganizerApp.swift */; };
 		35CA7C7C2C946D9300765522 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35CA7C7B2C946D9300765522 /* Assets.xcassets */; };
 		35CA7C7F2C946D9300765522 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35CA7C7E2C946D9300765522 /* Preview Assets.xcassets */; };
@@ -173,6 +179,12 @@
 		35896CC62E1D0EE90077D9E9 /* ValidationResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationResult.swift; sourceTree = "<group>"; };
 		35896CC82E1D15430077D9E9 /* ValidationMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationMessageView.swift; sourceTree = "<group>"; };
 		35B1B14C2C9C77F700B39FFC /* DraggableElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableElement.swift; sourceTree = "<group>"; };
+		35BE3F982E265D2E0047E041 /* JobLogType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobLogType.swift; sourceTree = "<group>"; };
+		35BE3F9A2E265DAA0047E041 /* JobLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobLog.swift; sourceTree = "<group>"; };
+		35BE3F9E2E26775F0047E041 /* LogLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogLevel.swift; sourceTree = "<group>"; };
+		35BE3FA02E267E750047E041 /* JobLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobLogView.swift; sourceTree = "<group>"; };
+		35BE3FA22E2680CA0047E041 /* LogEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogEntry.swift; sourceTree = "<group>"; };
+		35BE3FA42E2695DC0047E041 /* CodableIgnored.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableIgnored.swift; sourceTree = "<group>"; };
 		35CA7C742C946D9000765522 /* MediaOrganizer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MediaOrganizer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35CA7C772C946D9000765522 /* MediaOrganizerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaOrganizerApp.swift; sourceTree = "<group>"; };
 		35CA7C7B2C946D9300765522 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -292,6 +304,7 @@
 				35CBFF242CB828E0003E3DBE /* MediaFileInfo.swift */,
 				35E39A312CC29305003D6360 /* FileAction.swift */,
 				35896CC62E1D0EE90077D9E9 /* ValidationResult.swift */,
+				35BE3FA22E2680CA0047E041 /* LogEntry.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -343,6 +356,38 @@
 			path = Strategies;
 			sourceTree = "<group>";
 		};
+		35BE3F9C2E2673EA0047E041 /* Implementation */ = {
+			isa = PBXGroup;
+			children = (
+				352B6F022C99BD1C0000789D /* ServiceBase.swift */,
+				352B6F002C99BCF70000789D /* JobService.swift */,
+				3515140A2C9B1D4F000E4CAB /* RuleService.swift */,
+				3559D9562DCBA1CD00B8D0D5 /* ConditionService.swift */,
+				35DF884A2CAD6997007626CB /* ActionService.swift */,
+				35CBFF262CB82B99003E3DBE /* MetadataService.swift */,
+				35CBFF1A2CB804A0003E3DBE /* FileService.swift */,
+				35F872592DCA5D5E0064B304 /* ElementService.swift */,
+				35E8CB502E1C155800CDDDAD /* ValidationService.swift */,
+			);
+			path = Implementation;
+			sourceTree = "<group>";
+		};
+		35BE3F9D2E26746B0047E041 /* Log */ = {
+			isa = PBXGroup;
+			children = (
+				35BE3F9A2E265DAA0047E041 /* JobLog.swift */,
+			);
+			path = Log;
+			sourceTree = "<group>";
+		};
+		35BE3FA52E2695DC0047E041 /* Attributes */ = {
+			isa = PBXGroup;
+			children = (
+				35BE3FA42E2695DC0047E041 /* CodableIgnored.swift */,
+			);
+			path = Attributes;
+			sourceTree = "<group>";
+		};
 		35CA7C6B2C946D9000765522 = {
 			isa = PBXGroup;
 			children = (
@@ -368,6 +413,7 @@
 				35CA7C862C946FCB00765522 /* Infrastructure */,
 				35E39A352CC2A13E003D6360 /* Extensions */,
 				35CA7C872C946FE800765522 /* Protocols */,
+				35BE3FA52E2695DC0047E041 /* Attributes */,
 				35CA7C882C94700B00765522 /* Enums */,
 				35447F432C9848630000C0B1 /* Models */,
 				35CA7C8A2C94703300765522 /* Services */,
@@ -389,8 +435,8 @@
 			isa = PBXGroup;
 			children = (
 				35CA7C8C2C94708500765522 /* Constants.swift */,
-				35CA7C8E2C94710F00765522 /* AppDelegate.swift */,
 				35CA7C9C2C94743100765522 /* AppState.swift */,
+				35CA7C8E2C94710F00765522 /* AppDelegate.swift */,
 				3557DC1E2DCE373000BE779E /* NumberFormatters.swift */,
 			);
 			path = Infrastructure;
@@ -422,6 +468,7 @@
 				35DF88522CAED3CB007626CB /* DateFormatType.swift */,
 				3519DFE52DCCD394007D8B30 /* StringOperatorType.swift */,
 				3519DFE32DCCCF39007D8B30 /* NumberAndDateOperatorType.swift */,
+				35BE3F9E2E26775F0047E041 /* LogLevel.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -432,15 +479,8 @@
 				35E02EFD2DCC930C00D81F7F /* ElementStrategies */,
 				35E02F0B2DCC931500D81F7F /* FileActionStrategies */,
 				3558E6E42DEF1F7F00A0B3AE /* Expressions */,
-				352B6F022C99BD1C0000789D /* ServiceBase.swift */,
-				352B6F002C99BCF70000789D /* JobService.swift */,
-				3515140A2C9B1D4F000E4CAB /* RuleService.swift */,
-				3559D9562DCBA1CD00B8D0D5 /* ConditionService.swift */,
-				35DF884A2CAD6997007626CB /* ActionService.swift */,
-				35CBFF262CB82B99003E3DBE /* MetadataService.swift */,
-				35CBFF1A2CB804A0003E3DBE /* FileService.swift */,
-				35F872592DCA5D5E0064B304 /* ElementService.swift */,
-				35E8CB502E1C155800CDDDAD /* ValidationService.swift */,
+				35BE3F9C2E2673EA0047E041 /* Implementation */,
+				35BE3F9D2E26746B0047E041 /* Log */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -499,6 +539,7 @@
 				35E02EE42DCC930200D81F7F /* FileServiceType.swift */,
 				35E02EE62DCC930200D81F7F /* MetadataServiceType.swift */,
 				35E8CB4E2E1C13AB00CDDDAD /* ValidationServiceType.swift */,
+				35BE3F982E265D2E0047E041 /* JobLogType.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -574,8 +615,9 @@
 				3538D5152DF2DCBE00179C3C /* JobRunView.swift */,
 				3538D50F2DF20D3C00179C3C /* JobAbortView.swift */,
 				3538D50D2DF1CE0400179C3C /* JobProgressView.swift */,
-				35E02F212DCC931C00D81F7F /* JobGeneralSettingsEditView.swift */,
 				35E02F222DCC931C00D81F7F /* JobSettingsView.swift */,
+				35E02F212DCC931C00D81F7F /* JobGeneralSettingsEditView.swift */,
+				35BE3FA02E267E750047E041 /* JobLogView.swift */,
 			);
 			path = Jobs;
 			sourceTree = "<group>";
@@ -688,6 +730,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3557DC1F2DCE373300BE779E /* NumberFormatters.swift in Sources */,
+				35BE3FA62E2695DC0047E041 /* CodableIgnored.swift in Sources */,
 				35E39A322CC29305003D6360 /* FileAction.swift in Sources */,
 				3559D9532DCB9B1A00B8D0D5 /* ConditionValue.swift in Sources */,
 				35DF884D2CAD7EC1007626CB /* ElementOptions.swift in Sources */,
@@ -703,6 +746,7 @@
 				35E02F2C2DCC931C00D81F7F /* ActionPreviewView.swift in Sources */,
 				35E02F2D2DCC931C00D81F7F /* ActionView.swift in Sources */,
 				35E02F2E2DCC931C00D81F7F /* DraggableActionElementsView.swift in Sources */,
+				35BE3FA32E2680CA0047E041 /* LogEntry.swift in Sources */,
 				35E02F2F2DCC931C00D81F7F /* DraggableSourceElementsView.swift in Sources */,
 				35E02F302DCC931C00D81F7F /* InfoView.swift in Sources */,
 				35E02F312DCC931C00D81F7F /* ConditionEditView.swift in Sources */,
@@ -728,11 +772,13 @@
 				35E02EF02DCC930200D81F7F /* FileActionStrategyFactoryType.swift in Sources */,
 				3558E6E62DEF1FBB00A0B3AE /* ASTNode.swift in Sources */,
 				35E02EF12DCC930200D81F7F /* FileServiceType.swift in Sources */,
+				35BE3FA12E267E750047E041 /* JobLogView.swift in Sources */,
 				35E02EF22DCC930200D81F7F /* JobServiceType.swift in Sources */,
 				3519DFE42DCCCF39007D8B30 /* NumberAndDateOperatorType.swift in Sources */,
 				35E02EF32DCC930200D81F7F /* MetadataServiceType.swift in Sources */,
 				35E02EF42DCC930200D81F7F /* RuleServiceType.swift in Sources */,
 				35E02EF52DCC930200D81F7F /* ServiceBaseType.swift in Sources */,
+				35BE3F992E265D2E0047E041 /* JobLogType.swift in Sources */,
 				3538D50E2DF1CE0B00179C3C /* JobProgressView.swift in Sources */,
 				35B1B14D2C9C77F700B39FFC /* DraggableElement.swift in Sources */,
 				3559D9612DCBADB700B8D0D5 /* ElementType.swift in Sources */,
@@ -783,6 +829,7 @@
 				35CBFF252CB828E0003E3DBE /* MediaFileInfo.swift in Sources */,
 				3558E6EA2DEF206E00A0B3AE /* ASTError.swift in Sources */,
 				3557DC282DCE657100BE779E /* DatePickerWithSecondsPopover.swift in Sources */,
+				35BE3F9F2E2677620047E041 /* LogLevel.swift in Sources */,
 				35E8CB512E1C155B00CDDDAD /* ValidationService.swift in Sources */,
 				352B6F012C99BCF80000789D /* JobService.swift in Sources */,
 				35447F452C9848AA0000C0B1 /* Job.swift in Sources */,
@@ -793,6 +840,7 @@
 				35CA7C9F2C94855B00765522 /* FolderType.swift in Sources */,
 				3559D9572DCBA1CD00B8D0D5 /* ConditionService.swift in Sources */,
 				352B6F0B2C9A0BAC0000789D /* ConditionType.swift in Sources */,
+				35BE3F9B2E265DAA0047E041 /* JobLog.swift in Sources */,
 				3557DC152DCDF5A400BE779E /* ExpressionElementType.swift in Sources */,
 				35CA7C972C94720C00765522 /* ViewExtensions.swift in Sources */,
 				35CA7C912C94715900765522 /* Settable.swift in Sources */,

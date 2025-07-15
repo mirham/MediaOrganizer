@@ -9,5 +9,5 @@
 import Foundation
 
 protocol MetadataServiceType : ServiceBaseType {
-    func getFileMetadataAsync(fileUrl: URL) async -> [MetadataType: Any?]
+    func getFileMetadataAsync(fileUrl: URL) async throws -> [MetadataType: Any?]
 }

@@ -5,7 +5,6 @@
 //  Created by UglyGeorge on 06.05.2025.
 //
 
-
 import Foundation
 
 protocol RuleServiceType : ServiceBaseType {
@@ -15,7 +14,7 @@ protocol RuleServiceType : ServiceBaseType {
     func addRule()
     func updateRule()
     func isCurrentRule(ruleId: UUID) -> Bool
-    func applyRule(rule:Rule, fileInfo: MediaFileInfo) -> [FileAction]
+    func applyRule(rule:Rule, fileInfo: MediaFileInfo) throws -> [FileAction]
     func validateRule(rule: Rule?)
     func resetCurrentRule()
     func removeCurrentRule()

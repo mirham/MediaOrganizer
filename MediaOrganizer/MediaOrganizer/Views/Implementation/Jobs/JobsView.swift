@@ -41,10 +41,13 @@ struct JobsView: FolderContainerView {
                             .fontWeight(.bold)
                             .padding(.top, 5)
                             .padding(.bottom, 2)
+                            .font(.system(size: 14))
                         Text(String(format: Constants.maskSource, job.sourceFolder))
                             .foregroundStyle(jobService.isCurrentJob(jobId: job.id) ? .white : .gray)
+                            .font(.system(size: 11))
                         Text(String(format: Constants.maskOutput, job.outputFolder))
                             .foregroundStyle(jobService.isCurrentJob(jobId: job.id) ? .white : .gray)
+                            .font(.system(size: 11))
                         JobProgressView(job: job)
                     }
                     HStack {
@@ -85,24 +88,24 @@ struct JobsView: FolderContainerView {
                 .padding(.leading)
         })
         .onAppear() {
-            appState.views.isJobsViewShown = true
+            appState.views.addShownWindow(windowId: Constants.windowIdMain)
         }
         .onDisappear() {
-            appState.views.isJobsViewShown = false
+            appState.views.removeShownWindow(windowId: Constants.windowIdMain)
         }
     }
     
     // MARK: Private functions
     
     private func hanldeJobScrollViewClick () {
-        guard !appState.views.isJobSettingsViewShown
+        guard appState.views.isWindowShown(windowId: Constants.windowIdMain)
         else { return }
         
         jobService.resetCurrentJob()
     }
     
     private func handleJobItemClick (job : Job) {
-        guard !appState.views.isJobSettingsViewShown
+        guard appState.views.isWindowShown(windowId: Constants.windowIdMain)
         else { return }
         
         appState.current.job = job
@@ -114,13 +117,11 @@ struct JobsView: FolderContainerView {
     }
     
     private func showEditJobWindow() {
-        if (!appState.views.isJobSettingsViewShown){
+        if !appState.views.isWindowShown(windowId: Constants.windowIdJobSettings) {
             openWindow(id: Constants.windowIdJobSettings)
-            ViewHelper.activateView(viewId: Constants.windowIdJobSettings)
         }
-        else {
-            ViewHelper.activateView(viewId: Constants.windowIdJobSettings)
-        }
+        
+        ViewHelper.activateView(viewId: Constants.windowIdJobSettings)
     }
 }
 

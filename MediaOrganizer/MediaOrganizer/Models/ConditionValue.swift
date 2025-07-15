@@ -52,8 +52,10 @@ enum ConditionValue: Codable, Equatable {
             case Constants.ceString:
                 self = .string(try container.decode(String.self, forKey: .value))
             default:
-                // TODO: Logging
-                throw DecodingError.dataCorruptedError(forKey: .type, in: container, debugDescription: "Invalid type")
+                throw DecodingError.dataCorruptedError(
+                    forKey: .type,
+                    in: container,
+                    debugDescription: String(format: Constants.errorInvalidConditionValueType, type))
         }
     }
     

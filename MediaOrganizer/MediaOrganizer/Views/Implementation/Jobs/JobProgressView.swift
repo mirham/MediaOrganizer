@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct JobProgressView: View {
+    @EnvironmentObject var appState: AppState
+    
+    @Environment(\.openWindow) private var openWindow
+    
     @ObservedObject var job: Job
     
     var body: some View {
@@ -19,6 +23,7 @@ struct JobProgressView: View {
                     .isHidden(hidden: !job.progress.isCompleted, remove: true)
                 makeLabel(labelText: Constants.elCanceled, fillColor: Color.red)
                     .isHidden(hidden: !job.progress.isCancelled, remove: true)
+                makeLogButton()
                 Text(Constants.elAnalyzingFiles)
                     .offset(y: 10)
                     .isHidden(hidden: !job.progress.isAnalyzing, remove: true)
@@ -48,5 +53,28 @@ struct JobProgressView: View {
                     .fill(fillColor)
                     .offset(y: 15)
             )
+    }
+    
+    @ViewBuilder
+    private func makeLogButton() -> some View {
+        let hasErrors = job.progress.errorsCount > 0
+        
+        Text(hasErrors ? "\(Constants.error) \(job.progress.errorsCount)" : "\(Constants.info)")
+            .textCase(.uppercase)
+            .offset(y: 15)
+            .background(
+                RoundedRectangle(cornerRadius: 5, style: .continuous)
+                    .fill(.gray)
+                    .offset(y: 15)
+            )
+            .gesture(TapGesture(count: 1).onEnded {
+                appState.current.logJobId = job.id
+                
+                if !appState.views.isWindowShown(windowId: Constants.windowIdLog) {
+                    openWindow(id: Constants.windowIdLog)
+                }
+                
+                ViewHelper.activateView(viewId: Constants.windowIdLog)
+            })
     }
 }

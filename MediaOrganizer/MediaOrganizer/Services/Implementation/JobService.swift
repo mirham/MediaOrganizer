@@ -148,6 +148,8 @@ class JobService: ServiceBase, JobServiceType {
             job.progress.refreshSignal.toggle()
         }
         
+        let jobLog = JobLog(jobId: job.id)
+        
         do {
             let mediaFiles = try await fileService.getFolderMediaFilesAsync(
             path: job.sourceFolder,
@@ -172,7 +174,7 @@ class JobService: ServiceBase, JobServiceType {
                         throw CancellationError()
                     }
                     
-                    let wasProcessed = await processFile(fileInfo, for: job)
+                    let wasProcessed = try await processFile(fileInfo, for: job)
                     
                     await MainActor.run {
                         if wasProcessed {
@@ -184,12 +186,14 @@ class JobService: ServiceBase, JobServiceType {
                     }
                 }
             }
-        } catch is CancellationError {
-            // TODO: Logging
-            print("Job \(job.id) cancelled")
+        }
+        catch is CancellationError {
+            jobLog.info(Constants.lmJobCancelled)
         }
         catch {
-            print("Job \(job.id) failed: \(error)")
+            jobLog.error(String(format:Constants.lmJobFailed, error.localizedDescription))
+            job.progress.errorsCount += 1
+            job.progress.refreshSignal.toggle()
         }
         
         await MainActor.run {
@@ -198,13 +202,13 @@ class JobService: ServiceBase, JobServiceType {
         }
     }
     
-    private func processFile(_ fileInfo: MediaFileInfo, for job: Job) async -> Bool {
+    private func processFile(_ fileInfo: MediaFileInfo, for job: Job) async throws -> Bool {
         for rule in job.rules {
-            let fileActions = ruleService.applyRule(rule: rule, fileInfo: fileInfo)
+            let fileActions = try ruleService.applyRule(rule: rule, fileInfo: fileInfo)
             
             guard !fileActions.isEmpty else { continue }
             
-            await fileService.peformFileActionsAsync(
+            try await fileService.peformFileActionsAsync(
                 outputPath: job.outputFolder,
                 fileInfo: fileInfo,
                 fileActions: fileActions

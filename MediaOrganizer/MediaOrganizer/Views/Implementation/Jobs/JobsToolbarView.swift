@@ -58,13 +58,11 @@ struct JobsToolbarView : View {
     }
     
     private func showJobSettingsWindow() {
-        if (!appState.views.isJobSettingsViewShown){
+        if !appState.views.isWindowShown(windowId: Constants.windowIdJobSettings){
             openWindow(id: Constants.windowIdJobSettings)
-            ViewHelper.activateView(viewId: Constants.windowIdJobSettings)
         }
-        else {
-            ViewHelper.activateView(viewId: Constants.windowIdJobSettings)
-        }
+        
+        ViewHelper.activateView(viewId: Constants.windowIdJobSettings)
     }
 }
 

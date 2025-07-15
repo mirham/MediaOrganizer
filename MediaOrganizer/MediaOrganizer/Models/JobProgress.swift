@@ -43,7 +43,7 @@ struct JobProgress {
                         * Constants.maxPercentage
             
             let isJobCompleted = progress == Constants.maxPercentage
-                || (processedCount + skippedCount) == totalCount
+                || (processedCount + skippedCount + errorsCount) == totalCount
             
             if isJobCompleted {
                 resetProgressFlags()
@@ -54,10 +54,12 @@ struct JobProgress {
     var skippedCount: Int = 0
     var progress: Double = 0.0
     var totalCount: Int = 0
+    var errorsCount: Int = 0
     
     func isEmpty() -> Bool {
         return self.processedCount == 0
             && self.skippedCount == 0
+            && self.errorsCount == 0
             && self.totalCount == 0
     }
     
@@ -79,6 +81,7 @@ struct JobProgress {
         self.progress = 0.0
         self.processedCount = 0
         self.skippedCount = 0
+        self.errorsCount = 0
         self.totalCount = 0
     }
 }

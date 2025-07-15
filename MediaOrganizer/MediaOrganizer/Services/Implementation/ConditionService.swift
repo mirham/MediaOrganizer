@@ -37,7 +37,7 @@ class ConditionService : ServiceBase, ConditionServiceType {
     
     func applyConditions(
         conditions: [Condition],
-        fileInfo: MediaFileInfo) -> Bool {
+        fileInfo: MediaFileInfo) throws -> Bool {
         guard !conditions.isEmpty else { return false }
         
         for condition in conditions {
@@ -45,18 +45,12 @@ class ConditionService : ServiceBase, ConditionServiceType {
                 element.fileMetadata = fileInfo.metadata
             }
             
-            do {
-                let parser = ExpressionParser(elements: condition.elements)
-                let ast = try parser.parse()
-                let isMatch = try ast.evaluate(elementStrategyFactory)
-                
-                if isMatch {
-                    return true
-                }
-            }
-            catch {
-                // TODO: Log needed.
-                print("Error when parsing:" + error.localizedDescription)
+            let parser = ExpressionParser(elements: condition.elements)
+            let ast = try parser.parse()
+            let isMatch = try ast.evaluate(elementStrategyFactory)
+            
+            if isMatch {
+                return true
             }
         }
         

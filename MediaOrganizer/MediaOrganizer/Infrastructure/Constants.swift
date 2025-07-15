@@ -10,6 +10,7 @@ import Foundation
 struct Constants {
     // MARK: Default values
     static let appName = "MirHam Media Organizer"
+    static let defaultAppBundleName = "com.mirham.MediaOrganizer"
     static let step: Int = 1
     static let progressBarUpdateInterval: Double = 0.1
     static let threadChunk = 50
@@ -21,6 +22,10 @@ struct Constants {
     static let defaultToleranceInNanoseconds: UInt64 = 100_000_000
     static let maxFileNameLength = 255
     static let maxFolderPathLength = 1024
+    static let logFileNameMask = "job_%1$@.log"
+    static let loggerQueueLabel = "\(Bundle.main.bundleIdentifier!).logger"
+    static let loggerDomainName = "MediaOrganizer_Logger"
+    static let defaultLogFileLimit: Int = 10000
     
     // MARK: Symbols and strings
     static let space = "   "
@@ -32,13 +37,18 @@ struct Constants {
     static let nullChar = "\0"
     static let colon = ":"
     static let sharp = "#"
+    static let newLine = "\n"
+    static let info = "🟢"
+    static let error = "🔴"
     
     // MARK: Settings key names
     static let settingsKeyJobs = "jobs"
     
     // MARK: Window IDs
+    static let windowIdMain = "main-view"
     static let windowIdJobSettings = "job-settings-view"
     static let windowIdInfo = "info-view"
+    static let windowIdLog = "log-view"
     
     // MARK: Icons
     static let iconApp = "AppIcon"
@@ -99,13 +109,71 @@ struct Constants {
     static let longitudeMinValue: Double = -180.0
     static let longitudeMaxValue: Double = 180.0
     static let defaultValidationDateFormat = "yyyy/MM/dd HH:mm:ss"
+    static let defaultLogEntryDateFormat = "yyyy-MM-dd HH:mm:ss"
     static let dateMinValueString = "1900/01/01 00:00:00"
     static let dateMaxValueString = "2100/12/31 23:59:59"
     
-    // MARK: Errors
-    static let errorNoStrategyForElementType = "No strategy found for element type: %1$@."
-    static let errorUnexpectedLogicalOperator = "Unexpected logical operator: %1$@."
-    static let errorAstInvalidGroupStructure = "Invalid group structure in AST."
+    // MARK: Element names
+    static let elInfo = "Info"
+    static let elAbout = "About"
+    static let elJobSettings = "Job settings"
+    static let elGeneral = "General"
+    static let elRules = "Rules"
+    static let elAddJob = "Add job"
+    static let elEditJob = "Edit job"
+    static let elChoose = "Choose..."
+    static let elJobName = "Job name"
+    static let elConditions = "Conditions"
+    static let elActions = "Actions"
+    static let elNoConditions = "No conditions"
+    static let elNoActions = "No actions"
+    static let elActionPreview = "Action example: "
+    static let elConditionPreview = "Condition example: "
+    static let elCompleted = " completed "
+    static let elCanceled = " cancelled "
+    static let elNotYetRun = " not yet run "
+    static let elAnalyzingFiles = "Analyzing files..."
+    static let elChecked = "Checked"
+    static let elUnchecked = "Unchecked"
+    static let elJobLog = "Job log"
+    static let elShowLogInFolder = "Show in folder"
+    static let elClear = "Clear"
+    
+    // MARK: Masks
+    static let maskSource =  "Source: %1$@"
+    static let maskOutput =  "Output: %1$@"
+    
+    // MARK: Toolbars
+    static let toolbarRunJobs = "Run checked inactive jobs"
+    static let toolbarAbortActiveJobs = "Abort active jobs"
+    static let toolbarAddJob = "Add job"
+    static let toolbarRemoveJob = "Remove job"
+    static let toolbarAddRule = "Add rule"
+    static let toolbarRemoveRule = "Remove rule"
+    
+    // MARK: Stubs
+    static let stubNotSelected = "not selected yet"
+    
+    // MARK: Hints
+    static let hintFolder = "Select a folder..."
+    static let hintJobName = "A job name"
+    static let hintCustomText = "Custom text"
+    static let hintRunJob = "Run '%1$@' job"
+    static let hintAbortJob = "Abort '%1$@' job"
+    
+    // MARK: Drag and Drop
+    static let ddFolder = "public.file-url"
+    
+    // MARK: Dialogs
+    static let dialogHeaderRemoveJob = "Delete job '%1$@'"
+    static let dialogBodyRemoveJob = "This operation cannot be undone.\nThe folders will be preserved."
+    static let dialogHeaderRemoveRule = "Delete rule"
+    static let dialogBodyRemoveRule = "This operation cannot be undone."
+    static let dialogHeaderCompleteAction = "Complete the action."
+    static let dialogBodyCompleteAction = "Some changes are not completed. Please complete or reject them before closing this window."
+    static let dialogButtonDelete = "Remove"
+    static let dialogButtonCancel = "Cancel"
+    static let dialogButtonOk = "OK"
     
     // MARK: Validation messages
     static let vmStringLengthIsIncorrect = "The string must contain no more than \(stringMinLength) characters and no less than \(stringMaxLength) characters.";
@@ -151,64 +219,17 @@ struct Constants {
     static let vmExtraMoveToFolderAction = "The 'Move to Folder' action should only appear once."
     static let vmCannotParseArray = "Unable to parse array values. Make sure there is more than one value and they are separated by a comma."
     
-    // MARK: Element names
-    static let elInfo = "Info"
-    static let elAbout = "About"
-    static let elJobSettings = "Job settings"
-    static let elGeneral = "General"
-    static let elRules = "Rules"
-    static let elAddJob = "Add job"
-    static let elEditJob = "Edit job"
-    static let elChoose = "Choose..."
-    static let elJobName = "Job name"
-    static let elConditions = "Conditions"
-    static let elActions = "Actions"
-    static let elNoConditions = "No conditions"
-    static let elNoActions = "No actions"
-    static let elActionPreview = "Action example: "
-    static let elConditionPreview = "Condition example: "
-    static let elCompleted = " completed "
-    static let elCanceled = " cancelled "
-    static let elNotYetRun = " not yet run "
-    static let elAnalyzingFiles = "Analyzing files..."
-    static let elChecked = "Checked"
-    static let elUnchecked = "Unchecked"
+    // MARK: Log messages
+    static let lmJobCancelled = "The job has been cancelled."
+    static let lmJobFailed = "The job has been failed with error: %1$@"
     
-    // MARK: Masks
-    static let maskSource =  "Source: %1$@"
-    static let maskOutput =  "Output: %1$@"
-    
-    // MARK: Toolbars
-    static let toolbarRunJobs = "Run checked inactive jobs"
-    static let toolbarAbortActiveJobs = "Abort active jobs"
-    static let toolbarAddJob = "Add job"
-    static let toolbarRemoveJob = "Remove job"
-    static let toolbarAddRule = "Add rule"
-    static let toolbarRemoveRule = "Remove rule"
-    
-    // MARK: Stubs
-    static let stubNotSelected = "not selected yet"
-    
-    // MARK: Hints
-    static let hintFolder = "Select a folder..."
-    static let hintJobName = "A job name"
-    static let hintCustomText = "Custom text"
-    static let hintRunJob = "Run '%1$@' job"
-    static let hintAbortJob = "Abort '%1$@' job"
-    
-    // MARK: Drag and Drop
-    static let ddFolder = "public.file-url"
-    
-    // MARK: Dialogs
-    static let dialogHeaderRemoveJob = "Delete job '%1$@'"
-    static let dialogBodyRemoveJob = "This operation cannot be undone.\nThe folders will be preserved."
-    static let dialogHeaderRemoveRule = "Delete rule"
-    static let dialogBodyRemoveRule = "This operation cannot be undone."
-    static let dialogHeaderCompleteAction = "Complete the action."
-    static let dialogBodyCompleteAction = "Some changes are not completed. Please complete or reject them before closing this window."
-    static let dialogButtonDelete = "Remove"
-    static let dialogButtonCancel = "Cancel"
-    static let dialogButtonOk = "OK"
+    // MARK: Errors
+    static let errorNoStrategyForElementType = "No strategy found for element type: %1$@."
+    static let errorUnexpectedLogicalOperator = "Unexpected logical operator: %1$@."
+    static let errorAstInvalidGroupStructure = "Invalid structure of syntax three."
+    static let errorFailedToClearLogFile = "Failed to clear log file: %1$@"
+    static let errorReadingLogFile = "Error reading log file: %1$@"
+    static let errorInvalidConditionValueType = "Invalid condition value type: %1$@."
     
     // MARK: About
     static let aboutSupportMail = "bWlyaGFtQGFidi5iZw=="

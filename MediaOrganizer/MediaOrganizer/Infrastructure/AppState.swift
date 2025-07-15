@@ -28,6 +28,7 @@ extension AppState {
         var isActionInEditMode = false
         var actionElement: ActionElement? = nil
         var isActionElementInEditMode = false
+        var logJobId: UUID? = nil
         var validationMessage: String? = nil
         
         var isRuleSetupComplete: Bool {
@@ -64,6 +65,7 @@ extension AppState {
                 && lhs.action == rhs.action
                 && lhs.isActionInEditMode == rhs.isActionInEditMode
                 && lhs.isActionElementInEditMode == rhs.isActionElementInEditMode
+                && lhs.logJobId == rhs.logJobId
                 && lhs.validationMessage == rhs.validationMessage
             
             return result
@@ -73,9 +75,19 @@ extension AppState {
 
 extension AppState {
     struct Views {
-        var isJobsViewShown = false
-        var isJobSettingsViewShown = false
-        var isInfoViewShown = false
+        private var shownWindows: [String] = [String]()
+        
+        func isWindowShown(windowId: String) -> Bool {
+            return shownWindows.count(where: {$0 == windowId}) > 0
+        }
+        
+        mutating func addShownWindow(windowId: String) {
+            shownWindows.append(windowId)
+        }
+        
+        mutating func removeShownWindow(windowId: String) {
+            shownWindows.removeAll(where: {$0 == windowId})
+        }
     }
 }
 
