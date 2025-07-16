@@ -23,7 +23,7 @@ struct RulesToolbarView : View {
     var body: some View {
         HStack {
             Button(
-                Constants.toolbarAddRule,
+                Constants.toolbarAdd,
                 systemImage: Constants.iconAdd,
                 action: handleAddRuleButtonClick)
             .withToolbarButtonStyle(
@@ -34,7 +34,7 @@ struct RulesToolbarView : View {
                 showOverAddRule = hovering && controlActiveState == .key
             })
             .disabled(!appState.current.isRuleSetupComplete)
-            Button(Constants.toolbarRemoveRule, systemImage: Constants.iconRemove) {
+            Button(Constants.toolbarRemove, systemImage: Constants.iconRemove) {
                 isRuleRemoving = true
             }
             .withToolbarButtonStyle(

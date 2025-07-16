@@ -18,6 +18,13 @@ class JobService: ServiceBase, JobServiceType {
         appState.current.job = Job.initDefault()
     }
     
+    func duplicateJob() {
+        guard let currentJob = appState.current.job
+        else { return }
+        
+        appState.userData.jobs.append(currentJob.clone())
+    }
+    
     func doesCurrentJobExist() -> Bool {
         guard appState.current.job != nil else { return false }
         
@@ -149,6 +156,7 @@ class JobService: ServiceBase, JobServiceType {
         }
         
         let jobLog = JobLog(jobId: job.id)
+        jobLog.clearLogFile()
         
         do {
             let mediaFiles = try await fileService.getFolderMediaFilesAsync(
@@ -179,26 +187,37 @@ class JobService: ServiceBase, JobServiceType {
                     await MainActor.run {
                         if wasProcessed {
                             job.progress.processedCount += Constants.step
+                            //job.progress.refreshSignal.toggle()
                         }
                         else {
                             job.progress.skippedCount += Constants.step
+                            //job.progress.refreshSignal.toggle()
                         }
                     }
                 }
             }
+            
+            await MainActor.run {
+                job.progress.inProgress = false
+                job.progress.isCompleted = true
+                job.progress.refreshSignal.toggle()
+            }
         }
         catch is CancellationError {
             jobLog.info(Constants.lmJobCancelled)
+            
+            await MainActor.run {
+                job.progress.inProgress = false
+                job.progress.isCancelled = true
+                job.progress.refreshSignal.toggle()
+            }
         }
         catch {
             jobLog.error(String(format:Constants.lmJobFailed, error.localizedDescription))
-            job.progress.errorsCount += 1
-            job.progress.refreshSignal.toggle()
-        }
-        
-        await MainActor.run {
-            job.progress.inProgress = false
-            job.progress.refreshSignal.toggle()
+            await MainActor.run {
+                job.progress.errorsCount += 1
+                job.progress.refreshSignal.toggle()
+            }
         }
     }
     

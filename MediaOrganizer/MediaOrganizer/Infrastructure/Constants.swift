@@ -40,6 +40,8 @@ struct Constants {
     static let newLine = "\n"
     static let info = "🟢"
     static let error = "🔴"
+    static let infoChar: Character = "🟢"
+    static let errorChar: Character = "🔴"
     
     // MARK: Settings key names
     static let settingsKeyJobs = "jobs"
@@ -55,6 +57,7 @@ struct Constants {
     static let iconRun = "play.fill"
     static let iconArrowForward = "arrow.forward"
     static let iconAdd = "plus.circle.fill"
+    static let iconDuplicate = "document.on.document.fill"
     static let iconRemove = "minus.circle.fill"
     static let iconSettings = "gearshape.2"
     static let iconCheckmark = "checkmark.circle.fill"
@@ -116,13 +119,14 @@ struct Constants {
     // MARK: Element names
     static let elInfo = "Info"
     static let elAbout = "About"
-    static let elJobSettings = "Job settings"
+    static let elJobSettings = "Job settings: %1$@"
     static let elGeneral = "General"
     static let elRules = "Rules"
     static let elAddJob = "Add job"
     static let elEditJob = "Edit job"
     static let elChoose = "Choose..."
     static let elJobName = "Job name"
+    static let elJobs = "Jobs"
     static let elConditions = "Conditions"
     static let elActions = "Actions"
     static let elNoConditions = "No conditions"
@@ -135,7 +139,7 @@ struct Constants {
     static let elAnalyzingFiles = "Analyzing files..."
     static let elChecked = "Checked"
     static let elUnchecked = "Unchecked"
-    static let elJobLog = "Job log"
+    static let elJobLog = "Job log: %1$@"
     static let elShowLogInFolder = "Show in folder"
     static let elClear = "Clear"
     
@@ -146,10 +150,11 @@ struct Constants {
     // MARK: Toolbars
     static let toolbarRunJobs = "Run checked inactive jobs"
     static let toolbarAbortActiveJobs = "Abort active jobs"
-    static let toolbarAddJob = "Add job"
-    static let toolbarRemoveJob = "Remove job"
-    static let toolbarAddRule = "Add rule"
-    static let toolbarRemoveRule = "Remove rule"
+    static let toolbarAdd = "Add"
+    static let toolbarRemove = "Remove"
+    static let toolbarUp = "Up"
+    static let toolbarDown = "Down"
+    static let toolbarDuplicate = "Duplicate"
     
     // MARK: Stubs
     static let stubNotSelected = "not selected yet"

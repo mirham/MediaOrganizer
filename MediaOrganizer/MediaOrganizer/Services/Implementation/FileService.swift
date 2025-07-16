@@ -39,7 +39,6 @@ class FileService : ServiceBase, FileServiceType {
             .filter { $0.isImageFile || $0.isVideoFile }
         
         for await fileUrl in filteredFileUrls {
-            print(fileUrl.absoluteString)
             try Task.checkCancellation()
             
             if jobProgress.isCancelled {

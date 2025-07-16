@@ -9,6 +9,6 @@ import Foundation
 
 struct LogEntry: Identifiable, Equatable {
     let id = UUID()
-    let number: Int
+    let level: LogLevel
     let message: String
 }

@@ -36,7 +36,8 @@ class JobLog: ServiceBase, JobLogType {
     }
     
     func getLogFileUrl() -> URL? {
-        guard let appSupportDirectory = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
+        guard let appSupportDirectory = FileManager.default.urls(
+            for: .applicationSupportDirectory, in: .userDomainMask).first
         else { return nil }
         
         let appDirectory = appSupportDirectory.appendingPathComponent(subsystem)
@@ -149,68 +150,6 @@ class JobLog: ServiceBase, JobLogType {
             if let data = logMessage.data(using: .utf8) {
                 fileHandle.write(data)
             }
-            
-            self.trimLogFile(at: logFileUrl)
-        } catch {
-            return
-        }
-    }
-    
-    private func trimLogFile(at fileURL: URL) {
-        var recentLines: [String] = []
-        
-        do {
-            guard let stream = InputStream(url: fileURL)
-            else { return }
-            
-            stream.open()
-            
-            defer { stream.close() }
-            
-            let bufferSize = 1024
-            let buffer = UnsafeMutablePointer<UInt8>.allocate(capacity: bufferSize)
-            defer { buffer.deallocate() }
-            
-            var partialLine = String()
-            
-            while stream.hasBytesAvailable {
-                let bytesRead = stream.read(buffer, maxLength: bufferSize)
-                
-                if bytesRead < 0 {
-                    throw stream.streamError
-                    ?? NSError(domain: Constants.loggerDomainName, code: -1, userInfo: nil)
-                }
-                
-                if bytesRead == 0 { break }
-                
-                if let chunk = String(bytes: UnsafeBufferPointer(start: buffer, count: bytesRead), encoding: .utf8) {
-                    let lines = (partialLine + chunk).split(
-                        separator: Constants.newLine,
-                        omittingEmptySubsequences: false)
-                    partialLine = lines.last.map { String($0) } ?? String()
-                    
-                    for line in lines.dropLast(1) {
-                        recentLines.append(String(line))
-                        if recentLines.count > Constants.defaultLogFileLimit {
-                            recentLines.removeFirst()
-                        }
-                    }
-                }
-            }
-            
-            if !partialLine.isEmpty {
-                recentLines.append(partialLine)
-                if recentLines.count > Constants.defaultLogFileLimit {
-                    recentLines.removeFirst()
-                }
-            }
-            
-            if recentLines.count > Constants.defaultLogFileLimit {
-                recentLines = Array(recentLines.suffix(Constants.defaultLogFileLimit))
-            }
-            
-            let trimmedContent = recentLines.joined(separator: Constants.newLine)
-            try trimmedContent.write(to: fileURL, atomically: true, encoding: .utf8)
         } catch {
             return
         }

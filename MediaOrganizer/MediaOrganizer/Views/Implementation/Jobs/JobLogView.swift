@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Combine
 import Factory
 
 struct JobLogView: View {
@@ -15,6 +14,9 @@ struct JobLogView: View {
     @Environment(\.controlActiveState) var controlActiveState
     
     @StateObject private var viewModel: LogViewModel
+    
+    @State private var selectedEntryId: UUID? = nil
+    @State private var selectedEntryMessage: String? = nil
     
     var log: JobLogType
     
@@ -25,23 +27,37 @@ struct JobLogView: View {
     }
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             ScrollView {
                 ScrollViewReader { scrollProxy in
-                    LazyVStack(alignment: .leading, spacing: 2) {
-                        ForEach(viewModel.logEntries) { entry in
-                            HStack(spacing: 8) {
-                                Text(String("\(entry.number) |"))
-                                    .font(.system(.body))
-                                    .foregroundColor(.gray)
-                                    .frame(width: 60, alignment: .trailing)
-                                Text(entry.message)
-                                    .font(.system(.body))
-                                    .foregroundColor(.white)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
+                    LazyVStack(alignment: .leading, spacing: 0) {
+                        ForEach(Array(viewModel.logEntries.enumerated()), id: \.element.id) { index, entry in
+                            VStack(alignment: .leading) {
+                                HStack() {
+                                    Circle()
+                                        .fill(entry.level == .info ? .green : .red)
+                                        .frame(width: 10, height: 10)
+                                    Text(entry.message)
+                                        .lineLimit(1)
+                                        .truncationMode(.tail)
+                                        .allowsHitTesting(false)
+                                    Spacer()
+                                }
+                                .id(entry.id)
+                                .padding(.horizontal, 8)
                             }
-                            .id(entry.id)
-                            .padding(.horizontal, 8)
+                            .frame(height: 25)
+                            .frame(maxWidth: .infinity)
+                            .background(
+                                selectedEntryId == entry.id
+                                ? Color.blue.opacity(0.3)
+                                : (index % 2 == 0 ? Color.gray.opacity(0.2) : Color.clear)
+                            )
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                selectedEntryMessage = entry.message
+                                selectedEntryId = entry.id
+                            }
                         }
                     }
                     .onChange(of: viewModel.logEntries, { _, newEntries in
@@ -50,14 +66,12 @@ struct JobLogView: View {
                         }
                     })
                     .textSelection(.enabled)
-                    .padding(.vertical, 8)
                 }
             }
-            HStack {
-                Button(Constants.elClear, action: handleClearLogClick)
-                    .asLogButton()
-            }
-            .padding(.bottom, 5)
+            Divider()
+            Text(selectedEntryMessage ?? String())
+                .frame(maxWidth: .infinity, minHeight: 100, alignment: .topLeading)
+                .padding(5)
         }
         .onAppear(perform: {
             appState.views.addShownWindow(windowId: Constants.windowIdLog)
@@ -67,91 +81,6 @@ struct JobLogView: View {
             appState.views.removeShownWindow(windowId: Constants.windowIdLog)
         })
         .opacity(getViewOpacity(state: controlActiveState))
-    }
-    
-    // MARK: Private functions
-    
-    private func handleClearLogClick() {
-        log.clearLogFile()
-    }
-}
-
-class LogViewModel: NSObject, ObservableObject, NSFilePresenter {
-    @Published var logEntries: [LogEntry] = []
-    
-    var presentedItemURL: URL?
-    var presentedItemOperationQueue: OperationQueue = .main
-    
-    private var cancellables = Set<AnyCancellable>()
-    private let fileChangeSubject = PassthroughSubject<Void, Never>()
-    
-    init(fileURL: URL?) {
-        self.presentedItemURL = fileURL
-        super.init()
-        loadLogContent()
-        startFileMonitoring()
-        
-        fileChangeSubject
-            .debounce(for: .milliseconds(100), scheduler: DispatchQueue.main)
-            .sink { [weak self] in
-                self?.loadLogContent()
-            }
-            .store(in: &cancellables)
-    }
-    
-    deinit {
-        stopFileMonitoring()
-    }
-    
-    private func loadLogContent() {
-        guard let fileURL = presentedItemURL else {
-            DispatchQueue.main.async { [weak self] in
-                self?.logEntries = []
-            }
-            return
-        }
-        
-        do {
-            let content = try String(contentsOf: fileURL, encoding: .utf8)
-            let lines = content.split(separator: Constants.newLine, omittingEmptySubsequences: true)
-            let entries = lines.enumerated().map { index, line in
-                LogEntry(number: index + 1, message: String(line))
-            }
-            
-            DispatchQueue.main.async { [weak self] in
-                self?.logEntries = entries
-            }
-        } catch {
-            DispatchQueue.main.async { [weak self] in
-                
-                self?.logEntries = [LogEntry(
-                    number: 1,
-                    message: String(format: Constants.errorReadingLogFile, error.localizedDescription))]
-            }
-        }
-    }
-    
-    private func startFileMonitoring() {
-        guard presentedItemURL != nil else {
-            return
-        }
-        
-        NSFileCoordinator.addFilePresenter(self)
-    }
-    
-    private func stopFileMonitoring() {
-        NSFileCoordinator.removeFilePresenter(self)
-    }
-    
-    func presentedItemDidChange() {
-        fileChangeSubject.send()
-    }
-}
-
-private extension Button {
-    func asLogButton() -> some View {
-        self.focusEffectDisabled()
-            .padding(5)
     }
 }
 

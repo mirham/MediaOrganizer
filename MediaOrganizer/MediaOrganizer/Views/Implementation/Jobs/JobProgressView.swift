@@ -23,7 +23,10 @@ struct JobProgressView: View {
                     .isHidden(hidden: !job.progress.isCompleted, remove: true)
                 makeLabel(labelText: Constants.elCanceled, fillColor: Color.red)
                     .isHidden(hidden: !job.progress.isCancelled, remove: true)
-                makeLogButton()
+                makeLogLabel()
+                    .isHidden(
+                        hidden:!(job.progress.isCompleted || job.progress.isCancelled),
+                        remove: true)
                 Text(Constants.elAnalyzingFiles)
                     .offset(y: 10)
                     .isHidden(hidden: !job.progress.isAnalyzing, remove: true)
@@ -53,20 +56,6 @@ struct JobProgressView: View {
                     .fill(fillColor)
                     .offset(y: 15)
             )
-    }
-    
-    @ViewBuilder
-    private func makeLogButton() -> some View {
-        let hasErrors = job.progress.errorsCount > 0
-        
-        Text(hasErrors ? "\(Constants.error) \(job.progress.errorsCount)" : "\(Constants.info)")
-            .textCase(.uppercase)
-            .offset(y: 15)
-            .background(
-                RoundedRectangle(cornerRadius: 5, style: .continuous)
-                    .fill(.gray)
-                    .offset(y: 15)
-            )
             .gesture(TapGesture(count: 1).onEnded {
                 appState.current.logJobId = job.id
                 
@@ -76,5 +65,38 @@ struct JobProgressView: View {
                 
                 ViewHelper.activateView(viewId: Constants.windowIdLog)
             })
+    }
+    
+    @ViewBuilder
+    private func makeLogLabel() -> some View {
+        let hasErrors = job.progress.errorsCount > 0
+        
+        HStack(alignment: .center) {
+            Circle()
+                .fill(hasErrors ? .red : .green)
+                .frame(width: 10, height: 10)
+                .padding(hasErrors ? 0 : 3)
+            Text(job.progress.errorsCount.formatted())
+                .isHidden(hidden: !hasErrors, remove: true)
+        }
+        .padding(.leading, 5)
+        .padding(.trailing, 5)
+        .contentShape(Rectangle())
+        .frame(alignment: .center)
+        .offset(y: 15)
+        .background(
+            RoundedRectangle(cornerRadius: 5, style: .continuous)
+                .offset(y: 15)
+                .fill(.gray)
+        )
+        .gesture(TapGesture(count: 1).onEnded {
+            appState.current.logJobId = job.id
+            
+            if !appState.views.isWindowShown(windowId: Constants.windowIdLog) {
+                openWindow(id: Constants.windowIdLog)
+            }
+            
+            ViewHelper.activateView(viewId: Constants.windowIdLog)
+        })
     }
 }

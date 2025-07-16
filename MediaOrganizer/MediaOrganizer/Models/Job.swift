@@ -35,6 +35,17 @@ class Job : Codable, Identifiable, Equatable, ObservableObject {
         self.outputFolder = outputFolder
     }
     
+    func clone() -> Job {
+        let result = Job.initDefault()
+        result.checked = self.checked
+        result.name = self.name
+        result.sourceFolder = self.sourceFolder
+        result.outputFolder = self.outputFolder
+        result.rules = self.rules.map({$0.clone()})
+        
+        return result
+    }
+    
     static func initDefault() -> Job {
         let result = Job(
             name: Constants.defaultJobName,

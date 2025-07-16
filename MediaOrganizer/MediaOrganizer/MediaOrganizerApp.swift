@@ -34,7 +34,7 @@ struct MediaOrganizerApp: App {
         WindowGroup(id:Constants.windowIdJobSettings, makeContent: {
             JobSettingsView()
                 .environmentObject(appState)
-                .navigationTitle(Constants.elJobSettings)
+                .navigationTitle(String(format: Constants.elJobSettings, getCurrentJobName()))
                 .frame(minWidth: 560, minHeight: 500)
         })
         
@@ -42,13 +42,15 @@ struct MediaOrganizerApp: App {
             if let jobId = appState.current.logJobId {
                 JobLogView(jobId: jobId)
                     .environmentObject(appState)
-                    .navigationTitle(Constants.elJobLog)
+                    .navigationTitle(String(format: Constants.elJobLog, getCurrentJobName()))
                     .frame(minWidth: 400, minHeight: 400)
             }
-            else {
-                Text("No job log available")
-                    .frame(minWidth: 400, minHeight: 300)
-            }
         }).windowResizability(.contentSize)
+    }
+    
+    // MARK: Private functions
+    
+    private func getCurrentJobName() -> String {
+        return appState.current.job?.name ?? String()
     }
 }
