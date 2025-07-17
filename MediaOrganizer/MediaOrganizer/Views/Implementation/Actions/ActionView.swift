@@ -69,9 +69,9 @@ struct ActionView: ElementContainerView {
                 .isHidden(hidden: shouldActionButtonBeHidden(ruleId: ruleId), remove: true )
             }
             .background(actionService.isCurrentAction(actionId: action.id) && appState.current.isActionInEditMode
-                        ? Color(hex: Constants.colorHexSelection)
+                        ? Color.blue.opacity(0.3)
                         : .clear)
-            .clipShape(RoundedRectangle(cornerRadius: 10))
+            .clipShape(RoundedRectangle(cornerRadius: 5))
         }
     }
     

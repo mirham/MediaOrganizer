@@ -9,29 +9,32 @@ import SwiftUI
 
 struct DividerWithImage: View {
     let imageName: String
-    let padding: CGFloat
-    let color: Color
+    let imageSize: CGFloat
+    let lineColor: Color
+    let lineHeight: CGFloat
     
-        init(imageName: String, padding: CGFloat = 5, color: Color = .gray) {
+    init(imageName: String = Constants.iconDown,
+         imageSize: CGFloat = 16,
+         lineColor: Color = .gray,
+         lineHeight: CGFloat = 1) {
         self.imageName = imageName
-        self.padding = padding
-        self.color = color
+        self.imageSize = imageSize
+        self.lineColor = lineColor
+        self.lineHeight = lineHeight
     }
     
     var body: some View {
-        let layout = AnyLayout(VStackLayout())
-        
-        layout {
-            dividerLine
-            Image(systemName: imageName)
-                .foregroundStyle(color)
-                .offset(y: -(padding * 3))
+        ZStack {
+            Rectangle()
+                .fill(lineColor.opacity(0.4))
+                .frame(height: lineHeight)
+            Image(systemName: Constants.iconDown)
+                .resizable()
+                .scaledToFit()
+                .frame(width: imageSize, height: imageSize)
+                .foregroundColor(lineColor)
+                .frame(height: 0)
         }
-    }
-    
-    private var dividerLine: some View {
-        let layout = AnyLayout(VStackLayout())
-        
-        return layout { Divider().foregroundStyle(color) }.padding(padding)
+        .frame(height: lineHeight)
     }
 }

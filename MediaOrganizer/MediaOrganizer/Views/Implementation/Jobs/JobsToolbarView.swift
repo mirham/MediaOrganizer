@@ -19,24 +19,54 @@ struct JobsToolbarView : View {
     @State private var isJobRemoving = false
     
     @State private var showOverAddJob = false
+    @State private var showOverEditJob = false
+    @State private var showOverDuplicateJob = false
     @State private var showOverRemoveJob = false
     
     var body: some View {
         HStack {
-            Button(Constants.toolbarAddJob, systemImage: Constants.iconAdd) {
-                jobService.resetCurrentJob()
-                showJobSettingsWindow()
-            }
-            .withToolbarButtonStyle(showOver: showOverAddJob, activeState: controlActiveState, color: .green)
+            Button(
+                Constants.toolbarAdd,
+                systemImage: Constants.iconAdd,
+                action: handleAddJobButtonClick)
+            .withToolbarButtonStyle(
+                showOver: showOverAddJob,
+                activeState: controlActiveState,
+                color: .green)
             .onHover(perform: { hovering in
                 showOverAddJob = hovering && controlActiveState == .key
             })
-            Button(Constants.toolbarRemoveJob, systemImage: Constants.iconRemove) {
+            Button(
+                Constants.toolbarEdit,
+                systemImage: Constants.iconEdit,
+                action: showJobSettingsWindow)
+            .withToolbarButtonStyle(
+                showOver: showOverEditJob,
+                activeState: controlActiveState,
+                color: .blue)
+            .disabled(shouldDisablePanelButton())
+            .isHidden(hidden: !jobService.doesCurrentJobExist(), remove: true)
+            .onHover(perform: { hovering in
+                showOverEditJob = hovering && controlActiveState == .key
+            })
+            Button(
+                Constants.toolbarDuplicate,
+                systemImage: Constants.iconDuplicate,
+                action: handleDuplicateJobButtonClick)
+            .withToolbarButtonStyle(
+                showOver: showOverDuplicateJob,
+                activeState: controlActiveState,
+                color: .blue)
+            .disabled(shouldDisablePanelButton())
+            .isHidden(hidden: !jobService.doesCurrentJobExist(), remove: true)
+            .onHover(perform: { hovering in
+                showOverDuplicateJob = hovering && controlActiveState == .key
+            })
+            Button(Constants.toolbarRemove, systemImage: Constants.iconRemove) {
                 isJobRemoving = true
             }
             .withToolbarButtonStyle(showOver: showOverRemoveJob, activeState: controlActiveState, color: .red)
-            .disabled(!jobService.doesCurrentJobExist()
-                      || (appState.current.job != nil && appState.current.job!.progress.isActive))
+            .disabled(shouldDisablePanelButton())
             .isHidden(hidden: !jobService.doesCurrentJobExist(), remove: true)
             .onHover(perform: { hovering in
                 showOverRemoveJob = hovering && controlActiveState == .key
@@ -52,19 +82,31 @@ struct JobsToolbarView : View {
     
     // MARK: Private functions
     
+    private func shouldDisablePanelButton() -> Bool {
+        return !jobService.doesCurrentJobExist()
+        || (appState.current.job != nil && appState.current.job!.progress.isActive)
+    }
+    
+    private func handleAddJobButtonClick() {
+        jobService.resetCurrentJob()
+        showJobSettingsWindow()
+    }
+    
+    private func handleDuplicateJobButtonClick() {
+        jobService.duplicateJob()
+    }
+    
     private func handleRemoveJobClick() {
         jobService.removeCurrentJob()
         isJobRemoving = false
     }
     
     private func showJobSettingsWindow() {
-        if (!appState.views.isJobSettingsViewShown){
+        if !appState.views.isWindowShown(windowId: Constants.windowIdJobSettings){
             openWindow(id: Constants.windowIdJobSettings)
-            ViewHelper.activateView(viewId: Constants.windowIdJobSettings)
         }
-        else {
-            ViewHelper.activateView(viewId: Constants.windowIdJobSettings)
-        }
+        
+        ViewHelper.activateView(viewId: Constants.windowIdJobSettings)
     }
 }
 

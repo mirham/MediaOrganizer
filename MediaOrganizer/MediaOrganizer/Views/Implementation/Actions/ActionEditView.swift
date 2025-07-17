@@ -36,6 +36,7 @@ struct ActionEditView: View {
                         Text(item.description)
                     }
                 }
+                .disabled(appState.current.validationMessage != nil)
                 .pickerStyle(.menu)
                 DraggableActionElementsView(
                     selectedActionTypeId: $selectedActionTypeId,

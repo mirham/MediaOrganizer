@@ -39,7 +39,6 @@ class FileService : ServiceBase, FileServiceType {
             .filter { $0.isImageFile || $0.isVideoFile }
         
         for await fileUrl in filteredFileUrls {
-            print(fileUrl.absoluteString)
             try Task.checkCancellation()
             
             if jobProgress.isCancelled {
@@ -47,7 +46,7 @@ class FileService : ServiceBase, FileServiceType {
             }
             
             let mediaType = fileUrl.isImageFile ? MediaType.photo : MediaType.video
-            let metadata = await metadataService.getFileMetadataAsync(fileUrl: fileUrl)
+            let metadata = try await metadataService.getFileMetadataAsync(fileUrl: fileUrl)
             let mediaInfo = MediaFileInfo(type: mediaType, url: fileUrl, metadata: metadata)
             
             result.append(mediaInfo)
@@ -59,29 +58,23 @@ class FileService : ServiceBase, FileServiceType {
     func peformFileActionsAsync(
         outputPath: String,
         fileInfo: MediaFileInfo,
-        fileActions: [FileAction]) async {
-        do {
-            try createFolderIfDoesNotExist(path: outputPath)
-            fileInfo.currentUrl = try makeTempFileCopy(
-                fileUrl: fileInfo.currentUrl,
-                outputPath: outputPath)
+        fileActions: [FileAction]) async throws {
+        try createFolderIfDoesNotExist(path: outputPath)
+        fileInfo.currentUrl = try makeTempFileCopy(
+            fileUrl: fileInfo.currentUrl,
+            outputPath: outputPath)
+        
+        for fileAction in fileActions {
+            let fileActionStrategy = fileActionStrategyFactory.getStrategy(
+                actionType: fileAction.actionType)
+            let currentUrl = try fileActionStrategy?.performAction(
+                outputPath: outputPath,
+                fileInfo: fileInfo,
+                fileAction: fileAction)
             
-            for fileAction in fileActions {
-                let fileActionStrategy = fileActionStrategyFactory.getStrategy(
-                    actionType: fileAction.actionType)
-                let currentUrl = try fileActionStrategy?.performAction(
-                    outputPath: outputPath,
-                    fileInfo: fileInfo,
-                    fileAction: fileAction)
-                
-                if let currentUrl = currentUrl {
-                    fileInfo.currentUrl = currentUrl
-                }
+            if let currentUrl = currentUrl {
+                fileInfo.currentUrl = currentUrl
             }
-        }
-        catch let fileActionException {
-            // TODO: Log
-            print(fileActionException.localizedDescription)
         }
     }
     
@@ -101,15 +94,9 @@ class FileService : ServiceBase, FileServiceType {
         
         try createFolderIfDoesNotExist(path: subfolderPath)
         
-        let newUrl = URL(fileURLWithPath: subfolderPath + Constants.slash + fileUrl.lastPathComponent)
+        let newUrl = URL(fileURLWithPath: "\(subfolderPath)\(Constants.slash)\(fileUrl.lastPathComponent)")
         
-        do {
-            try fileManager.moveItem(at: fileUrl, to: newUrl)
-        }
-        catch {
-            // TODO: Log
-            print("---- \nCannot move:" + error.localizedDescription + "\n -----")
-        }
+        try fileManager.moveItem(at: fileUrl, to: newUrl)
         
         return newUrl
     }

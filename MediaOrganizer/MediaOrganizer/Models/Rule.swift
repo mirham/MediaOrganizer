@@ -25,6 +25,14 @@ class Rule : Codable, Identifiable, Equatable {
         case actions
     }
     
+    func clone() -> Rule {
+        let result = Rule()
+        result.conditions = self.conditions.map({$0.clone()})
+        result.actions = self.actions.map({$0.clone()})
+        
+        return result
+    }
+    
     static func == (lhs: Rule, rhs: Rule) -> Bool {
         return lhs.id == rhs.id
     }

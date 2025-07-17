@@ -57,11 +57,11 @@ struct JobSettingsView : View {
     // MARK: Private functions
     
     private func openView() {
-        appState.views.isJobSettingsViewShown = true
+        appState.views.addShownWindow(windowId: Constants.windowIdJobSettings)
         
         ViewHelper.setUpView(
             viewName: Constants.windowIdJobSettings,
-            onTop: false)
+            onTop: true)
         
         guard appState.current.job != nil else {
             currentEditMode = .add
@@ -79,9 +79,7 @@ struct JobSettingsView : View {
             jobService.updateJob()
         }
         
-        jobService.resetCurrentJob()
-        
-        appState.views.isJobSettingsViewShown = false
+        appState.views.removeShownWindow(windowId: Constants.windowIdJobSettings)
     }
 }
 

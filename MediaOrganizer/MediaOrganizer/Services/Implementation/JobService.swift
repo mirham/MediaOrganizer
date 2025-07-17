@@ -36,7 +36,20 @@ class JobService: ServiceBase, JobServiceType {
                 && getJobIndexByJobId(jobId: appState.current.job!.id) == nil
         else { return }
         
-        appState.userData.jobs.append(appState.current.job!)
+        guard let currentJob = appState.current.job
+        else { return }
+        
+        appState.userData.jobs.append(currentJob)
+    }
+    
+    func duplicateJob() {
+        guard let currentJob = appState.current.job
+        else { return }
+        
+        let clonedJob = currentJob.clone()
+        clonedJob.name = makeDuplicatedJobName(currentJobName: clonedJob.name)
+        
+        appState.userData.jobs.append(clonedJob)
     }
     
     func updateJob() {
@@ -141,12 +154,38 @@ class JobService: ServiceBase, JobServiceType {
         return result
     }
     
+    private func makeDuplicatedJobName(currentJobName: String) -> String {
+        let currentJobNames = appState.userData.jobs.map { $0.name }
+        var counter = 1
+        var result = currentJobName.range(
+            of: Constants.regexSearchCopySuffix,
+            options: [.regularExpression, .caseInsensitive]) != nil
+            ? currentJobName
+            : "\(currentJobName) \(Constants.elCopy.uppercased())"
+        
+        while currentJobNames.contains(where: {$0.uppercased() == result.uppercased()}) {
+            if let range = result.range(
+                of: Constants.regexSearchCopySuffixToReplace,
+                options: [.regularExpression, .caseInsensitive]) {
+                result = result.replacingCharacters(in: range, with: Constants.elCopy.uppercased())
+            }
+            
+            result = "\(result) \(counter)"
+            counter += 1
+        }
+        
+        return result
+    }
+    
     private func runJobAsync(job: Job) async {
         await MainActor.run {
             job.progress.reset()
             job.progress.isAnalyzing = true
             job.progress.refreshSignal.toggle()
         }
+        
+        let jobLog = JobLog(jobId: job.id)
+        jobLog.clearLogFile()
         
         do {
             let mediaFiles = try await fileService.getFolderMediaFilesAsync(
@@ -172,39 +211,52 @@ class JobService: ServiceBase, JobServiceType {
                         throw CancellationError()
                     }
                     
-                    let wasProcessed = await processFile(fileInfo, for: job)
+                    let wasProcessed = try await processFile(fileInfo, for: job)
                     
                     await MainActor.run {
                         if wasProcessed {
                             job.progress.processedCount += Constants.step
+                            //job.progress.refreshSignal.toggle()
                         }
                         else {
                             job.progress.skippedCount += Constants.step
+                            //job.progress.refreshSignal.toggle()
                         }
                     }
                 }
             }
-        } catch is CancellationError {
-            // TODO: Logging
-            print("Job \(job.id) cancelled")
+            
+            await MainActor.run {
+                job.progress.inProgress = false
+                job.progress.isCompleted = true
+                job.progress.refreshSignal.toggle()
+            }
+        }
+        catch is CancellationError {
+            jobLog.info(Constants.lmJobCancelled)
+            
+            await MainActor.run {
+                job.progress.inProgress = false
+                job.progress.isCancelled = true
+                job.progress.refreshSignal.toggle()
+            }
         }
         catch {
-            print("Job \(job.id) failed: \(error)")
-        }
-        
-        await MainActor.run {
-            job.progress.inProgress = false
-            job.progress.refreshSignal.toggle()
+            jobLog.error(String(format:Constants.lmJobFailed, error.localizedDescription))
+            await MainActor.run {
+                job.progress.errorsCount += 1
+                job.progress.refreshSignal.toggle()
+            }
         }
     }
     
-    private func processFile(_ fileInfo: MediaFileInfo, for job: Job) async -> Bool {
+    private func processFile(_ fileInfo: MediaFileInfo, for job: Job) async throws -> Bool {
         for rule in job.rules {
-            let fileActions = ruleService.applyRule(rule: rule, fileInfo: fileInfo)
+            let fileActions = try ruleService.applyRule(rule: rule, fileInfo: fileInfo)
             
             guard !fileActions.isEmpty else { continue }
             
-            await fileService.peformFileActionsAsync(
+            try await fileService.peformFileActionsAsync(
                 outputPath: job.outputFolder,
                 fileInfo: fileInfo,
                 fileActions: fileActions

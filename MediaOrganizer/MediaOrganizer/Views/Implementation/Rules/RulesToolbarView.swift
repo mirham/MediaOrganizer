@@ -17,13 +17,16 @@ struct RulesToolbarView : View {
     @Injected(\.ruleService) private var ruleService
     
     @State private var showOverAddRule = false
+    @State private var showOverDuplicateRule = false
+    @State private var showOverMoveUp = false
+    @State private var showOverMoveDown = false
     @State private var showOverRemoveRule = false
     @State private var isRuleRemoving = false
     
     var body: some View {
         HStack {
             Button(
-                Constants.toolbarAddRule,
+                Constants.toolbarAdd,
                 systemImage: Constants.iconAdd,
                 action: handleAddRuleButtonClick)
             .withToolbarButtonStyle(
@@ -34,14 +37,54 @@ struct RulesToolbarView : View {
                 showOverAddRule = hovering && controlActiveState == .key
             })
             .disabled(!appState.current.isRuleSetupComplete)
-            Button(Constants.toolbarRemoveRule, systemImage: Constants.iconRemove) {
-                isRuleRemoving = true
-            }
+            Button(
+                Constants.toolbarUp,
+                systemImage: Constants.iconUp,
+                action: handleMoveUpButtonClick)
+            .withToolbarButtonStyle(
+                showOver: showOverMoveUp,
+                activeState: controlActiveState,
+                color: .blue)
+            .disabled(shouldDisablePanelButton())
+            .isHidden(hidden: !ruleService.doesCurrentRuleExist(), remove: true)
+            .onHover(perform: { hovering in
+                showOverMoveUp = hovering && controlActiveState == .key
+            })
+            Button(
+                Constants.toolbarDown,
+                systemImage: Constants.iconDown,
+                action: handleMoveDownButtonClick)
+            .withToolbarButtonStyle(
+                showOver: showOverMoveDown,
+                activeState: controlActiveState,
+                color: .blue)
+            .disabled(shouldDisablePanelButton())
+            .isHidden(hidden: !ruleService.doesCurrentRuleExist(), remove: true)
+            .onHover(perform: { hovering in
+                showOverMoveDown = hovering && controlActiveState == .key
+            })
+            Button(
+                Constants.toolbarDuplicate,
+                systemImage: Constants.iconDuplicate,
+                action: handleDuplicateRuleButtonClick)
+            .withToolbarButtonStyle(
+                showOver: showOverDuplicateRule,
+                activeState: controlActiveState,
+                color: .blue)
+            .disabled(shouldDisablePanelButton())
+            .isHidden(hidden: !ruleService.doesCurrentRuleExist(), remove: true)
+            .onHover(perform: { hovering in
+                showOverDuplicateRule = hovering && controlActiveState == .key
+            })
+            Button(
+                Constants.toolbarRemove,
+                systemImage: Constants.iconRemove,
+                action: handleRemoveRuleButtonClick)
             .withToolbarButtonStyle(
                 showOver: showOverRemoveRule,
                 activeState: controlActiveState,
                 color: .red)
-            .disabled(!ruleService.doesCurrentRuleExist() || !appState.current.isRuleSetupComplete)
+            .disabled(shouldDisablePanelButton())
             .isHidden(hidden: !ruleService.doesCurrentRuleExist(), remove: true)
             .onHover(perform: { hovering in
                 showOverRemoveRule = hovering && controlActiveState == .key
@@ -50,7 +93,7 @@ struct RulesToolbarView : View {
                 Alert(
                     title: Text(Constants.dialogHeaderRemoveRule),
                     message: Text(Constants.dialogBodyRemoveRule),
-                    primaryButton: Alert.Button.destructive(Text(Constants.dialogButtonDelete), action: handleRemoveRuleButtonClick),
+                    primaryButton: Alert.Button.destructive(Text(Constants.dialogButtonDelete), action: handleRemoveRule),
                     secondaryButton: .default(Text(Constants.dialogButtonCancel)))
             }
         }
@@ -67,7 +110,34 @@ struct RulesToolbarView : View {
             enable: false)
     }
     
+    private func handleDuplicateRuleButtonClick() {
+        ruleService.duplicateRule()
+        appState.current.refreshSignal.toggle()
+    }
+    
+    private func handleMoveUpButtonClick() {
+        ruleService.moveRuleUp()
+        appState.current.refreshSignal.toggle()
+    }
+    
+    private func handleMoveDownButtonClick() {
+        ruleService.moveRuleDown()
+        appState.current.refreshSignal.toggle()
+    }
+    
     private func handleRemoveRuleButtonClick() {
+        guard let currentRule = appState.current.rule
+        else { return }
+        
+        if currentRule.isEmpty {
+            ruleService.removeCurrentRule()
+        }
+        else {
+            isRuleRemoving = true
+        }
+    }
+    
+    private func handleRemoveRule() {
         ruleService.removeCurrentRule()
         isRuleRemoving = false
         
@@ -85,6 +155,10 @@ struct RulesToolbarView : View {
             .interactiveDismissDisabled()
         
         return result
+    }
+    
+    private func shouldDisablePanelButton() -> Bool {
+        return !ruleService.doesCurrentRuleExist() || !appState.current.isRuleSetupComplete
     }
 }
 

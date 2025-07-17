@@ -13,6 +13,7 @@ protocol JobServiceType : ServiceBaseType {
     func doesCurrentJobExist() -> Bool
     func getCurrentJobId() -> UUID?
     func addJob()
+    func duplicateJob()
     func updateJob()
     func toggleJob(jobId: UUID, checked: Bool)
     func isCurrentJob(jobId: UUID) -> Bool

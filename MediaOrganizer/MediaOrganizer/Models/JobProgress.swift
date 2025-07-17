@@ -34,30 +34,26 @@ struct JobProgress {
             }
         }
     }
+    
+    var totalCount: Int = 0
+    var progress: Double = 0.0
     var processedCount: Int = 0 {
         didSet {
             let isJobInProgress = processedCount != 0 || totalCount != 0
             guard isJobInProgress else { return }
             
-            progress = (Double(processedCount + skippedCount) / Double(totalCount))
-                        * Constants.maxPercentage
-            
-            let isJobCompleted = progress == Constants.maxPercentage
-                || (processedCount + skippedCount) == totalCount
-            
-            if isJobCompleted {
-                resetProgressFlags()
-                isCompleted = true
-            }
+            progress = (Double(processedCount + skippedCount + errorsCount)
+                        / Double(totalCount))
+            * Constants.maxPercentage
         }
     }
     var skippedCount: Int = 0
-    var progress: Double = 0.0
-    var totalCount: Int = 0
+    var errorsCount: Int = 0
     
     func isEmpty() -> Bool {
         return self.processedCount == 0
             && self.skippedCount == 0
+            && self.errorsCount == 0
             && self.totalCount == 0
     }
     
@@ -79,6 +75,7 @@ struct JobProgress {
         self.progress = 0.0
         self.processedCount = 0
         self.skippedCount = 0
+        self.errorsCount = 0
         self.totalCount = 0
     }
 }
