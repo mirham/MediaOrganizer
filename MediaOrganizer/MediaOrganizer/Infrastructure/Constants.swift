@@ -57,18 +57,19 @@ struct Constants {
     static let iconRun = "play.fill"
     static let iconArrowForward = "arrow.forward"
     static let iconAdd = "plus.circle.fill"
-    static let iconDuplicate = "document.on.document.fill"
+    static let iconDuplicate = "rectangle.on.rectangle.circle.fill"
     static let iconRemove = "minus.circle.fill"
-    static let iconSettings = "gearshape.2"
+    static let iconSettings = "gear.circle.fill"
     static let iconCheckmark = "checkmark.circle.fill"
     static let iconCircle = "circle"
-    static let iconArrowDown = "arrow.down.circle.fill"
     static let iconCheck = "checkmark.circle.fill"
     static let iconEdit = "pencil.circle.fill"
     static let iconFile = "doc.fill"
     static let iconStop = "stop.fill"
     static let iconCancel = "xmark.circle.fill"
     static let iconWarning = "exclamationmark.triangle"
+    static let iconUp = "arrowshape.up.circle.fill"
+    static let iconDown = "arrowshape.down.circle.fill"
     
     // MARK: Colors
     static let colorHexSelection = "#244EC9"
@@ -83,6 +84,8 @@ struct Constants {
     static let regexEncodedLocationInIso6709 = "%+09.5f%+010.5f%+.0fCRSWGS_84/"
     static let regexSlash = /\//
     static let regexTwoSlashes = /\/\//
+    static let regexSearchCopySuffix = "\(Constants.elCopy)\\s*\\d*\\s*$"
+    static let regexSearchCopySuffixToReplace = "\(Constants.elCopy)\\s*\\d+\\s*$"
     
     // MARK: Condition elements supported types
     static let ceString = "string";
@@ -142,6 +145,8 @@ struct Constants {
     static let elJobLog = "Job log: %1$@"
     static let elShowLogInFolder = "Show in folder"
     static let elClear = "Clear"
+    static let elCopy = "Copy"
+    static let elDuplicatesPolicy = "Duplicates policy"
     
     // MARK: Masks
     static let maskSource =  "Source: %1$@"
@@ -155,6 +160,7 @@ struct Constants {
     static let toolbarUp = "Up"
     static let toolbarDown = "Down"
     static let toolbarDuplicate = "Duplicate"
+    static let toolbarEdit = "Edit"
     
     // MARK: Stubs
     static let stubNotSelected = "not selected yet"

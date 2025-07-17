@@ -17,79 +17,86 @@ struct RulesEditView: View {
     @Injected(\.conditionService) private var conditionService
     @Injected(\.actionService) private var actionService
     
+    @State private var selectedRuleId: UUID? = nil
+    
     var body: some View {
         ScrollView(.vertical) {
-            ForEach(appState.current.job?.rules ?? [Rule](), id: \.id) { rule in
-                VStack(alignment: .center) {
-                    Text(Constants.elConditions)
-                        .asRuleElementCaption()
-                        .padding(.top, 5)
-                    HStack(alignment: .center) {
-                        VStack(alignment: .leading) {
-                            Text(Constants.elNoConditions)
-                                .asRuleElementNone()
-                                .isHidden(hidden: isNoneElementSholuldBeHidden(rule: rule, array: rule.conditions), remove: true)
-                            ForEach(rule.conditions, id: \.id) { condition in
-                                HStack(spacing: 0) {
-                                    ConditionView(ruleId: rule.id, condition: condition)
-                                        .frame(maxWidth: .infinity)
+            LazyVStack(alignment: .leading, spacing: 0) {
+                ForEach(Array(appState.current.job?.rules.enumerated() ?? [Rule]().enumerated()), id: \.element.id) { index, rule in
+                    VStack(alignment: .center) {
+                        Text(Constants.elConditions)
+                            .asRuleElementCaption()
+                            .padding(.top, 5)
+                        HStack(alignment: .center) {
+                            VStack(alignment: .leading) {
+                                Text(Constants.elNoConditions)
+                                    .asRuleElementNone()
+                                    .isHidden(
+                                        hidden: isNoneElementSholuldBeHidden(rule: rule, array: rule.conditions),
+                                        remove: true)
+                                ForEach(rule.conditions, id: \.id) { condition in
+                                    HStack(spacing: 0) {
+                                        ConditionView(ruleId: rule.id, condition: condition)
+                                            .frame(maxWidth: .infinity)
+                                    }
                                 }
                             }
                         }
-                    }
-                    Button(String(),systemImage: Constants.iconAdd, action: handleAddConditionButtonClick)
-                    .withSmallAddButtonStyle(activeState: controlActiveState)
-                    .isHidden(hidden: isAddButtonShouldBeHidden(ruleId: rule.id) , remove: true)
-                    .padding(.top, 3)
-                    .padding(.leading, 10)
-                    .padding(.bottom, 5)
-                    Text(Constants.elActions)
-                        .asRuleElementCaption()
-                    HStack(alignment: .center) {
-                        VStack(alignment: .leading) {
-                            Text(Constants.elNoActions)
-                                .asRuleElementNone()
-                                .isHidden(hidden: isNoneElementSholuldBeHidden(rule: rule, array: rule.actions), remove: true)
-                            ForEach(rule.actions, id: \.id) { action in
-                                HStack(spacing: 0) {
-                                    ActionView(ruleId: rule.id, action: action)
-                                        .frame(maxWidth: .infinity)
+                        Button(String(),systemImage: Constants.iconAdd, action: handleAddConditionButtonClick)
+                            .withSmallAddButtonStyle(activeState: controlActiveState)
+                            .isHidden(hidden: isAddButtonShouldBeHidden(ruleId: rule.id) , remove: true)
+                            .padding(.top, 3)
+                            .padding(.leading, 10)
+                            .padding(.bottom, 5)
+                        Text(Constants.elActions)
+                            .asRuleElementCaption()
+                        HStack(alignment: .center) {
+                            VStack(alignment: .leading) {
+                                Text(Constants.elNoActions)
+                                    .asRuleElementNone()
+                                    .isHidden(hidden: isNoneElementSholuldBeHidden(rule: rule, array: rule.actions), remove: true)
+                                ForEach(rule.actions, id: \.id) { action in
+                                    HStack(spacing: 0) {
+                                        ActionView(ruleId: rule.id, action: action)
+                                            .frame(maxWidth: .infinity)
+                                    }
                                 }
                             }
                         }
+                        .onAppear(perform: { validateRule(rule: rule) })
+                        .onChange(of: appState.current.rule, {
+                            selectedRuleId = appState.current.rule?.id ?? nil
+                        })
+                        .padding(.bottom, 5)
+                        ValidationMessageView(
+                            text: rule.validationMessage ?? String(),
+                            hideFunc: { return rule.validationMessage == nil })
+                        Button(String(), systemImage: Constants.iconAdd) {
+                            handleAddActionButtonClick(rule: rule)
+                        }
+                        .withSmallAddButtonStyle(activeState: controlActiveState)
+                        .isHidden(hidden: isAddButtonShouldBeHidden(ruleId: rule.id) , remove: true)
+                        .padding(.leading, 10)
+                        .padding(.bottom, 3)
                     }
-                    .onAppear(perform: { validateRule(rule: rule) })
-                    .padding(.bottom, 5)
-                    ValidationMessageView(
-                        text: rule.validationMessage ?? String(),
-                        hideFunc: { return rule.validationMessage == nil })
-                    Button(String(), systemImage: Constants.iconAdd) {
-                        handleAddActionButtonClick(rule: rule)
-                    }
-                    .withSmallAddButtonStyle(activeState: controlActiveState)
-                    .isHidden(hidden: isAddButtonShouldBeHidden(ruleId: rule.id) , remove: true)
-                    .padding(.leading, 10)
-                    .padding(.bottom, 3)
+                    .padding(10)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(selectedRuleId == rule.id
+                                && ruleService.isCurrentRule(ruleId: rule.id)
+                                && !appState.current.isRuleInSetupMode
+                                ? Color.blue.opacity(0.3)
+                                : (index % 2 == 0 ? Color.gray.opacity(0.08) : Color.clear))
+                    .contentShape(Rectangle())
+                    .simultaneousGesture(
+                        TapGesture()
+                            .onEnded {
+                                handleRuleItemClick(rule: rule)
+                            }
+                    )
+                    .disabled(isRuleShouldBeDisabled(ruleId: rule.id))
+                    DividerWithImage()
+                        .isHidden(hidden: ruleService.getRuleIndexByRuleId(ruleId: rule.id)! == appState.current.job!.rules.count - 1, remove: true)
                 }
-                .padding(5)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .contentShape(Rectangle())
-                .background(ruleService.isCurrentRule(ruleId: rule.id)
-                            && !appState.current.isActionInEditMode
-                            ? Color(hex: Constants.colorHexSelection)
-                            : .clear)
-                .clipShape(RoundedRectangle(cornerRadius: 10))
-                .padding(.leading, 10)
-                .padding(.trailing, 10)
-                .simultaneousGesture(
-                    TapGesture()
-                        .onEnded {
-                            handleRuleItemClick(rule: rule)
-                        }
-                )
-                .disabled(isRuleShouldBeDisabled(ruleId: rule.id))
-                DividerWithImage(imageName: Constants.iconArrowDown, color: Color.gray)
-                    .isHidden(hidden: ruleService.getRuleIndexByRuleId(ruleId: rule.id)! == appState.current.job!.rules.count - 1, remove: true)
             }
         }
         .onChange(of: appState.current.refreshSignal, setupCloseButton)
@@ -139,13 +146,12 @@ struct RulesEditView: View {
     
     private func isAddButtonShouldBeHidden(ruleId: UUID) -> Bool {
         return !ruleService.isCurrentRule(ruleId: ruleId)
-            || appState.current.isConditionInEditMode
-            || appState.current.isActionInEditMode
+            || appState.current.isRuleInSetupMode
     }
     
     private func isRuleShouldBeDisabled(ruleId: UUID) -> Bool {
         return !ruleService.isCurrentRule(ruleId: ruleId)
-            && (appState.current.isConditionInEditMode || appState.current.isActionInEditMode)
+            && appState.current.isRuleInSetupMode
     }
     
     private func validateRule(rule: Rule) {
@@ -156,7 +162,9 @@ struct RulesEditView: View {
     private func setupCloseButton() {
         ViewHelper.setUpCloseViewButton(
             viewName: Constants.windowIdJobSettings,
-            enable: appState.current.allRulesValid)
+            enable: appState.current.allRulesValid
+                && appState.current.isRuleSetupComplete
+                && appState.current.isRuleElementSetupComplete)
     }
 }
 

@@ -10,10 +10,13 @@ import Foundation
 protocol RuleServiceType : ServiceBaseType {
     func createRule()
     func doesCurrentRuleExist() -> Bool
+    func isCurrentRule(ruleId: UUID) -> Bool
     func getRuleIndexByRuleId(ruleId: UUID) -> Int?
     func addRule()
+    func duplicateRule()
     func updateRule()
-    func isCurrentRule(ruleId: UUID) -> Bool
+    func moveRuleUp()
+    func moveRuleDown()
     func applyRule(rule:Rule, fileInfo: MediaFileInfo) throws -> [FileAction]
     func validateRule(rule: Rule?)
     func resetCurrentRule()

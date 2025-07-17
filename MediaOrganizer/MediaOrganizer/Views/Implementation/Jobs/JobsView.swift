@@ -15,62 +15,69 @@ struct JobsView: FolderContainerView {
     
     @Injected(\.jobService) private var jobService
     
+    @State private var selectedJobId: UUID? = nil
+    
     var body: some View {
         VStack {
             Text(Constants.elJobs)
                 .asJobsCaption()
                 .padding(.top, 5)
             ScrollView(.vertical) {
-                ForEach(appState.userData.jobs, id: \.id) { job in
-                    HStack {
+                LazyVStack(alignment: .leading, spacing: 0) {
+                    ForEach(Array(appState.userData.jobs.enumerated()), id: \.element.id) {index, job in
                         HStack {
-                            Toggle(String(), isOn: Binding(
-                                get: { job.checked },
-                                set: {
-                                    jobService.toggleJob(jobId: job.id, checked: $0)
-                                }))
-                            .toggleStyle(CheckToggleStyle())
-                            Image(nsImage: getFolderIcon(folder: job.sourceFolder))
-                                .resizable()
-                                .frame(width: 42, height: 42)
-                            Image(nsImage: getFolderIcon(folder: job.outputFolder))
-                                .resizable()
-                                .frame(width: 42, height: 42)
-                                .offset(x: -20, y: 35)
-                                .padding(.bottom, 45)
+                            HStack {
+                                Toggle(String(), isOn: Binding(
+                                    get: { job.checked },
+                                    set: {
+                                        jobService.toggleJob(jobId: job.id, checked: $0)
+                                    }))
+                                .toggleStyle(CheckToggleStyle())
+                                Image(nsImage: getFolderIcon(folder: job.sourceFolder))
+                                    .resizable()
+                                    .frame(width: 42, height: 42)
+                                Image(nsImage: getFolderIcon(folder: job.outputFolder))
+                                    .resizable()
+                                    .frame(width: 42, height: 42)
+                                    .offset(x: -20, y: 35)
+                                    .padding(.bottom, 45)
+                            }
+                            .padding(.leading, 10)
+                            VStack (alignment: .leading) {
+                                Text(job.name)
+                                    .fontWeight(.bold)
+                                    .padding(.top, 5)
+                                    .padding(.bottom, 2)
+                                    .font(.system(size: 14))
+                                Text(String(format: Constants.maskSource, job.sourceFolder))
+                                    .foregroundStyle(jobService.isCurrentJob(jobId: job.id) ? .white : .gray)
+                                    .font(.system(size: 11))
+                                Text(String(format: Constants.maskOutput, job.outputFolder))
+                                    .foregroundStyle(jobService.isCurrentJob(jobId: job.id) ? .white : .gray)
+                                    .font(.system(size: 11))
+                                JobProgressView(job: job)
+                            }
+                            HStack {
+                                JobRunView(job: job)
+                                JobAbortView(job: job)
+                            }
                         }
-                        .padding(.leading, 10)
-                        VStack (alignment: .leading) {
-                            Text(job.name)
-                                .fontWeight(.bold)
-                                .padding(.top, 5)
-                                .padding(.bottom, 2)
-                                .font(.system(size: 14))
-                            Text(String(format: Constants.maskSource, job.sourceFolder))
-                                .foregroundStyle(jobService.isCurrentJob(jobId: job.id) ? .white : .gray)
-                                .font(.system(size: 11))
-                            Text(String(format: Constants.maskOutput, job.outputFolder))
-                                .foregroundStyle(jobService.isCurrentJob(jobId: job.id) ? .white : .gray)
-                                .font(.system(size: 11))
-                            JobProgressView(job: job)
-                        }
-                        HStack {
-                            JobRunView(job: job)
-                            JobAbortView(job: job)
-                        }
+                        
+                        .frame(maxWidth: .infinity)
+                        .background(
+                            selectedJobId == job.id && appState.current.job != nil
+                            ? Color.blue.opacity(0.3)
+                            : (index % 2 == 0 ? Color.gray.opacity(0.08) : Color.clear)
+                        )
+                        .contentShape(Rectangle())
+                        .gesture(TapGesture(count: 2).onEnded {
+                            handleJobItemDoubleClick(job: job)
+                        })
+                        .simultaneousGesture(TapGesture().onEnded {
+                            handleJobItemClick(job: job)
+                        })
+                        Divider()
                     }
-                    .contentShape(Rectangle())
-                    .background(jobService.isCurrentJob(jobId: job.id) ? Color(hex: Constants.colorHexSelection) : .clear)
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                    .padding(.leading, 10)
-                    .padding(.trailing, 10)
-                    .gesture(TapGesture(count: 2).onEnded {
-                        handleJobItemDoubleClick(job: job)
-                    })
-                    .simultaneousGesture(TapGesture().onEnded {
-                        handleJobItemClick(job: job)
-                    })
-                    Divider()
                 }
             }
         }
@@ -91,6 +98,9 @@ struct JobsView: FolderContainerView {
         .toolbar(content: {
             JobsHeaderToolbarView()
                 .padding(.leading)
+        })
+        .onChange(of: appState.current.job, {
+            selectedJobId = appState.current.job?.id ?? nil
         })
         .onAppear() {
             appState.views.addShownWindow(windowId: Constants.windowIdMain)

@@ -48,6 +48,7 @@
 		3559D9532DCB9B1A00B8D0D5 /* ConditionValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3559D9522DCB9B1400B8D0D5 /* ConditionValue.swift */; };
 		3559D9572DCBA1CD00B8D0D5 /* ConditionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3559D9562DCBA1CD00B8D0D5 /* ConditionService.swift */; };
 		3559D9612DCBADB700B8D0D5 /* ElementType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3559D9602DCBADB300B8D0D5 /* ElementType.swift */; };
+		357BAD872E2943E80026D77C /* DuplicatesPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357BAD862E2943E80026D77C /* DuplicatesPolicy.swift */; };
 		35896CC72E1D0EF40077D9E9 /* ValidationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35896CC62E1D0EE90077D9E9 /* ValidationResult.swift */; };
 		35896CC92E1D154F0077D9E9 /* ValidationMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35896CC82E1D15430077D9E9 /* ValidationMessageView.swift */; };
 		35B1B14D2C9C77F700B39FFC /* DraggableElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B1B14C2C9C77F700B39FFC /* DraggableElement.swift */; };
@@ -178,6 +179,7 @@
 		3559D9522DCB9B1400B8D0D5 /* ConditionValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionValue.swift; sourceTree = "<group>"; };
 		3559D9562DCBA1CD00B8D0D5 /* ConditionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionService.swift; sourceTree = "<group>"; };
 		3559D9602DCBADB300B8D0D5 /* ElementType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementType.swift; sourceTree = "<group>"; };
+		357BAD862E2943E80026D77C /* DuplicatesPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicatesPolicy.swift; sourceTree = "<group>"; };
 		35896CC62E1D0EE90077D9E9 /* ValidationResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationResult.swift; sourceTree = "<group>"; };
 		35896CC82E1D15430077D9E9 /* ValidationMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationMessageView.swift; sourceTree = "<group>"; };
 		35B1B14C2C9C77F700B39FFC /* DraggableElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableElement.swift; sourceTree = "<group>"; };
@@ -479,6 +481,7 @@
 				35DF88522CAED3CB007626CB /* DateFormatType.swift */,
 				3519DFE52DCCD394007D8B30 /* StringOperatorType.swift */,
 				3519DFE32DCCCF39007D8B30 /* NumberAndDateOperatorType.swift */,
+				357BAD862E2943E80026D77C /* DuplicatesPolicy.swift */,
 				35BE3F9E2E26775F0047E041 /* LogLevel.swift */,
 			);
 			path = Enums;
@@ -621,8 +624,8 @@
 			isa = PBXGroup;
 			children = (
 				35CA7C982C94724600765522 /* JobsView.swift */,
-				35E02F232DCC931C00D81F7F /* JobsHeaderToolbarView.swift */,
 				35E02F242DCC931C00D81F7F /* JobsToolbarView.swift */,
+				35E02F232DCC931C00D81F7F /* JobsHeaderToolbarView.swift */,
 				3538D5152DF2DCBE00179C3C /* JobRunView.swift */,
 				3538D50F2DF20D3C00179C3C /* JobAbortView.swift */,
 				3538D50D2DF1CE0400179C3C /* JobProgressView.swift */,
@@ -757,6 +760,7 @@
 				35E02F2C2DCC931C00D81F7F /* ActionPreviewView.swift in Sources */,
 				35E02F2D2DCC931C00D81F7F /* ActionView.swift in Sources */,
 				35E02F2E2DCC931C00D81F7F /* DraggableActionElementsView.swift in Sources */,
+				357BAD872E2943E80026D77C /* DuplicatesPolicy.swift in Sources */,
 				35BE3FA32E2680CA0047E041 /* LogEntry.swift in Sources */,
 				35E02F2F2DCC931C00D81F7F /* DraggableSourceElementsView.swift in Sources */,
 				35E02F302DCC931C00D81F7F /* InfoView.swift in Sources */,

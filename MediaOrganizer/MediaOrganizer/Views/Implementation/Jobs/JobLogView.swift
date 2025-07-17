@@ -51,7 +51,7 @@ struct JobLogView: View {
                             .background(
                                 selectedEntryId == entry.id
                                 ? Color.blue.opacity(0.3)
-                                : (index % 2 == 0 ? Color.gray.opacity(0.2) : Color.clear)
+                                : (index % 2 == 0 ? Color.gray.opacity(0.08) : Color.clear)
                             )
                             .contentShape(Rectangle())
                             .onTapGesture {

@@ -31,6 +31,12 @@ extension AppState {
         var logJobId: UUID? = nil
         var validationMessage: String? = nil
         
+        var isRuleInSetupMode: Bool {
+            get {
+                return isConditionInEditMode || isActionInEditMode
+            }
+        }
+        
         var isRuleSetupComplete: Bool {
             get {
                 return !isConditionInEditMode

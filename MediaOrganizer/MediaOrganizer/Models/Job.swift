@@ -13,6 +13,7 @@ class Job : Codable, Identifiable, Equatable, ObservableObject {
     var name: String
     var sourceFolder: String
     var outputFolder: String
+    var duplicatesPolicy: DuplicatesPolicy
     var rules: [Rule] = [Rule]()
     
     @Published var progress: JobProgress = JobProgress()
@@ -23,6 +24,7 @@ class Job : Codable, Identifiable, Equatable, ObservableObject {
         case name
         case sourceFolder
         case outputFolder
+        case duplicatesPolicy
         case rules
     }
     
@@ -33,6 +35,7 @@ class Job : Codable, Identifiable, Equatable, ObservableObject {
         self.name = name
         self.sourceFolder = sourceFolder
         self.outputFolder = outputFolder
+        self.duplicatesPolicy = .keep
     }
     
     func clone() -> Job {
@@ -41,6 +44,7 @@ class Job : Codable, Identifiable, Equatable, ObservableObject {
         result.name = self.name
         result.sourceFolder = self.sourceFolder
         result.outputFolder = self.outputFolder
+        result.duplicatesPolicy = self.duplicatesPolicy
         result.rules = self.rules.map({$0.clone()})
         
         return result
@@ -59,5 +63,6 @@ class Job : Codable, Identifiable, Equatable, ObservableObject {
         return lhs.name == rhs.name
         && lhs.sourceFolder == rhs.sourceFolder
         && lhs.outputFolder == rhs.outputFolder
+        && lhs.duplicatesPolicy == rhs.duplicatesPolicy
     }
 }

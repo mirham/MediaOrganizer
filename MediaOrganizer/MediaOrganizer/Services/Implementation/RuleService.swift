@@ -23,6 +23,15 @@ class RuleService: ServiceBase, RuleServiceType {
         return true
     }
     
+    func isCurrentRule(ruleId: UUID) -> Bool {
+        guard let currentRule = appState.current.rule
+        else { return false }
+        
+        let result = currentRule.id == ruleId
+        
+        return result
+    }
+    
     func getRuleIndexByRuleId(ruleId: UUID) -> Int? {
         guard let currentJob = appState.current.job else { return nil }
         
@@ -37,6 +46,16 @@ class RuleService: ServiceBase, RuleServiceType {
         currentJob.rules.append(currentRule)
     }
     
+    func duplicateRule() {
+        guard let currentJob = appState.current.job,
+              let currentRule = appState.current.rule
+        else { return }
+        
+        let duplicatedRule = currentRule.clone()
+        
+        currentJob.rules.append(duplicatedRule)
+    }
+    
     func updateRule() {
         guard let currentJob = appState.current.job,
               let currentRule = appState.current.rule
@@ -47,13 +66,29 @@ class RuleService: ServiceBase, RuleServiceType {
         }
     }
     
-    func isCurrentRule(ruleId: UUID) -> Bool {
-        guard let currentRule = appState.current.rule
-        else { return false }
+    func moveRuleUp() {
+        guard let currentJob = appState.current.job,
+              let currentRule = appState.current.rule,
+              let ruleId = getCurrentRuleId(),
+              let ruleIndex = getRuleIndexByRuleId(ruleId: ruleId) else {
+            return
+        }
         
-        let result = currentRule.id == ruleId
+        guard ruleIndex > 0 else { return }
         
-        return result
+        currentJob.rules.swapAt(ruleIndex, ruleIndex - 1)
+    }
+    func moveRuleDown() {
+        guard let currentJob = appState.current.job,
+              let currentRule = appState.current.rule,
+              let ruleId = getCurrentRuleId(),
+              let ruleIndex = getRuleIndexByRuleId(ruleId: ruleId) else {
+            return
+        }
+        
+        guard ruleIndex < currentJob.rules.count - 1 else { return }
+        
+        currentJob.rules.swapAt(ruleIndex, ruleIndex + 1)
     }
     
     func applyRule(rule:Rule, fileInfo: MediaFileInfo) throws -> [FileAction] {

@@ -79,8 +79,6 @@ struct JobSettingsView : View {
             jobService.updateJob()
         }
         
-        jobService.resetCurrentJob()
-        
         appState.views.removeShownWindow(windowId: Constants.windowIdJobSettings)
     }
 }

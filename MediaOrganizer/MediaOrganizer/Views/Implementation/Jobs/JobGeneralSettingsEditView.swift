@@ -15,6 +15,7 @@ struct JobGeneralSettingsEditView: FolderContainerView {
     
     @State private var jobName = String()
     
+    @State private var duplicatesPolicy = DuplicatesPolicy.keep
     @State private var dragOverSourceFolder = false
     @State private var dragOverDestinationFolder = false
     
@@ -69,6 +70,21 @@ struct JobGeneralSettingsEditView: FolderContainerView {
             VStack {
                 Text(String(format: Constants.maskSource, appState.current.job?.sourceFolder ?? String()))
                 Text(String(format: Constants.maskOutput, appState.current.job?.outputFolder ?? String()))
+                Spacer()
+                    .frame(height: 50)
+                Text(Constants.elDuplicatesPolicy)
+                    .asDuplicatesPolicyCaption()
+                Picker(String(), selection: $duplicatesPolicy) {
+                    ForEach(DuplicatesPolicy.allCases, id: \.id) {
+                        Text($0.description.uppercased()).tag($0)
+                    }
+                }
+                .pickerStyle(.segmented)
+                .frame(maxWidth: 350)
+                .onChange(of: duplicatesPolicy) {
+                    appState.current.job?.duplicatesPolicy = duplicatesPolicy
+                }
+                Spacer()
             }
             .frame(maxWidth: .infinity, alignment: .center)
             .padding(20)
@@ -76,6 +92,7 @@ struct JobGeneralSettingsEditView: FolderContainerView {
         }
         .onAppear() {
             jobName = appState.current.job?.name ?? Constants.defaultJobName
+            duplicatesPolicy = appState.current.job?.duplicatesPolicy ?? .keep
         }
     }
     
@@ -147,6 +164,16 @@ struct JobGeneralSettingsEditView: FolderContainerView {
         }
         
         self.appState.current.refreshSignal.toggle()
+    }
+}
+
+private extension Text {
+    func asDuplicatesPolicyCaption() -> some View {
+        self.textCase(.uppercase)
+            .font(.system(size: 10))
+            .foregroundStyle(.gray)
+            .frame(maxWidth: .infinity, alignment: .center)
+            .padding(.bottom, 5)
     }
 }
 

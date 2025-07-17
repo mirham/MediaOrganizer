@@ -18,13 +18,6 @@ class JobService: ServiceBase, JobServiceType {
         appState.current.job = Job.initDefault()
     }
     
-    func duplicateJob() {
-        guard let currentJob = appState.current.job
-        else { return }
-        
-        appState.userData.jobs.append(currentJob.clone())
-    }
-    
     func doesCurrentJobExist() -> Bool {
         guard appState.current.job != nil else { return false }
         
@@ -43,7 +36,20 @@ class JobService: ServiceBase, JobServiceType {
                 && getJobIndexByJobId(jobId: appState.current.job!.id) == nil
         else { return }
         
-        appState.userData.jobs.append(appState.current.job!)
+        guard let currentJob = appState.current.job
+        else { return }
+        
+        appState.userData.jobs.append(currentJob)
+    }
+    
+    func duplicateJob() {
+        guard let currentJob = appState.current.job
+        else { return }
+        
+        let clonedJob = currentJob.clone()
+        clonedJob.name = makeDuplicatedJobName(currentJobName: clonedJob.name)
+        
+        appState.userData.jobs.append(clonedJob)
     }
     
     func updateJob() {
@@ -144,6 +150,29 @@ class JobService: ServiceBase, JobServiceType {
     
     private func getJobIndexByJobId(jobId: UUID) -> Int? {
         let result = appState.userData.jobs.firstIndex(where: {$0.id == jobId})
+        
+        return result
+    }
+    
+    private func makeDuplicatedJobName(currentJobName: String) -> String {
+        let currentJobNames = appState.userData.jobs.map { $0.name }
+        var counter = 1
+        var result = currentJobName.range(
+            of: Constants.regexSearchCopySuffix,
+            options: [.regularExpression, .caseInsensitive]) != nil
+            ? currentJobName
+            : "\(currentJobName) \(Constants.elCopy.uppercased())"
+        
+        while currentJobNames.contains(where: {$0.uppercased() == result.uppercased()}) {
+            if let range = result.range(
+                of: Constants.regexSearchCopySuffixToReplace,
+                options: [.regularExpression, .caseInsensitive]) {
+                result = result.replacingCharacters(in: range, with: Constants.elCopy.uppercased())
+            }
+            
+            result = "\(result) \(counter)"
+            counter += 1
+        }
         
         return result
     }

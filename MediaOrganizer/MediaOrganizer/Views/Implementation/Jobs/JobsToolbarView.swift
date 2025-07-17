@@ -19,6 +19,7 @@ struct JobsToolbarView : View {
     @State private var isJobRemoving = false
     
     @State private var showOverAddJob = false
+    @State private var showOverEditJob = false
     @State private var showOverDuplicateJob = false
     @State private var showOverRemoveJob = false
     
@@ -34,6 +35,19 @@ struct JobsToolbarView : View {
                 color: .green)
             .onHover(perform: { hovering in
                 showOverAddJob = hovering && controlActiveState == .key
+            })
+            Button(
+                Constants.toolbarEdit,
+                systemImage: Constants.iconEdit,
+                action: showJobSettingsWindow)
+            .withToolbarButtonStyle(
+                showOver: showOverEditJob,
+                activeState: controlActiveState,
+                color: .blue)
+            .disabled(shouldDisablePanelButton())
+            .isHidden(hidden: !jobService.doesCurrentJobExist(), remove: true)
+            .onHover(perform: { hovering in
+                showOverEditJob = hovering && controlActiveState == .key
             })
             Button(
                 Constants.toolbarDuplicate,
