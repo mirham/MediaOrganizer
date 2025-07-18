@@ -221,9 +221,21 @@ class ValidationService: ServiceBase, ValidationServiceType {
         return ValidationResult()
     }
     
+    func areValidConditions(conditions: [Condition]) -> ValidationResult<[Condition]> {
+        if conditions.contains(where: {$0.isEmpty()}) {
+            return ValidationResult(
+                message: Constants.vmEmptyCondition,
+                severity: .warinig)
+        }
+        
+        return ValidationResult()
+    }
+    
     func areValidActions(actions: [Action]) -> ValidationResult<[Action]> {
         if actions.isEmpty {
-            return ValidationResult(message: Constants.vmNoActions)
+            return ValidationResult(
+                message: Constants.vmNoActions,
+                severity: .warinig)
         }
         
         let zero = 0

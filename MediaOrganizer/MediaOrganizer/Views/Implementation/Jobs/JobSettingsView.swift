@@ -61,7 +61,7 @@ struct JobSettingsView : View {
         
         ViewHelper.setUpView(
             viewName: Constants.windowIdJobSettings,
-            onTop: true)
+            onTop: false)
         
         guard appState.current.job != nil else {
             currentEditMode = .add

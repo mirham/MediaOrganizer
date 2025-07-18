@@ -30,6 +30,23 @@ class JobService: ServiceBase, JobServiceType {
         return currentJob.id
     }
     
+    func canRunJob(jobId: UUID) -> Bool {
+        let job = appState.userData.jobs
+            .first(where: { $0.id == jobId })
+        
+        guard let job = job else { return false }
+        
+        var isFolder: ObjCBool = true
+        let doesSourceFolderExist = FileManager.default.fileExists(
+            atPath: job.sourceFolder,
+            isDirectory: &isFolder)
+        let doesOutputFolderExist = FileManager.default.fileExists(
+            atPath: job.outputFolder,
+            isDirectory: &isFolder)
+        
+        return doesSourceFolderExist && doesOutputFolderExist
+    }
+    
     func addJob() {
         guard doesCurrentJobExist()
                 && appState.current.job != Job.initDefault()
@@ -79,7 +96,7 @@ class JobService: ServiceBase, JobServiceType {
     
     func runCheckedJobs() {
         let checkedInactiveJobs = appState.userData.jobs
-            .filter({ $0.checked && !$0.progress.isActive })
+            .filter({ $0.checked && !$0.progress.isActive && canRunJob(jobId: $0.id) })
         
         guard !checkedInactiveJobs.isEmpty else { return }
         

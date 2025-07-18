@@ -37,7 +37,7 @@ struct JobGeneralSettingsEditView: FolderContainerView {
             .frame(maxWidth: .infinity, alignment: .center)
             .padding(30)
             HStack(alignment: .center) {
-                Image(nsImage: getFolderIcon(folder: appState.current.job?.sourceFolder ?? String()))
+                Image(nsImage: getFolderIcon(folderPath: appState.current.job?.sourceFolder))
                     .resizable()
                     .frame(width: 128, height: 128)
                     .gesture(TapGesture().onEnded {
@@ -52,7 +52,7 @@ struct JobGeneralSettingsEditView: FolderContainerView {
                     .resizable()
                     .frame(width: 20, height: 20)
                     .padding(30)
-                Image(nsImage: getFolderIcon(folder: appState.current.job?.outputFolder ?? String()))
+                Image(nsImage: getFolderIcon(folderPath: appState.current.job?.outputFolder))
                     .resizable()
                     .frame(width: 128, height: 128)
                     .gesture(TapGesture().onEnded {
@@ -68,8 +68,10 @@ struct JobGeneralSettingsEditView: FolderContainerView {
             Spacer()
                 .frame(height: 30)
             VStack {
-                Text(String(format: Constants.maskSource, appState.current.job?.sourceFolder ?? String()))
-                Text(String(format: Constants.maskOutput, appState.current.job?.outputFolder ?? String()))
+                Text(getFolderPath(folderPath: appState.current.job?.sourceFolder,
+                                   folderType: .source))
+                Text(getFolderPath(folderPath: appState.current.job?.outputFolder,
+                                   folderType: .output))
                 Spacer()
                     .frame(height: 50)
                 Text(Constants.elDuplicatesPolicy)
@@ -102,7 +104,11 @@ struct JobGeneralSettingsEditView: FolderContainerView {
         let folderChooserPoint = CGPoint(x: 0, y: 0)
         let folderChooserSize = CGSize(width: 500, height: 600)
         let folderChooserRectangle = CGRect(origin: folderChooserPoint, size: folderChooserSize)
-        let folderPicker = NSOpenPanel(contentRect: folderChooserRectangle, styleMask: .utilityWindow, backing: .buffered, defer: true)
+        let folderPicker = NSOpenPanel(
+            contentRect: folderChooserRectangle,
+            styleMask: .utilityWindow,
+            backing: .buffered,
+            defer: true)
         
         folderPicker.canChooseDirectories = true
         folderPicker.canChooseFiles = false

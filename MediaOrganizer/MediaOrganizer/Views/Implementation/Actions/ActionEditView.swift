@@ -38,6 +38,11 @@ struct ActionEditView: View {
                 }
                 .disabled(appState.current.validationMessage != nil)
                 .pickerStyle(.menu)
+                ValidationMessageView(
+                    text: appState.current.validationMessage ?? String(),
+                    offset: 5,
+                    paddingBottom: 0,
+                    hideFunc: hideValidationMessage)
                 DraggableActionElementsView(
                     selectedActionTypeId: $selectedActionTypeId,
                     draggedItem: $draggedItem,
@@ -49,6 +54,8 @@ struct ActionEditView: View {
                         actionElements = appState.current.action!.elements
                             .map({ return DraggableElement(element: $0) })
                     }
+                    
+                    appState.current.refreshSignal.toggle()
                 }
                 .onChange(of: actionElements) {
                     if appState.current.action != nil {
@@ -57,11 +64,9 @@ struct ActionEditView: View {
                     }
                     appState.current.refreshSignal.toggle()
                 }
-                ValidationMessageView(
-                    text: appState.current.validationMessage ?? String(),
-                    offset: -20,
-                    paddingBottom: -25,
-                    hideFunc: hideValidationMessage)
+                .onDisappear() {
+                    appState.current.refreshSignal.toggle()
+                }
                 DraggableSourceElementsView(
                     selectedTypeId: $selectedActionTypeId,
                     draggedItem: $draggedItem,

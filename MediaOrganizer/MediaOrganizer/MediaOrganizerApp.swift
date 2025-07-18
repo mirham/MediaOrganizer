@@ -17,7 +17,7 @@ struct MediaOrganizerApp: App {
     @Environment(\.scenePhase) private var scenePhase
     
     var body: some Scene {
-        WindowGroup {
+        WindowGroup(id: Constants.windowIdMain) {
             JobsView()
                 .environmentObject(appState)
                 .navigationTitle(Constants.appName)
@@ -31,14 +31,14 @@ struct MediaOrganizerApp: App {
         }
         .windowResizability(.contentSize)
         
-        WindowGroup(id:Constants.windowIdJobSettings, makeContent: {
+        WindowGroup(id: Constants.windowIdJobSettings, makeContent: {
             JobSettingsView()
                 .environmentObject(appState)
                 .navigationTitle(String(format: Constants.elJobSettings, getCurrentJobName()))
                 .frame(minWidth: 560, minHeight: 500)
         })
         
-        WindowGroup(id:Constants.windowIdLog, makeContent: {
+        WindowGroup(id: Constants.windowIdLog, makeContent: {
             if let jobId = appState.current.logJobId {
                 JobLogView(jobId: jobId)
                     .environmentObject(appState)

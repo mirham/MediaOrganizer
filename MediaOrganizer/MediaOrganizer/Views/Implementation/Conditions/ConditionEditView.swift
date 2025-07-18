@@ -25,6 +25,11 @@ struct ConditionEditView: View {
                 Text(ConditionType(rawValue: selectedConditionTypeId)?.description ?? String())
                     .fontWeight(.bold)
                     .padding(.leading, 10)
+                ValidationMessageView(
+                    text: appState.current.validationMessage ?? String(),
+                    offset: 5,
+                    paddingBottom: 0,
+                    hideFunc: hideValidationMessage)
                 DraggableConditionElementsView(
                     selectedConditionTypeId: $selectedConditionTypeId,
                     draggedItem: $draggedItem,
@@ -36,6 +41,8 @@ struct ConditionEditView: View {
                         conditionElements = appState.current.condition!.elements
                             .map({ return DraggableElement(element: $0) })
                     }
+                    
+                    appState.current.refreshSignal.toggle()
                 }
                 .onChange(of: conditionElements) {
                     if appState.current.condition != nil {
@@ -44,11 +51,9 @@ struct ConditionEditView: View {
                     }
                     appState.current.refreshSignal.toggle()
                 }
-                ValidationMessageView(
-                    text: appState.current.validationMessage ?? String(),
-                    offset: -20,
-                    paddingBottom: -25,
-                    hideFunc: hideValidationMessage)
+                .onDisappear() {
+                    appState.current.refreshSignal.toggle()
+                }
                 DraggableSourceElementsView<ConditionElement>(
                     selectedTypeId: $selectedConditionTypeId,
                     draggedItem: $draggedItem,

@@ -65,7 +65,10 @@ struct JobsToolbarView : View {
             Button(Constants.toolbarRemove, systemImage: Constants.iconRemove) {
                 isJobRemoving = true
             }
-            .withToolbarButtonStyle(showOver: showOverRemoveJob, activeState: controlActiveState, color: .red)
+            .withToolbarButtonStyle(
+                showOver: showOverRemoveJob,
+                activeState: controlActiveState,
+                color: .red)
             .disabled(shouldDisablePanelButton())
             .isHidden(hidden: !jobService.doesCurrentJobExist(), remove: true)
             .onHover(perform: { hovering in
@@ -111,7 +114,10 @@ struct JobsToolbarView : View {
 }
 
 private extension Button {
-    func withToolbarButtonStyle(showOver: Bool, activeState: ControlActiveState, color: Color) -> some View {
+    func withToolbarButtonStyle(
+        showOver: Bool,
+        activeState: ControlActiveState,
+        color: Color) -> some View {
         self.buttonStyle(.plain)
             .foregroundColor(showOver && activeState == .key ? color : .gray)
             .focusEffectDisabled()

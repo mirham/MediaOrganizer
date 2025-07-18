@@ -10,16 +10,37 @@ import SwiftUI
 protocol FolderContainerView : View {}
 
 extension FolderContainerView {
-    func getFolderIcon(folder: String) -> NSImage {
+    func getFolderIcon(folderPath: String?) -> NSImage {
         var result = NSImage(resource: .foldericon)
+        
+        guard let folderPath = folderPath, folderPath != Constants.stubNotSelected
+        else { return result }
+        
         var isFolder: ObjCBool = true
+        let doesFolderExist = FileManager.default.fileExists(
+            atPath: folderPath,
+            isDirectory: &isFolder)
         
-        let doesFolderExist = (folder != String() && folder != Constants.stubNotSelected)
-            && FileManager.default.fileExists(atPath: folder, isDirectory: &isFolder)
+        result = doesFolderExist
+            ? NSWorkspace.shared.icon(forFile: folderPath)
+            : NSImage(resource: .warningicon)
         
-        if doesFolderExist {
-            result = NSWorkspace.shared.icon(forFile: folder)
-        }
+        return result
+    }
+    
+    func getFolderPath(folderPath: String?, folderType: FolderType) -> String {
+        guard let folderPath = folderPath, folderPath != Constants.stubNotSelected
+        else { return folderPath ?? String() }
+        
+        let mask = folderType == .source ? Constants.maskSource : Constants.maskOutput
+        var isFolder: ObjCBool = true
+        let doesFolderExist = FileManager.default.fileExists(
+            atPath: folderPath,
+            isDirectory: &isFolder)
+        
+        let result = doesFolderExist
+            ? String(format: mask, folderPath)
+            : "\(String(format: mask, folderPath)) (\(Constants.elIsNotAvailable))"
         
         return result
     }

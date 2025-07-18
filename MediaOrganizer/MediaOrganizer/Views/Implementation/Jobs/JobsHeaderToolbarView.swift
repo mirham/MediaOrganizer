@@ -24,7 +24,10 @@ struct JobsHeaderToolbarView : View {
             Button(Constants.toolbarRunJobs, systemImage: Constants.iconRun) {
                 jobService.runCheckedJobs()
             }
-            .withToolbarButtonStyle(showOver: showOverRunJobs, activeState: controlActiveState, color: .green)
+            .withToolbarButtonStyle(
+                showOver: showOverRunJobs,
+                activeState: controlActiveState,
+                color: .green)
             .disabled(!jobService.hasCheckedInactiveJobs())
             .popover(
                 isPresented: $showOverRunJobs,
@@ -37,7 +40,10 @@ struct JobsHeaderToolbarView : View {
             Button(Constants.toolbarAbortActiveJobs, systemImage: Constants.iconStop) {
                 jobService.abortActiveJobs()
             }
-            .withToolbarButtonStyle(showOver: showOverAbortJobs, activeState: controlActiveState, color: .red)
+            .withToolbarButtonStyle(
+                showOver: showOverAbortJobs,
+                activeState: controlActiveState,
+                color: .red)
             .disabled(!jobService.hasActiveJobs())
             .popover(isPresented: $showOverAbortJobs, content: {
                 renderHint(hint: Constants.toolbarAbortActiveJobs)

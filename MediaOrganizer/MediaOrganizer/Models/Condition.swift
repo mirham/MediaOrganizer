@@ -18,15 +18,19 @@ class Condition : Codable, Identifiable, Equatable {
         return result
     }
     
-    static func == (lhs: Condition, rhs: Condition) -> Bool {
-        return lhs.id == rhs.id
-    }
-    
     func clone() -> Condition {
         let result = Condition()
         result.type = self.type
         result.elements = self.elements.map({$0.clone(withValue: true) as! ConditionElement})
         
         return result
+    }
+    
+    func isEmpty() -> Bool {
+        return elements.isEmpty
+    }
+    
+    static func == (lhs: Condition, rhs: Condition) -> Bool {
+        return lhs.id == rhs.id
     }
 }

@@ -11,8 +11,7 @@ class Rule : Codable, Identifiable, Equatable {
     var id = UUID()
     var conditions: [Condition] = [Condition]()
     var actions: [Action] = [Action]()
-    var isValid: Bool = true
-    var validationMessage: String? = nil
+    var validation: Validation = Validation()
     var isEmpty: Bool {
         get {
             return conditions.isEmpty && actions.isEmpty
