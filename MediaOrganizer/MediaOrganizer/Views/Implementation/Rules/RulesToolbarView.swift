@@ -131,6 +131,7 @@ struct RulesToolbarView : View {
         
         if currentRule.isEmpty {
             ruleService.removeCurrentRule()
+            appState.current.refreshSignal.toggle()
         }
         else {
             isRuleRemoving = true
@@ -147,6 +148,8 @@ struct RulesToolbarView : View {
                 viewName: Constants.windowIdJobSettings,
                 enable: !hasEmptyRule)
         }
+        
+        appState.current.refreshSignal.toggle()
     }
     
     private func renderHint(hint: String) -> some View {

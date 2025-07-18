@@ -33,10 +33,10 @@ struct JobsView: FolderContainerView {
                                         jobService.toggleJob(jobId: job.id, checked: $0)
                                     }))
                                 .toggleStyle(CheckToggleStyle())
-                                Image(nsImage: getFolderIcon(folder: job.sourceFolder))
+                                Image(nsImage: getFolderIcon(folderPath: job.sourceFolder))
                                     .resizable()
                                     .frame(width: 42, height: 42)
-                                Image(nsImage: getFolderIcon(folder: job.outputFolder))
+                                Image(nsImage: getFolderIcon(folderPath: job.outputFolder))
                                     .resizable()
                                     .frame(width: 42, height: 42)
                                     .offset(x: -20, y: 35)
@@ -49,10 +49,14 @@ struct JobsView: FolderContainerView {
                                     .padding(.top, 5)
                                     .padding(.bottom, 2)
                                     .font(.system(size: 14))
-                                Text(String(format: Constants.maskSource, job.sourceFolder))
+                                Text(getFolderPath(
+                                    folderPath: job.sourceFolder,
+                                    folderType: .source))
                                     .foregroundStyle(jobService.isCurrentJob(jobId: job.id) ? .white : .gray)
                                     .font(.system(size: 11))
-                                Text(String(format: Constants.maskOutput, job.outputFolder))
+                                Text(getFolderPath(
+                                    folderPath: job.outputFolder,
+                                    folderType: .output))
                                     .foregroundStyle(jobService.isCurrentJob(jobId: job.id) ? .white : .gray)
                                     .font(.system(size: 11))
                                 JobProgressView(job: job)
@@ -62,7 +66,6 @@ struct JobsView: FolderContainerView {
                                 JobAbortView(job: job)
                             }
                         }
-                        
                         .frame(maxWidth: .infinity)
                         .background(
                             selectedJobId == job.id && appState.current.job != nil
@@ -81,24 +84,11 @@ struct JobsView: FolderContainerView {
                 }
             }
         }
-        .safeAreaInset(edge: .bottom, content: {
-            VStack {
-                Divider()
-                HStack {
-                    JobsToolbarView()
-                }
-                .padding(.bottom, 10)
-                .frame(maxWidth: .infinity)
-            }
-            .background(Color(hex: Constants.colorHexPanelDark))
-        })
+        .disabled(shouldDisableActions())
         .onTapGesture {
             hanldeJobScrollViewClick()
         }
-        .toolbar(content: {
-            JobsHeaderToolbarView()
-                .padding(.leading)
-        })
+        .onChange(of: appState.views.shownWindows, setupCloseButton)
         .onChange(of: appState.current.job, {
             selectedJobId = appState.current.job?.id ?? nil
         })
@@ -108,12 +98,46 @@ struct JobsView: FolderContainerView {
         .onDisappear() {
             handleCloseWindow()
         }
+        .onReceive(NotificationCenter.default.publisher(
+            for: NSApplication.willTerminateNotification),
+            perform: { output in handleCloseApp() })
+        .toolbar(content: {
+            JobsHeaderToolbarView()
+                .disabled(shouldDisableActions())
+                .padding(.leading)
+        })
+        .safeAreaInset(edge: .bottom, content: {
+            VStack {
+                Divider()
+                HStack {
+                    JobsToolbarView()
+                        .disabled(shouldDisableActions())
+                }
+                .padding(.bottom, 10)
+                .frame(maxWidth: .infinity)
+            }
+            .background(Color(hex: Constants.colorHexPanelDark))
+        })
     }
     
     // MARK: Private functions
     
+    private func setupCloseButton() {
+        let isEnabled = !appState.views.isWindowShown(
+            windowId: Constants.windowIdJobSettings)
+        
+        ViewHelper.setUpCloseViewButton(
+            viewName: Constants.windowIdMain,
+            enable: isEnabled)
+    }
+    
+    private func shouldDisableActions() -> Bool {
+        return appState.views.isWindowShown(windowId: Constants.windowIdJobSettings)
+    }
+    
     private func hanldeJobScrollViewClick () {
         guard appState.views.isWindowShown(windowId: Constants.windowIdMain)
+                && !shouldDisableActions()
         else { return }
         
         jobService.resetCurrentJob()
@@ -123,10 +147,16 @@ struct JobsView: FolderContainerView {
         guard appState.views.isWindowShown(windowId: Constants.windowIdMain)
         else { return }
         
+        guard !appState.views.isWindowShown(windowId: Constants.windowIdJobSettings)
+        else { return }
+        
         appState.current.job = job
     }
     
     private func handleJobItemDoubleClick (job : Job) {
+        guard !appState.views.isWindowShown(windowId: Constants.windowIdJobSettings)
+        else { return }
+        
         appState.current.job = job
         showEditJobWindow()
     }
@@ -139,13 +169,15 @@ struct JobsView: FolderContainerView {
         ViewHelper.activateView(viewId: Constants.windowIdJobSettings)
     }
     
-    private func handleCloseWindow(){
+    private func handleCloseWindow() {
+        appState.views.removeShownWindow(windowId: Constants.windowIdMain)
+    }
+    
+    private func handleCloseApp() {
         for jobId in appState.userData.jobs.map({$0.id}) {
             let jobLog = JobLog(jobId: jobId)
             jobLog.deleteLogFile()
         }
-        
-        appState.views.removeShownWindow(windowId: Constants.windowIdMain)
     }
 }
 

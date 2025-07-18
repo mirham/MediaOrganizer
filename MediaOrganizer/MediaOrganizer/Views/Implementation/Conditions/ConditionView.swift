@@ -68,6 +68,9 @@ struct ConditionView: ElementContainerView {
                 }
                 .isHidden(hidden: shouldActionButtonBeHidden(ruleId: ruleId), remove: true )
             }
+            .onDisappear() {
+                appState.current.refreshSignal.toggle()
+            }
             .background(conditionService.isCurrentCondition(conditionId: condition.id) && appState.current.isConditionInEditMode
                         ? Color.blue.opacity(0.3)
                         : .clear)
@@ -100,15 +103,16 @@ struct ConditionView: ElementContainerView {
             conditionService.replaceCondition(
                 conditionId: condition.id,
                 condition: prevCondition)
+            resetValidationMessage()
             exitEditMode()
         }
     }
     
     private func handleRemoveClick() {
         conditionService.removeConditionById(conditionId: condition.id)
+        ruleService.validateRule(rule: appState.current.rule)
         appState.current.isConditionInEditMode = false
         showEditor = false
-        setupCloseButton()
     }
     
     private func shouldActionButtonBeHidden(ruleId: UUID) -> Bool {
@@ -170,23 +174,15 @@ struct ConditionView: ElementContainerView {
         appState.current.condition = condition
         appState.current.isConditionInEditMode = true
         showEditor = true
-        setupCloseButton(enable: false)
     }
     
     private func exitEditMode() {
         appState.current.isConditionInEditMode = false
         appState.current.isConditionElementInEditMode = false
         showEditor = false
-        setupCloseButton(enable: true)
     }
     
     private func resetValidationMessage() {
         appState.current.validationMessage = nil
-    }
-    
-    private func setupCloseButton(enable: Bool? = nil) {
-        ViewHelper.setUpCloseViewButton(
-            viewName: Constants.windowIdJobSettings,
-            enable: enable ?? appState.current.allRulesValid)
     }
 }

@@ -15,4 +15,5 @@ protocol ValidationServiceType {
     func isValidFilename(input: String) -> ValidationResult<String>
     func isValidFolderPath(input: String, parentFolderPathLength: Int) -> ValidationResult<String>
     func areValidActions(actions: [Action]) -> ValidationResult<[Action]>
+    func areValidConditions(conditions: [Condition]) -> ValidationResult<[Condition]>
 }

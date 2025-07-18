@@ -68,6 +68,9 @@ struct ActionView: ElementContainerView {
                 }
                 .isHidden(hidden: shouldActionButtonBeHidden(ruleId: ruleId), remove: true )
             }
+            .onDisappear() {
+                appState.current.refreshSignal.toggle()
+            }
             .background(actionService.isCurrentAction(actionId: action.id) && appState.current.isActionInEditMode
                         ? Color.blue.opacity(0.3)
                         : .clear)
@@ -115,7 +118,8 @@ struct ActionView: ElementContainerView {
     private func handleRemoveClick () {
         actionService.removeActionById(actionId: action.id)
         ruleService.validateRule(rule: appState.current.rule)
-        exitEditMode(enableCloseButton: nil)
+        exitEditMode()
+        appState.current.refreshSignal.toggle()
     }
     
     private func shouldActionButtonBeHidden(ruleId: UUID) -> Bool {
@@ -203,24 +207,16 @@ struct ActionView: ElementContainerView {
         appState.current.action = action
         appState.current.isActionInEditMode = true
         showEditor = true
-        setupCloseButton(enable: false)
     }
     
-    private func exitEditMode(enableCloseButton: Bool? = true) {
+    private func exitEditMode() {
         appState.current.isActionInEditMode = false
         appState.current.isActionElementInEditMode = false
         showEditor = false
-        setupCloseButton(enable: enableCloseButton)
     }
     
     private func resetValidationMessage() {
         appState.current.validationMessage = nil
-    }
-    
-    private func setupCloseButton(enable: Bool? = nil) {
-        ViewHelper.setUpCloseViewButton(
-            viewName: Constants.windowIdJobSettings,
-            enable: enable ?? appState.current.allRulesValid)
     }
 }
 

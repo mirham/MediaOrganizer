@@ -55,7 +55,7 @@ extension AppState {
         var allRulesValid: Bool {
             get {
                 if let currentJob = job {
-                    return currentJob.rules.allSatisfy({$0.isValid})
+                    return currentJob.rules.allSatisfy({$0.validation.isValid})
                 }
                 
                 return true
@@ -81,7 +81,7 @@ extension AppState {
 
 extension AppState {
     struct Views {
-        private var shownWindows: [String] = [String]()
+        var shownWindows: [String] = [String]()
         
         func isWindowShown(windowId: String) -> Bool {
             return shownWindows.count(where: {$0 == windowId}) > 0

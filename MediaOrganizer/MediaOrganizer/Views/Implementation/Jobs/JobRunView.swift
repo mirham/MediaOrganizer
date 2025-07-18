@@ -25,6 +25,7 @@ struct JobRunView: View {
         })
         .buttonStyle(.plain)
         .focusEffectDisabled()
+        .disabled(shouldDisableButton())
         .foregroundStyle(overRunButton ? .green : .blue)
         .isHidden(hidden: job.progress.isActive, remove: true)
         .popover(isPresented: $overRunButton, content: {
@@ -36,6 +37,10 @@ struct JobRunView: View {
     }
     
     // MARK: Private functions
+    
+    private func shouldDisableButton() -> Bool {
+        return !jobService.canRunJob(jobId: job.id)
+    }
     
     private func runJob() {
         jobService.runJob(jobId: job.id)

@@ -67,7 +67,8 @@ struct Constants {
     static let iconFile = "doc.fill"
     static let iconStop = "stop.fill"
     static let iconCancel = "xmark.circle.fill"
-    static let iconWarning = "exclamationmark.triangle"
+    static let iconWarning = "exclamationmark.circle.fill"
+    static let iconError = "xmark.circle.fill"
     static let iconUp = "arrowshape.up.circle.fill"
     static let iconDown = "arrowshape.down.circle.fill"
     
@@ -147,6 +148,7 @@ struct Constants {
     static let elClear = "Clear"
     static let elCopy = "Copy"
     static let elDuplicatesPolicy = "Duplicates policy"
+    static let elIsNotAvailable = "not available"
     
     // MARK: Masks
     static let maskSource =  "Source: %1$@"
@@ -222,6 +224,7 @@ struct Constants {
     static let vmPathComponentEndsWithDot = "Folder name like '%1$@' cannot end with a dot."
     static let vmPathComponentStartsWithDot = "Folder name like '%1$@' starts with a dot, which will be hidden on macOS."
     static let vmNoActions = "Add at least one action or remove rule."
+    static let vmEmptyCondition = "Set up or remove empty conditions."
     static let vmActionsMess = "The 'Skip' or 'Delete' actions should not be combined with others."
     static let vmCopyMoveActionsMess = "There should only be one 'Copy to Folder' or 'Move to Folder' action per rule."
     static let vmExtraSkipOrDeleteAction = "The 'Skip' or 'Delete' actions should only appear once."

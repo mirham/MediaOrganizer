@@ -68,7 +68,6 @@ class RuleService: ServiceBase, RuleServiceType {
     
     func moveRuleUp() {
         guard let currentJob = appState.current.job,
-              let currentRule = appState.current.rule,
               let ruleId = getCurrentRuleId(),
               let ruleIndex = getRuleIndexByRuleId(ruleId: ruleId) else {
             return
@@ -80,7 +79,6 @@ class RuleService: ServiceBase, RuleServiceType {
     }
     func moveRuleDown() {
         guard let currentJob = appState.current.job,
-              let currentRule = appState.current.rule,
               let ruleId = getCurrentRuleId(),
               let ruleIndex = getRuleIndexByRuleId(ruleId: ruleId) else {
             return
@@ -115,13 +113,29 @@ class RuleService: ServiceBase, RuleServiceType {
     func validateRule(rule: Rule?) {
         guard let currentRule = rule else { return }
         
-        let validationResult = validationService.areValidActions(
-            actions: currentRule.actions)
+        var isValid: Bool
+        var message: String?
+        var severity: ValidationSeverity?
         
-        currentRule.isValid = validationResult.isValid
-        currentRule.validationMessage = validationResult.message
+        let conditionsValidationResult = validationService.areValidConditions(
+            conditions: currentRule.conditions)
         
-        appState.current.refreshSignal.toggle()
+        isValid = conditionsValidationResult.isValid
+        message = conditionsValidationResult.message
+        severity = conditionsValidationResult.severity
+        
+        if isValid {
+            let actionsValidationResult = validationService.areValidActions(
+                actions: currentRule.actions)
+            
+            isValid = actionsValidationResult.isValid
+            message = actionsValidationResult.message
+            severity = actionsValidationResult.severity
+        }
+        
+        currentRule.validation.isValid = isValid
+        currentRule.validation.message = message
+        currentRule.validation.severity = severity
     }
     
     func resetCurrentRule() {
