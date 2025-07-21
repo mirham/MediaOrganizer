@@ -33,6 +33,7 @@ struct Constants {
     static let slash = "/"
     static let slashChar: Character = "/"
     static let dot = "."
+    static let hyphen = "-"
     static let comma = ","
     static let nullChar = "\0"
     static let colon = ":"
@@ -236,6 +237,14 @@ struct Constants {
     // MARK: Log messages
     static let lmJobCancelled = "The job has been cancelled."
     static let lmJobFailed = "The job has been failed with error: %1$@"
+    static let lmFileSkipped = "File '%1$@' skipped."
+    static let lmFileSkippedDestinationExists = "File '%1$@' skipped, destination file '%1$@' already exists \(lmAccordingToPolicy)."
+    static let lmFileWasRenamed = "File '%1$@' was renamed to '%2$@'."
+    static let lmFileWasCopied = "File '%1$@' was copied to '%2$@'."
+    static let lmFileWasMoved = "File '%1$@' was moved to '%2$@'."
+    static let lmFileWasOverwritten = "File '%1$@' was overwritten \(lmAccordingToPolicy)."
+    static let lmFileWasDeleted = "File '%1$@' was deleted."
+    static let lmAccordingToPolicy = "(according to policy)"
     
     // MARK: Errors
     static let errorNoStrategyForElementType = "No strategy found for element type: %1$@."
@@ -244,6 +253,11 @@ struct Constants {
     static let errorFailedToClearLogFile = "Failed to clear log file: %1$@"
     static let errorReadingLogFile = "Error reading log file: %1$@"
     static let errorInvalidConditionValueType = "Invalid condition value type: %1$@."
+    static let errorCannotCreateFolder = "Cannot create folder '%1$@': %2$@."
+    static let errorCannotCreateTempFile = "Cannot create temp file: %1$@."
+    static let errorCannotPerformAction = "Cannot %1$@ file '%2$@': %3$@."
+    static let errorCannotPerformAction2 = "Cannot perform action with file '%1$@': %2$@."
+    static let errorCannotApplyRule = "Cannot apply rule: %1$@."
     
     // MARK: About
     static let aboutSupportMail = "bWlyaGFtQGFidi5iZw=="

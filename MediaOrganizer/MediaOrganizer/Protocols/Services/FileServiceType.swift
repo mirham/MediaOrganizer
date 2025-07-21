@@ -16,8 +16,21 @@ protocol FileServiceType {
     func peformFileActionsAsync(
         outputPath: String,
         fileInfo: MediaFileInfo,
-        fileActions: [FileAction]) async throws
-    func renameFile(newName: String, fileUrl: URL) throws -> URL
-    func copyToFolder(subfolderName: String, outputPath: String, fileUrl: URL) throws -> URL
-    func deleteFile(fileUrl: URL) throws
+        fileActions: [FileAction],
+        duplicatesPolicy: DuplicatesPolicy,
+        operationResult: inout OperationResult) async
+    func renameFile(
+        newName: String,
+        fileUrl: URL,
+        duplicatesPolicy: DuplicatesPolicy,
+        operationResult: inout OperationResult)
+    func copyToFolder(
+        subfolderName: String,
+        outputPath: String,
+        fileUrl: URL,
+        duplicatesPolicy: DuplicatesPolicy,
+        operationResult: inout OperationResult)
+    func deleteFile(
+        fileUrl: URL,
+        operationResult: inout OperationResult)
 }
