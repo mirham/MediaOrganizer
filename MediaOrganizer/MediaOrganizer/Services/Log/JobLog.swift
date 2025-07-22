@@ -35,6 +35,15 @@ class JobLog: ServiceBase, JobLogType {
         log(message, .error)
     }
     
+    func write(_ message: String) {
+        log(message, .raw)
+    }
+    
+    func write(_ messages: [String]) {
+        let message = messages.joined(separator: Constants.newLine)
+        log(message, .raw)
+    }
+    
     func getLogFileUrl() -> URL? {
         guard let appSupportDirectory = FileManager.default.urls(
             for: .applicationSupportDirectory, in: .userDomainMask).first
@@ -102,6 +111,9 @@ class JobLog: ServiceBase, JobLogType {
             case .error:
                 let errorMessage = String(format: fileMessageMask, Constants.error)
                 self.writeToLogFile(errorMessage)
+                break
+            case .raw:
+                self.writeToLogFile(message)
                 break
         }
     }

@@ -42,7 +42,7 @@ struct JobProgress {
             let isJobInProgress = processedCount != 0 || totalCount != 0
             guard isJobInProgress else { return }
             
-            progress = (Double(processedCount + skippedCount + errorsCount)
+            progress = (Double(processedCount + skippedCount)
                         / Double(totalCount))
             * Constants.maxPercentage
         }

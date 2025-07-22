@@ -41,9 +41,9 @@ struct ActionElementEditView: ElementContainerView {
     
     init(element: ActionElement) {
         self.element = element
-        self.selectedDateFormatTypeId = element.selectedDateFormatType != nil
-            ? element.selectedDateFormatType!.id
-            : DateFormatType.dateEu.id
+        self.selectedDateFormatTypeId = element.selectedDateFormatType == nil
+            ? nil
+            : element.selectedDateFormatType!.id
         self.customText = element.customText ?? String()
         self.customDate = element.customDate ?? Date.distantPast
         self.hasError = false

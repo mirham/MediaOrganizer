@@ -17,12 +17,14 @@ class CopyToFolderStrategy : FileActionStrategy {
     func performAction(
         outputPath: String,
         fileInfo: MediaFileInfo,
-        fileAction: FileAction) throws -> URL? {
-        let result = try fileService.copyToFolder(
+        fileAction: FileAction,
+        duplicatesPolicy: DuplicatesPolicy,
+        operationResult: inout OperationResult) {
+            fileService.copyOrMoveToFolder(
             subfolderName: fileAction.value!,
             outputPath: outputPath,
-            fileUrl: fileInfo.currentUrl)
-        
-        return result
+            fileUrl: fileInfo.currentUrl,
+            duplicatesPolicy: duplicatesPolicy,
+            operationResult: &operationResult)
     }
 }

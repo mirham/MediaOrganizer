@@ -14,5 +14,7 @@ protocol FileActionStrategy {
     func performAction(
         outputPath: String,
         fileInfo: MediaFileInfo,
-        fileAction: FileAction) throws -> URL?
+        fileAction: FileAction,
+        duplicatesPolicy: DuplicatesPolicy,
+        operationResult: inout OperationResult)
 }

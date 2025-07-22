@@ -17,11 +17,13 @@ class RenameStrategy : FileActionStrategy {
     func performAction(
         outputPath: String,
         fileInfo: MediaFileInfo,
-        fileAction: FileAction) throws -> URL? {
-        let result = try fileService.renameFile(
+        fileAction: FileAction,
+        duplicatesPolicy: DuplicatesPolicy,
+        operationResult: inout OperationResult) {
+        fileService.renameFile(
             newName: fileAction.value!,
-            fileUrl: fileInfo.currentUrl)
-        
-        return result
+            fileUrl: fileInfo.currentUrl,
+            duplicatesPolicy: duplicatesPolicy,
+            operationResult: &operationResult)
     }
 }

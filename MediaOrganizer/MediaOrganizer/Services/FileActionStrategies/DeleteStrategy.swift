@@ -17,10 +17,11 @@ class DeleteStrategy : FileActionStrategy {
     func performAction(
         outputPath: String,
         fileInfo: MediaFileInfo,
-        fileAction: FileAction) throws -> URL? {
-        try fileService.deleteFile(fileUrl: fileInfo.currentUrl)
-        try fileService.deleteFile(fileUrl: fileInfo.originalUrl)
-        
-        return nil
+        fileAction: FileAction,
+        duplicatesPolicy: DuplicatesPolicy,
+        operationResult: inout OperationResult) {
+        fileService.deleteFile(
+            fileUrl: fileInfo.originalUrl,
+            operationResult: &operationResult)
     }
 }

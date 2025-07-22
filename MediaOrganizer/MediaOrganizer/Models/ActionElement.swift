@@ -55,6 +55,18 @@ class ActionElement : ElementType {
     }
     
     func hasValue() -> Bool {
+        if let metadataElementType = MetadataType(rawValue: elementTypeId) {
+            switch metadataElementType {
+                case .fileDateCreated,
+                    .fileDateModified,
+                    .metadataDateOriginal,
+                    .metadataDateDigitilized:
+                    return selectedDateFormatType != nil
+                default:
+                    return true
+            }
+        }
+        
         if let optionalElementType = OptionalElementType(rawValue: elementTypeId) {
             switch optionalElementType {
                 case .customDate:

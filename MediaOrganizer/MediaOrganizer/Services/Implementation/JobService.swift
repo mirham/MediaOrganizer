@@ -228,17 +228,23 @@ class JobService: ServiceBase, JobServiceType {
                         throw CancellationError()
                     }
                     
-                    let wasProcessed = try await processFile(fileInfo, for: job)
+                    let operationResult = await processFile(fileInfo, for: job)
                     
                     await MainActor.run {
-                        if wasProcessed {
-                            job.progress.processedCount += Constants.step
-                            //job.progress.refreshSignal.toggle()
+                        if operationResult.isSuccess {
+                            if operationResult.isEmpty {
+                                job.progress.skippedCount += Constants.step
+                            }
+                            else {
+                                job.progress.processedCount += Constants.step
+                            }
                         }
                         else {
-                            job.progress.skippedCount += Constants.step
-                            //job.progress.refreshSignal.toggle()
+                            job.progress.processedCount += Constants.step
+                            job.progress.errorsCount += Constants.step
                         }
+                        
+                        jobLog.write(operationResult.logMessages)
                     }
                 }
             }
@@ -267,19 +273,44 @@ class JobService: ServiceBase, JobServiceType {
         }
     }
     
-    private func processFile(_ fileInfo: MediaFileInfo, for job: Job) async throws -> Bool {
+    private func processFile(_ fileInfo: MediaFileInfo, for job: Job) async -> OperationResult {
+        var result = OperationResult(originalUrl: fileInfo.originalUrl)
+        
         for rule in job.rules {
-            let fileActions = try ruleService.applyRule(rule: rule, fileInfo: fileInfo)
+            let fileActions = applyRule(
+                rule: rule,
+                fileInfo: fileInfo,
+                operationResult: &result)
             
-            guard !fileActions.isEmpty else { continue }
+            guard result.isSuccess else { continue }
             
-            try await fileService.peformFileActionsAsync(
+            await fileService.peformFileActionsAsync(
                 outputPath: job.outputFolder,
                 fileInfo: fileInfo,
-                fileActions: fileActions
+                fileActions: fileActions,
+                duplicatesPolicy: job.duplicatesPolicy,
+                operationResult: &result
             )
-            return true
         }
-        return false
+        
+        return result
+    }
+    
+    private func applyRule(
+        rule: Rule,
+        fileInfo: MediaFileInfo,
+        operationResult: inout OperationResult) -> [FileAction] {
+        do {
+            let result = try ruleService.applyRule(rule: rule, fileInfo: fileInfo)
+            
+            return result
+        }
+        catch {
+            operationResult.appendLogMessage(
+                message: String(format: Constants.errorCannotApplyRule, error.localizedDescription),
+                logLevel: .error)
+        }
+        
+        return [FileAction]()
     }
 }

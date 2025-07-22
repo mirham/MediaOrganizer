@@ -15,7 +15,9 @@ class SkipStrategy : FileActionStrategy {
     func performAction(
         outputPath: String,
         fileInfo: MediaFileInfo,
-        fileAction: FileAction) throws -> URL? {
-        return nil
+        fileAction: FileAction,
+        duplicatesPolicy: DuplicatesPolicy,
+        operationResult: inout OperationResult) {
+        return
     }
 }
