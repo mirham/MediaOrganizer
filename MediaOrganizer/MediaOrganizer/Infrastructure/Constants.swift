@@ -238,7 +238,8 @@ struct Constants {
     static let lmJobCancelled = "The job has been cancelled."
     static let lmJobFailed = "The job has been failed with error: %1$@"
     static let lmFileSkipped = "File '%1$@' skipped."
-    static let lmFileSkippedDestinationExists = "File '%1$@' skipped, destination file '%1$@' already exists \(lmAccordingToPolicy)."
+    static let lmFileRenamingSkipped = "Renaming file '%1$@' was skipped, it already has a proper name."
+    static let lmFileSkippedDestinationExists = "File '%1$@' skipped and restored as '%2$@', because of destination file '%3$@' already exists \(lmAccordingToPolicy)."
     static let lmFileWasRenamed = "File '%1$@' was renamed to '%2$@'."
     static let lmFileWasCopied = "File '%1$@' was copied to '%2$@'."
     static let lmFileWasMoved = "File '%1$@' was moved to '%2$@'."
@@ -254,10 +255,11 @@ struct Constants {
     static let errorReadingLogFile = "Error reading log file: %1$@"
     static let errorInvalidConditionValueType = "Invalid condition value type: %1$@."
     static let errorCannotCreateFolder = "Cannot create folder '%1$@': %2$@."
-    static let errorCannotCreateTempFile = "Cannot create temp file: %1$@."
     static let errorCannotPerformAction = "Cannot %1$@ file '%2$@': %3$@."
     static let errorCannotPerformAction2 = "Cannot perform action with file '%1$@': %2$@."
     static let errorCannotApplyRule = "Cannot apply rule: %1$@."
+    static let errorCannotPerformFileAction = "Cannot perform file action '%1$@'"
+    static let errorFatalCannotRestoreFile = "Uh-oh, fatal error here! Cannot restore file '%1$@'!"
     
     // MARK: About
     static let aboutSupportMail = "bWlyaGFtQGFidi5iZw=="

@@ -16,17 +16,17 @@ class FileService : ServiceBase, FileServiceType {
     private let fileManager = FileManager.default
     
     func doesFolderExist(path: String) -> Bool {
-        let url = URL(fileURLWithPath: path)
+        let url = URL(fileURLWithPath: path, isDirectory: true)
         let result = (try? url.resourceValues(forKeys: [.isDirectoryKey]).isDirectory) ?? false
         
         return result
     }
     
-    func getFolderMediaFilesAsync(
+    func getFolderMediaFilesAsync (
         path: String,
         jobProgress: JobProgress) async throws -> [MediaFileInfo] {
         var result = [MediaFileInfo]()
-        let path = URL( string: path)
+        let path = URL(string: path)
         
         let options: FileManager.DirectoryEnumerationOptions
             = [.skipsHiddenFiles, .skipsPackageDescendants]
@@ -55,7 +55,7 @@ class FileService : ServiceBase, FileServiceType {
         return result
     }
     
-    func peformFileActionsAsync(
+    func peformFileActionsAsync (
         outputPath: String,
         fileInfo: MediaFileInfo,
         fileActions: [FileAction],
@@ -69,16 +69,6 @@ class FileService : ServiceBase, FileServiceType {
             
         guard checkIfActionNeeded(fileActions: fileActions, operationResult: &operationResult)
         else { return }
-            
-        makeTempFileCopy(
-            fileUrl: fileInfo.currentUrl,
-            outputPath: outputPath,
-            fileActions: fileActions,
-            operationResult: &operationResult)
-            
-        guard operationResult.isSuccess else { return }
-            
-        fileInfo.currentUrl = operationResult.currentUrl
         
         for fileAction in fileActions {
             let fileActionStrategy = fileActionStrategyFactory.getStrategy(
@@ -99,15 +89,16 @@ class FileService : ServiceBase, FileServiceType {
         }
     }
     
-    func renameFile(
+    func renameFile (
         newName: String,
         fileUrl: URL,
         duplicatesPolicy: DuplicatesPolicy,
         operationResult: inout OperationResult) {
-        let newUrl = URL(fileURLWithPath: fileUrl.deletingLastPathComponent().path() + newName)
+        let newUrl = URL(string: "\(fileUrl.deletingLastPathComponent().path())\(newName)")
+        guard let newUrl = newUrl else { return }
         
         do {
-            let adjustedNewUrl = try moveFileWithDuplicatesPolicy(
+            let adjustedNewUrl = try processFileWithDuplicatesPolicy(
                 at: fileUrl,
                 to: newUrl,
                 duplicatesPolicy: duplicatesPolicy,
@@ -122,7 +113,7 @@ class FileService : ServiceBase, FileServiceType {
         }
     }
     
-    func copyToFolder(
+    func copyOrMoveToFolder (
         subfolderName: String,
         outputPath: String,
         fileUrl: URL,
@@ -137,10 +128,12 @@ class FileService : ServiceBase, FileServiceType {
         guard operationResult.isSuccess
         else { return }
         
-        let newUrl = URL(fileURLWithPath: "\(subfolderPath)\(Constants.slash)\(fileUrl.lastPathComponent)")
+        let newUrl = URL(
+            fileURLWithPath: "\(subfolderPath)\(fileUrl.lastPathComponent)",
+            isDirectory: false)
         
         do {
-            let adjustedNewUrl = try moveFileWithDuplicatesPolicy(
+            let adjustedNewUrl = try processFileWithDuplicatesPolicy(
                 at: fileUrl,
                 to: newUrl,
                 duplicatesPolicy: duplicatesPolicy,
@@ -154,13 +147,15 @@ class FileService : ServiceBase, FileServiceType {
         }
     }
     
-    func deleteFile(
+    func deleteFile (
         fileUrl: URL,
         operationResult: inout OperationResult) {
         do {
             try fileManager.removeItem(at: fileUrl)
             operationResult.appendLogMessage(
-                message: String(format: Constants.lmFileWasDeleted, fileUrl.absoluteString),
+                message: String(
+                    format: Constants.lmFileWasDeleted,
+                    fileUrl.path(percentEncoded: false)),
                 logLevel: .info)
         }
         catch {
@@ -172,16 +167,17 @@ class FileService : ServiceBase, FileServiceType {
     
     // MARK: Private functions
     
-    private func listFilesInFolderAsync(
+    private func listFilesInFolderAsync (
         at url: URL,
         options: FileManager.DirectoryEnumerationOptions,
         jobProgress: JobProgress) async -> AsyncStream<URL> {
         AsyncStream { continuation in
             Task {
                 do {
+                    let standardizedURL = url.standardizedFileURL
                     let enumerator = FileManager.default.enumerator(
-                        at: url,
-                        includingPropertiesForKeys: nil,
+                        at: standardizedURL,
+                        includingPropertiesForKeys: [.isDirectoryKey],
                         options: options
                     )
                     
@@ -205,7 +201,7 @@ class FileService : ServiceBase, FileServiceType {
         }
     }
     
-    private func createFolderIfDoesNotExist(
+    private func createFolderIfDoesNotExist (
         path: String,
         operationResult: inout OperationResult) {
         do {
@@ -222,7 +218,7 @@ class FileService : ServiceBase, FileServiceType {
         }
     }
     
-    private func checkIfActionNeeded(
+    private func checkIfActionNeeded (
         fileActions: [FileAction],
         operationResult: inout OperationResult) -> Bool {
         if !fileActions.isEmpty && !fileActions.allSatisfy({$0.actionType == .skip}) {
@@ -236,50 +232,26 @@ class FileService : ServiceBase, FileServiceType {
         return false
     }
     
-    private func makeTempFileCopy(
-        fileUrl: URL,
-        outputPath: String,
-        fileActions: [FileAction],
-        operationResult: inout OperationResult) {
-        let isDeleteOnly = fileActions.count == 1
-        && fileActions.allSatisfy({$0.actionType == .delete})
-        
-        if !isDeleteOnly {
-            let uuid = UUID().toStringWithoutHyphens
-            let outputUrl = URL(fileURLWithPath: "\(outputPath).\(uuid)_\(fileUrl.lastPathComponent)")
-         
-            do {
-                try fileManager.copyItem(at: fileUrl, to: outputUrl)
-                operationResult.currentUrl = outputUrl
-            }
-            catch {
-                operationResult.appendLogMessage(
-                    message: String(format: Constants.errorCannotCreateTempFile, error.localizedDescription),
-                    logLevel: .error)
-            }
-        }
-    }
-    
-    private func moveFileWithDuplicatesPolicy(
+    private func processFileWithDuplicatesPolicy (
         at source: URL,
         to destination: URL,
         duplicatesPolicy: DuplicatesPolicy,
         operationResult: inout OperationResult) throws -> URL? {
         switch duplicatesPolicy {
             case .overwrite:
-                try fileManager.moveItemWithOverwriting(
+                try fileManager.processItemWithOverwriting(
                     at: source,
                     to: destination,
                     overwrite: true,
                     operationResult: &operationResult)
                 return nil
             case .keep:
-               return try fileManager.moveItemWithUniqueName(
+               return try fileManager.processItemWithUniqueName(
                     at: source,
                     to: destination,
                     operationResult: &operationResult)
             case .skip:
-                try fileManager.moveItemWithSkipIfDuplicate(
+                try fileManager.processItemWithSkipIfDuplicate(
                     at: source,
                     to: destination,
                     operationResult: &operationResult)
@@ -287,7 +259,7 @@ class FileService : ServiceBase, FileServiceType {
         }
     }
     
-    private func handlePerformActionException(
+    private func handlePerformActionException (
         errorDescription: String,
         operationResult: inout OperationResult) {
         var message: String
@@ -295,29 +267,200 @@ class FileService : ServiceBase, FileServiceType {
             case .rename:
                 message = String(format: Constants.errorCannotPerformAction,
                                  ActionType.rename.description,
-                                 operationResult.originalUrl.absoluteString,
+                                 operationResult.originalUrl.path(percentEncoded: false),
                                  errorDescription)
             case .copyToFolder:
                 message = String(format: Constants.errorCannotPerformAction,
                                  ActionType.copyToFolder.description,
-                                 operationResult.originalUrl.absoluteString,
+                                 operationResult.originalUrl.path(percentEncoded: false),
                                  errorDescription)
             case .moveToFolder:
                 message = String(format: Constants.errorCannotPerformAction,
                                  ActionType.moveToFolder.description,
-                                 operationResult.originalUrl.absoluteString,
+                                 operationResult.originalUrl.path(percentEncoded: false),
                                  errorDescription)
             case .delete:
                 message = String(format: Constants.errorCannotPerformAction,
                                  ActionType.delete.description,
-                                 operationResult.originalUrl.absoluteString,
+                                 operationResult.originalUrl.path(percentEncoded: false),
                                  errorDescription)
             default:
                 message = String(format: Constants.errorCannotPerformAction2,
-                                 operationResult.originalUrl.absoluteString,
+                                 operationResult.originalUrl.path(percentEncoded: false),
                                  errorDescription)
         }
-            
+        
+        fileManager.restoreFile(operationResult: &operationResult)
         operationResult.appendLogMessage(message: message, logLevel: .error)
+    }
+}
+
+private extension FileManager {
+    func processItemWithOverwriting (
+        at source: URL,
+        to destination: URL,
+        overwrite: Bool = false,
+        operationResult: inout OperationResult) throws {
+            do {
+                try performFileAction(
+                    at: source,
+                    to: destination,
+                    operationResult)
+                
+                operationResult.appendLogMessage(
+                    message: String(
+                        format: getFileActionMask(operationResult),
+                        source.path(percentEncoded: false),
+                        destination.path(percentEncoded: false)),
+                    logLevel: .info)
+            } catch let error as NSError {
+                if error.code == NSFileWriteFileExistsError && overwrite {
+                    let sourcePath = source.standardized.path(percentEncoded: false)
+                    let destinationPath = destination.standardized.path(percentEncoded: false)
+                    
+                    try removeItem(atPath: destinationPath)
+                    try moveItem(atPath: sourcePath, toPath: destinationPath)
+                    
+                    operationResult.appendLogMessage(
+                        message: String(
+                            format: Constants.lmFileWasOverwritten,
+                            destination.path(percentEncoded: false)),
+                        logLevel: .info)
+                } else {
+                    throw error
+                }
+            }
+        }
+    
+    func processItemWithUniqueName (
+        at source: URL,
+        to destination: URL,
+        operationResult: inout OperationResult) throws -> URL {
+            var result = destination
+            var counter = 1
+            
+            let fileName = destination.deletingPathExtension().lastPathComponent
+            let fileExtension = destination.pathExtension
+            let isFileHasProperName = source.standardized.path(percentEncoded: false)
+                == destination.standardized.path(percentEncoded: false)
+                && operationResult.actionType == .rename
+            
+            if isFileHasProperName {
+                operationResult.appendLogMessage(
+                    message: String(format: Constants.lmFileRenamingSkipped, result.path(percentEncoded: false)),
+                    logLevel: .info)
+                return result
+            }
+            
+            while fileExists(atPath: result.path) {
+                let newFileName = "\(fileName) \(counter).\(fileExtension)"
+                result = destination.deletingLastPathComponent().appendingPathComponent(newFileName)
+                counter += 1
+            }
+            
+            try performFileAction(
+                at: source,
+                to: result,
+                operationResult)
+            
+            let message = String(format: getFileActionMask(operationResult),
+                                 source.path(percentEncoded: false),
+                                 result.path(percentEncoded: false),
+                                 counter > 1 ? " \(Constants.lmAccordingToPolicy)" : String())
+            
+            operationResult.appendLogMessage(
+                message: message,
+                logLevel: .info)
+            
+            return result
+        }
+    
+    func processItemWithSkipIfDuplicate(
+        at source: URL,
+        to destination: URL,
+        operationResult: inout OperationResult) throws {
+        do {
+            try performFileAction(
+                at: source,
+                to: destination,
+                operationResult)
+                
+            operationResult.appendLogMessage(
+                message: String(format: getFileActionMask(operationResult),
+                                source.path(percentEncoded: false),
+                                destination.path(percentEncoded: false)),
+                logLevel: .info)
+        }
+        catch let error as NSError {
+            if error.code != NSFileWriteFileExistsError {
+                throw error
+            }
+            else {
+                restoreFile(operationResult: &operationResult)
+                
+                operationResult.appendLogMessage(
+                    message: String(format: Constants.lmFileSkippedDestinationExists,
+                                    source.path(percentEncoded: false),
+                                    operationResult.originalUrl.path(percentEncoded: false),
+                                    destination.path(percentEncoded: false)),
+                    logLevel: .info)
+            }
+        }
+    }
+    
+     func restoreFile (operationResult: inout OperationResult) {
+        let originalPath = operationResult.originalUrl.standardized.path(percentEncoded: false)
+        let currentPath = operationResult.currentUrl.standardized.path(percentEncoded: false)
+        
+        do {
+            if fileExists(atPath: originalPath) {
+                if originalPath != currentPath {
+                    try removeItem(atPath: currentPath)
+                }
+            }
+            else {
+                try moveItem(atPath: currentPath, toPath: originalPath)
+            }
+        }
+        catch {
+            operationResult.appendLogMessage(
+                message: String(format: Constants.errorFatalCannotRestoreFile,
+                                operationResult.originalUrl.path(percentEncoded: false)),
+                logLevel: .error)
+        }
+    }
+    
+    // MARK: Private functions
+    
+    private func getFileActionMask (_ operationResult: OperationResult) -> String {
+        switch operationResult.actionType {
+            case .copyToFolder:
+                return Constants.lmFileWasCopied
+            case .moveToFolder:
+                return Constants.lmFileWasMoved
+            case .rename:
+                return Constants.lmFileWasRenamed
+            default:
+                return String()
+        }
+    }
+    
+    private func performFileAction (
+        at source: URL,
+        to destination: URL,
+        _ operationResult: OperationResult) throws {
+        switch operationResult.actionType {
+            case .copyToFolder:
+                try copyItem(
+                    atPath: source.standardized.path(percentEncoded: false),
+                    toPath: destination.standardized.path(percentEncoded: false))
+            case .moveToFolder, .rename:
+                try moveItem(
+                    atPath: source.standardized.path(percentEncoded: false),
+                    toPath: destination.standardized.path(percentEncoded: false))
+            default:
+                let error = String(format: Constants.errorCannotPerformFileAction, operationResult.actionType?.description ?? String())
+                throw error
+        }
     }
 }

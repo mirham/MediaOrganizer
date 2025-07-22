@@ -24,7 +24,7 @@ protocol FileServiceType {
         fileUrl: URL,
         duplicatesPolicy: DuplicatesPolicy,
         operationResult: inout OperationResult)
-    func copyToFolder(
+    func copyOrMoveToFolder(
         subfolderName: String,
         outputPath: String,
         fileUrl: URL,

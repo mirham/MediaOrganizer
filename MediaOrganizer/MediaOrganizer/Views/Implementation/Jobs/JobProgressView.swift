@@ -17,11 +17,17 @@ struct JobProgressView: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                makeLabel(labelText: Constants.elNotYetRun, fillColor: Color.gray)
+                makeLabel(
+                    labelText: Constants.elNotYetRun,
+                    fillColor: Color.gray)
                     .isHidden(hidden: !job.progress.notYetRun, remove: true)
-                makeLabel(labelText: Constants.elCompleted, fillColor: Color.green)
+                makeLabel(
+                    labelText: Constants.elCompleted,
+                    fillColor: job.progress.errorsCount == 0 ? Color.green : Color.orange)
                     .isHidden(hidden: !job.progress.isCompleted, remove: true)
-                makeLabel(labelText: Constants.elCanceled, fillColor: Color.red)
+                makeLabel(
+                    labelText: Constants.elCanceled,
+                    fillColor: Color.red)
                     .isHidden(hidden: !job.progress.isCancelled, remove: true)
                 makeLogLabel()
                     .isHidden(

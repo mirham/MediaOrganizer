@@ -20,7 +20,7 @@ class CopyToFolderStrategy : FileActionStrategy {
         fileAction: FileAction,
         duplicatesPolicy: DuplicatesPolicy,
         operationResult: inout OperationResult) {
-            fileService.copyToFolder(
+            fileService.copyOrMoveToFolder(
             subfolderName: fileAction.value!,
             outputPath: outputPath,
             fileUrl: fileInfo.currentUrl,

@@ -232,10 +232,16 @@ class JobService: ServiceBase, JobServiceType {
                     
                     await MainActor.run {
                         if operationResult.isSuccess {
-                            job.progress.processedCount += Constants.step
+                            if operationResult.isEmpty {
+                                job.progress.skippedCount += Constants.step
+                            }
+                            else {
+                                job.progress.processedCount += Constants.step
+                            }
                         }
                         else {
-                            job.progress.skippedCount += Constants.step
+                            job.progress.processedCount += Constants.step
+                            job.progress.errorsCount += Constants.step
                         }
                         
                         jobLog.write(operationResult.logMessages)
@@ -271,7 +277,10 @@ class JobService: ServiceBase, JobServiceType {
         var result = OperationResult(originalUrl: fileInfo.originalUrl)
         
         for rule in job.rules {
-            let fileActions = applyRule(rule: rule, fileInfo: fileInfo, operationResult: &result)
+            let fileActions = applyRule(
+                rule: rule,
+                fileInfo: fileInfo,
+                operationResult: &result)
             
             guard result.isSuccess else { continue }
             

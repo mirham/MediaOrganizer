@@ -20,14 +20,11 @@ class MoveToFolderStrategy : FileActionStrategy {
         fileAction: FileAction,
         duplicatesPolicy: DuplicatesPolicy,
         operationResult: inout OperationResult) {
-        fileService.copyToFolder(
+        fileService.copyOrMoveToFolder(
             subfolderName: fileAction.value!,
             outputPath: outputPath,
             fileUrl: fileInfo.currentUrl,
             duplicatesPolicy: duplicatesPolicy,
-            operationResult: &operationResult)
-        fileService.deleteFile(
-            fileUrl: fileInfo.originalUrl,
             operationResult: &operationResult)
     }
 }
