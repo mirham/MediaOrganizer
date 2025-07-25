@@ -76,6 +76,7 @@ struct Constants {
     // MARK: Colors
     static let colorHexSelection = "#244EC9"
     static let colorHexPanelDark = "#313131"
+    static let colorHexPanelLight = "#ECECEC"
     static let colorHexFileElement = "#681892"
     static let colorHexExifElement = "#093576"
     static let colorHexCustomElement = "#C49518"

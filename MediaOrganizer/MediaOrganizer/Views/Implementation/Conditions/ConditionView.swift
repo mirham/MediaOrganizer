@@ -12,6 +12,7 @@ struct ConditionView: ElementContainerView {
     @EnvironmentObject var appState: AppState
     
     @Environment(\.controlActiveState) private var controlActiveState
+    @Environment(\.colorScheme) private var colorScheme
     
     @Injected(\.ruleService) private var ruleService
     @Injected(\.conditionService) private var conditionService
@@ -31,7 +32,9 @@ struct ConditionView: ElementContainerView {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                let elementOptions = getElementOptionsByTypeId(typeId: condition.type.id)
+                let elementOptions = getElementOptionsByTypeId(
+                    typeId: condition.type.id,
+                    colorScheme: colorScheme)
                 Text(condition.description())
                     .fontWeight(.bold)
                     .frame(maxWidth: 100, alignment: .center)

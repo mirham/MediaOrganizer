@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-protocol ElementContainerView: View {}
+protocol ElementContainerView: ColorThemeSupportedView {}
 
 extension ElementContainerView {
     private static var defaultElementOptions: ElementOptions { ElementOptions(
@@ -57,7 +57,7 @@ extension ElementContainerView {
                 elementValueType: .text),
         MetadataType.fileName.id:
             ElementOptions(
-                icon: Image(systemName: Constants.iconFile),
+                icon: Image(.file),
                 background: Color(hex: Constants.colorHexFileElement),
                 hasFormula: false,
                 editableInAction: false,
@@ -66,7 +66,7 @@ extension ElementContainerView {
                 conditionValueType: .string),
         MetadataType.fileExtension.id:
             ElementOptions(
-                icon: Image(systemName: Constants.iconFile),
+                icon: Image(.file),
                 background: Color(hex: Constants.colorHexFileElement),
                 hasFormula: false,
                 editableInAction: false,
@@ -75,7 +75,7 @@ extension ElementContainerView {
                 conditionValueType: .string),
         MetadataType.fileDateCreated.id:
             ElementOptions(
-                icon: Image(systemName: Constants.iconFile),
+                icon: Image(.file),
                 background: Color(hex: Constants.colorHexFileElement),
                 hasFormula: true,
                 editableInAction: false,
@@ -84,7 +84,7 @@ extension ElementContainerView {
                 conditionValueType: .date),
         MetadataType.fileDateModified.id:
             ElementOptions(
-                icon: Image(systemName: Constants.iconFile),
+                icon: Image(.file),
                 background: Color(hex: Constants.colorHexFileElement),
                 hasFormula: true,
                 editableInAction: false,
@@ -223,8 +223,17 @@ extension ElementContainerView {
         return result
     }
     
-    func getElementOptionsByTypeId(typeId: Int) -> ElementOptions {
-        let result: ElementOptions = Self.elementOptionsMap[typeId] ?? Self.defaultElementOptions
+    func getElementOptionsByTypeId(typeId: Int, colorScheme: ColorScheme) -> ElementOptions {
+        var result: ElementOptions = Self.elementOptionsMap[typeId] ?? Self.defaultElementOptions
+        
+        switch colorScheme {
+            case .dark:
+                result.background = result.background.opacity(0.6)
+            case .light:
+                result.background = result.background.opacity(0.3)
+            @unknown default:
+                break
+        }
         
         return result
     }

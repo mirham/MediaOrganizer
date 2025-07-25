@@ -12,6 +12,7 @@ struct ActionView: ElementContainerView {
     @EnvironmentObject var appState: AppState
     
     @Environment(\.controlActiveState) private var controlActiveState
+    @Environment(\.colorScheme) private var colorScheme
     
     @Injected(\.ruleService) private var ruleService
     @Injected(\.actionService) private var actionService
@@ -31,7 +32,9 @@ struct ActionView: ElementContainerView {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                let elementOptions = getElementOptionsByTypeId(typeId: action.type.id)
+                let elementOptions = getElementOptionsByTypeId(
+                    typeId: action.type.id,
+                    colorScheme: colorScheme)
                 Text(action.description())
                     .fontWeight(.bold)
                     .frame(maxWidth: 100, alignment: .center)

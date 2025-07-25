@@ -12,6 +12,7 @@ struct ActionElementEditView: ElementContainerView {
     @EnvironmentObject var appState: AppState
     
     @Environment(\.controlActiveState) private var controlActiveState
+    @Environment(\.colorScheme) private var colorScheme
     
     @Injected(\.validationService) private var validationService
     
@@ -30,7 +31,9 @@ struct ActionElementEditView: ElementContainerView {
     private let element: ActionElement
     
     private var elementOptions: ElementOptions { get {
-        return getElementOptionsByTypeId(typeId: element.elementTypeId)
+        return getElementOptionsByTypeId(
+            typeId: element.elementTypeId,
+            colorScheme: colorScheme)
     }}
     
     private let dateFormatter: DateFormatter = {

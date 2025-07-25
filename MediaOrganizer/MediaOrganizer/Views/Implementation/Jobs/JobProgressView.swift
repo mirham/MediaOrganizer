@@ -19,7 +19,7 @@ struct JobProgressView: View {
             HStack {
                 makeLabel(
                     labelText: Constants.elNotYetRun,
-                    fillColor: Color.gray)
+                    fillColor: Color.gray.opacity(0.5))
                     .isHidden(hidden: !job.progress.notYetRun, remove: true)
                 makeLabel(
                     labelText: Constants.elCompleted,
@@ -27,7 +27,7 @@ struct JobProgressView: View {
                     .isHidden(hidden: !job.progress.isCompleted, remove: true)
                 makeLabel(
                     labelText: Constants.elCanceled,
-                    fillColor: Color.red)
+                    fillColor: Color.red.opacity(0.5))
                     .isHidden(hidden: !job.progress.isCancelled, remove: true)
                 makeLogLabel()
                     .isHidden(

@@ -139,6 +139,7 @@
 		35F8725A2DCA5D5E0064B304 /* ElementService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F872592DCA5D5E0064B304 /* ElementService.swift */; };
 		35F8B8722E2A62E900F16FFA /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F8B8712E2A62E300F16FFA /* Validation.swift */; };
 		35F8B8742E2A634300F16FFA /* ValidationSeverity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F8B8732E2A634300F16FFA /* ValidationSeverity.swift */; };
+		35FB35EE2E3399690058654F /* ColorThemeSupportedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FB35ED2E33995D0058654F /* ColorThemeSupportedView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -272,6 +273,7 @@
 		35F872592DCA5D5E0064B304 /* ElementService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementService.swift; sourceTree = "<group>"; };
 		35F8B8712E2A62E300F16FFA /* Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
 		35F8B8732E2A634300F16FFA /* ValidationSeverity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationSeverity.swift; sourceTree = "<group>"; };
+		35FB35ED2E33995D0058654F /* ColorThemeSupportedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorThemeSupportedView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -336,6 +338,7 @@
 			children = (
 				35447F492C985A890000C0B1 /* FolderContainerView.swift */,
 				35E39A382CC2A303003D6360 /* ElementContainerView.swift */,
+				35FB35ED2E33995D0058654F /* ColorThemeSupportedView.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -845,6 +848,7 @@
 				35E02F022DCC930C00D81F7F /* MetadataDateStrategy.swift in Sources */,
 				35E02F032DCC930C00D81F7F /* MetadataNumberStrategy.swift in Sources */,
 				35E02F042DCC930C00D81F7F /* SlashStrategy.swift in Sources */,
+				35FB35EE2E3399690058654F /* ColorThemeSupportedView.swift in Sources */,
 				352B6F0D2C9A0D9E0000789D /* MetadataType.swift in Sources */,
 				3559D94F2DCB83CE00B8D0D5 /* StringExtensions.swift in Sources */,
 				35DF883F2CABDCEC007626CB /* ElementValueType.swift in Sources */,

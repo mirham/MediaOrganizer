@@ -11,6 +11,8 @@ import WrappingHStack
 struct ConditionPreviewView: ElementContainerView {
     @EnvironmentObject var appState: AppState
     
+    @Environment(\.colorScheme) private var colorScheme
+    
     var conditionElements: [ConditionElement]
     
     private let dateFormatter = DateFormatter()
@@ -22,7 +24,9 @@ struct ConditionPreviewView: ElementContainerView {
             Text(Constants.elConditionPreview)
                 .font(.subheadline)
             ForEach(conditionElements, id: \.id) { element in
-                let elementOptions = getElementOptionsByTypeId(typeId: element.elementTypeId)
+                let elementOptions = getElementOptionsByTypeId(
+                    typeId: element.elementTypeId,
+                    colorScheme: colorScheme)
                 let operatorDescription = getOperatorDescription(
                     conditionValueType: elementOptions.conditionValueType,
                     selectedOperatorTypeId: element.selectedOperatorTypeId)
@@ -33,7 +37,7 @@ struct ConditionPreviewView: ElementContainerView {
                             conditionValueType: elementOptions.conditionValueType,
                             selectedDateFormatTypeId: element.selectedDateFormatType?.id))
                     Text(operatorDescription)
-                        .foregroundStyle(.gray)
+                        .foregroundStyle(getOperatorColor(colorScheme: colorScheme))
                         .font(.system(size: 10))
                         .isHidden(hidden: operatorDescription == String(), remove: true)
                     Text(element.value.toString())

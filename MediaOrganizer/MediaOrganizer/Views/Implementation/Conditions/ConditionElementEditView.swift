@@ -12,6 +12,7 @@ struct ConditionElementEditView: ElementContainerView {
     @EnvironmentObject var appState: AppState
     
     @Environment(\.controlActiveState) private var controlActiveState
+    @Environment(\.colorScheme) private var colorScheme
     
     @Injected(\.validationService) private var validationService
     
@@ -29,7 +30,9 @@ struct ConditionElementEditView: ElementContainerView {
     
     private var elementOptions: ElementOptions {
         get {
-            return getElementOptionsByTypeId(typeId: element.elementTypeId)
+            return getElementOptionsByTypeId(
+                typeId: element.elementTypeId,
+                colorScheme: colorScheme)
         }
     }
     
@@ -62,7 +65,7 @@ struct ConditionElementEditView: ElementContainerView {
                         conditionValueType: elementOptions.conditionValueType,
                         selectedDateFormatTypeId: self.selectedDateFormatTypeId))
                 Text(operatorDescription)
-                    .foregroundStyle(.gray)
+                    .foregroundStyle(getOperatorColor(colorScheme: colorScheme))
                     .font(.system(size: 12))
                     .isHidden(hidden: operatorDescription == String(), remove: true)
                 Text(element.value.toString())

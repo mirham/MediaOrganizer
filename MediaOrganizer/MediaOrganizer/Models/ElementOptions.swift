@@ -9,10 +9,14 @@ import SwiftUI
 
 struct ElementOptions {
     let icon: Image?
-    let background: Color
+    var background: Color
     let hasFormula: Bool
     let editableInAction: Bool
     let editableInCondition: Bool
     let elementValueType: ElementValueType
     var conditionValueType: ConditionValueType? = nil
+    
+    mutating func adjustBackgroundOpacity(opacity: Double) {
+        self.background = background.opacity(opacity)
+    }
 }
