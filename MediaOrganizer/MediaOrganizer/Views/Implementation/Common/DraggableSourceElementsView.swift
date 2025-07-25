@@ -11,6 +11,8 @@ import WrappingHStack
 struct DraggableSourceElementsView<T: ElementType>: ElementContainerView {
     @EnvironmentObject var appState: AppState
     
+    @Environment(\.colorScheme) private var colorScheme
+    
     @Binding var selectedTypeId: Int
     @Binding var draggedItem: DraggableElement<T>?
     @Binding var destinationElements: [DraggableElement<T>]
@@ -64,7 +66,9 @@ struct DraggableSourceElementsView<T: ElementType>: ElementContainerView {
     @ViewBuilder
     private func elementAsIconAndText(elementInfo: T) -> some View {
         let label = elementInfo.displayText
-        let options = getElementOptionsByTypeId(typeId: elementInfo.elementTypeId)
+        let options = getElementOptionsByTypeId(
+            typeId: elementInfo.elementTypeId,
+            colorScheme: colorScheme)
         
         HStack {
             if options.icon != nil {

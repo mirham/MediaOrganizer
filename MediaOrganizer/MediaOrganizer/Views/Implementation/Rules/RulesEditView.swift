@@ -8,10 +8,11 @@
 import SwiftUI
 import Factory
 
-struct RulesEditView: View {
+struct RulesEditView: ColorThemeSupportedView {
     @EnvironmentObject var appState: AppState
     
     @Environment(\.controlActiveState) private var controlActiveState
+    @Environment(\.colorScheme) private var colorScheme
     
     @Injected(\.ruleService) private var ruleService
     @Injected(\.conditionService) private var conditionService
@@ -112,7 +113,7 @@ struct RulesEditView: View {
                 .padding(.bottom, 5)
                 .frame(maxWidth: .infinity)
             }
-            .background(Color(hex: Constants.colorHexPanelDark))
+            .background(getPanelColor(colorScheme: colorScheme))
         })
     }
     

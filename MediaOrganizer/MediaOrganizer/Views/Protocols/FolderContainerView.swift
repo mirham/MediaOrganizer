@@ -7,13 +7,14 @@
 
 import SwiftUI
 
-protocol FolderContainerView : View {}
+protocol FolderContainerView : ColorThemeSupportedView {}
 
 extension FolderContainerView {
     func getFolderIcon(folderPath: String?) -> NSImage {
-        var result = NSImage(resource: .foldericon)
+        var result = NSImage(resource: .foldericonsetup)
         
-        guard let folderPath = folderPath, folderPath != Constants.stubNotSelected
+        guard let folderPath = folderPath,
+              folderPath != Constants.stubNotSelected
         else { return result }
         
         var isFolder: ObjCBool = true
@@ -29,10 +30,14 @@ extension FolderContainerView {
     }
     
     func getFolderPath(folderPath: String?, folderType: FolderType) -> String {
-        guard let folderPath = folderPath, folderPath != Constants.stubNotSelected
-        else { return folderPath ?? String() }
+        let mask = folderType == .source
+            ? Constants.maskSource
+            : Constants.maskOutput
         
-        let mask = folderType == .source ? Constants.maskSource : Constants.maskOutput
+        guard let folderPath = folderPath,
+              folderPath != Constants.stubNotSelected
+        else { return "\(String(format: mask, folderPath ?? String()))" }
+        
         var isFolder: ObjCBool = true
         let doesFolderExist = FileManager.default.fileExists(
             atPath: folderPath,

@@ -12,6 +12,7 @@ struct ConditionView: ElementContainerView {
     @EnvironmentObject var appState: AppState
     
     @Environment(\.controlActiveState) private var controlActiveState
+    @Environment(\.colorScheme) private var colorScheme
     
     @Injected(\.ruleService) private var ruleService
     @Injected(\.conditionService) private var conditionService
@@ -31,7 +32,9 @@ struct ConditionView: ElementContainerView {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                let elementOptions = getElementOptionsByTypeId(typeId: condition.type.id)
+                let elementOptions = getElementOptionsByTypeId(
+                    typeId: condition.type.id,
+                    colorScheme: colorScheme)
                 Text(condition.description())
                     .fontWeight(.bold)
                     .frame(maxWidth: 100, alignment: .center)
@@ -86,11 +89,11 @@ struct ConditionView: ElementContainerView {
     }
     
     private func handleSaveClick() {
-        guard isValidCondition() else {
-            return
-        }
+        guard isValidCondition()
+        else { return }
         
-        if let conditionIndex = appState.current.rule!.conditions.firstIndex(where: {$0.id == appState.current.condition!.id}) {
+        if let conditionIndex = appState.current.rule!.conditions
+            .firstIndex(where: {$0.id == appState.current.condition!.id}) {
             appState.current.rule!.conditions[conditionIndex].elements
             = appState.current.condition!.elements
         }
@@ -144,7 +147,7 @@ struct ConditionView: ElementContainerView {
                 return false
             }
         }
-        
+
         return true
     }
     
@@ -180,6 +183,7 @@ struct ConditionView: ElementContainerView {
         appState.current.isConditionInEditMode = false
         appState.current.isConditionElementInEditMode = false
         showEditor = false
+        ruleService.validateRule(rule: appState.current.rule)
     }
     
     private func resetValidationMessage() {

@@ -11,6 +11,8 @@ import WrappingHStack
 struct ActionPreviewView: ElementContainerView {
     @EnvironmentObject var appState: AppState
     
+    @Environment(\.colorScheme) private var colorScheme
+    
     var actionElements: [ActionElement]
     
     private let dateFormatter = DateFormatter()
@@ -22,7 +24,9 @@ struct ActionPreviewView: ElementContainerView {
             Text(Constants.elActionPreview)
                 .font(.subheadline)
             ForEach(actionElements, id: \.id) { elementInfo in
-                let elementOptions = getElementOptionsByTypeId(typeId: elementInfo.elementTypeId)
+                let elementOptions = getElementOptionsByTypeId(
+                    typeId: elementInfo.elementTypeId,
+                    colorScheme: colorScheme)
                 switch elementInfo.settingType {
                     case .date:
                         if elementInfo.customDate != nil {

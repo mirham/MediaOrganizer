@@ -11,6 +11,7 @@ import Factory
 struct JobsView: FolderContainerView {
     @EnvironmentObject var appState: AppState
     
+    @Environment(\.colorScheme) private var colorScheme
     @Environment(\.openWindow) private var openWindow
     
     @Injected(\.jobService) private var jobService
@@ -116,7 +117,7 @@ struct JobsView: FolderContainerView {
                 .padding(.bottom, 10)
                 .frame(maxWidth: .infinity)
             }
-            .background(Color(hex: Constants.colorHexPanelDark))
+            .background(getPanelColor(colorScheme: colorScheme))
         })
     }
     
