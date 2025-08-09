@@ -301,7 +301,10 @@ class JobService: ServiceBase, JobServiceType {
         fileInfo: MediaFileInfo,
         operationResult: inout OperationResult) -> [FileAction] {
         do {
-            let result = try ruleService.applyRule(rule: rule, fileInfo: fileInfo)
+            let result = try ruleService.applyRule(
+                rule: rule,
+                fileInfo: fileInfo,
+                operationResult: &operationResult)
             
             return result
         }

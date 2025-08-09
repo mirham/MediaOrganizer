@@ -44,13 +44,14 @@ class ActionService : ServiceBase, ActionServiceType {
         return result
     }
     
-    func actionToFileAction(action: Action, fileInfo: MediaFileInfo) -> FileAction {
+    func actionToFileAction(action: Action, fileInfo: MediaFileInfo) -> FileAction? {
         var value: String = String()
         
         for element in action.elements {
             element.fileMetadata = fileInfo.metadata
+            
             guard let stringElement = elementService.elementAsString(element: element)
-            else { return FileAction(actionType: .skip, value: nil) }
+            else { return nil }
             
             value.append(stringElement)
         }

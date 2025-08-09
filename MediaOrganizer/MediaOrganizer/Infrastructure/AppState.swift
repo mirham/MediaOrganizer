@@ -62,6 +62,16 @@ extension AppState {
             }
         }
         
+        mutating func clearRuleSelection() {
+            rule = nil
+            condition = nil
+            action = nil
+            isConditionInEditMode = false
+            isActionInEditMode = false
+            isConditionElementInEditMode = false
+            isActionElementInEditMode = false
+        }
+        
         static func == (lhs: Current, rhs: Current) -> Bool {
             let result = lhs.job == rhs.job
                 && lhs.rule == rhs.rule

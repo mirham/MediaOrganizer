@@ -81,8 +81,12 @@ class LogViewModel: NSObject, ObservableObject, NSFilePresenter {
     
     private func determineLogLevel(symbol: Character?) -> LogLevel {
         switch symbol {
-            case Constants.errorChar: return .error
-            default: return .info
+            case Constants.errorChar:
+                return .error
+            case Constants.warningChar:
+                return .warning
+            default:
+                return .info
         }
     }
     

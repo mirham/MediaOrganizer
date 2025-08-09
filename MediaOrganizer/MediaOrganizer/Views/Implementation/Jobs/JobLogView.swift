@@ -35,7 +35,7 @@ struct JobLogView: View {
                             VStack(alignment: .leading) {
                                 HStack() {
                                     Circle()
-                                        .fill(entry.level == .info ? .green : .red)
+                                        .fill(getColorByLevel(level: entry.level))
                                         .frame(width: 10, height: 10)
                                     Text(entry.message)
                                         .lineLimit(1)
@@ -81,6 +81,19 @@ struct JobLogView: View {
             appState.views.removeShownWindow(windowId: Constants.windowIdLog)
         })
         .opacity(getViewOpacity(state: controlActiveState))
+    }
+    
+    // MARK: Private functions
+    
+    private func getColorByLevel(level: LogLevel) -> Color {
+        switch level {
+            case .warning:
+                return .orange
+            case .error:
+                return .red
+            default:
+                return .green
+        }
     }
 }
 

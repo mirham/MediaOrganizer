@@ -165,6 +165,9 @@ struct ConditionElementEditView: ElementContainerView {
         }
         .pickerStyle(.menu)
         .frame(maxWidth: 120)
+        .onAppear(perform: {
+            selectedOperatorTypeId = selectedOperatorTypeId ?? StringOperatorType.equals.id
+        })
     }
     
     @ViewBuilder
@@ -183,6 +186,9 @@ struct ConditionElementEditView: ElementContainerView {
         }
         .pickerStyle(.menu)
         .frame(maxWidth: 55)
+        .onAppear(perform: {
+            selectedOperatorTypeId = selectedOperatorTypeId ?? NumberAndDateOperatorType.equals.id
+        })
     }
     
     @ViewBuilder

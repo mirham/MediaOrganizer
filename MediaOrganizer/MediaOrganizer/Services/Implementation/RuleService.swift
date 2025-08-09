@@ -89,7 +89,11 @@ class RuleService: ServiceBase, RuleServiceType {
         currentJob.rules.swapAt(ruleIndex, ruleIndex + 1)
     }
     
-    func applyRule(rule:Rule, fileInfo: MediaFileInfo) throws -> [FileAction] {
+    func applyRule(
+        rule:Rule,
+        fileInfo: MediaFileInfo,
+        operationResult: inout OperationResult) throws -> [FileAction] {
+        let emptyResult = [FileAction]()
         var result = [FileAction]()
         
         let matchAnyCondition = rule.conditions.isEmpty
@@ -98,11 +102,17 @@ class RuleService: ServiceBase, RuleServiceType {
                 conditions: rule.conditions,
                 fileInfo: fileInfo)
         
-        guard matchAnyCondition else { return result }
+        guard matchAnyCondition else { return emptyResult }
         
         for action in rule.actions {
-            let fileAction = actionService.actionToFileAction(
+            guard let fileAction = actionService.actionToFileAction(
                 action: action, fileInfo: fileInfo)
+            else {
+                operationResult.appendLogMessage(
+                    message: String(format: Constants.lmCannotMakeFileAction, action.description()),
+                    logLevel: .warning)
+                return emptyResult
+            }
             
             result.append(fileAction)
         }

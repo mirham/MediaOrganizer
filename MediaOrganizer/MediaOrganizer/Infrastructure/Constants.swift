@@ -26,6 +26,7 @@ struct Constants {
     static let loggerQueueLabel = "\(Bundle.main.bundleIdentifier!).logger"
     static let loggerDomainName = "MediaOrganizer_Logger"
     static let defaultLogFileLimit: Int = 10000
+    static let exifDateFormat = "yyyy:MM:dd HH:mm:ss"
     
     // MARK: Symbols and strings
     static let space = "   "
@@ -40,8 +41,10 @@ struct Constants {
     static let sharp = "#"
     static let newLine = "\n"
     static let info = "🟢"
+    static let warning = "🟠"
     static let error = "🔴"
     static let infoChar: Character = "🟢"
+    static let warningChar: Character = "🟠"
     static let errorChar: Character = "🔴"
     
     // MARK: Settings key names
@@ -247,6 +250,7 @@ struct Constants {
     static let lmFileWasOverwritten = "File '%1$@' was overwritten \(lmAccordingToPolicy)."
     static let lmFileWasDeleted = "File '%1$@' was deleted."
     static let lmAccordingToPolicy = "(according to policy)"
+    static let lmCannotMakeFileAction = "Unable to perform action '%1$@' on file, rule will be skipped."
     
     // MARK: Errors
     static let errorNoStrategyForElementType = "No strategy found for element type: %1$@."

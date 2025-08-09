@@ -17,7 +17,7 @@ protocol RuleServiceType : ServiceBaseType {
     func updateRule()
     func moveRuleUp()
     func moveRuleDown()
-    func applyRule(rule:Rule, fileInfo: MediaFileInfo) throws -> [FileAction]
+    func applyRule(rule:Rule, fileInfo: MediaFileInfo, operationResult: inout OperationResult) throws -> [FileAction]
     func validateRule(rule: Rule?)
     func resetCurrentRule()
     func removeCurrentRule()

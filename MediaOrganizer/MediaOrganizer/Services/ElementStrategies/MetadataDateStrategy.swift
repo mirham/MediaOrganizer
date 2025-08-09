@@ -12,7 +12,7 @@ struct MetadataDateStrategy : ElementStrategy {
     let metadataKey: MetadataType
     
     func elementAsString(context: ActionElement) -> String? {
-        guard let date = context.fileMetadata[metadataKey] as? Date,
+        guard let date = extractDateFromMetadata(context: context),
               let dateFormatType = context.selectedDateFormatType
         else {
             return nil
@@ -100,17 +100,33 @@ struct MetadataDateStrategy : ElementStrategy {
     
     // MARK: Private functions
     
+    private func extractDateFromMetadata(context: ActionElement) -> Date? {
+        switch metadataKey {
+            case .fileDateCreated,.fileDateModified:
+                return context.fileMetadata[metadataKey] as? Date
+            case .metadataDateOriginal, .metadataDateDigitilized:
+                guard let exifDateString = context.fileMetadata[metadataKey] as? String
+                else { return nil }
+                
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = Constants.exifDateFormat
+                return dateFormatter.date(from: exifDateString)
+            default:
+                return nil
+        }
+    }
+    
     private func setupUsDateFormatIfNeeded(
         dateFormatType: DateFormatType?,
         input: String) -> String {
-            guard let dateFormatType = dateFormatType
-            else { return input }
+        guard let dateFormatType = dateFormatType
+        else { return input }
             
-            switch dateFormatType {
-                case .dateTimeUs, .dateUs, .monthAndDayUs:
-                    return input.withColonsInsteadSlashes
-                default:
-                    return input
-            }
+        switch dateFormatType {
+            case .dateTimeUs, .dateUs, .monthAndDayUs:
+                return input.withColonsInsteadSlashes
+            default:
+                return input
         }
+    }
 }

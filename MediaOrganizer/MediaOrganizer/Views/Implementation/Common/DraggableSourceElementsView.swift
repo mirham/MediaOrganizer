@@ -24,7 +24,9 @@ struct DraggableSourceElementsView<T: ElementType>: ElementContainerView {
             ForEach(sourceElements, id: \.id) {sourceElement in
                 elementAsIconAndText(elementInfo: sourceElement.element)
                     .onDrag {
-                        self.draggedItem = sourceElement
+                        if appState.current.isRuleElementSetupComplete {
+                            self.draggedItem = sourceElement
+                        }
                         return NSItemProvider(object: sourceElement.element.displayText as NSString)
                     }
                     .onDrop(of: [.text], delegate: DropViewDelegate(

@@ -61,14 +61,17 @@ class FileService : ServiceBase, FileServiceType {
         fileActions: [FileAction],
         duplicatesPolicy: DuplicatesPolicy,
         operationResult: inout OperationResult) async {
+        let isPerformingReasonable = !fileInfo.isRuleApplied
+            && operationResult.isSuccess
+            && checkIfActionNeeded(
+                fileActions: fileActions,
+                operationResult: &operationResult)
+        
+        guard isPerformingReasonable else { return }
+        
         createFolderIfDoesNotExist(
             path: outputPath,
             operationResult: &operationResult)
-            
-        guard operationResult.isSuccess else { return }
-            
-        guard checkIfActionNeeded(fileActions: fileActions, operationResult: &operationResult)
-        else { return }
         
         for fileAction in fileActions {
             let fileActionStrategy = fileActionStrategyFactory.getStrategy(
@@ -87,6 +90,8 @@ class FileService : ServiceBase, FileServiceType {
             
             fileInfo.currentUrl = operationResult.currentUrl
         }
+        
+        fileInfo.isRuleApplied = true
     }
     
     func renameFile (
@@ -119,7 +124,9 @@ class FileService : ServiceBase, FileServiceType {
         fileUrl: URL,
         duplicatesPolicy: DuplicatesPolicy,
         operationResult: inout OperationResult) {
-        let subfolderPath = outputPath + subfolderName
+        let subfolderPath = makeSubfolderPath(
+            outputPath: outputPath,
+            subfolderName: subfolderName)
         
         createFolderIfDoesNotExist(
             path: subfolderPath,
@@ -201,6 +208,17 @@ class FileService : ServiceBase, FileServiceType {
         }
     }
     
+    private func makeSubfolderPath(outputPath: String, subfolderName: String) -> String {
+        let subfolderPath = outputPath + subfolderName
+        
+        if subfolderPath.hasSuffix(Constants.slash) {
+            return subfolderPath
+        }
+        else {
+            return subfolderPath + Constants.slash
+        }
+    }
+    
     private func createFolderIfDoesNotExist (
         path: String,
         operationResult: inout OperationResult) {
@@ -226,7 +244,9 @@ class FileService : ServiceBase, FileServiceType {
         }
         
         operationResult.appendLogMessage(
-            message: String(format: Constants.lmFileSkipped, operationResult.originalUrl.absoluteString),
+            message: String(
+                format: Constants.lmFileSkipped,
+                operationResult.originalUrl.path(percentEncoded: false)),
             logLevel: .info)
             
         return false

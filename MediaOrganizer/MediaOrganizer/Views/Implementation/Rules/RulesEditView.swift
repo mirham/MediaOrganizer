@@ -104,6 +104,7 @@ struct RulesEditView: ColorThemeSupportedView {
             }
         }
         .onChange(of: appState.current.refreshSignal, setupCloseButton)
+        .onDisappear(perform: { appState.current.clearRuleSelection() })
         .safeAreaInset(edge: .bottom, content: {
             VStack {
                 Divider()

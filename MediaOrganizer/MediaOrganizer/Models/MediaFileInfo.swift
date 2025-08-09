@@ -14,6 +14,7 @@ class MediaFileInfo : Identifiable, Equatable {
     let originalName: String
     let originalUrl: URL
     var currentUrl: URL
+    var isRuleApplied: Bool
     
     init(type: MediaType, url: URL, metadata: [MetadataType: Any?]) {
         self.type = type
@@ -21,6 +22,7 @@ class MediaFileInfo : Identifiable, Equatable {
         self.originalUrl = url
         self.currentUrl = url
         self.metadata = metadata
+        self.isRuleApplied = false
     }
     
     static func == (lhs: MediaFileInfo, rhs: MediaFileInfo) -> Bool {

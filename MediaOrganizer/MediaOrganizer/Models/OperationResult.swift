@@ -20,8 +20,11 @@ struct OperationResult {
     var currentUrl: URL
     var actionType: ActionType?
     var logMessages: [String] { get { _logMessages } }
-    var isSuccess: Bool { get { _logMessages.allSatisfy({$0.hasPrefix(Constants.info)}) } }
-    var isEmpty: Bool { get { _logMessages.isEmpty } }
+    // TODO: Fix this crap below!
+    var isSuccess: Bool {
+        get { _logMessages.allSatisfy({!$0.hasPrefix(Constants.error)}) }
+    }
+    var isEmpty: Bool { get { originalUrl == currentUrl } }
     
     init(originalUrl: URL) {
         self.originalUrl = originalUrl
@@ -34,6 +37,8 @@ struct OperationResult {
         switch logLevel {
             case .info:
                 _logMessages.append("\(Constants.info) \(timestamp) \(message)")
+            case .warning:
+                _logMessages.append("\(Constants.warning) \(timestamp) \(message)")
             case .error:
                 _logMessages.append("\(Constants.error) \(timestamp) \(message)")
             default:
