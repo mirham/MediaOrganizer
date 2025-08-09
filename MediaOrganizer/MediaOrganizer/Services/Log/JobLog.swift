@@ -31,6 +31,10 @@ class JobLog: ServiceBase, JobLogType {
         log(message, .info)
     }
     
+    func warning(_ message: String) {
+        log(message, .warning)
+    }
+    
     func error(_ message: String) {
         log(message, .error)
     }
@@ -107,6 +111,10 @@ class JobLog: ServiceBase, JobLogType {
             case .info:
                 let infoMessage = String(format: fileMessageMask, Constants.info)
                 self.writeToLogFile(infoMessage)
+                break
+            case .warning:
+                let warningMessage = String(format: fileMessageMask, Constants.warning)
+                self.writeToLogFile(warningMessage)
                 break
             case .error:
                 let errorMessage = String(format: fileMessageMask, Constants.error)
