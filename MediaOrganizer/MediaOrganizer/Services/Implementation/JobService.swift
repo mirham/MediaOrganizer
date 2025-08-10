@@ -310,7 +310,10 @@ class JobService: ServiceBase, JobServiceType {
         }
         catch {
             operationResult.appendLogMessage(
-                message: String(format: Constants.errorCannotApplyRule, error.localizedDescription),
+                message: String(
+                    format: Constants.errorCannotApplyRule,
+                    rule.number,
+                    error.localizedDescription),
                 logLevel: .error)
         }
         

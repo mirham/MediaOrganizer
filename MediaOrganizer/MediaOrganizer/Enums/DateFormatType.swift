@@ -65,7 +65,7 @@ enum DateFormatType : Int, CaseIterable, Identifiable, Codable, Equatable {
             case .asIs: return String()
             case .dateEu: return "dd.MM.yyyy"
             case .dateUs: return "MM/dd/yyyy"
-            case .dateTimeEu: return "MM.dd.yyyy HH-mm-ss"
+            case .dateTimeEu: return "dd.MM.yyyy HH-mm-ss"
             case .dateTimeUs: return "MM/dd/yyyy HH-mm-ss"
             case .monthAndDay: return "MM.dd"
             case .monthAndDayUs: return "MM/dd"

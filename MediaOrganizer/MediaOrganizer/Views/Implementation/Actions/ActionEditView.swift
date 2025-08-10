@@ -22,7 +22,16 @@ struct ActionEditView: View {
     
     var body: some View {
         HStack {
-            VStack {
+            VStack (alignment: .leading) {
+                HStack {
+                    Image(systemName: Constants.iconInfo)
+                        .asSmallInfoIcon()
+                    Text(Constants.hintElements)
+                        .font(.system(size: 12))
+                }
+                .opacity(0.7)
+                .padding(.bottom, 3)
+                .isHidden(hidden: !ActionType(rawValue: selectedActionTypeId)!.canBeCustomized, remove: true)
                 Picker(String(), selection: Binding(
                     get: { selectedActionTypeId },
                     set: {

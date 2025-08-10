@@ -22,6 +22,14 @@ struct ConditionEditView: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
+                HStack {
+                    Image(systemName: Constants.iconInfo)
+                        .asSmallInfoIcon()
+                    Text(Constants.hintElements)
+                        .font(.system(size: 12))
+                }
+                .opacity(0.7)
+                .padding(.bottom, 3)
                 Text(ConditionType(rawValue: selectedConditionTypeId)?.description ?? String())
                     .fontWeight(.bold)
                     .padding(.leading, 10)

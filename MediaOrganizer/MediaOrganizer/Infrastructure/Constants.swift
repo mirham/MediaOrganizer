@@ -75,6 +75,7 @@ struct Constants {
     static let iconError = "xmark.circle.fill"
     static let iconUp = "arrowshape.up.circle.fill"
     static let iconDown = "arrowshape.down.circle.fill"
+    static let iconInfo = "info.circle.fill"
     
     // MARK: Colors
     static let colorHexSelection = "#244EC9"
@@ -182,6 +183,10 @@ struct Constants {
     // MARK: Drag and Drop
     static let ddFolder = "public.file-url"
     
+    // MARK: Hints
+    static let hintRules = "Rules are applied sequentially\nSet up more specific rules, then more general ones\nIf rules cannot be applied or an error occurs, the files are left untouched"
+    static let hintElements = "Drag and drop elements to customize them as you like, drag them back to remove them."
+    
     // MARK: Dialogs
     static let dialogHeaderRemoveJob = "Delete job '%1$@'"
     static let dialogBodyRemoveJob = "This operation cannot be undone.\nThe folders will be preserved."
@@ -250,7 +255,7 @@ struct Constants {
     static let lmFileWasOverwritten = "File '%1$@' was overwritten \(lmAccordingToPolicy)."
     static let lmFileWasDeleted = "File '%1$@' was deleted."
     static let lmAccordingToPolicy = "(according to policy)"
-    static let lmCannotMakeFileAction = "Unable to perform action '%1$@' on file, rule will be skipped."
+    static let lmCannotMakeFileAction = "Unable to perform action '%1$@' on file '%2$@', rule %3$@ will be skipped."
     
     // MARK: Errors
     static let errorNoStrategyForElementType = "No strategy found for element type: %1$@."
@@ -262,7 +267,7 @@ struct Constants {
     static let errorCannotCreateFolder = "Cannot create folder '%1$@': %2$@."
     static let errorCannotPerformAction = "Cannot %1$@ file '%2$@': %3$@."
     static let errorCannotPerformAction2 = "Cannot perform action with file '%1$@': %2$@."
-    static let errorCannotApplyRule = "Cannot apply rule: %1$@."
+    static let errorCannotApplyRule = "Cannot apply rule %1$@: %2$@."
     static let errorCannotPerformFileAction = "Cannot perform file action '%1$@'"
     static let errorFatalCannotRestoreFile = "Uh-oh, fatal error here! Cannot restore file '%1$@'!"
     
