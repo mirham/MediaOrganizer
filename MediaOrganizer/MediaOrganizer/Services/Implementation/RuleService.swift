@@ -90,7 +90,7 @@ class RuleService: ServiceBase, RuleServiceType {
     }
     
     func applyRule(
-        rule:Rule,
+        rule: Rule,
         fileInfo: MediaFileInfo,
         operationResult: inout OperationResult) throws -> [FileAction] {
         let emptyResult = [FileAction]()
@@ -109,7 +109,11 @@ class RuleService: ServiceBase, RuleServiceType {
                 action: action, fileInfo: fileInfo)
             else {
                 operationResult.appendLogMessage(
-                    message: String(format: Constants.lmCannotMakeFileAction, action.description()),
+                    message: String(
+                        format: Constants.lmCannotMakeFileAction,
+                        action.description(),
+                        fileInfo.currentUrl.path(percentEncoded: false),
+                        rule.number.description),
                     logLevel: .warning)
                 return emptyResult
             }

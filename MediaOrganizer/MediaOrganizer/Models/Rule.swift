@@ -9,6 +9,7 @@ import Foundation
 
 class Rule : Codable, Identifiable, Equatable {
     var id = UUID()
+    var number: Int = 0
     var conditions: [Condition] = [Condition]()
     var actions: [Action] = [Action]()
     var validation: Validation = Validation()
@@ -20,6 +21,7 @@ class Rule : Codable, Identifiable, Equatable {
     
     private enum CodingKeys: String, CodingKey {
         case id
+        case number
         case conditions
         case actions
     }

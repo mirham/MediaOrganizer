@@ -79,6 +79,7 @@ struct JobSettingsView : View {
             jobService.updateJob()
         }
         
+        appState.current.clearRuleSelection()
         appState.views.removeShownWindow(windowId: Constants.windowIdJobSettings)
     }
 }
