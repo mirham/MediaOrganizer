@@ -23,8 +23,8 @@ MirHam MediaOrganizer is a macOS application...
 - Processes multiple jobs at the same time
 - Rapidly processes large media collections thanks to parallel processing
 - Automatically restores the original file in case of an error
-- Supports both, light and dark theme
 - Detailed logs help you fine-tune jobs
+- Supports both, light and dark theme
 
 ## Compatibility
 This application is compatible with macOS 14.5 and above.
