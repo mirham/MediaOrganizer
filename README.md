@@ -18,12 +18,57 @@
 MirHam MediaOrganizer is a macOS application...
 
 ## Features
-- 
+- Lets you organize photos and videos in any structure you prefer
+- Achieves this using file and EXIF data and a set of flexible rules
+- Processes multiple jobs at the same time
+- Rapidly processes large media collections thanks to parallel processing
+- Automatically restores the original file in case of an error
+- Supports both, light and dark theme
+
+Detailed logs help you fine-tune your organization jobs for greater accuracy.
 
 ## Compatibility
 This application is compatible with macOS 14.0 and above.
 
+## Installation
+Download the DMG installer from the [releases](https://github.com/mirham/MediaOrganizer/releases), mount it, and drag and drop the application to the Applications folder. That's it! However, you will need to allow launching applications from unidentified developers to start the application, as I don't have an Apple developer license.
+
 ## Screenshots
+
+### Main view
+<p align="left">
+  <img src="https://github.com/mirham/MediaOrganizer/blob/main/Images/Main2.png" width="700">
+</p>
+
+### Job settings
+<p align="left">
+  <img src="https://github.com/mirham/MediaOrganizer/blob/main/Images/GeneralSettings.png" width="700">
+  <img src="https://github.com/mirham/MediaOrganizer/blob/main/Images/Rules.png" width="700">
+</p>
+
+### Flexible rules
+<p align="left">
+  <img src="https://github.com/mirham/MediaOrganizer/blob/main/Images/RuleEdit.png" width="700">
+</p>
+
+Set up them as you wish
+<p align="left">
+  <img src="https://github.com/mirham/MediaOrganizer/blob/main/Images/ElementSetup4.png" width="250">
+  <img src="https://github.com/mirham/MediaOrganizer/blob/main/Images/ElementSetup5.png" width="380">
+  <img src="https://github.com/mirham/MediaOrganizer/blob/main/Images/ElementSetup2.png" width="200">
+  <img src="https://github.com/mirham/MediaOrganizer/blob/main/Images/ElementSetup1.png" width="120">
+  <img src="https://github.com/mirham/MediaOrganizer/blob/main/Images/ElementSetup3.png" width="60">
+</p>
+
+### Inline validation
+<p align="left">
+  <img src="https://github.com/mirham/MediaOrganizer/blob/main/Images/Validation.png" width="800">
+</p>
+
+### Job logs
+<p align="left">
+  <img src="https://github.com/mirham/MediaOrganizer/blob/main/Images/JobLog.png" width="800">
+</p>
 
 ## Improvement
 > [!TIP]
