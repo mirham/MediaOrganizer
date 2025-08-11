@@ -28,7 +28,7 @@ MirHam MediaOrganizer is a macOS application...
 Detailed logs help you fine-tune your organization jobs for greater accuracy.
 
 ## Compatibility
-This application is compatible with macOS 14.0 and above.
+This application is compatible with macOS 14.5 and above.
 
 ## Installation
 Download the DMG installer from the [releases](https://github.com/mirham/MediaOrganizer/releases), mount it, and drag and drop the application to the Applications folder. That's it! However, you will need to allow launching applications from unidentified developers to start the application, as I don't have an Apple developer license.
