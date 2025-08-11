@@ -37,7 +37,7 @@ Download the DMG installer from the [releases](https://github.com/mirham/MediaOr
 
 ### Main view
 <p align="left">
-  <img src="https://github.com/mirham/MediaOrganizer/blob/main/Images/Main2.png" width="700">
+  <img src="https://github.com/mirham/MediaOrganizer/blob/main/Images/Main2.png" width="650">
 </p>
 
 ### Job settings
