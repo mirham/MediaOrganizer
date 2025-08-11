@@ -18,7 +18,7 @@
 MirHam MediaOrganizer is a macOS application...
 
 ## Features
-- Lets you organize photos and videos in any structure you prefer
+- Lets you organize photos and videos in any structure you prefer with desired file names
 - Achieves this using file and EXIF data and a set of flexible rules
 - Processes multiple jobs at the same time
 - Rapidly processes large media collections thanks to parallel processing
