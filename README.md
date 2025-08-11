@@ -42,13 +42,13 @@ Download the DMG installer from the [releases](https://github.com/mirham/MediaOr
 
 ### Job settings
 <p align="left">
-  <img src="https://github.com/mirham/MediaOrganizer/blob/main/Images/GeneralSettings.png" width="700">
-  <img src="https://github.com/mirham/MediaOrganizer/blob/main/Images/Rules.png" width="700">
+  <img src="https://github.com/mirham/MediaOrganizer/blob/main/Images/GeneralSettings.png" width="650">
+  <img src="https://github.com/mirham/MediaOrganizer/blob/main/Images/Rules.png" width="650">
 </p>
 
 ### Flexible rules
 <p align="left">
-  <img src="https://github.com/mirham/MediaOrganizer/blob/main/Images/RuleEdit.png" width="700">
+  <img src="https://github.com/mirham/MediaOrganizer/blob/main/Images/RuleEdit.png" width="650">
 </p>
 
 Set up them as you wish
@@ -62,12 +62,12 @@ Set up them as you wish
 
 ### Inline validation
 <p align="left">
-  <img src="https://github.com/mirham/MediaOrganizer/blob/main/Images/Validation.png" width="800">
+  <img src="https://github.com/mirham/MediaOrganizer/blob/main/Images/Validation.png" width="700">
 </p>
 
 ### Job logs
 <p align="left">
-  <img src="https://github.com/mirham/MediaOrganizer/blob/main/Images/JobLog.png" width="800">
+  <img src="https://github.com/mirham/MediaOrganizer/blob/main/Images/JobLog.png" width="700">
 </p>
 
 ## Improvement
