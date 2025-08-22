@@ -15,7 +15,29 @@
 </p>
 
 ## Introduction
-MirHam MediaOrganizer is a macOS application...
+If you're into photography, you're likely aware of how challenging it can be to organize your photos and videos. Each device has its own naming format, and most aren't adjustable (I'm looking at you, iPhone and GoPro). For instance, after a family trip to France, collecting all the media from various devices can leave you with thousands of disorganized files. Manually sorting through that mess can be incredibly time-consuming, especially if you have a strict file structure and naming rules.
+
+You'd probably need a few applications to rename and move files, like Adobe Lightroom Classic. However, purchasing expensive software just for these operations isn't always a reasonable choice.
+
+Personally, I've organized my media archive with this structure:
+```
+Year
+|-- Month.Day
+|   |-- Videos
+|   |   |-- dd.MM.yyyy hh-mm-ss.Extension
+|   |   |-- dd.MM.yyyy hh-mm-ss.Extension
+|   |-- dd.MM.yyyy hh-mm-ss_DeviceName.Extension
+|   |-- dd.MM.yyyy hh-mm-ss_DeviceName.Extension
+```
+
+In the past, I used this combination of software:
+- Renamer - to rename files
+- A custom Automator's AppleScript - to move files into the correct folders
+- Finder's smart folders - for quick file filtering
+
+This system worked, but even with all these tools, it took a long time to organize my files.
+
+Eventually, I got fed up and decided to create the MirHam Media Organizer. My goal was to set up my media organization jobs once and then periodically run them with the click of a button. I'm now sharing it with everyone, and I hope this open-source program proves to be useful.
 
 ## Features
 - Lets you organize photos and videos in any structure you prefer with desired file names
