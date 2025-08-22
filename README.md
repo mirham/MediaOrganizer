@@ -52,11 +52,7 @@ Download the DMG installer from the [releases](https://github.com/mirham/MediaOr
 
 Set up them as you wish
 <p align="left">
-  <img src="https://github.com/mirham/MediaOrganizer/blob/main/Images/ElementSetup4.png" width="250">
-  <img src="https://github.com/mirham/MediaOrganizer/blob/main/Images/ElementSetup5.png" width="380">
-  <img src="https://github.com/mirham/MediaOrganizer/blob/main/Images/ElementSetup2.png" width="200">
-  <img src="https://github.com/mirham/MediaOrganizer/blob/main/Images/ElementSetup1.png" width="120">
-  <img src="https://github.com/mirham/MediaOrganizer/blob/main/Images/ElementSetup3.png" width="60">
+  <img src="https://github.com/mirham/MediaOrganizer/blob/main/Images/ElementSetup.png" width="1000">
 </p>
 
 ### Inline validation
