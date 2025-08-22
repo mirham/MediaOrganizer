@@ -155,6 +155,8 @@ struct Constants {
     static let elCopy = "Copy"
     static let elDuplicatesPolicy = "Duplicates policy"
     static let elIsNotAvailable = "not available"
+    static let elNoJobs = "No jobs, add a new one"
+    static let elNoRules = "No rules, add a new one"
     
     // MARK: Masks
     static let maskSource =  "Source: %1$@"

@@ -55,7 +55,9 @@ extension AppState {
         var allRulesValid: Bool {
             get {
                 if let currentJob = job {
-                    return currentJob.rules.allSatisfy({$0.validation.isValid})
+                    return currentJob.rules.isEmpty
+                        ? true
+                        : currentJob.rules.allSatisfy({$0.validation.isValid})
                 }
                 
                 return true

@@ -136,6 +136,14 @@ struct RulesToolbarView : View {
         else {
             isRuleRemoving = true
         }
+        
+        if let currentJob = appState.current.job {
+            if currentJob.rules.isEmpty {
+                ViewHelper.setUpCloseViewButton(
+                    viewName: Constants.windowIdJobSettings,
+                    enable: true)
+            }
+        }
     }
     
     private func handleRemoveRule() {
