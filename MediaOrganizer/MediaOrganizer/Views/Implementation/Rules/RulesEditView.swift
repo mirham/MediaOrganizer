@@ -29,46 +29,51 @@ struct RulesEditView: ColorThemeSupportedView {
             }
             .opacity(0.7)
             .padding(5)
-            ScrollView(.vertical) {
-                LazyVStack(alignment: .leading, spacing: 0) {
-                    ForEach(Array(appState.current.job?.rules.enumerated() ?? [Rule]().enumerated()), id: \.element.id) { index, rule in
-                        HStack {
-                            Text("\(index + 1)")
-                                .asRuleNumber()
-                            Divider()
-                                .padding(.trailing, 5)
-                            VStack(alignment: .center) {
-                                buildConditions(rule: rule)
-                                buildActions(rule: rule)
-                                ValidationMessageView(
-                                    text: rule.validation.message ?? String(),
-                                    severity: rule.validation.severity ?? .error,
-                                    hideFunc: { return rule.validation.message == nil })
-                            }
-                            .frame(maxWidth: .infinity)
-                        }
-                        .onAppear(perform: { rule.number = index + 1})
-                        .padding(10)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(selectedRuleId == rule.id
-                                    && ruleService.isCurrentRule(ruleId: rule.id)
-                                    && !appState.current.isRuleInSetupMode
-                                    ? Color.blue.opacity(0.3)
-                                    : (index % 2 == 0 ? Color.gray.opacity(0.08) : Color.clear))
-                        .contentShape(Rectangle())
-                        .simultaneousGesture(
-                            TapGesture()
-                                .onEnded {
-                                    handleRuleItemClick(rule: rule)
+            if appState.current.job?.rules.isEmpty ?? true {
+                buildNoRulesStub()
+            }
+            else {
+                ScrollView(.vertical) {
+                    LazyVStack(alignment: .leading, spacing: 0) {
+                        ForEach(Array(appState.current.job?.rules.enumerated() ?? [Rule]().enumerated()), id: \.element.id) { index, rule in
+                            HStack {
+                                Text("\(index + 1)")
+                                    .asRuleNumber()
+                                Divider()
+                                    .padding(.trailing, 5)
+                                VStack(alignment: .center) {
+                                    buildConditions(rule: rule)
+                                    buildActions(rule: rule)
+                                    ValidationMessageView(
+                                        text: rule.validation.message ?? String(),
+                                        severity: rule.validation.severity ?? .error,
+                                        hideFunc: { return rule.validation.message == nil })
                                 }
-                        )
-                        .disabled(isRuleShouldBeDisabled(ruleId: rule.id))
-                        DividerWithImage()
-                            .isHidden(hidden: ruleService.getRuleIndexByRuleId(ruleId: rule.id)! == appState.current.job!.rules.count - 1, remove: true)
+                                .frame(maxWidth: .infinity)
+                            }
+                            .onAppear(perform: { rule.number = index + 1})
+                            .padding(10)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .background(selectedRuleId == rule.id
+                                        && ruleService.isCurrentRule(ruleId: rule.id)
+                                        && !appState.current.isRuleInSetupMode
+                                        ? Color.blue.opacity(0.3)
+                                        : (index % 2 == 0 ? Color.gray.opacity(0.08) : Color.clear))
+                            .contentShape(Rectangle())
+                            .simultaneousGesture(
+                                TapGesture()
+                                    .onEnded {
+                                        handleRuleItemClick(rule: rule)
+                                    }
+                            )
+                            .disabled(isRuleShouldBeDisabled(ruleId: rule.id))
+                            DividerWithImage()
+                                .isHidden(hidden: ruleService.getRuleIndexByRuleId(ruleId: rule.id)! == appState.current.job!.rules.count - 1, remove: true)
+                        }
                     }
                 }
+                .onChange(of: appState.current.refreshSignal, setupCloseButton)
             }
-            .onChange(of: appState.current.refreshSignal, setupCloseButton)
         }
         .safeAreaInset(edge: .bottom, content: {
             VStack {
@@ -84,6 +89,20 @@ struct RulesEditView: ColorThemeSupportedView {
     }
     
     // MARK: Private functions
+    
+    @ViewBuilder
+    private func buildNoRulesStub() -> some View {
+        Spacer()
+        HStack {
+            Spacer()
+            Text(Constants.elNoRules)
+                .textCase(.uppercase)
+                .foregroundColor(.gray.opacity(0.5))
+                .padding()
+            Spacer()
+        }
+        Spacer()
+    }
     
     @ViewBuilder
     private func buildConditions(rule: Rule) -> some View {
