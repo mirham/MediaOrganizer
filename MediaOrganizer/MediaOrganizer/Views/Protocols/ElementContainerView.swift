@@ -213,6 +213,7 @@ extension ElementContainerView {
     private static var optionalElementsMap: [Int: Bool] { [
         ActionType.rename.id: true,
         ActionType.copyToFolder.id: true,
+        ActionType.moveToFolder.id: true,
         ConditionType.cIf.id: true,
         ConditionType.cElseIf.id: true
     ] }
